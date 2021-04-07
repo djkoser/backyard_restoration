@@ -1,0 +1,17 @@
+{
+  "env": {
+    "browser": false,
+    "es2021": true,
+    "node": true,
+    "jest": true 
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/recommended",
+    "plugin:node/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["jest", "testing-library", "node", "prettier"]
+}
