@@ -8,6 +8,9 @@ module.exports = {
     let TMAX = [];
     let TMIN = [];
 
+    // function for delaying calls to NOAA
+    const delay = interval => new Promise(resolve => setTimeout(resolve, interval))
+
     const date2String = (dateParam = new Date()) => {
       return dateParam.toISOString().match(/\d\d\d\d-\d\d-\d\d/)[0];
     }
@@ -16,36 +19,26 @@ module.exports = {
       return new Date(dateParam.setFullYear(dateParam.getFullYear() - 1));
     }
 
-    // Pulled out GET request to NOAA in order to make it easier on the eyes
+    // Pulled out GET request to NOAA in order to make code easier to read
     // Also added setTimeout to prevent too many requests per second to NOAA server when looping 
-    const getTMAXFromNOAA = (edString, sdString, locationType, zipFips, cb) => {
-      // @ts-ignore
-      axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
+    const getDataFromNOAA = async (acc, datatype, edString, sdString, locationType, zipFips) => {
+      axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=${datatype}&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
         .then(res => {
-          res.data.results.forEach(el => TMAX.push(el.value))
-          cb ? cb() : console.log(TMAX.length)
+          res.data.results.forEach(el => acc.push(el.value));
         })
         .catch(err => { console.log(err) })
+      await delay(300)
     }
 
-    const getTMINFromNOAA = (edString, sdString, locationType, zipFips, cb) => {
-      // @ts-ignore
-      axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
-        .then(res => {
-          res.data.results.forEach(el => TMIN.push(el.value))
-          cb === 'function' ? cb() : console.log(TMIN.length)
-        })
-        .catch(err => console.log(err))
-    }
 
-    // forBlock contents placed within setTimeout to meter requests to NOAA
-    const forBlock = (locationType, location, cb) => {
+    const forBlock = async (locationType, location) => {
       sd = less1Date(sd);
       ed = less1Date(ed);
       edString = date2String(ed);
       sdString = date2String(sd);
-      getTMAXFromNOAA(edString, sdString, locationType, location, getTMINFromNOAA(edString, sdString, locationType, location, cb));
-    };
+      await getDataFromNOAA(TMAX, "TMAX", edString, sdString, locationType, location);
+      await getDataFromNOAA(TMIN, "TMIN", edString, sdString, locationType, location);
+    }
 
     const { email, password, first_name, last_name, street, city, state, zipcode } = req.body;
     const db = req.app.get('db');
@@ -63,7 +56,7 @@ module.exports = {
     // if data returned for zipcode, proceed with zipcode querying, if no data, use county FIPS code
     // @ts-ignore
     axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&units=standard&startdate=${sdString}&enddate=${edString}&locationid=ZIP:${zipcode}&limit=1000`, { headers: { token: NOAA_TOKEN } })
-      .then(res => {
+      .then(async res => {
         if (res.data.results.length === 0) {
           // Extra Steps required to get FIPS code to facilitate wider geographic range
           // @ts-ignore
@@ -73,12 +66,15 @@ module.exports = {
               // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
               // @ts-ignore
               axios.get(`https://geo.fcc.gov/api/census/block/find?latitude=${location.lat}&longitude=${location.lng}&showall=false&format=json`)
-                .then(res => {
+                .then(async res => {
                   // Run the query 5 times using FIPS code, reducing the year value each time to get 5 years of data
-                  // Must run seperate queries to get around NOAA Data Limitations
+                  // Must run seperate queries to get around NOAA 1-year of Data limitation
                   const FIPS = res.data.County.FIPS;
-
-                  forBlock("FIPS", FIPS, forBlock("FIPS", FIPS, forBlock("FIPS", FIPS, forBlock("FIPS", FIPS, forBlock("FIPS", FIPS)))))
+                  await forBlock("FIPS", FIPS)
+                  await forBlock("FIPS", FIPS)
+                  await forBlock("FIPS", FIPS)
+                  await forBlock("FIPS", FIPS)
+                  await forBlock("FIPS", FIPS)
 
                 })
                 // Completed Google Maps API Promise
@@ -88,10 +84,15 @@ module.exports = {
             .catch(err => console.log(err))
         } else {
           // Run Query for TMIN to Catch it up
-          getTMINFromNOAA(edString, sdString, "ZIP", zipcode);
+          await getDataFromNOAA(TMIN, "TMIN", edString, sdString, "ZIP", zipcode);
+
           // Run the query 4 more times using zipcode, reducing the year value each time to get 4 more years of data
           // Must run seperate queries to get around NOAA Data Limitations
-          forBlock("ZIP", zipcode, forBlock("ZIP", zipcode, forBlock("ZIP", zipcode)));
+          await forBlock("ZIP", zipcode)
+          await forBlock("ZIP", zipcode)
+          await forBlock("ZIP", zipcode)
+          await forBlock("ZIP", zipcode)
+          await forBlock("ZIP", zipcode)
 
         };
       }).catch(err => console.log(err))
