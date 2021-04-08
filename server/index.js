@@ -3,7 +3,6 @@ const massive = require("massive");
 const express = require("express");
 const app = express();
 const session = require("express-session");
-app.use(express.json());
 const methodsCtl = require("./controllers/methodController");
 const userCtl = require("./controllers/userController");
 const weedCtl = require("./controllers/weedController");
@@ -11,6 +10,7 @@ const updUserCtl = require("./controllers/updateUserController");
 
 const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
 
+app.use(express.json());
 app.use(
   session({
     resave: false,

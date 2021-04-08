@@ -1,6 +1,12 @@
 module.exports = {
-  getMethods: () => { },
-  addMethod: () => { },
-  removeMethod: () => { }
+  getMethods: (req, res) => {
+    const db = req.app.get('db')
+  },
+  addMethod: (req, res) => {
+    const db = req.app.get('db')
+  },
+  removeMethod: (req, res) => {
+    const db = req.app.get('db')
+  }
 
 }
