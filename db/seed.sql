@@ -6,6 +6,18 @@
 -- DROP TABLE management_method;
 -- DROP TABLE user_info;
 -- DROP TABLE weed;
+CREATE TABLE tmin (
+  id serial PRIMARY KEY,
+  temperature int,
+  observation_date date
+);
+
+CREATE TABLE tmax (
+  id serial PRIMARY KEY,
+  temperature int,
+  observation_date date
+);
+
 CREATE TABLE weed (
   weed_id serial PRIMARY KEY,
   common_name text,
