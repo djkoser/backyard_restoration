@@ -28,6 +28,15 @@ module.exports = {
     const less1Date = (dateParam = new Date()) => {
       return new Date(dateParam.setFullYear(dateParam.getFullYear() - 1));
     }
+
+    // Initialize start and end dates for temperature queries to NOAA 
+    let ed = new Date();
+    ed = new Date(ed.getFullYear() - 1, 12, 0)
+    let edString = ed.toISOString().match(/\d\d\d\d-\d\d-\d\d/)[0];
+    let sd = new Date();
+    sd = new Date(sd.getFullYear() - 1, 12, 0)
+    sd = less1Date(sd);
+    let sdString = date2String(sd);
     // Pulled-out GET request to NOAA in order to make code easier to read
     // Also added setTimeout to prevent too many requests per second to NOAA server when "looping" 
     const getDataFromNOAA = async (acc, datatype, edString, sdString, locationType, zipFips, iterations) => {
@@ -37,11 +46,12 @@ module.exports = {
           count === iterations ? calculateGParams() : count += 1;
         })
         .catch(err => { console.log(err) })
-      await delay(200)
+      await delay(500)
     }
 
     // Block of code acting like a for loop -> subtracts one year from sd and ed and uses this to getData from NOAA
     const forBlock = async (acc, type, locationType, location, iterations) => {
+      console.log(sd, ed)
       sd = less1Date(sd);
       ed = less1Date(ed);
       edString = date2String(ed);
@@ -52,7 +62,7 @@ module.exports = {
     // Calculate absolute TMIN, TMAX and determine hardiness zone, Season STart Date and Average Season length over a 5 year period
 
     const calculateGParams = async () => {
-      console.log('run');
+      console.log(TMIN.length, TMAX.length);
       // insert values into TMIN and TMAX tables
       await db.growingCalcs.truncateTMAX();
       await db.growingCalcs.truncateTMIN();
@@ -60,84 +70,77 @@ module.exports = {
       TMAX.forEach(async el => await db.growingCalcs.insertIntoTMAX(el.value, el.date))
       const TMAXFiltered = await db.growingCalcs.selectHighestDuplicates();
       const TMINFiltered = await db.growingCalcs.selectLowestDuplicates();
+
+      // Remove day values from date to break data into years and add this back to the TMIN table
+      await db.growingCalcs.truncateTMIN();
+      TMINFiltered.forEach(async el => {
+        el.observation_date = new Date(el.observation_date.getFullYear(), 0)
+        await db.growingCalcs.insertIntoTMIN(el.temperature, el.observation_date)
+      })
+
+      let yearlyAvgTMIN = await db.growingCalcs.TMINByYear()
+      console.log(yearlyAvgTMIN)
+      const numYears = yearlyAvgTMIN.length;
+      yearlyAvgTMIN = yearlyAvgTMIN.reduce((acc, el) => acc + el);
+      yearlyAvgTMIN = yearlyAvgTMIN / numYears;
+
+      console.log(yearlyAvgTMIN);
+
+      let hardinessZone;
+      if (yearlyAvgTMIN >= -60 && yearlyAvgTMIN < -55) {
+        hardinessZone = "1a"
+      } else if (yearlyAvgTMIN >= -55 && yearlyAvgTMIN < -50) {
+        hardinessZone = "1b"
+      } else if (yearlyAvgTMIN >= -50 && yearlyAvgTMIN < -45) {
+        hardinessZone = "2a"
+      } else if (yearlyAvgTMIN >= -45 && yearlyAvgTMIN < -40) {
+        hardinessZone = "2b"
+      } else if (yearlyAvgTMIN >= -40 && yearlyAvgTMIN < -35) {
+        hardinessZone = "3a"
+      } else if (yearlyAvgTMIN >= -35 && yearlyAvgTMIN < -30) {
+        hardinessZone = "3b"
+      } else if (yearlyAvgTMIN >= -30 && yearlyAvgTMIN < -25) {
+        hardinessZone = "4a"
+      } else if (yearlyAvgTMIN >= -25 && yearlyAvgTMIN < -20) {
+        hardinessZone = "4b"
+      } else if (yearlyAvgTMIN >= -20 && yearlyAvgTMIN < -15) {
+        hardinessZone = "5a"
+      } else if (yearlyAvgTMIN >= -15 && yearlyAvgTMIN < -10) {
+        hardinessZone = "5b"
+      } else if (yearlyAvgTMIN >= -10 && yearlyAvgTMIN < -5) {
+        hardinessZone = "6a"
+      } else if (yearlyAvgTMIN >= -5 && yearlyAvgTMIN < 0) {
+        hardinessZone = "6b"
+      } else if (yearlyAvgTMIN >= 0 && yearlyAvgTMIN < 5) {
+        hardinessZone = "7a"
+      } else if (yearlyAvgTMIN >= 5 && yearlyAvgTMIN < 10) {
+        hardinessZone = "7b"
+      } else if (yearlyAvgTMIN >= 10 && yearlyAvgTMIN < 15) {
+        hardinessZone = "8a"
+      } else if (yearlyAvgTMIN >= 15 && yearlyAvgTMIN < 20) {
+        hardinessZone = "8b"
+      } else if (yearlyAvgTMIN >= 20 && yearlyAvgTMIN < 25) {
+        hardinessZone = "9a"
+      } else if (yearlyAvgTMIN >= 25 && yearlyAvgTMIN < 30) {
+        hardinessZone = "9b"
+      } else if (yearlyAvgTMIN >= 30 && yearlyAvgTMIN < 35) {
+        hardinessZone = "10a"
+      } else if (yearlyAvgTMIN >= 35 && yearlyAvgTMIN < 40) {
+        hardinessZone = "10b"
+      } else if (yearlyAvgTMIN >= 40 && yearlyAvgTMIN < 45) {
+        hardinessZone = "11a"
+      } else if (yearlyAvgTMIN >= 45 && yearlyAvgTMIN < 50) {
+        hardinessZone = "11b"
+      } else if (yearlyAvgTMIN >= 50 && yearlyAvgTMIN < 55) {
+        hardinessZone = "12a"
+      } else if (yearlyAvgTMIN >= 55 && yearlyAvgTMIN < 60) {
+        hardinessZone = "12b"
+      } else if (yearlyAvgTMIN >= 60 && yearlyAvgTMIN < 65) {
+        hardinessZone = "13a"
+      } else if (yearlyAvgTMIN >= 65 && yearlyAvgTMIN < 70) {
+        hardinessZone = "13b"
+      }
     };
-
-    //   // Remove day values from date to break data into years and add this back to the TMIN table
-    //   // await db.growingCalcs.truncateTMIN();
-    //   // TMINFiltered.forEach(async el => {
-    //   //   el.date = el.date.match(/\d\d\d\d/)
-    //   //   await db.growingCalcs.insertIntoTMIN(el.value, el.date)
-    //   // })
-
-    //   // let yearlyAvgTMIN = await db.growingCalcs.TMINYearlyAverage()
-    //   // console.log(yearlyAvgTMIN)
-    //   // const numYears = yearlyAvgTMIN.length;
-    //   // yearlyAvgTMIN = yearlyAvgTMIN.reduce((acc, el) => acc + el);
-    //   // yearlyAvgTMIN = yearlyAvgTMIN / numYears;
-
-    //   // console.log(yearlyAvgTMIN);
-
-    //   let hardinessZone;
-    //   if (yearlyAvgTMIN >= -60 && yearlyAvgTMIN < -55) {
-    //     hardinessZone = "1a"
-    //   } else if (yearlyAvgTMIN >= -55 && yearlyAvgTMIN < -50) {
-    //     hardinessZone = "1b"
-    //   } else if (yearlyAvgTMIN >= -50 && yearlyAvgTMIN < -45) {
-    //     hardinessZone = "2a"
-    //   } else if (yearlyAvgTMIN >= -45 && yearlyAvgTMIN < -40) {
-    //     hardinessZone = "2b"
-    //   } else if (yearlyAvgTMIN >= -40 && yearlyAvgTMIN < -35) {
-    //     hardinessZone = "3a"
-    //   } else if (yearlyAvgTMIN >= -35 && yearlyAvgTMIN < -30) {
-    //     hardinessZone = "3b"
-    //   } else if (yearlyAvgTMIN >= -30 && yearlyAvgTMIN < -25) {
-    //     hardinessZone = "4a"
-    //   } else if (yearlyAvgTMIN >= -25 && yearlyAvgTMIN < -20) {
-    //     hardinessZone = "4b"
-    //   } else if (yearlyAvgTMIN >= -20 && yearlyAvgTMIN < -15) {
-    //     hardinessZone = "5a"
-    //   } else if (yearlyAvgTMIN >= -15 && yearlyAvgTMIN < -10) {
-    //     hardinessZone = "5b"
-    //   } else if (yearlyAvgTMIN >= -10 && yearlyAvgTMIN < -5) {
-    //     hardinessZone = "6a"
-    //   } else if (yearlyAvgTMIN >= -5 && yearlyAvgTMIN < 0) {
-    //     hardinessZone = "6b"
-    //   } else if (yearlyAvgTMIN >= 0 && yearlyAvgTMIN < 5) {
-    //     hardinessZone = "7a"
-    //   } else if (yearlyAvgTMIN >= 5 && yearlyAvgTMIN < 10) {
-    //     hardinessZone = "7b"
-    //   } else if (yearlyAvgTMIN >= 10 && yearlyAvgTMIN < 15) {
-    //     hardinessZone = "8a"
-    //   } else if (yearlyAvgTMIN >= 15 && yearlyAvgTMIN < 20) {
-    //     hardinessZone = "8b"
-    //   } else if (yearlyAvgTMIN >= 20 && yearlyAvgTMIN < 25) {
-    //     hardinessZone = "9a"
-    //   } else if (yearlyAvgTMIN >= 25 && yearlyAvgTMIN < 30) {
-    //     hardinessZone = "9b"
-    //   } else if (yearlyAvgTMIN >= 30 && yearlyAvgTMIN < 35) {
-    //     hardinessZone = "10a"
-    //   } else if (yearlyAvgTMIN >= 35 && yearlyAvgTMIN < 40) {
-    //     hardinessZone = "10b"
-    //   } else if (yearlyAvgTMIN >= 40 && yearlyAvgTMIN < 45) {
-    //     hardinessZone = "11a"
-    //   } else if (yearlyAvgTMIN >= 45 && yearlyAvgTMIN < 50) {
-    //     hardinessZone = "11b"
-    //   } else if (yearlyAvgTMIN >= 50 && yearlyAvgTMIN < 55) {
-    //     hardinessZone = "12a"
-    //   } else if (yearlyAvgTMIN >= 55 && yearlyAvgTMIN < 60) {
-    //     hardinessZone = "12b"
-    //   } else if (yearlyAvgTMIN >= 60 && yearlyAvgTMIN < 65) {
-    //     hardinessZone = "13a"
-    //   } else if (yearlyAvgTMIN >= 65 && yearlyAvgTMIN < 70) {
-    //     hardinessZone = "13b"
-    //   }
-    // };
-    // Initialize start and end dates for temperature queries to NOAA 
-    let ed = new Date();
-    let edString = ed.toISOString().match(/\d\d\d\d-\d\d-\d\d/)[0];
-    let sd = new Date();
-    sd = less1Date(sd);
-    let sdString = date2String(sd);
 
     // Get TMAX for the First year (1-Year Data Restriction)
     // if data returned for zipcode, proceed with zipcode querying, if no data, use county FIPS code
