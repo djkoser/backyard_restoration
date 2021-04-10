@@ -47,7 +47,7 @@ CREATE TABLE user_info (
   zipcode varchar(5),
   hash VARCHAR(60),
   growing_season_length int,
-  first_gdd32 date,
+  first_gdd35 varchar(5),
   hardiness_zone varchar(2)
 );
 

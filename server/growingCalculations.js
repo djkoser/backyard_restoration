@@ -25,9 +25,9 @@ let sdString = date2String(sd);
 // Also added setTimeout to prevent too many requests per second to NOAA server when looping 
 const getDataFromNOAA = async (edString, sdString, locationType, zipFips) => {
   // Initialize TMAX and TMIN arrays for growing zone and GDD calcualtion
+  console.log("requested")
   let TMAX = [];
   let TMIN = [];
-  // @ts-ignore
   await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&datatypeid=TMAX&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
     .then(res => {
       res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
@@ -36,13 +36,14 @@ const getDataFromNOAA = async (edString, sdString, locationType, zipFips) => {
   return { TMAX, TMIN };
 }
 
-// Block of code used within the for loops, subtracts one year from sd and ed and uses this to getData from NOAA
+// Block of code used within pseudo for-loops, subtracts one year from sd and ed and uses this to getData from NOAA
 const forBlock = async () => {
   sd = less1Date(sd);
   ed = less1Date(ed);
   edString = date2String(ed);
   sdString = date2String(sd);
-  await delay(350)
+  // 
+  await delay(200)
 }
 
 const hardinessZoneCalculator = (TMINAvg) => {
@@ -110,7 +111,7 @@ const averageSeasonLength = (seasonEnds, seasonStarts) => {
   // Convert each difference into days
   seasonLengthsDays.forEach((el, ind, arr) => arr[ind] = el / 1000 / 60 / 60 / 24);
   // Calculate average season length
-  console.log(seasonLengthsDays.reduce((prev, next) => prev + next) / seasonLengthsDays.length)
+  return seasonLengthsDays.reduce((prev, next) => prev + next) / seasonLengthsDays.length
 
 }
 // THIS RETURN IS THE RETURN THAT WILL ULTIMATELY EXIT THIS SCRIPT!!!!
@@ -139,6 +140,7 @@ const calculateGParams = async (db, TMAX, TMIN) => {
 // @ts-ignore
 module.exports = {
   getGrowingParams: async (zipcode, street, city, state, db) => {
+    // collector for initial axios requests
     const thisTMINMAX = { TMIN: [], TMAX: [] };
     // @ts-ignore
     await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&locationid=ZIP:${zipcode}&limit=1000`, { headers: { token: NOAA_TOKEN } })
@@ -157,27 +159,19 @@ module.exports = {
                   // Must run seperate queries to get around NOAA 1-year of Data limitation
                   const FIPS = res.data.County.FIPS;
                   await forBlock();
-                  const output1 = await getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                  const output1 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
                   await forBlock();
-                  const output2 = await getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                  const output2 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
                   await forBlock();
-                  const output3 = await getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                  const output3 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
                   await forBlock();
-                  const output4 = await getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                  const output4 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
                   await forBlock();
-                  const output5 = await getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                  const output5 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
 
-                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output1.TMIN]
-                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output1.TMAX]
-                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output2.TMIN]
-                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output2.TMAX]
-                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output3.TMIN]
-                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output3.TMAX]
-                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output4.TMIN]
-                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output4.TMAX]
-                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output5.TMIN]
-                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output5.TMAX]
-
+                  const APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
+                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
+                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
                 })
                 // Completed Google Maps API Promise
                 .catch(err => console.log(err))
@@ -192,24 +186,17 @@ module.exports = {
           // Must run seperate queries to get around NOAA Data Limitations
 
           await forBlock();
-          const output1 = await getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+          const output1 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
           await forBlock();
-          const output2 = await getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+          const output2 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
           await forBlock();
-          const output3 = await getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+          const output3 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
           await forBlock();
-          const output4 = await getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+          const output4 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
 
-          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output1.TMIN]
-          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output1.TMAX]
-          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output2.TMIN]
-          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output2.TMAX]
-          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output3.TMIN]
-          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output3.TMAX]
-          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...output4.TMIN]
-          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...output4.TMAX]
-
-
+          const APIOutputs = await Promise.all([output1, output2, output3, output4]);
+          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
+          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
 
         };
       }).catch(err => console.log(err))

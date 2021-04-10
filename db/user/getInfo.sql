@@ -7,7 +7,7 @@ SELECT
   state,
   zipcode,
   growing_season_length,
-  first_gdd32,
+  first_gdd35,
   hardiness_zone
 FROM
   user_info
