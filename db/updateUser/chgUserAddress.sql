@@ -5,11 +5,9 @@ SET
   city = $3,
   state = $4,
   zipcode = $5,
-  lat = $6,
-  long = $7,
-  growing_season_length = $8,
-  first_gdd32 = $9,
-  hardiness_zone = $10
+  growing_season_length = $6,
+  first_gdd32 = $7,
+  hardiness_zone = $8
 WHERE
   user_id = $1;
 

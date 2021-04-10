@@ -2,10 +2,18 @@
 -- SELECT * FROM weed;
 -- SELECT * FROM management_method;
 -- SELECT * FROM user_management_method;
--- DROP TABLE user_management_method;
--- DROP TABLE management_method;
--- DROP TABLE user_info;
--- DROP TABLE weed;
+DROP TABLE user_management_method;
+
+DROP TABLE management_method;
+
+DROP TABLE user_info;
+
+DROP TABLE weed;
+
+DROP TABLE tmin;
+
+DROP TABLE tmax;
+
 CREATE TABLE tmin (
   id serial PRIMARY KEY,
   temperature int,
@@ -38,8 +46,6 @@ CREATE TABLE user_info (
   state text,
   zipcode varchar(5),
   hash VARCHAR(60),
-  lat DECIMAL,
-  long DECIMAL,
   growing_season_length int,
   first_gdd32 date,
   hardiness_zone varchar(2)

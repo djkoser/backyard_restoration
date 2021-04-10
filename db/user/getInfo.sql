@@ -6,8 +6,6 @@ SELECT
   city,
   state,
   zipcode,
-  lat,
-  long,
   growing_season_length,
   first_gdd32,
   hardiness_zone
