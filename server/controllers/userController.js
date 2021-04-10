@@ -27,9 +27,12 @@ module.exports = {
       const storedUser = await db.user.getUserCredentials(email.toLowerCase());
       if (storedUser.length) {
         if (await bcrypt.compare(password, storedUser[0].hash)) {
-          req.session.user = { user_id: storedUser[0].user_id };
-          return res.status(200).send(await db.user.getInfo(storedUser[0].user_id));
-        } else { return res.sendStatus(401) }
+          req.session.user = storedUser[0];
+          return res.status(200).send(req.session.user);
+        } else {
+          req.session.destroy();
+          return res.sendStatus(401);
+        }
       } else { return res.sendStatus(404) }
     } catch (err) { console.log(err) }
   },
@@ -40,10 +43,7 @@ module.exports = {
   },
 
   getInfo: async (req, res) => {
-    const db = req.app.get('db');
-    try {
-      typeof req.session.user === 'object' ? res.status(200).send(await db.user.getInfo(req.session.user.user_id)) : res.sendStatus(403);
-    } catch (err) { console.log(err) }
+    typeof req.session.user === 'object' ? res.status(200).send(req.session.user) : res.sendStatus(403);
   }
 };
 
