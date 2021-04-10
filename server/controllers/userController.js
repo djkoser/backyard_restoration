@@ -8,9 +8,15 @@ module.exports = {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const growingParams = await getGrowingParams(zipcode, street, city, state, db);
+    const { hardinessZone, firstGDD35, averageSeasonLength } = await getGrowingParams(zipcode, street, city, state, db);
 
+    const testFunction = (hardinessZone, firstGDD35, averageSeasonLength) => {
+      console.log(hardinessZone)
+      console.log(firstGDD35)
+      console.log(averageSeasonLength)
+    }
 
+    testFunction(hardinessZone, firstGDD35, averageSeasonLength)
 
     // db.user.newUser(email, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd32, hardiness_zone)
   },
