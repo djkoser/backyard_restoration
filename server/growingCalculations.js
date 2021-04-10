@@ -25,15 +25,17 @@ let sdString = date2String(sd);
 // Also added setTimeout to prevent too many requests per second to NOAA server when looping 
 const getDataFromNOAA = async (edString, sdString, locationType, zipFips) => {
   // Initialize TMAX and TMIN arrays for growing zone and GDD calcualtion
-  console.log("requested")
   let TMAX = [];
   let TMIN = [];
-  await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&datatypeid=TMAX&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
-    .then(res => {
-      res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
-    })
-    .catch(err => { console.log(err) })
-  return { TMAX, TMIN };
+  try {
+    // @ts-ignore
+    await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&datatypeid=TMAX&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
+      .then(res => {
+        res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
+      })
+      .catch(err => { console.log(err) })
+    return { TMAX, TMIN };
+  } catch (err) { console.log(err) }
 }
 
 // Block of code used within pseudo for-loops, subtracts one year from sd and ed and uses this to getData from NOAA
@@ -117,22 +119,23 @@ const averageSeasonLength = (seasonEnds, seasonStarts) => {
 // THIS RETURN IS THE RETURN THAT WILL ULTIMATELY EXIT THIS SCRIPT!!!!
 
 const calculateGParams = async (db, TMAX, TMIN) => {
-  console.log(TMIN.length, TMAX.length);
   // insert values into TMIN and TMAX tables
-  await db.growingCalcs.truncateTMAX();
-  await db.growingCalcs.truncateTMIN();
-  TMIN.forEach(async el => await db.growingCalcs.insertIntoTMIN(el.value, el.date))
-  TMAX.forEach(async el => await db.growingCalcs.insertIntoTMAX(el.value, el.date))
-  await db.growingCalcs.selectHighestDuplicates();
-  await db.growingCalcs.selectLowestDuplicates();
-  const TMINAvg = await db.growingCalcs.tminAvg();
-  const seasonStarts = await db.growingCalcs.GDD35SpringTransitions();
-  const seasonEnds = await db.growingCalcs.GDD35WinterTransitions();
-  return {
-    hardinessZone: hardinessZoneCalculator(TMINAvg[0].round),
-    firstGDD35: avgStartDate(seasonStarts),
-    averageSeasonLength: averageSeasonLength(seasonEnds, seasonStarts)
-  }
+  try {
+    await db.growingCalcs.truncateTMAX();
+    await db.growingCalcs.truncateTMIN();
+    TMIN.forEach(async el => await db.growingCalcs.insertIntoTMIN(el.value, el.date))
+    TMAX.forEach(async el => await db.growingCalcs.insertIntoTMAX(el.value, el.date))
+    await db.growingCalcs.selectHighestDuplicates();
+    await db.growingCalcs.selectLowestDuplicates();
+    const TMINAvg = await db.growingCalcs.tminAvg();
+    const seasonStarts = await db.growingCalcs.GDD35SpringTransitions();
+    const seasonEnds = await db.growingCalcs.GDD35WinterTransitions();
+    return {
+      hardinessZone: hardinessZoneCalculator(TMINAvg[0].round),
+      firstGDD35: avgStartDate(seasonStarts),
+      averageSeasonLength: averageSeasonLength(seasonEnds, seasonStarts)
+    }
+  } catch (err) { console.log(err) }
 };
 
 // Get TMAX for the First year (1-Year Data Restriction)
@@ -140,69 +143,78 @@ const calculateGParams = async (db, TMAX, TMIN) => {
 // @ts-ignore
 module.exports = {
   getGrowingParams: async (zipcode, street, city, state, db) => {
+
     // collector for initial axios requests
     const thisTMINMAX = { TMIN: [], TMAX: [] };
     // @ts-ignore
-    await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&locationid=ZIP:${zipcode}&limit=1000`, { headers: { token: NOAA_TOKEN } })
-      .then(async res => {
-        if (res.data.results.length === 0) {
-          // Extra Steps required to get FIPS code to facilitate wider geographic range
-          // @ts-ignore
-          axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
-            .then(axiosRes => {
-              const location = axiosRes.data.results[0].geometry.location
-              // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
+    try {
+      // @ts-ignore
+      await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&locationid=ZIP:${zipcode}&limit=1000`, { headers: { token: NOAA_TOKEN } })
+        .then(async res => {
+          try {
+            if (!res.data.results) {
+              // Extra Steps required to get FIPS code to facilitate wider geographic range
               // @ts-ignore
-              axios.get(`https://geo.fcc.gov/api/census/block/find?latitude=${location.lat}&longitude=${location.lng}&showall=false&format=json`)
-                .then(async res => {
-                  // Run the query 5 times using FIPS code, reducing the year value each time to get 5 years of data
-                  // Must run seperate queries to get around NOAA 1-year of Data limitation
-                  const FIPS = res.data.County.FIPS;
-                  await forBlock();
-                  const output1 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                  await forBlock();
-                  const output2 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                  await forBlock();
-                  const output3 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                  await forBlock();
-                  const output4 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                  await forBlock();
-                  const output5 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+              await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
+                .then(async axiosRes => {
+                  const location = axiosRes.data.results[0].geometry.location
+                  // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
+                  // @ts-ignore
+                  try {
+                    // @ts-ignore
+                    await axios.get(`https://geo.fcc.gov/api/census/block/find?latitude=${location.lat}&longitude=${location.lng}&showall=false&format=json`)
+                      .then(async res => {
+                        // Run the query 5 times using FIPS code, reducing the year value each time to get 5 years of data
+                        // Must run seperate queries to get around NOAA 1-year of Data limitation
+                        const FIPS = res.data.County.FIPS;
+                        try {
+                          const output1 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                          await forBlock();
+                          const output2 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                          await forBlock();
+                          const output3 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                          await forBlock();
+                          const output4 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+                          await forBlock();
+                          const output5 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
 
-                  const APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
-                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
-                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
+                          const APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
+                          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
+                          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
+                        } catch (err) { console.log(err) };
+                      })
+                      // Completed Google Maps API Promise
+                      .catch(err => console.log(err))
+                  } catch (err) { console.log(err) };
                 })
-                // Completed Google Maps API Promise
+                // Completed FCC Promise
                 .catch(err => console.log(err))
-            })
-            // Completed FCC Promise
-            .catch(err => console.log(err))
-        } else {
-          // Add Data to TMIN/TMAX from first run
-          res.data.results.forEach(el => el.datatype === "TMIN" ? thisTMINMAX.TMIN.push({ value: el.value, date: el.date }) : thisTMINMAX.TMAX.push({ value: el.value, date: el.date }));
+            } else {
+              // Add Data to TMIN/TMAX from first run
+              res.data.results.forEach(el => el.datatype === "TMIN" ? thisTMINMAX.TMIN.push({ value: el.value, date: el.date }) : thisTMINMAX.TMAX.push({ value: el.value, date: el.date }));
 
-          // Run the query 4 more times using zipcode, reducing the year value each time to get 4 more years of data
-          // Must run seperate queries to get around NOAA Data Limitations
+              // Run the query 4 more times using zipcode, reducing the year value each time to get 4 more years of data
+              // Must run seperate queries to get around NOAA Data Limitations
 
-          await forBlock();
-          const output1 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-          await forBlock();
-          const output2 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-          await forBlock();
-          const output3 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-          await forBlock();
-          const output4 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+              await forBlock();
+              const output1 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+              await forBlock();
+              const output2 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+              await forBlock();
+              const output3 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
+              await forBlock();
+              const output4 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
 
-          const APIOutputs = await Promise.all([output1, output2, output3, output4]);
-          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
-          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
+              const APIOutputs = await Promise.all([output1, output2, output3, output4]);
+              thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
+              thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
 
-        };
-      }).catch(err => console.log(err))
+            };
+          } catch (err) { console.log(err) }
+        }).catch(err => console.log(err))
 
-    const output = await calculateGParams(db, thisTMINMAX.TMAX, thisTMINMAX.TMIN)
-    return output;
-
+      const output = await calculateGParams(db, thisTMINMAX.TMAX, thisTMINMAX.TMIN)
+      return output;
+    } catch (err) { return new Error('Growing parameter calculations failed, this could be a problem with the NOAA API -> ' + err) };
   }
 };

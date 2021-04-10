@@ -34,7 +34,7 @@ massive({
 // User Endpoints
 app.post("/api/register", userCtl.newUser);
 app.get("/api/login", userCtl.login);
-app.get("/api/user")
+app.get("/api/user", userCtl.getInfo);
 app.delete("/api/logout", userCtl.logout);
 // Update user Endpoints
 app.put("/api/user/address", updUserCtl.chgUserAddress);
@@ -47,5 +47,5 @@ app.post("/api/wdctrl/:ctlID", methodsCtl.addMethod);
 app.delete("/api/wdctrl/:ctlID", methodsCtl.removeMethod);
 // Weeds Endpoints
 app.get("/api/weeds", weedCtl.weedsByTypeKw);
-app.get("/api/weeds/:weedID");
+app.get("/api/weeds/:weedID", weedCtl.weedDetails);
 
