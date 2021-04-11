@@ -1,6 +1,50 @@
 const { GOOGLE_API_KEY, NOAA_TOKEN } = process.env;
 const axios = require('axios');
 
+// Creates a bounding box from from a lat/long coordinate -> will be used for gathering a list of weather stations surrounding the user's lat-long -> from stack overflow, courtesy of Federico A Rampnoni (comverted by me from Python)
+// degrees to radians
+const deg2rad = (degrees) => {
+  return Math.PI * degrees / 180.0
+}
+// # radians to degrees
+const rad2deg = (radians) => {
+  return 180.0 * radians / Math.PI
+}
+
+// Semi - axes of WGS - 84 geoidal reference # Major semiaxis[m]
+const WGS84_a = 6378137.0
+const WGS84_b = 6356752.3
+
+// # Earth radius at a given latitude, according to the WGS - 84 ellipsoid[m]
+const WGS84EarthRadius = (lat) => {
+  // # http://en.wikipedia.org/wiki/Earth_radius
+  const An = WGS84_a * WGS84_a * Math.cos(lat)
+  const Bn = WGS84_b * WGS84_b * Math.sin(lat)
+  const Ad = WGS84_a * Math.cos(lat)
+  const Bd = WGS84_b * Math.sin(lat)
+  return Math.sqrt((An * An + Bn * Bn) / (Ad * Ad + Bd * Bd))
+}
+
+// # Bounding box surrounding the point at given coordinates,
+// # assuming local approximation of Earth surface as a sphere
+// # of radius given by WGS84
+// Default is set high on purpose due to many stations not making data available on API
+const boundingBox = (latitudeInDegrees, longitudeInDegrees, halfSideInKm = 50) => {
+  const lat = deg2rad(latitudeInDegrees)
+  const lon = deg2rad(longitudeInDegrees)
+  const halfSide = 1000 * halfSideInKm
+  // # Radius of Earth at given latitude
+  const radius = WGS84EarthRadius(lat)
+  // # Radius of the parallel at given latitude
+  const pradius = radius * Math.cos(lat)
+
+  const latMin = lat - halfSide / radius
+  const latMax = lat + halfSide / radius
+  const lonMin = lon - halfSide / pradius
+  const lonMax = lon + halfSide / pradius
+
+  return [rad2deg(latMin), rad2deg(lonMin), rad2deg(latMax), rad2deg(lonMax)]
+}
 
 // function for delaying calls to NOAA
 const delay = interval => new Promise(resolve => setTimeout(resolve, interval))
@@ -23,13 +67,13 @@ sd = less1Date(sd);
 let sdString = date2String(sd);
 // Pulled-out GET request to NOAA in order to make code easier to read
 // Also added setTimeout to prevent too many requests per second to NOAA server when looping 
-const getDataFromNOAA = async (edString, sdString, locationType, zipFips) => {
+const getDataFromNOAA = async (edString, sdString, stationList) => {
   // Initialize TMAX and TMIN arrays for growing zone and GDD calcualtion
   let TMAX = [];
   let TMIN = [];
   try {
     // @ts-ignore
-    await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&datatypeid=TMAX&units=standard&startdate=${sdString}&enddate=${edString}&locationid=${locationType}:${zipFips}&limit=1000`, { headers: { token: NOAA_TOKEN } })
+    await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&stationid=${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
       .then(res => {
         res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
       })
@@ -148,73 +192,42 @@ module.exports = {
     const thisTMINMAX = { TMIN: [], TMAX: [] };
     // @ts-ignore
     try {
-      // @ts-ignore
-      await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&locationid=ZIP:${zipcode}&limit=1000`, { headers: { token: NOAA_TOKEN } })
+      // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
+      await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
         .then(async res => {
           try {
-            if (!res.data.results) {
-              // Extra Steps required to get FIPS code to facilitate wider geographic range
-              // @ts-ignore
-              await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
-                .then(async axiosRes => {
-                  const location = axiosRes.data.results[0].geometry.location
-                  // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
-                  // @ts-ignore
-                  try {
-                    // @ts-ignore
-                    await axios.get(`https://geo.fcc.gov/api/census/block/find?latitude=${location.lat}&longitude=${location.lng}&showall=false&format=json`)
-                      .then(async res => {
-                        // Run the query 5 times using FIPS code, reducing the year value each time to get 5 years of data
-                        // Must run seperate queries to get around NOAA 1-year of Data limitation
-                        const FIPS = res.data.County.FIPS;
-                        try {
-                          const output1 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                          await forBlock();
-                          const output2 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                          await forBlock();
-                          const output3 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                          await forBlock();
-                          const output4 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
-                          await forBlock();
-                          const output5 = getDataFromNOAA(edString, sdString, "FIPS", FIPS)
+            const location = res.data.results[0].geometry.location
+            const coordinateArray = boundingBox(location.lat, location.lng);
+            const coordinateString = coordinateArray.join(",")
+            // calculate 100km by 100km bounding box in which to find NOAA weather towers
+            await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=${coordinateString}&dataset=GHCND&datatypeid=TMIN&TMAX&endDate=${edString}`, { headers: { token: NOAA_TOKEN } })
+              .then(async res => {
+                // @ts-ignore
+                // Concatenate station names into a string for data request
+                const stationString = res.data.results.reduce((prev, next) => `${prev.id}&${next.id}&`, "");
 
-                          const APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
-                          thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
-                          thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
-                        } catch (err) { console.log(err) };
-                      })
-                      // Completed Google Maps API Promise
-                      .catch(err => console.log(err))
-                  } catch (err) { console.log(err) };
-                })
-                // Completed FCC Promise
-                .catch(err => console.log(err))
-            } else {
-              // Add Data to TMIN/TMAX from first run
-              res.data.results.forEach(el => el.datatype === "TMIN" ? thisTMINMAX.TMIN.push({ value: el.value, date: el.date }) : thisTMINMAX.TMAX.push({ value: el.value, date: el.date }));
+                // Run the query 5 times getting any available data from the towers collected during the second request reducing the year value each time to get 5 years of data
+                // Must run seperate queries to get around NOAA 1-year Data limitation
+                try {
+                  const output1 = getDataFromNOAA(edString, sdString, stationString)
+                  await forBlock();
+                  const output2 = getDataFromNOAA(edString, sdString, stationString)
+                  await forBlock();
+                  const output3 = getDataFromNOAA(edString, sdString, stationString)
+                  await forBlock();
+                  const output4 = getDataFromNOAA(edString, sdString, stationString)
+                  await forBlock();
+                  const output5 = getDataFromNOAA(edString, sdString, stationString)
 
-              // Run the query 4 more times using zipcode, reducing the year value each time to get 4 more years of data
-              // Must run seperate queries to get around NOAA Data Limitations
-
-              await forBlock();
-              const output1 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-              await forBlock();
-              const output2 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-              await forBlock();
-              const output3 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-              await forBlock();
-              const output4 = getDataFromNOAA(edString, sdString, "ZIP", zipcode)
-
-              const APIOutputs = await Promise.all([output1, output2, output3, output4]);
-              thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
-              thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN];
-
-            };
+                  const APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
+                  thisTMINMAX.TMIN = [...thisTMINMAX.TMIN, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
+                  thisTMINMAX.TMAX = [...thisTMINMAX.TMAX, ...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN];
+                } catch (err) { console.log(err) }
+              }).catch(err => console.log(err))
           } catch (err) { console.log(err) }
-        }).catch(err => console.log(err))
-
-      const output = await calculateGParams(db, thisTMINMAX.TMAX, thisTMINMAX.TMIN)
-      return output;
-    } catch (err) { return new Error('Growing parameter calculations failed, this could be a problem with the NOAA API -> ' + err) };
+        });
+    } catch (err) { console.log(err) };
+    const output = await calculateGParams(db, thisTMINMAX.TMAX, thisTMINMAX.TMIN);
+    return output;
   }
 };

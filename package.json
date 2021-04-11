@@ -5,6 +5,7 @@
   "main": "server/index.js",
   "proxy": "http://localhost:1313",
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.11.3",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
