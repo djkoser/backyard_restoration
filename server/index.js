@@ -7,6 +7,7 @@ const methodsCtl = require("./controllers/methodController");
 const userCtl = require("./controllers/userController");
 const weedCtl = require("./controllers/weedController");
 const updUserCtl = require("./controllers/updateUserController");
+const { authorize } = require("./middleware/authMiddleware")
 
 const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
 
@@ -34,18 +35,18 @@ massive({
 // User Endpoints
 app.post("/api/register", userCtl.newUser);
 app.get("/api/login", userCtl.login);
-app.get("/api/user", userCtl.getInfo);
-app.delete("/api/logout", userCtl.logout);
+app.get("/api/user", authorize, userCtl.getInfo);
+app.delete("/api/logout", authorize, userCtl.logout);
 // Update user Endpoints
-app.put("/api/user/address", updUserCtl.chgUserAddress);
-app.put("/api/user/email", updUserCtl.chgUserEmail);
-app.put("/api/user/password", updUserCtl.chgUserPassword);
-app.put("/api/user/name", updUserCtl.chgUserName);
+app.put("/api/user/address", authorize, updUserCtl.chgUserAddress);
+app.put("/api/user/email", authorize, updUserCtl.chgUserEmail);
+app.put("/api/user/password", authorize, updUserCtl.chgUserPassword);
+app.put("/api/user/name", authorize, updUserCtl.chgUserName);
 // Methods Endpoints
-app.get("/api/wdctrl", methodsCtl.getMethods);
-app.post("/api/wdctrl/:ctlID", methodsCtl.addMethod);
-app.delete("/api/wdctrl/:ctlID", methodsCtl.removeMethod);
+app.get("/api/wdctrl", authorize, methodsCtl.getMethods);
+app.post("/api/wdctrl/:ctlID", authorize, methodsCtl.addMethod);
+app.delete("/api/wdctrl/:ctlID", authorize, methodsCtl.removeMethod);
 // Weeds Endpoints
-app.get("/api/weeds", weedCtl.weedsByTypeKw);
-app.get("/api/weeds/:weedID", weedCtl.weedDetails);
+app.get("/api/weeds", authorize, weedCtl.weedsByTypeKw);
+app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);
 

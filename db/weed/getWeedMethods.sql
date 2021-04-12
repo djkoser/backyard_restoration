@@ -1,7 +1,7 @@
 SELECT
   *
 FROM
-  weed
+  management_method
 WHERE
   weed_id = $1;
 

@@ -1,42 +1,48 @@
+const bcrypt = require("bcryptjs");
+
 const { getGrowingParams } = require('../growingCalculations');
 module.exports = {
   chgUserAddress: async (req, res) => {
     const db = req.app.get('db')
-    if (typeof req.session.user === 'object') {
-      const { street, city, state, zipcode } = req.body;
-      console.log(street, city, state, zipcode)
-      const user_id = req.session.user.user_id;
-      try {
-        // @ts-ignore
-        const { hardinessZone, firstGDD35, averageSeasonLength } = await getGrowingParams(zipcode, street, city, state, db);
-        // @ts-ignore
-        const updatedUserInfo = await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, averageSeasonLength, firstGDD35, hardinessZone);
-        req.session.user = updatedUserInfo;
-      } catch (err) { console.log(err) }
-    } else { return res.sendStatus(403) };
+    const { street, city, state, zipcode } = req.body;
+    const user_id = req.session.user.user_id;
+    try {
+      const { hardinessZone, firstGDD35, averageSeasonLength } = await getGrowingParams(zipcode, street, city, state, db);
+      await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, averageSeasonLength, firstGDD35, hardinessZone);
+      req.session.user = { ...req.session.user, street, city, state, zipcode, growing_season_length: averageSeasonLength, first_gdd35: firstGDD35, hardiness_zone: hardinessZone };
+      res.status(200).send(req.session.user);
+    } catch (err) { console.log(err) }
   },
   chgUserEmail: async (req, res) => {
     const db = req.app.get('db')
-    if (typeof req.session.user === 'object') {
-      const { } = req.body
-      // @ts-ignore
-      db.updateuser.chgUserEmail(user_id)
-    } else { return res.sendStatus(403) }
+    const { email } = req.body;
+    const user_id = req.session.user.user_id;
+    try {
+      await db.updateUser.chgUserEmail(user_id, email);
+      req.session.user = { ...req.session.user, email };
+      res.status(200).send(req.session.user);
+    } catch (err) { console.log(err) }
   },
   chgUserPassword: async (req, res) => {
     const db = req.app.get('db')
-    if (typeof req.session.user === 'object') {
-      const { } = req.body
-      // @ts-ignore
-      db.updateuser.chgUserPassword(user_id)
-    } else { return res.sendStatus(403) }
+    const { password } = req.body;
+    const user_id = req.session.user.user_id;
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+      await db.updateUser.chgUserPassword(user_id, hash);
+      req.session.user = { ...req.session.user, hash };
+      res.status(200).send(req.session.user);
+    } catch (err) { console.log(err) }
   },
   chgUserName: async (req, res) => {
     const db = req.app.get('db')
-    if (typeof req.session.user === 'object') {
-      const { } = req.body
-      // @ts-ignore
-      db.updateuser.chgUserName(user_id)
-    } else { return res.sendStatus(403) }
+    const { first_name, last_name } = req.body;
+    const user_id = req.session.user.user_id;
+    try {
+      await db.updateUser.chgUserName(user_id, first_name, last_name);
+      req.session.user = { ...req.session.user, first_name, last_name };
+      res.status(200).send(req.session.user);
+    } catch (err) { console.log(err) }
   }
 }

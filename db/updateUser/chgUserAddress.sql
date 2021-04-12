@@ -9,7 +9,5 @@ SET
   first_gdd35 = $7,
   hardiness_zone = $8
 WHERE
-  user_id = $1
-RETURNING
-  *;
+  user_id = $1;
 

@@ -73,6 +73,7 @@ const getDataFromNOAA = async (edString, sdString, stationList) => {
   let TMIN = [];
   try {
 
+    // @ts-ignore
     await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
       .then(res => {
         res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
@@ -134,7 +135,6 @@ const avgStartDate = (seasonStarts) => {
   // convert to milleseconds
   normalizedDates.forEach((el, ind, arr) => arr[ind] = el.getTime());
   // Sum and divide by normalized Dates' lengh creating a new date
-  console.log(normalizedDates)
   const averageDate = new Date(normalizedDates.reduce((prev, next) => prev + next) / normalizedDates.length);
   return averageDate.toISOString().substring(5, 10);
 
@@ -164,23 +164,17 @@ const averageSeasonLength = (seasonEnds, seasonStarts) => {
 // THIS RETURN IS THE RETURN THAT WILL ULTIMATELY EXIT THIS SCRIPT!!!!
 
 const calculateGParams = async (db, TMAX, TMIN) => {
-  console.log(TMAX.length)
   // insert values into TMIN and TMAX tables
   try {
     await db.growingCalcs.truncateTMAX();
     await db.growingCalcs.truncateTMIN();
     await TMIN.forEach(async (el) => await db.growingCalcs.insertIntoTMIN(el.value, el.date))
-    console.log("added")
     await TMAX.forEach(async el => await db.growingCalcs.insertIntoTMAX(el.value, el.date))
-    console.log("addedtmax")
     await db.growingCalcs.selectHighestDuplicates();
     await db.growingCalcs.selectLowestDuplicates();
     const TMINAvg = await db.growingCalcs.tminAvg();
-    console.log("TMINAvg", TMINAvg)
     const seasonStarts = await db.growingCalcs.GDD35SpringTransitions();
-    console.log("seasonStarts", seasonStarts)
     const seasonEnds = await db.growingCalcs.GDD35WinterTransitions();
-    console.log("seasonEnds", seasonEnds)
     return {
       hardinessZone: hardinessZoneCalculator(TMINAvg[0].round),
       firstGDD35: avgStartDate(seasonStarts),
@@ -193,35 +187,37 @@ const calculateGParams = async (db, TMAX, TMIN) => {
 // if data returned for zipcode, proceed with zipcode querying, if no data, use county FIPS code
 const apiLogic = async (coordinateString) => {
   let APIOutputs;
+  // @ts-ignore
   await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=${coordinateString}&dataset=GHCND&datatypeid=TMIN&datatypeid=TMAX&endDate=${edString}&limit=1000`, { headers: { token: NOAA_TOKEN } })
     .then(async res => {
-
       // Concatenate station names into a string for data request
-      const stationString = res.data.results.reduce((acc, next) => acc + (acc ? "stationid=" + next.id + "&" : "stationid=" + next.id + "&"), "");
-      console.log(stationString)
-      await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationString}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
-        .then(async res => {
-          // Check if station list returns results if not, expand the search area by 20 km2
-          if (res.data.results) {
-            // Run the query 5 times getting any available data from the towers collected during the second request reducing the year value each time to get 5 years of data
-            // Must run seperate queries to get around NOAA 1-year Data limitation
-            try {
-              const output1 = getDataFromNOAA(edString, sdString, stationString)
-              await forBlock();
-              const output2 = getDataFromNOAA(edString, sdString, stationString)
-              await forBlock();
-              const output3 = getDataFromNOAA(edString, sdString, stationString)
-              await forBlock();
-              const output4 = getDataFromNOAA(edString, sdString, stationString)
-              await forBlock();
-              const output5 = getDataFromNOAA(edString, sdString, stationString)
+      if (res.data.results) {
+        const stationString = res.data.results.reduce((acc, next) => acc + (acc ? "stationid=" + next.id + "&" : "stationid=" + next.id + "&"), "");
+        // @ts-ignore
+        await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationString}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
+          .then(async res => {
+            // Check if station list returns results if not, expand the search area by 20 km2
+            if (res.data.results) {
+              // Run the query 5 times getting any available data from the towers collected during the second request reducing the year value each time to get 5 years of data
+              // Must run seperate queries to get around NOAA 1-year Data limitation
+              try {
+                const output1 = getDataFromNOAA(edString, sdString, stationString)
+                await forBlock();
+                const output2 = getDataFromNOAA(edString, sdString, stationString)
+                await forBlock();
+                const output3 = getDataFromNOAA(edString, sdString, stationString)
+                await forBlock();
+                const output4 = getDataFromNOAA(edString, sdString, stationString)
+                await forBlock();
+                const output5 = getDataFromNOAA(edString, sdString, stationString)
 
-              APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
+                APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
 
-            } catch (err) { console.log(err) }
-          } else { return null }
-        }).catch(err => console.log(err))
-    }).catch(err => console.log(err))
+              } catch (err) { console.log(err) }
+            } else { return null }
+          }).catch(err => console.log(err))
+      }
+    }).catch(err => console.log(err));
   return APIOutputs
 };
 module.exports = {
@@ -230,9 +226,9 @@ module.exports = {
     let foundTowers = false;
     // collector for initial axios requests
     const thisTMINMAX = { TMIN: [], TMAX: [] };
-    console.log("run")
     try {
       // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
+      // @ts-ignore
       await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
         .then(async res => {
           try {
@@ -243,7 +239,6 @@ module.exports = {
             // Expand the half side of the bounding box by 2.5 km and whole side by 5km until data is found. 
             let APIOutputs = await apiLogic(coordinateString)
             while (foundTowers === false) {
-              console.log("run")
               if (APIOutputs) {
                 foundTowers = true;
                 thisTMINMAX.TMIN = [...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]

@@ -3,5 +3,5 @@ SELECT
 FROM
   weed
 WHERE
-  weed_id = $1;
+  veg_type = $1;
 

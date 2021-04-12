@@ -12,8 +12,9 @@ module.exports = {
       if (!storedUser.length) {
         // @ts-ignore
         const { hardinessZone, firstGDD35, averageSeasonLength } = await getGrowingParams(zipcode, street, city, state, db);
-        const newUser = await db.user.newUser(email, first_name, last_name, street, city, state, zipcode, hash, averageSeasonLength, firstGDD35, hardinessZone);
-        req.session.user = newUser[0];
+        const newUser = { email, first_name, last_name, street, city, state, zipcode, hash, averageSeasonLength, firstGDD35, hardinessZone }
+        await db.user.newUser(email, first_name, last_name, street, city, state, zipcode, hash, averageSeasonLength, firstGDD35, hardinessZone);
+        req.session.user = newUser;
         return res.status(200).send(newUser);
       } else {
         return res.sendStatus(403);
@@ -39,11 +40,11 @@ module.exports = {
 
   logout: async (req, res) => {
     req.session.destroy();
-    return res.status(200).send('You have been logged out.')
+    return res.sendStatus(200);
   },
 
   getInfo: async (req, res) => {
-    typeof req.session.user === 'object' ? res.status(200).send(req.session.user) : res.sendStatus(403);
+    res.status(200).send(req.session.user);
   }
 };
 
