@@ -1,7 +1,15 @@
--- SELECT * FROM user_info;
--- SELECT * FROM weed;
--- SELECT * FROM management_method;
--- SELECT * FROM user_management_method;
+-- SELECT  *
+-- FROM
+--   user_info;
+-- SELECT  *
+-- FROM
+--   weed;
+-- SELECT  *
+-- FROM
+--   management_method;
+-- SELECT  *
+-- FROM
+--   user_management_method;
 DROP TABLE user_management_method;
 
 DROP TABLE management_method;
@@ -72,10 +80,3 @@ CREATE TABLE user_management_method (
   user_id int REFERENCES user_info (user_id),
   method_id int REFERENCES management_method (method_id)
 );
-
-INSERT INTO management_method (weed_id, name, description, april, may, june, july, august, september, october, november, december_march)
-  VALUES ();
-
-INSERT INTO weed (common_name, botanical_name, annual_perennial_biennial, veg_type, description, src)
-  VALUES ();
-
