@@ -1,4 +1,5 @@
 SELECT
+  mm.method_id,
   w.common_name,
   mm.name,
   mm.description,
