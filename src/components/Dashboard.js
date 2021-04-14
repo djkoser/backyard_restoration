@@ -1,38 +1,41 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Timeline from './Timeline';
 import { getUserInfo } from '../redux/userInfoReducer';
 import { getMethods } from '../redux/mgmtMethodReducer';
+import { dispatch } from 'd3-dispatch';
 
 
 // props from store hZone, gSeasonLength firstGDD35
 
-class Dashboard extends Component {
+const Dashboard = () => {
 
-  componentDidMount() {
-    this.props.getUserInfo();
-  }
+  // @ts-ignore
+  const hardiness_zone = useSelector(state => state.userInfoReducer.hardiness_zone)
+  // @ts-ignore
+  const growing_season_length = useSelector(state => state.userInfoReducer.growing_season_length)
+  // @ts-ignore
+  const first_gdd35 = useSelector(state => state.userInfoReducer.first_gdd35)
+  // @ts-ignore
+  const last_gdd35 = useSelector(state => state.userInfoReducer.last_gdd35)
 
-  render() {
-    return (
-      <>
-        <h2>Site Preparation Timeline</h2>
-        <h3><strong>Zone </strong>{this.props.hardiness_zone}</h3>
-        <h3><strong>Average Growing Days (GDD35) </strong>{this.props.growing_season_length}</h3>
-        <h3><strong>Average Season Start Date</strong>{this.props.last_gdd35}</h3>
-        <Timeline />
-      </>
-    )
-  }
+  const disptach = useDispatch();
+  useEffect(() => {
+    disptach(getUserInfo());
+    // @ts-ignore
+    dispatch(getMethods())
+  }, [disptach]);
 
+  return (
+    <>
+      <h2>Site Preparation Timeline</h2>
+      <h3><strong>Zone </strong>{hardiness_zone}</h3>
+      <h3><strong>Average Growing Days (GDD35) </strong>{growing_season_length}</h3>
+      <h3><strong>Average Season Start Date</strong>{first_gdd35}</h3>
+      <h3><strong>Average Season End Date</strong>{last_gdd35}</h3>
+
+      <Timeline />
+    </>
+  )
 }
-const mapStateToProps = (state) => {
-  return {
-    hardiness_zone: state.userInfoReducer.hardiness_zone,
-    growing_season_length: state.userInfoReducer.growing_season_length,
-    first_gdd35: state.userInfoReducer.first_gdd35,
-    last_gdd35: state.userInfoReducer.last_gdd35
-  };
-}
-
-export default connect(mapStateToProps, { getUserInfo, getMethods })(Dashboard)
+export default Dashboard
