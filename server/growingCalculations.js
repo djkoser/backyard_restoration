@@ -72,7 +72,6 @@ const getDataFromNOAA = async (edString, sdString, stationList) => {
   let TMAX = [];
   let TMIN = [];
   try {
-
     // @ts-ignore
     await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
       .then(res => {
@@ -128,10 +127,10 @@ const hardinessZoneCalculator = (TMINAvg) => {
   }
 };
 
-const avgStartDate = (seasonStarts) => {
+const avgDateString = (seasonStartsEnds) => {
   // normalize to current year
   let currentYear = new Date().getFullYear()
-  const normalizedDates = seasonStarts.map(el => new Date(el.obs_date.setFullYear(currentYear)))
+  const normalizedDates = seasonStartsEnds.map(el => new Date(el.obs_date.setFullYear(currentYear)))
   // convert to milleseconds
   normalizedDates.forEach((el, ind, arr) => arr[ind] = el.getTime());
   // Sum and divide by normalized Dates' lengh creating a new date
@@ -139,6 +138,7 @@ const avgStartDate = (seasonStarts) => {
   return averageDate.toISOString().substring(5, 10);
 
 }
+
 
 const averageSeasonLength = (seasonEnds, seasonStarts) => {
   // normalize to current year
@@ -161,7 +161,6 @@ const averageSeasonLength = (seasonEnds, seasonStarts) => {
   return seasonLengthsDays.reduce((prev, next) => prev + next) / seasonLengthsDays.length
 
 }
-// THIS RETURN IS THE RETURN THAT WILL ULTIMATELY EXIT THIS SCRIPT!!!!
 
 const calculateGParams = async (db, TMAX, TMIN) => {
   // insert values into TMIN and TMAX tables
@@ -176,15 +175,14 @@ const calculateGParams = async (db, TMAX, TMIN) => {
     const seasonStarts = await db.growingCalcs.GDD35SpringTransitions();
     const seasonEnds = await db.growingCalcs.GDD35WinterTransitions();
     return {
-      hardinessZone: hardinessZoneCalculator(TMINAvg[0].round),
-      firstGDD35: avgStartDate(seasonStarts),
-      averageSeasonLength: averageSeasonLength(seasonEnds, seasonStarts)
+      hardiness_zone: hardinessZoneCalculator(TMINAvg[0].round),
+      first_gdd35: avgDateString(seasonStarts),
+      last_gdd35: avgDateString(seasonEnds),
+      growing_season_length: averageSeasonLength(seasonEnds, seasonStarts)
     }
   } catch (err) { console.log(err) }
 };
 
-// Get TMAX for the First year (1-Year Data Restriction)
-// if data returned for zipcode, proceed with zipcode querying, if no data, use county FIPS code
 const apiLogic = async (coordinateString) => {
   let APIOutputs;
   // @ts-ignore

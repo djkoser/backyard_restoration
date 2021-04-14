@@ -1,4 +1,4 @@
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import mgmtMethodReducer from './mgmtMethodReducer';
@@ -9,6 +9,6 @@ const rootReducer = combineReducers({
   userInfoReducer
 })
 
-export default createStore(rootReducer, applyMiddleware(promiseMiddleware))
+export default createStore(rootReducer, composeWithDevTools(applyMiddleware(promiseMiddleware)))
 
 

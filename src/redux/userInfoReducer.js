@@ -9,21 +9,21 @@ const initialState = {
   city: "",
   state: "",
   zipcode: "",
-  lat: 0,
-  long: 0,
-  gSeasonLength: 0,
-  firstGDD32: "",
-  hZone: ""
+  growing_season_length: 0,
+  first_gdd35: "",
+  hardiness_zone: "",
+  loading: false,
+  failed: false
 };
 
 const GET_USER_INFO = "GET_USER_INFO";
 
-export const getUserInfo = (userID) => {
+export const getUserInfo = () => {
   const userInfo = axios
-    .get(`/api/user/${userID}`)
-    .then(res => res)
+    .get(`/api/user`)
+    .then(res => res.data)
     .catch(err => console.log(err));
-
+  console.log(userInfo);
   const action = {
     type: GET_USER_INFO,
     payload: userInfo
@@ -34,11 +34,11 @@ export const getUserInfo = (userID) => {
 export default function userInfoReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER_INFO + "_PENDING":
-      return { ...state }
+      return { ...state, ...{ loading: true, failed: false } }
     case GET_USER_INFO + "_FULFILLED":
-      return { ...state }
+      return { ...state, ...action.payload, ...{ loading: false, failed: false } }
     case GET_USER_INFO + "_REJECTED":
-      return { ...state }
+      return { ...state, ...{ loading: false, failed: true } }
     default:
       return state
   }

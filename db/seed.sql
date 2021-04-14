@@ -56,6 +56,7 @@ CREATE TABLE user_info (
   hash VARCHAR(60),
   growing_season_length int,
   first_gdd35 varchar(5),
+  last_gdd35 varchar(5),
   hardiness_zone varchar(2)
 );
 
@@ -80,3 +81,4 @@ CREATE TABLE user_management_method (
   user_id int REFERENCES user_info (user_id),
   method_id int REFERENCES management_method (method_id)
 );
+

@@ -7,7 +7,8 @@ SET
   zipcode = $5,
   growing_season_length = $6,
   first_gdd35 = $7,
-  hardiness_zone = $8
+  last_gdd35 = $8,
+  hardiness_zone = $9
 WHERE
   user_id = $1;
 

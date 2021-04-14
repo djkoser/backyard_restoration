@@ -34,7 +34,7 @@ massive({
 
 // User Endpoints
 app.post("/api/register", userCtl.newUser);
-app.get("/api/login", userCtl.login);
+app.post("/api/login", userCtl.login);
 app.get("/api/user", authorize, userCtl.getInfo);
 app.delete("/api/logout", authorize, userCtl.logout);
 // Update user Endpoints

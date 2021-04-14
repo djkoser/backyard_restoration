@@ -7,9 +7,9 @@ module.exports = {
     const { street, city, state, zipcode } = req.body;
     const user_id = req.session.user.user_id;
     try {
-      const { hardinessZone, firstGDD35, averageSeasonLength } = await getGrowingParams(zipcode, street, city, state, db);
-      await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, averageSeasonLength, firstGDD35, hardinessZone);
-      req.session.user = { ...req.session.user, street, city, state, zipcode, growing_season_length: averageSeasonLength, first_gdd35: firstGDD35, hardiness_zone: hardinessZone };
+      const { hardiness_zone, first_gdd35, last_gdd35, growing_season_length } = await getGrowingParams(zipcode, street, city, state, db);
+      await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone);
+      req.session.user = { ...req.session.user, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
       res.status(200).send(req.session.user);
     } catch (err) { console.log(err) }
   },

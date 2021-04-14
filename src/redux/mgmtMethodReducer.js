@@ -1,17 +1,19 @@
 import axios from 'axios';
 
 const initialState = {
-  userMethods: []
+  userMethods: [],
+  loading: false,
+  failed: false
 };
 
 const GET_METHODS = "GET_METHODS";
 const ADD_METHOD = "ADD_METHOD";
 const REMOVE_METHOD = "REMOVE_METHOD";
 
-export const getMethods = (userID) => {
+export const getMethods = () => {
   const methods = axios
-    .get(`/api/user/wdctrl/${userID}`)
-    .then(res => res)
+    .get(`/api/user/wdctrl`)
+    .then(res => res.data)
     .catch(err => console.log(err));
 
   const action = {
@@ -21,10 +23,10 @@ export const getMethods = (userID) => {
   return action;
 };
 
-export const addMethod = (userID, methodID) => {
+export const addMethod = (methodID) => {
   const methods = axios
-    .post(`/api/wdctrl/${userID}/${methodID}`)
-    .then(res => res)
+    .post(`/api/wdctrl/${methodID}`)
+    .then(res => res.data)
     .catch(err => console.log(err));
 
   const action = {
@@ -34,10 +36,10 @@ export const addMethod = (userID, methodID) => {
   return action;
 };
 
-export const removeMethod = (userID, methodID) => {
+export const removeMethod = (methodID) => {
   const methods = axios
-    .delete(`/api/wdctrl/${userID}/${methodID}`)
-    .then(res => res)
+    .delete(`/api/wdctrl/${methodID}`)
+    .then(res => res.data)
     .catch(err => console.log(err));
 
   const action = {
@@ -50,23 +52,23 @@ export const removeMethod = (userID, methodID) => {
 export default function mgmtMethodReducer(state = initialState, action) {
   switch (action.type) {
     case GET_METHODS + '_PENDING':
-      return { ...state }
+      return { ...state, ...{ failed: false, loading: true } }
     case GET_METHODS + '_FULFILLED':
-      return { ...state }
+      return { ...state, ...{ failed: false, loading: false }, ...action.payload }
     case GET_METHODS + '_REJECTED':
-      return { ...state }
+      return { ...state, ...{ failed: true, loading: false } }
     case ADD_METHOD + '_PENDING':
-      return { ...state }
+      return { ...state, ...{ failed: false, loading: true } }
     case ADD_METHOD + '_FULFILLED':
-      return { ...state }
+      return { ...state, ...{ failed: false, loading: false }, ...action.payload }
     case ADD_METHOD + '_REJECTED':
-      return { ...state }
+      return { ...state, ...{ failed: true, loading: false } }
     case REMOVE_METHOD + '_PENDING':
-      return { ...state }
+      return { ...state, ...{ failed: false, loading: true } }
     case REMOVE_METHOD + '_FULFILLED':
-      return { ...state }
+      return { ...state, ...{ failed: false, loading: false }, ...action.payload }
     case REMOVE_METHOD + '_REJECTED':
-      return { ...state }
+      return { ...state, ...{ failed: true, loading: false } }
     default:
       return state
   }
