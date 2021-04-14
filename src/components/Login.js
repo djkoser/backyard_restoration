@@ -38,7 +38,6 @@ const Login = (props) => {
 
         }}>Login</button>
         <button id="registerButton" onClick={(e) => {
-          console.log("clicked")
           e.preventDefault();
           register();
         }}>Register</button>

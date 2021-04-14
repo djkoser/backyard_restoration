@@ -12,10 +12,10 @@ const REMOVE_METHOD = "REMOVE_METHOD";
 
 export const getMethods = () => {
   const methods = axios
-    .get(`/api/user/wdctrl`)
+    .get(`/api/wdctrl`)
     .then(res => res.data)
     .catch(err => console.log(err));
-
+  console.log(methods)
   const action = {
     type: GET_METHODS,
     payload: methods
@@ -54,19 +54,19 @@ export default function mgmtMethodReducer(state = initialState, action) {
     case GET_METHODS + '_PENDING':
       return { ...state, ...{ failed: false, loading: true } }
     case GET_METHODS + '_FULFILLED':
-      return { ...state, ...{ failed: false, loading: false }, ...action.payload }
+      return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } }
     case GET_METHODS + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } }
     case ADD_METHOD + '_PENDING':
       return { ...state, ...{ failed: false, loading: true } }
     case ADD_METHOD + '_FULFILLED':
-      return { ...state, ...{ failed: false, loading: false }, ...action.payload }
+      return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } }
     case ADD_METHOD + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } }
     case REMOVE_METHOD + '_PENDING':
       return { ...state, ...{ failed: false, loading: true } }
     case REMOVE_METHOD + '_FULFILLED':
-      return { ...state, ...{ failed: false, loading: false }, ...action.payload }
+      return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } }
     case REMOVE_METHOD + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } }
     default:

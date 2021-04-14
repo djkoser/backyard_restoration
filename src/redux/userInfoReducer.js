@@ -23,7 +23,6 @@ export const getUserInfo = () => {
     .get(`/api/user`)
     .then(res => res.data)
     .catch(err => console.log(err));
-  console.log(userInfo);
   const action = {
     type: GET_USER_INFO,
     payload: userInfo

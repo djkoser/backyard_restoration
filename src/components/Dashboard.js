@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import Timeline from './Timeline';
 import { getUserInfo } from '../redux/userInfoReducer';
 import { getMethods } from '../redux/mgmtMethodReducer';
-import { dispatch } from 'd3-dispatch';
 
 
 // props from store hZone, gSeasonLength firstGDD35
@@ -19,12 +18,11 @@ const Dashboard = () => {
   // @ts-ignore
   const last_gdd35 = useSelector(state => state.userInfoReducer.last_gdd35)
 
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
-    disptach(getUserInfo());
-    // @ts-ignore
+    dispatch(getUserInfo());
     dispatch(getMethods())
-  }, [disptach]);
+  }, [dispatch]);
 
   return (
     <>
