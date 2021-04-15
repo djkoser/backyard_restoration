@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 // @ts-ignore
 import * as d3 from 'd3';
 
-import { swatches } from '@d3/color-legend'
-import e from 'express';
-
+// import { swatches } from '@d3/color-legend';
 
 // From store userMethods[], gSeasonLength, firstGDD35
 // @ts-ignore
@@ -61,9 +59,9 @@ const Timeline = (props) => {
           return userMethods.map(el => `Weed: ${el.common_name}: ${el.name} - ${el.description}`)
         }
         const legendText = extractText()
-        swatches({
-          color: d3.scaleOrdinal(legendText, d3.schemeTableau10),
-        })
+        // swatches({
+        //   color: d3.scaleOrdinal(legendText, d3.schemeTableau10),
+        // })
 
         const update = svg
           .selectAll('g')
@@ -142,8 +140,6 @@ const Timeline = (props) => {
         // Remove old D3 elements
         update.exit()
           .remove();
-
-
 
       }
     }, [first_gdd35, last_gdd35, userMethods])

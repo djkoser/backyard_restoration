@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 const Login = (props) => {
@@ -27,6 +27,12 @@ const Login = (props) => {
         <input id="emailLoginInput" placeholder='Email' type="text" value={email} onChange={e => setEmail(e.target.value)}></input>
         <label htmlFor="passwordLoginInput">Password</label>
         <input id="passwordLoginInput" placeholder='Password' type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
+        <Link to={{
+          pathname: './requestReset',
+          state: {
+            email
+          }
+        }}>Forgot Password</Link>
         <button id="loginButton" onClick={(e) => {
           e.preventDefault();
           if (email && password) {

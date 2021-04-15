@@ -26,7 +26,7 @@ module.exports = {
         const mailOptions = {
           from: '${GMAIL_ADDRESS]',
           to: `${rtvdCreds[0].email}`,
-          subject: 'Password Reset The Backyard Restorationist',
+          subject: 'Password Reset',
           html:
             `<h1 style='font-size: 18pt'>Hello,<h1>
           <main>
@@ -34,7 +34,7 @@ module.exports = {
             <p  style='font-size: 14pt'>If this request was not made by you, please reset your password immediately using the "Reset Password" link on our login page.</p>
             <p  style='font-size: 14pt'>Otherwise, please click on the following link within 24 hours to reset your password.</p>
           </main>
-          <a href="http://localhost:1313/resetPassword/${token}"> Reset Password </a>`
+          <a href="http://localhost:1314/#/resetPassword/${token}"> Reset Password </a>`
         }
 
         transporter.sendMail(mailOptions, (err, res) => {

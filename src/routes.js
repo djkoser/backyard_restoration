@@ -12,7 +12,7 @@ export default (
   <Switch>
     <Route exact path='/' component={Login} />
     <Route path='/requestReset' component={RequestPasswordReset} />
-    <Route path='/resetPassword' component={ResetPassword} />
+    <Route path='/resetPassword/:token' component={ResetPassword} />
     <Route path='/dash' component={Dashboard} />
     <Route path='/account' component={MyAccount} />
     <Route path='/register' component={Register} />
