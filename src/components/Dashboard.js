@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Timeline from './Timeline';
 import { getUserInfo } from '../redux/userInfoReducer';
-import { getMethods } from '../redux/mgmtMethodReducer';
+import { getMethods } from '../redux/mgmtMethodReducer'
+
 
 
 // props from store hZone, gSeasonLength firstGDD35

@@ -3,6 +3,9 @@ SELECT
   w.common_name,
   mm.name,
   mm.description,
+  mm.january,
+  mm.february,
+  mm.march,
   mm.april,
   mm.may,
   mm.june,
@@ -11,7 +14,7 @@ SELECT
   mm.september,
   mm.october,
   mm.november,
-  mm.december_march
+  mm.december
 FROM
   user_management_method umm
   JOIN management_method mm ON mm.method_id = umm.method_id

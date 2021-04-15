@@ -65,6 +65,9 @@ CREATE TABLE management_method (
   weed_id int REFERENCES weed (weed_id),
   name text,
   description text,
+  january varchar(1),
+  february varchar(1),
+  march varchar(1),
   april varchar(1),
   may varchar(1),
   june varchar(1),
@@ -73,7 +76,7 @@ CREATE TABLE management_method (
   september varchar(1),
   october varchar(1),
   november varchar(1),
-  december_march varchar(1)
+  december varchar(1)
 );
 
 CREATE TABLE user_management_method (

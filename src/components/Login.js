@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const login = () => {
     axios.post('/api/login', { email, password })
       .then(() => {
