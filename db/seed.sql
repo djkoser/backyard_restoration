@@ -57,7 +57,9 @@ CREATE TABLE user_info (
   growing_season_length int,
   first_gdd35 varchar(5),
   last_gdd35 varchar(5),
-  hardiness_zone varchar(2)
+  hardiness_zone varchar(2),
+  pwd_reset_token varchar(32),
+  reset_password_expiration date
 );
 
 CREATE TABLE management_method (

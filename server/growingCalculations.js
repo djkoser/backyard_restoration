@@ -161,7 +161,7 @@ const averageSeasonLength = (seasonEnds, seasonStarts) => {
   return seasonLengthsDays.reduce((prev, next) => prev + next) / seasonLengthsDays.length
 
 }
-
+// Final return from the script
 const calculateGParams = async (db, TMAX, TMIN) => {
   // insert values into TMIN and TMAX tables
   try {
