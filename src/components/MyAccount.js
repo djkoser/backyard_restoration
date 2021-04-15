@@ -64,4 +64,4 @@ const MyAccount = (props) => {
 
 
 }
-export default (MyAccount)
+export default MyAccount
