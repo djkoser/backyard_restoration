@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Nav from './Nav';
 import Timeline from './Timeline';
 
 // props from store hZone, gSeasonLength firstGDD35
@@ -17,12 +18,12 @@ const Dashboard = () => {
 
   return (
     <>
+      <Nav />
       <h2>Site Preparation Timeline</h2>
       <h3><strong>Zone </strong>{hardiness_zone}</h3>
       <h3><strong>Average Growing Days (GDD35) </strong>{growing_season_length}</h3>
       <h3><strong>Average Season Start Date</strong>{first_gdd35}</h3>
       <h3><strong>Average Season End Date</strong>{last_gdd35}</h3>
-
       <Timeline />
     </>
   )

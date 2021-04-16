@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // @ts-ignore
 import { getUserInfo } from '../redux/userInfoReducer';
+import Nav from './Nav';
 
 // props from store user_id, email, first_name, last_name, street, city, state, zipcode, getUserInfo()
 
@@ -62,6 +63,8 @@ const MyAccount = (props) => {
   // @ts-ignore
   const changeAddress = () => { };
 
-
+  return (
+    <Nav />
+  )
 }
 export default MyAccount

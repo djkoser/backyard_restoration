@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -10,17 +10,15 @@ const Login = (props) => {
 
   const dispatch = useDispatch();
   // @ts-ignore
-  useEffect(() => {
-    return dispatch(getMethods())
-  }, [dispatch])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = () => {
     axios.post('/api/login', { email, password })
       .then((res) => {
-        dispatch(addRetrievedInfo(res));
-        props.history.push('/dash')
+        dispatch(getMethods())
+        dispatch(addRetrievedInfo(res.data));
+        props.history.push("/dash")
       })
       .catch((err) => {
         setPassword("");

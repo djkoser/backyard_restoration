@@ -15,7 +15,6 @@ export const getMethods = () => {
     .get(`/api/wdctrl`)
     .then(res => res.data)
     .catch(err => console.log(err));
-  console.log(methods)
   const action = {
     type: GET_METHODS,
     payload: methods

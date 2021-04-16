@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { addRetrievedInfo } from '../redux/userInfoReducer';
+import Nav from './Nav';
 
 // props from Login email, password
 
@@ -21,7 +22,6 @@ const Register = (props) => {
   const [zipcode, setZipcode] = useState("")
   const [loading, setLoading] = useState(false);
 
-
   const createNewUser = (e) => {
     e.preventDefault()
     setFirstName("");
@@ -34,10 +34,11 @@ const Register = (props) => {
     setZipcode("");
     setLoading(true)
     axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
-      .then((res) => {
-        dispatch(addRetrievedInfo(res.data))
-        // delay to push avoids strange error from NOAA Server ->  The proxy server received an invalid response from an upstream server.'The proxy server could not handle the request Reason: Error reading from remote server. Additionally, a 502 Bad Gateway  'error was encountered while trying to use an ErrorDocument. End Quote.  It is possible that the push was causing some sort of timeout condition. 1 second seemed did the trick. 
-        setTimeout(() => props.history.push('./dash'), 1000)
+      .then(async (res) => {
+        dispatch(addRetrievedInfo(res.data));
+        toast.success('Registration Successful! Logging you in to your new dashboard...')
+        // delay to push avoids strange error from NOAA Server ->  The proxy server received an invalid response from an upstream server.'The proxy server could not handle the request Reason: Error reading from remote server. Additionally, a 502 Bad Gateway  'error was encountered while trying to use an ErrorDocument. End Quote.  It is possible that the quick turnaround to push was causing some sort of timeout condition. 3 seconds allows for registration susccess message so this ends up being dual purpose. 
+        setTimeout(() => props.history.push('./dash'), 3000);
       })
       .catch((err) => {
         setLoading(false)
@@ -46,6 +47,7 @@ const Register = (props) => {
   };
   return (
     <>
+      <Nav />
       <ToastContainer />
       <section style={loading ? { visibility: "hidden" } : { visibility: "visible" }}>
         <form onSubmit={e => { createNewUser(e) }}>
@@ -72,7 +74,7 @@ const Register = (props) => {
       {/* Weather-Themed Loading SVG Adapted from Tim Holman's Work as Listed on Codepen - I thought this particularly lengthy loading screen deserved a solid weather-themed loading graphic. Much time spent reconfiguring CSS to be more for mobile view (retained relative positions of SVGs) by turning animation into a series of nested SVGs. Also added animateTransform element for rotation to account for coordinate system difference in SVG as opposed to CSS keyfrmames */}
       <div style={loading ? { visibility: "visible" } : { visibility: "hidden" }}>
         <div className="loaderText">
-          Calculating growing parameters for your location based upon 5 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA)
+          Calculating growing parameters for your location based upon 5 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA). This could take several minutes, but will only happen once.
       </div >
         <svg className="registrationLoader" width="900" height="900" viewBox="0 0 900 900" preserveAspectRatio="xMinYMin meet">
           <svg x="310" y="80" id="sun" width="275" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet" >

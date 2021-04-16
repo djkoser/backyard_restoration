@@ -54,21 +54,16 @@ module.exports = {
     const db = req.app.get('db');
     if (req.params.token) {
       const userCreds = await db.updateUser.getCredsByResetToken(req.params.token)
-      console.log('req.params.token', userCreds)
       if (userCreds.length) {
-        console.log('pass')
         if (userCreds[0].reset_password_expiration.getTime() >= Date.now()) {
-          console.log('pass2')
           const { newPassword } = req.body;
           try {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(newPassword, salt);
-            console.log('pass3')
             await db.updateUser.chgUserPassword(userCreds[0].user_id, hash);
             req.session.user = { ...userCreds[0], ...{ hash: hash, pwd_reset_token: "" } };
             await db.updateUser.removeResetToken(userCreds[0].user_id);
             res.status(200).send(req.session.user);
-            console.log(req.session.user)
           } catch (err) { console.log(err) }
         } else {
           res.sendStatus(403)

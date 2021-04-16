@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 const ResetPassword = (props) => {
 
-  console.log(props.match.params.token)
   // @ts-ignore
   const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" })
   const [password, setPassword] = useState("")

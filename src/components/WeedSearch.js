@@ -1,17 +1,44 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import Nav from './Nav';
 import Thumbnail from './Thumbnail'
 
 // props vegType 
 const WeedSearch = (props) => {
-  const initialState = {
-    search: ""
-  }
+  const [weedType] = useState(props.match.params.vegType);
+  const [searchText, setSearchText] = useState("");
+  const [weedList, setWeedList] = useState([]);
 
-  const getWeedsByType = () => { };
-  const searchWeedsByKeyword = () => { };
+  const getWeedsByType = () => {
+    axios.get(`/api/weeds?vegType=${weedType}`)
+      .then(res => setWeedList(res.data))
+      .catch(err => console.log(err))
+  };
+  const searchWeedsByKeyword = (e) => {
+    e.preventDefault()
+    console.log(`/api/weeds?vegType=${weedType}&keyword=${encodeURI(searchText)}`)
+    axios.get(`/api/weeds?vegType=${weedType}&keyword=${encodeURI(searchText)}`)
+      .then(res => {
+        setSearchText("")
+        setWeedList(res.data)
+      })
+      .catch(err => console.log(err))
+  };
+  useEffect(() => {
+    getWeedsByType();
+  }, [])
+
+  const searchResults = weedList.map(el => <Thumbnail weedInfo={el} />)
+
   return (
     <>
-      <Thumbnail />
+      <Nav />
+      <form onSubmit={(e) => searchWeedsByKeyword(e)}>
+        <input type="text" placeholder="Botanical or Common Name" value={searchText} onChange={e => setSearchText(e.target.value)}></input>
+        <button>Search</button>
+        <button>Show All {weedType === "f" ? "Forb" : weedType === "g" ? "Graminoid" : "Woody"} Species</button>
+      </form>
+      {searchResults}
     </>
   )
 }

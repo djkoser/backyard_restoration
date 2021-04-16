@@ -4,7 +4,7 @@ module.exports = {
     if (req.query.vegType && req.query.keyword) {
       try {
         const { vegType, keyword } = req.query;
-        const weeds = await db.weed.weedsByTypeKw(vegType, keyword);
+        const weeds = await db.weed.weedsByTypeKw(vegType, decodeURI(keyword));
         res.status(200).send(weeds);
       } catch (err) { console.log(err) }
     } else if (req.query.vegType) {

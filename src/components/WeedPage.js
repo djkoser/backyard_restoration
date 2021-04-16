@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMethods, addMethod, removeMethod } from '../redux/mgmtMethodReducer';
 import axios from 'axios';
+import Nav from './Nav';
 
 // From Store userMethods[], getMethods(), addMethod() removeMethod()
 
@@ -24,6 +25,7 @@ const WeedPage = (props) => {
 
   return (
     <>
+      <Nav />
     </>
   )
 
