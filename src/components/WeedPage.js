@@ -8,6 +8,7 @@ import Nav from './Nav';
 
 const WeedPage = (props) => {
 
+  const { weed_id } = props.location.state
   const dispatch = useDispatch();
 
   const [src, setSrc] = useState("");
@@ -21,7 +22,26 @@ const WeedPage = (props) => {
   // @ts-ignore
   useSelector(state => state.mgmtMethodReducer.userMethods);
 
-  const getWeedDetails = () => { };
+  const getWeedDetails = async () => {
+    await axios.get(`/api/weeds/${weed_id}`)
+      .then(res => {
+        const { src, common_name, botanical_name, annual_perennial_biennial, veg_type, description } = res.data;
+        setSrc(src);
+        setCommonName(common_name);
+        setBotanicalName(botanical_name);
+        setAnnualPerennialBiennial(annual_perennial_biennial);
+        setVegType(veg_type);
+        setDescription(description)
+      })
+      .catch(err => console.log(err))
+    await axios.get(`/api/weeds/methods/${weed_id}`)
+      .then(res => {
+        const methods = res.data;
+        setMgmtOptions(methods);
+
+      })
+      .catch(err => console.log(err))
+  };
 
   return (
     <>

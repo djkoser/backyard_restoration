@@ -52,5 +52,6 @@ app.delete("/api/wdctrl/:ctlID", authorize, methodsCtl.removeMethod);
 // Weeds Endpoints
 app.get("/api/weeds", authorize, weedCtl.weedsByTypeKw);
 app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);
+app.get("/api/weeds/methods/:weedID", authorize, weedCtl.weedMethods);
 
 

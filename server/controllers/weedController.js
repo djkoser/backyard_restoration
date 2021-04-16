@@ -5,13 +5,13 @@ module.exports = {
       try {
         const { vegType, keyword } = req.query;
         const weeds = await db.weed.weedsByTypeKw(vegType, decodeURI(keyword));
-        res.status(200).send(weeds);
+        return res.status(200).send(weeds);
       } catch (err) { console.log(err) }
     } else if (req.query.vegType) {
       try {
         const { vegType } = req.query;
         const weeds = await db.weed.getWeedsByType(vegType);
-        res.status(200).send(weeds);
+        return res.status(200).send(weeds);
       } catch (err) { console.log(err) }
     } else { return res.sendStatus(400) };
   },
@@ -21,7 +21,17 @@ module.exports = {
       try {
         const { weedID } = req.params;
         const weeds = await db.weed.weedDetails(weedID);
-        res.status(200).send(weeds);
+        return res.status(200).send(weeds);
+      } catch (err) { console.log(err) }
+    } else { return res.sendStatus(400) };
+  },
+  weedMethods: async (req, res) => {
+    const db = req.app.get('db')
+    if (req.params.weedID) {
+      try {
+        const { weedID } = req.params
+        const methods = await db.weed.getWeedMethods(weedID);
+        return res.status(200).send(methods);
       } catch (err) { console.log(err) }
     } else { return res.sendStatus(400) };
   }
