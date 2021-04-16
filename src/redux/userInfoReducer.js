@@ -17,6 +17,7 @@ const initialState = {
 };
 
 const GET_USER_INFO = "GET_USER_INFO";
+const ADD_RETRIEVED_INFO = "ADD_RETRIEVED_INFO";
 
 export const getUserInfo = () => {
   const userInfo = axios
@@ -30,6 +31,16 @@ export const getUserInfo = () => {
   return action;
 };
 
+export const addRetrievedInfo = (retrievedInfo) => {
+  const action = {
+    type: ADD_RETRIEVED_INFO,
+    payload: retrievedInfo
+  }
+  return action;
+}
+
+
+
 export default function userInfoReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER_INFO + "_PENDING":
@@ -38,6 +49,8 @@ export default function userInfoReducer(state = initialState, action) {
       return { ...state, ...action.payload, ...{ loading: false, failed: false } }
     case GET_USER_INFO + "_REJECTED":
       return { ...state, ...{ loading: false, failed: true } }
+    case ADD_RETRIEVED_INFO:
+      return { ...state, ...action.payload }
     default:
       return state
   }

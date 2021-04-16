@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 // @ts-ignore
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const ResetPassword = (props) => {
@@ -19,6 +19,7 @@ const ResetPassword = (props) => {
     axios.put(`/api/pwdRS/${props.match.params.token}`, { newPassword: password })
       // @ts-ignore
       .then(res => {
+        setPassword("")
         toast.success("Password Reset Successful! Logging you in...")
         setFailureMessage({ visibility: "hidden" })
         setTimeout(() => {
@@ -26,7 +27,8 @@ const ResetPassword = (props) => {
         }, 2000)
       })
       // @ts-ignore
-      .catch((err) => {
+      .catch(err => {
+        setPassword("")
         toast.error('Your password reset request has expired. Please try again using the "Forgot Password" link on our login page.')
         setFailureMessage({ visibility: "visible" })
       })
@@ -40,7 +42,7 @@ const ResetPassword = (props) => {
       <form onSubmit={e => submitChange(e)}>
         <label htmlFor="resetPwdPasswordInput">New Password </label>
         <input
-          type="text"
+          type="password"
           placeholder="New Password"
           onChange={e => setPassword(e.target.value)}
           id='resetPwdPasswordInput'
@@ -58,4 +60,4 @@ const ResetPassword = (props) => {
 }
 
 // @ts-ignore
-export default withRouter(ResetPassword)
+export default ResetPassword

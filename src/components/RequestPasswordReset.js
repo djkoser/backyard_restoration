@@ -13,12 +13,14 @@ const RequestPasswordReset = (props) => {
     axios.put("/api/pwdResetReq", { email })
       // @ts-ignore
       .then(res => {
+        setEmail("");
         toast.success('Password Reset Request Submitted Successfully')
         setSuccessMessage({ visibility: "visible" })
         setFailureMessage({ visibility: "hidden" })
       })
       // @ts-ignore
-      .catch((err) => {
+      .catch(err => {
+        setEmail("");
         toast.error('Password Reset Request Failed.')
         setSuccessMessage({ visibility: "hidden" })
         setFailureMessage({ visibility: "visible" })

@@ -11,7 +11,7 @@ module.exports = {
       const storedUser = await db.user.getUserCredentials(email.toLowerCase());
       if (!storedUser.length) {
         const { hardiness_zone, first_gdd35, last_gdd35, growing_season_length } = await getGrowingParams(zipcode, street, city, state, db);
-        const newUser = { email, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd35, last_gdd35, hardiness_zone }
+        const newUser = { email, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
         await db.user.newUser(email, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd35, last_gdd35, hardiness_zone);
         req.session.user = newUser;
         return res.status(200).send(newUser);

@@ -53,7 +53,7 @@ const date2String = (dateParam = new Date()) => {
   return dateParam.toISOString().match(/\d\d\d\d-\d\d-\d\d/)[0];
 }
 // subtracts one year from passed-in date and returns new date object
-const less1Date = (dateParam = new Date()) => {
+const less1Date = (dateParam) => {
   return new Date(dateParam.setFullYear(dateParam.getFullYear() - 1));
 }
 
@@ -230,11 +230,11 @@ module.exports = {
       await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
         .then(async res => {
           try {
-            const location = res.data.results[0].geometry.location
-            searchHalfSide += 2.5
+            const location = res.data.results[0].geometry.location;
+            searchHalfSide += 0.5;
             let coordinateArray = boundingBox(location.lat, location.lng, searchHalfSide);
             let coordinateString = coordinateArray.join(",")
-            // Expand the half side of the bounding box by 2.5 km and whole side by 5km until data is found. 
+            // Expand the half side of the bounding box by 0.5 km and whole side by 1km until data is found. 
             let APIOutputs = await apiLogic(coordinateString)
             while (foundTowers === false) {
               if (APIOutputs) {

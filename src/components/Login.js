@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { addRetrievedInfo } from '../redux/userInfoReducer';
+import { getMethods } from '../redux/mgmtMethodReducer'
 
 const Login = (props) => {
+
+  const dispatch = useDispatch();
+  // @ts-ignore
+  useEffect(() => {
+    return dispatch(getMethods())
+  }, [dispatch])
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = () => {
     axios.post('/api/login', { email, password })
-      .then(() => {
+      .then((res) => {
+        dispatch(addRetrievedInfo(res));
         props.history.push('/dash')
       })
-      .catch(() => {
+      .catch((err) => {
         setPassword("");
         setEmail("");
         toast.error("Incorrect username or password, please try again or register for an account.")
       })
   };
-  const register = () => { };
+  const register = () => {
+    props.history.push('/register')
+  };
   return (
     <>
       <ToastContainer />
@@ -51,4 +64,4 @@ const Login = (props) => {
     </>
   )
 }
-export default withRouter(Login)
+export default Login
