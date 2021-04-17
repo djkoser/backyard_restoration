@@ -178,7 +178,7 @@ const Timeline = (props) => {
         };
       };
       // Initiate user comparison on final render after d3 updates
-    }, [first_gdd35, last_gdd35, userMethods, d3Container.current, user_id])
+    }, [first_gdd35, last_gdd35, userMethods, user_id])
 
   return (
     <main className="d3Container">

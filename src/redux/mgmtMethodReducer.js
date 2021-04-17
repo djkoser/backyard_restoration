@@ -7,14 +7,13 @@ const initialState = {
 };
 
 const GET_METHODS = "GET_METHODS";
-const ADD_METHOD = "ADD_METHOD";
-const REMOVE_METHOD = "REMOVE_METHOD";
+const TOGGLE_METHOD = "TOGGLE_METHOD";
 
 export const getMethods = () => {
   const methods = axios
     .get(`/api/wdctrl`)
     .then(res => res.data)
-    .catch(err => console.log(err));
+    .catch(err => initialState.userMethods);
   const action = {
     type: GET_METHODS,
     payload: methods
@@ -22,27 +21,14 @@ export const getMethods = () => {
   return action;
 };
 
-export const addMethod = (methodID) => {
+export const toggleMethod = (methodID) => {
   const methods = axios
-    .post(`/api/wdctrl/${methodID}`)
+    .put(`/api/wdctrl/${methodID}`)
     .then(res => res.data)
-    .catch(err => console.log(err));
+    .catch(err => initialState.userMethods);
 
   const action = {
-    type: ADD_METHOD,
-    payload: methods
-  };
-  return action;
-};
-
-export const removeMethod = (methodID) => {
-  const methods = axios
-    .delete(`/api/wdctrl/${methodID}`)
-    .then(res => res.data)
-    .catch(err => console.log(err));
-
-  const action = {
-    type: REMOVE_METHOD,
+    type: TOGGLE_METHOD,
     payload: methods
   };
   return action;
@@ -56,17 +42,11 @@ export default function mgmtMethodReducer(state = initialState, action) {
       return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } }
     case GET_METHODS + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } }
-    case ADD_METHOD + '_PENDING':
+    case TOGGLE_METHOD + '_PENDING':
       return { ...state, ...{ failed: false, loading: true } }
-    case ADD_METHOD + '_FULFILLED':
+    case TOGGLE_METHOD + '_FULFILLED':
       return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } }
-    case ADD_METHOD + '_REJECTED':
-      return { ...state, ...{ failed: true, loading: false } }
-    case REMOVE_METHOD + '_PENDING':
-      return { ...state, ...{ failed: false, loading: true } }
-    case REMOVE_METHOD + '_FULFILLED':
-      return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } }
-    case REMOVE_METHOD + '_REJECTED':
+    case TOGGLE_METHOD + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } }
     default:
       return state

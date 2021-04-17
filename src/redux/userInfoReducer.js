@@ -23,7 +23,7 @@ export const getUserInfo = () => {
   const userInfo = axios
     .get(`/api/user`)
     .then(res => res.data)
-    .catch(err => console.log(err));
+    .catch(err => initialState);
   const action = {
     type: GET_USER_INFO,
     payload: userInfo

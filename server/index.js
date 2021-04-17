@@ -47,8 +47,7 @@ app.put("/api/pwdResetReq", passwordReset.resetPwdEmail);
 app.put("/api/pwdRS/:token", passwordReset.processReset);
 // Methods Endpoints
 app.get("/api/wdctrl", authorize, methodsCtl.getMethods);
-app.post("/api/wdctrl/:ctlID", authorize, methodsCtl.addMethod);
-app.delete("/api/wdctrl/:ctlID", authorize, methodsCtl.removeMethod);
+app.put("/api/wdctrl/:ctlID", authorize, methodsCtl.toggleMethod);
 // Weeds Endpoints
 app.get("/api/weeds", authorize, weedCtl.weedsByTypeKw);
 app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMethod, removeMethod } from '../redux/mgmtMethodReducer';
+import { toggleMethod } from '../redux/mgmtMethodReducer';
 import axios from 'axios';
 import Nav from './Nav';
 
 // From Store userMethods[], getMethods(), addMethod() removeMethod()
 
 const WeedPage = (props) => {
-
+  console.log("render")
   const { weed_id } = props.location.state
   const dispatch = useDispatch();
 
@@ -19,11 +19,11 @@ const WeedPage = (props) => {
   const [description, setDescription] = useState("");
   const [mgmtOptions, setMgmtOptions] = useState([]);
   // @ts-ignore
-  const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods)
-  const [loading, setLoading] = useState(true)
+  const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
+  // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
+  const [loading, setLoading] = useState(true);
 
   // @ts-ignore
-  useSelector(state => state.mgmtMethodReducer.userMethods);
 
   const getWeedDetails = async () => {
     await axios.get(`/api/weeds/${weed_id}`)
@@ -39,45 +39,44 @@ const WeedPage = (props) => {
       .catch(err => console.log(err))
     await axios.get(`/api/weeds/methods/${weed_id}`)
       .then(res => {
-        const methods = res.data;
-        setMgmtOptions(methods);
+        setMgmtOptions(res.data);
       })
-      .catch(err => console.log(err))
+      .catch(err => { console.log(err) })
     setLoading(false)
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { getWeedDetails() }, [])
-
+  useEffect(() => {
+    getWeedDetails()
+  }, [])
   const switchMaker = (weedMethod) => {
-    let checked = false
     // Determine if weed method is in user method list and check inputs accordingly
-    if (userMethods.reduce((acc, el) => weedMethod.method_id === el.method_id ? ++acc : acc, 0)) {
-      checked = true
+    if (userMethods) {
+      let checked = false
+      if (userMethods.reduce((acc, el) => weedMethod.method_id === el.method_id ? ++acc : acc, 0)) {
+        checked = true
+      }
+      return (
+        <div key={weedMethod.method_id}>
+          <p>
+            <strong>Name: </strong>{weedMethod.name}
+            <br />
+            <strong>Description: </strong>{weedMethod.description}
+          </p>
+          <div className="switch" >
+            <input type="checkbox"
+              id={`switch${weedMethod.method_id}`}
+              checked={checked}
+              onChange={() => {
+                dispatch(toggleMethod(weedMethod.method_id))
+              }} />
+            <label htmlFor={`switch${weedMethod.method_id}`}>
+              <span className="switchSpan"></span>
+            </label>
+          </div>
+        </div>
+      )
     }
-    return (
-      <div className="switch" key={weedMethod.method_id}>
-        <p>
-          <strong>Name: </strong>{weedMethod.name}
-          <br />
-          <strong>Description: </strong>{weedMethod.description}
-        </p>
-        <input type="checkbox"
-          id={weedMethod.method_id}
-          checked={checked}
-          onChange={() => {
-            if (!checked) {
-              dispatch(addMethod(weedMethod.method_id))
-            } else {
-              dispatch(removeMethod(weedMethod.method_id))
-            }
-          }} />
-        <label htmlFor="switch">
-          <p>Add</p>
-          <p>Added</p>
-        </label>
-      </div>
-    )
   }
 
   const switches = mgmtOptions.map(el => switchMaker(el))

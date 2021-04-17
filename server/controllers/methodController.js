@@ -8,7 +8,7 @@ module.exports = {
       res.status(200).send(methods);
     } catch (err) { console.log(err) }
   },
-  addMethod: async (req, res) => {
+  toggleMethod: async (req, res) => {
     // Methods Endpoints
     const db = req.app.get('db')
     try {
@@ -19,17 +19,11 @@ module.exports = {
         await db.method.addMethod(user_id, ctlID);
         methods = await db.method.getMethods(user_id);
         res.status(200).send(methods);
-      } else { res.sendStatus(409) }
-    } catch (err) { console.log(err) }
-  },
-  removeMethod: async (req, res) => {
-    const db = req.app.get('db')
-    try {
-      const { user_id } = req.session.user
-      const { ctlID } = req.params;
-      await db.method.removeMethod(user_id, ctlID);
-      const methods = await db.method.getMethods(user_id);
-      res.status(200).send(methods);
+      } else if (methods.reduce((acc, el) => Number.parseInt(ctlID) === el.method_id ? ++acc : acc, 0)) {
+        await db.method.removeMethod(user_id, ctlID);
+        methods = await db.method.getMethods(user_id);
+        res.status(200).send(methods);
+      } else { res.sendStatus(400) }
     } catch (err) { console.log(err) }
   }
 }
