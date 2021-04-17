@@ -15,7 +15,7 @@ module.exports = {
       const { user_id } = req.session.user
       const { ctlID } = req.params;
       let methods = await db.method.getMethods(user_id);
-      if (!methods.reduce((acc, el) => Number.parseInt(ctlID) === el.method_id ? acc++ : acc, 0)) {
+      if (!methods.reduce((acc, el) => Number.parseInt(ctlID) === el.method_id ? ++acc : acc, 0)) {
         await db.method.addMethod(user_id, ctlID);
         methods = await db.method.getMethods(user_id);
         res.status(200).send(methods);

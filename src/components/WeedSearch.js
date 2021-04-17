@@ -5,9 +5,9 @@ import Thumbnail from './Thumbnail'
 
 // props vegType 
 const WeedSearch = (props) => {
-  const [weedType] = useState(props.match.params.vegType);
   const [searchText, setSearchText] = useState("");
   const [weedList, setWeedList] = useState([]);
+  const weedType = props.match.params.vegType
 
   const getWeedsByType = () => {
     axios.get(`/api/weeds?vegType=${weedType}`)
@@ -16,7 +16,6 @@ const WeedSearch = (props) => {
   };
   const searchWeedsByKeyword = (e) => {
     e.preventDefault()
-    console.log(`/api/weeds?vegType=${weedType}&keyword=${encodeURI(searchText)}`)
     axios.get(`/api/weeds?vegType=${weedType}&keyword=${encodeURI(searchText)}`)
       .then(res => {
         setSearchText("")
@@ -26,9 +25,11 @@ const WeedSearch = (props) => {
   };
   useEffect(() => {
     getWeedsByType();
-  }, [])
 
-  const searchResults = weedList.map(el => <Thumbnail weedInfo={el} />)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weedType])
+
+  const searchResults = weedList.map(el => <Thumbnail key={el.weed_id} weedInfo={el} />)
 
   return (
     <>

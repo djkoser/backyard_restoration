@@ -21,7 +21,7 @@ module.exports = {
       try {
         const { weedID } = req.params;
         const weeds = await db.weed.weedDetails(weedID);
-        return res.status(200).send(weeds);
+        return res.status(200).send(weeds[0]);
       } catch (err) { console.log(err) }
     } else { return res.sendStatus(400) };
   },
