@@ -1,7 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import Footer from './Footer';
 import Nav from './Nav';
-import Thumbnail from './Thumbnail'
+import Thumbnail from './Thumbnail';
+
+
 
 // props vegType 
 const WeedSearch = (props) => {
@@ -40,6 +43,7 @@ const WeedSearch = (props) => {
         <button>Show All {weedType === "f" ? "Forb" : weedType === "g" ? "Graminoid" : "Woody"} Species</button>
       </form>
       {searchResults}
+      <Footer />
     </>
   )
 }

@@ -7,6 +7,8 @@ import WeedPage from "./components/WeedPage";
 import WeedSearch from "./components/WeedSearch";
 import ResetPassword from "./components/ResetPassword";
 import RequestPasswordReset from "./components/RequestPasswordReset";
+import StripeThankYou from "./components/StripeThankYou";
+import Stripe from "./components/Stripe";
 
 export default (
   <Switch>
@@ -18,5 +20,7 @@ export default (
     <Route path='/register' component={Register} />
     <Route path='/weed/:id' component={WeedPage} />
     <Route path='/search/:vegType' component={WeedSearch} />
+    <Route path='/donation/success' component={StripeThankYou} />
+    <Route path='/donation' component={Stripe} />
   </Switch>
 )

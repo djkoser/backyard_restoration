@@ -177,3 +177,13 @@
     border-radius: 20px; 
     background: #FFCC33;
   }
+
+
+  /*Donation Input Styling*/
+  #donationSpan {
+    border:1px inset #ccc;
+  }
+
+  #donationInput {
+    border:0; 
+  }

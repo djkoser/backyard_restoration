@@ -9,6 +9,7 @@ const weedCtl = require("./controllers/weedController");
 const updUserCtl = require("./controllers/updateUserController");
 const { authorize } = require("./middleware/authMiddleware");
 const passwordReset = require('./controllers/passwordReset');
+const stripeController = require('./controllers/stripeController');
 
 const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
 
@@ -52,5 +53,7 @@ app.put("/api/wdctrl/:ctlID", authorize, methodsCtl.toggleMethod);
 app.get("/api/weeds", authorize, weedCtl.weedsByTypeKw);
 app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);
 app.get("/api/weeds/methods/:weedID", authorize, weedCtl.weedMethods);
+// Stripe EndPoint
+app.post('/api/donate', authorize, stripeController.checkout);
 
 

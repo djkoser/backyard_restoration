@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleMethod } from '../redux/mgmtMethodReducer';
 import axios from 'axios';
 import Nav from './Nav';
-
+import Footer from './Footer';
 // From Store userMethods[], getMethods(), addMethod() removeMethod()
 
 const WeedPage = (props) => {
@@ -101,8 +101,12 @@ const WeedPage = (props) => {
     </>
   )
 
-  return loading ? (<></>) : output
-
+  return (
+    <>
+      { loading ? <></> : output}
+      <Footer />
+    </>
+  )
 };
 
 export default WeedPage

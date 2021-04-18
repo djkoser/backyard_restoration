@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Footer from './Footer';
 import Nav from './Nav';
 import Timeline from './Timeline';
 
@@ -25,6 +26,7 @@ const Dashboard = () => {
       <h3><strong>Average Season Start Date</strong>{first_gdd35}</h3>
       <h3><strong>Average Season End Date</strong>{last_gdd35}</h3>
       <Timeline />
+      <Footer />
     </>
   )
 }
