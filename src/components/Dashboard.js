@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import Footer from './Footer';
 import Nav from './Nav';
 import Timeline from './Timeline';
+import DashboardDropdowns from './DashboardDropdowns'
 
 // props from store hZone, gSeasonLength firstGDD35
 
 const Dashboard = () => {
-
+  console.log("rerender dashboard")
   // @ts-ignore
   const hardiness_zone = useSelector(state => state.userInfoReducer.hardiness_zone)
   // @ts-ignore
@@ -26,6 +27,7 @@ const Dashboard = () => {
       <h3><strong>Average Season Start Date</strong>{first_gdd35}</h3>
       <h3><strong>Average Season End Date</strong>{last_gdd35}</h3>
       <Timeline />
+      <DashboardDropdowns />
       <Footer />
     </>
   )

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleMethod } from '../redux/mgmtMethodReducer';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Nav from './Nav';
 import Footer from './Footer';
+import SwitchMaker from './SwitchMaker';
 // From Store userMethods[], getMethods(), addMethod() removeMethod()
 
 const WeedPage = (props) => {
-  console.log("render")
   const { weed_id } = props.location.state
-  const dispatch = useDispatch();
 
   const [src, setSrc] = useState("");
   const [commonName, setCommonName] = useState("");
@@ -18,6 +16,7 @@ const WeedPage = (props) => {
   const [vegType, setVegType] = useState("");
   const [description, setDescription] = useState("");
   const [mgmtOptions, setMgmtOptions] = useState([]);
+
   // @ts-ignore
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
   // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
@@ -49,37 +48,9 @@ const WeedPage = (props) => {
   useEffect(() => {
     getWeedDetails()
   }, [])
-  const switchMaker = (weedMethod) => {
-    // Determine if weed method is in user method list and check inputs accordingly
-    if (userMethods) {
-      let checked = false
-      if (userMethods.reduce((acc, el) => weedMethod.method_id === el.method_id ? ++acc : acc, 0)) {
-        checked = true
-      }
-      return (
-        <div key={weedMethod.method_id}>
-          <p>
-            <strong>Name: </strong>{weedMethod.name}
-            <br />
-            <strong>Description: </strong>{weedMethod.description}
-          </p>
-          <div className="switch" >
-            <input type="checkbox"
-              id={`switch${weedMethod.method_id}`}
-              checked={checked}
-              onChange={() => {
-                dispatch(toggleMethod(weedMethod.method_id))
-              }} />
-            <label htmlFor={`switch${weedMethod.method_id}`}>
-              <span className="switchSpan"></span>
-            </label>
-          </div>
-        </div>
-      )
-    }
-  }
 
-  const switches = mgmtOptions.map(el => switchMaker(el))
+
+  const switches = mgmtOptions.map(el => (<SwitchMaker key={`method${el.method_id}`} userMethods={userMethods} weedMethod={el} />))
   const output = (
     <>
       <Nav />

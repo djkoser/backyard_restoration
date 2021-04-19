@@ -13,6 +13,7 @@ const Nav = (props) => {
   return (
     <>
       <nav >
+        <Link to='/dash'> Dashboard </Link>
         <Link to='/account'> My Account </Link>
         <span>Weed ID Pages</span>
         <Link to='/search/f' > Forbs </Link>
