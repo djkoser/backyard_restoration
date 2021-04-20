@@ -3,7 +3,6 @@ import SwitchMaker from './SwitchMaker';
 import axios from 'axios';
 
 const DashboardDropdowns = (props) => {
-  console.log("rerender d dropdowns")
 
   const [weedOptions, setWeedOptions] = useState([]);
   const [switches, setSwitches] = useState([]);

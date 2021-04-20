@@ -64,11 +64,11 @@ const WeedPage = (props) => {
           {description}
         </article>
       </section>
-      <section>
-        <h4>Management Options</h4>
+      <fieldset>
+        <legend>Management Options</legend>
         <br />
         {switches}
-      </section>
+      </fieldset>
     </>
   )
 

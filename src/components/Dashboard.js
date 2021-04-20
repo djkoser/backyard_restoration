@@ -3,12 +3,11 @@ import { useSelector } from 'react-redux';
 import Footer from './Footer';
 import Nav from './Nav';
 import Timeline from './Timeline';
-import DashboardDropdowns from './DashboardDropdowns'
+import DashboardDropdowns from './DashboardDropdowns';
 
 // props from store hZone, gSeasonLength firstGDD35
 
 const Dashboard = () => {
-  console.log("rerender dashboard")
   // @ts-ignore
   const hardiness_zone = useSelector(state => state.userInfoReducer.hardiness_zone)
   // @ts-ignore
@@ -18,6 +17,12 @@ const Dashboard = () => {
   // @ts-ignore
   const last_gdd35 = useSelector(state => state.userInfoReducer.last_gdd35)
 
+  // @ts-ignore
+  const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
+
+
+  const chartMargin = { top: 20, right: 0, bottom: 90, left: 40 };
+
   return (
     <>
       <Nav />
@@ -26,7 +31,7 @@ const Dashboard = () => {
       <h3><strong>Average Growing Days (GDD35) </strong>{growing_season_length}</h3>
       <h3><strong>Average Season Start Date</strong>{first_gdd35}</h3>
       <h3><strong>Average Season End Date</strong>{last_gdd35}</h3>
-      <Timeline />
+      <Timeline height={300} width={400} first_gdd35={first_gdd35} last_gdd35={last_gdd35} userMethods={userMethods} margin={chartMargin} />
       <DashboardDropdowns />
       <Footer />
     </>

@@ -74,7 +74,7 @@ const Register = (props) => {
       {/* Weather-Themed Loading SVG Adapted from Tim Holman's Work as Listed on Codepen - I thought this particularly lengthy loading screen deserved a solid weather-themed loading graphic. Much time spent reconfiguring CSS to be more for mobile view (retained relative positions of SVGs) by turning animation into a series of nested SVGs. Also added animateTransform element for rotation to account for coordinate system difference in SVG as opposed to CSS keyfrmames */}
       <div style={loading ? { visibility: "visible" } : { visibility: "hidden" }}>
         <div className="loaderText">
-          Calculating growing parameters for your location based upon 5 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA). This could take several minutes, but will only happen once.
+          Calculating growing parameters for your location based upon 5 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA). This could take several minutes depending on their server traffic.
       </div >
         <svg className="registrationLoader" width="900" height="900" viewBox="0 0 900 900" preserveAspectRatio="xMinYMin meet">
           <svg x="310" y="80" id="sun" width="275" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet" >

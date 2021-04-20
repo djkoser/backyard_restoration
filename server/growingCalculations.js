@@ -89,7 +89,7 @@ const forBlock = async () => {
   edString = date2String(ed);
   sdString = date2String(sd);
   // 
-  await delay(200)
+  await delay(300)
 }
 
 const hardinessZoneCalculator = (TMINAvg) => {
