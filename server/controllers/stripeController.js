@@ -22,7 +22,7 @@ module.exports = {
         ],
         mode: 'payment',
         success_url: 'http://localhost:1314/#/donationSuccess',
-        cancel_url: 'http://localhost:1314/#/donation',
+        cancel_url: 'http://localhost:1314/#/',
       });
       res.status(200).send({ id: session.id });
     } catch (err) { console.log(err) }

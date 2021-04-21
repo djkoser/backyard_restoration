@@ -35,16 +35,18 @@ const WeedSearch = (props) => {
   const searchResults = weedList.map(el => <Thumbnail key={el.weed_id} weedInfo={el} />)
 
   return (
-    <>
-      <Nav />
-      <form onSubmit={(e) => searchWeedsByKeyword(e)}>
-        <input type="text" placeholder="Botanical or Common Name" value={searchText} onChange={e => setSearchText(e.target.value)}></input>
+    <main id="weedSearchBody">
+      <Nav invertColors={true} />
+      <form id="weedSearchForm" onSubmit={(e) => searchWeedsByKeyword(e)}>
+        <input type="text" placeholder="Weed Name" value={searchText} onChange={e => setSearchText(e.target.value)}></input>
         <button>Search</button>
         <button>Show All {weedType === "f" ? "Forb" : weedType === "g" ? "Graminoid" : "Woody"} Species</button>
       </form>
-      {searchResults}
+      <div id="searchResultsBox">
+        {searchResults}
+      </div>
       <Footer />
-    </>
+    </main>
   )
 }
 export default WeedSearch

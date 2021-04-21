@@ -28,12 +28,11 @@ const RequestPasswordReset = (props) => {
   }
 
   return (
-    <>
+    <div id="resetReqBox">
       <ToastContainer />
-      <h1>Password Reset</h1>
-      <p>Please Enter the Email you Used to Register with TheBackyardRestorationist.net</p>
-      <form onSubmit={e => submitRequest(e)}>
-        <label htmlFor="resetPwdEmailInput">Email </label>
+      <h1 id="resetTitle"><strong>Password Reset</strong></h1>
+      <h3>Please Enter the Email you Used to Register with BackyardRestoration.net</h3>
+      <form id="resetRequestForm" onSubmit={e => submitRequest(e)}>
         <input
           type="text"
           placeholder="Your Email"
@@ -41,21 +40,21 @@ const RequestPasswordReset = (props) => {
           id='resetPwdEmailInput'
           value={email}
         ></input>
-        <button>Request Reset</button>
+        <button id="resetReqButton">Request Reset</button>
       </form>
+      <Link to={"/"}>Back to Login</Link>
       <article
         // @ts-ignore
         style={successMessage}>
         <h4> Your password reset request has been submitted successfully! Please check your email for a link to reset your password. (These often end up in SPAM, so please check there if you're having trouble finding it).</h4>
-        <Link to={"/"}>Back to Login</Link>
+
       </article>
       <article
         // @ts-ignore
         style={failureMessage}>
         <h4> We did not find an account under the email address provided. Please try again or register for a new account using the "Register" button on our login page.</h4>
-        <Link to={"/"}>Back to Login</Link>
       </article>
-    </>
+    </div>
   )
 }
 

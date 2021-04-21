@@ -75,46 +75,45 @@ const Timeline = (props) => {
     // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multipleid by the viewbox width minus chart margins
     notGDD35Prop = ((notGDD35ms / yr2ms) / 6) * (width - margin.left - margin.right);
 
-    // Associate reference object with SVG varable to be manipulated by D3
     // Assign height and width values, border and add axis
   }
 
   useEffect(() => {
 
+    // Associate reference object with SVG varable to be manipulated by D3
     const svg = d3.select(d3Container.current)
-    // .style("border", "1px solid black")
+      .attr("class", "timelineSVG")
 
-    // // Add Axis
-    // .append('g')
-    // // move the g element that will host the x axis to the bottom of the chart
-    // .attr("transform", `translate(0,${height - margin.bottom})`)
-    // .attr("class", "timelineAxis")
-    // .call(d3.axisBottom(xAxis))
-    // // Select the xAxis Text and rotate labels for readibility. 
-    // .selectAll("text")
-    // .style("text-anchor", "end")
-    // .attr("dx", "-.8em")
-    // .attr("dy", ".15em")
-    // .attr("transform", "rotate(-65)")
-    // .append('g')
-    // .attr("transform", `translate(200,275)`)
-    // .attr("height", "25")
-    // .attr("width", "50")
-    // .append('text')
-    // .attr("font-size", "14")
-    // .attr("font-family", "raleway")
-    // .text('Month')
+      // Add Axis
+      .append('g')
+      // move the g element that will host the x axis to the bottom of the chart
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .attr("class", "timelineAxis")
+      .call(d3.axisBottom(xAxis))
+      // Select the xAxis Text and rotate labels for readibility. 
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)")
+      .append('g')
+      .attr("transform", `translate(200,275)`)
+      .attr("height", "25")
+      .attr("width", "50")
+      .append('text')
+      .attr("font-size", "14")
+      .attr("font-family", "raleway")
+      .text('Month')
   }, [])
 
   const timelineUpdater = () => {
 
+    // Group chart update tasks that will be contingent upon data changes to a different useEffect that will re-render on change.
     const svg = d3.select(d3Container.current)
     // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
     const gSelect = svg
       .selectAll('g')
       .data(userMethods)
-
-    gSelect
       .enter()
       .append('g')
       .attr("y", (d, i) => `${((height - margin.bottom) / userMethods.length) * i}`)
@@ -154,14 +153,13 @@ const Timeline = (props) => {
     rSelect
       .exit()
       .remove()
-
   }
 
   useEffect(() => {
 
+
     console.log("useEffect1")
     timelineUpdater()
-
 
   }, [userMethods, d3Container.current])
 
@@ -171,12 +169,6 @@ const Timeline = (props) => {
     .domain([yrStartDate, yrEndDate])
     // Rather than extending from 0 to the full width and height of the chart, the starts and ends of the ranges are moved inward by the corresponding margins.
     .range([margin.left, width - margin.right])
-
-
-
-
-  // Add chart update tasks that will be contingent upon data changes to a different useEffect that will re-render on change.
-
 
 
   return (

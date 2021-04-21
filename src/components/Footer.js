@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <Link to='/donation'>Donate</Link>
+      <Link id="donationLink" to='/donation'>Donate</Link>
     </footer>
   )
 }

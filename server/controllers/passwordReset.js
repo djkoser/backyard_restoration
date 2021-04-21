@@ -30,7 +30,7 @@ module.exports = {
           html:
             `<h1 style='font-size: 18pt'>Hello,<h1>
           <main>
-            <p  style='font-size: 14pt'>You, or someone with access to your account, has requested a password reset with theBackyardRestorationist.net.</p>            
+            <p  style='font-size: 14pt'>You, or someone with access to your account, has requested a password reset with BackyardRestoration.net.</p>            
             <p  style='font-size: 14pt'>If this request was not made by you, please reset your password immediately using the "Reset Password" link on our login page.</p>
             <p  style='font-size: 14pt'>Otherwise, please click on the following link within 24 hours to reset your password.</p>
           </main>

@@ -31,8 +31,8 @@ const DashboardDropdowns = (props) => {
 
   return (
     <>
-      <fieldset>
-        <legend>Select Management Options</legend>
+      <fieldset className="dropdownBox">
+        <h4 id="dropdownLegend">Select Management Options</h4>
         <select onChange={e => getWeedsByVegType(e.target.value)}>
           <option value='f' >Forbs</option>
           <option value='w' >Woody Species</option>
@@ -41,6 +41,7 @@ const DashboardDropdowns = (props) => {
         <select onChange={e => getWeedMethodsByID(e.target.value)} disabled={weedOptions.length <= 0 ? true : false} >
           {weedOptions}
         </select>
+        <br />
         {switches}
       </fieldset>
 

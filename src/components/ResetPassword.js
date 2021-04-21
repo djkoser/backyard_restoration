@@ -34,12 +34,11 @@ const ResetPassword = (props) => {
   }
 
   return (
-    <>
+    <main id="submitResetBody">
       <ToastContainer />
       <h1>Change Password</h1>
-      <p>Please Enter a New Password for Your Account</p>
-      <form onSubmit={e => submitChange(e)}>
-        <label htmlFor="resetPwdPasswordInput">New Password </label>
+      <h4>Please Enter a New Password for Your Account Below</h4>
+      <form id="submitResetForm" onSubmit={e => submitChange(e)}>
         <input
           type="password"
           placeholder="New Password"
@@ -54,7 +53,7 @@ const ResetPassword = (props) => {
         <h4 >'Your password reset request has expired. Please try again using the "Forgot Password" link on our login page.'</h4>
         <Link to={"/"}>Back to Login</Link>
       </article>
-    </>
+    </main>
   )
 }
 

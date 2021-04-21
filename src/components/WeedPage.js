@@ -54,20 +54,24 @@ const WeedPage = (props) => {
   const output = (
     <>
       <Nav />
-      <section>
+      <section className="weedDescriptionBox">
         <h2>{commonName}</h2>
-        <h2>{botanicalName}</h2>
+        <h2><em>{botanicalName}</em></h2>
         <h3>{annualPerennialBiennial === "a" ? "Annual" : annualPerennialBiennial === "p" ? "Perennial" : "Biennial"} {vegType === "f" ? "Forb" : vegType === "g" ? "Graminoid" : "Woody"}</h3>
-        <img alt={`${botanicalName} commonly known as ${commonName}`} src={src} />
-        <h4>Description</h4>
-        <article>
-          {description}
-        </article>
+        <img id="descImage" alt={`${botanicalName} commonly known as ${commonName}`} src={src} />
+        <section>
+          <h4>Description</h4>
+          <article>
+            <h4 >{description}</h4>
+          </article>
+        </section>
       </section>
-      <fieldset>
-        <legend>Management Options</legend>
+      <fieldset className="dropdownBox">
+        <h3 id="manageDescLegend">Management Options</h3>
         <br />
-        {switches}
+        <div>
+          {switches}
+        </div>
       </fieldset>
     </>
   )
