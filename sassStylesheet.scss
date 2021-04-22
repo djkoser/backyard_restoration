@@ -9,6 +9,8 @@ $boxShadow: 0px 2px 2px 0px grey;
 $bodyHeight: 85vh;
 $hFHeight: 7.5vh;
 $boxPadding: 15px;
+$iPadWidth: 768px;
+$iPadWidthL1: 767px;
 
 %box {
   border-radius: $corners;
@@ -164,23 +166,11 @@ em {
 
 // login Assignments
 
-// full view only remove in mobile
-#loginComponent {
-  @extend %rowFlex;
-}
-#loginWelcomeTextBox {
-  @extend %lightBlueBox;
-  width: 400px;
-  margin-bottom: 10px;
-  margin-right: 40px;
-}
-.loginWelcomeText {
-  color: black;
-  line-height: 26.5pt;
-}
-
 #loginContainer {
   @extend %columnFlex;
+}
+#loginComponent {
+  @extend %rowFlex;
 }
 
 #siteTitleBorder {
@@ -195,6 +185,7 @@ em {
   margin-bottom: 30px;
   color: $yellow;
 }
+
 #loginBox {
   @extend %columnFlex;
   @extend %yellow-GreenBox;
@@ -209,8 +200,30 @@ em {
   color: black;
 }
 
-#mobileWelcomeText {
-  display: none;
+@media (min-width: $iPadWidth) {
+  #mobileWelcomeText {
+    display: none;
+  }
+  #loginWelcomeTextBox {
+    // Unfortunatley, cannot @extend selectors accross media queries.
+    border-radius: $corners;
+    box-shadow: $boxShadow;
+    padding: $boxPadding;
+    box-sizing: border-box;
+    background-color: $lightBlue;
+    width: 400px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+  }
+  .loginWelcomeText {
+    color: black;
+    line-height: 26.5pt;
+  }
+}
+@media (max-width: $iPadWidthL1) {
+  #loginWelcomeTextBox {
+    display: none;
+  }
 }
 
 /* Timeline */
@@ -226,6 +239,7 @@ em {
 }
 
 // Nav Bar Assignments
+
 nav {
   display: flex;
   width: 100vw;
@@ -235,65 +249,72 @@ nav {
 .linkBox {
   display: flex;
 }
-// desktop Layout
-// .linkBox {
-//   position: fixed;
-//   top: 0px;
-//   @extend %rowFlex;
-//   background-color: $greenBlue;
-//   color: $yellow;
-//   justify-content: space-around;
-//   width: 100vw;
-// }
 
-// .hamburger {
-//   display: none;
-// }
+@media (min-width: $iPadWidth) {
+  .linkBox {
+    position: fixed;
+    top: 0px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $greenBlue;
+    color: $yellow;
+    justify-content: space-around;
+    width: 100vw;
+  }
 
-// mobile Layout
-
-.invertColors {
-  width: 25px;
-  height: 4px;
-  background-color: $greenBlue;
+  .hamburger {
+    display: none;
+  }
 }
 
-.hamburger {
-  @extend %columnFlex;
-  justify-content: space-between;
-  width: 25px;
-  height: 22px;
-  margin: 2.2vh 20px 0px 0px;
-  transition: all 0.3s;
-}
-.hamburgerPatties {
-  background-color: $greenYellow;
-  width: 25px;
-  height: 4px;
-}
+@media (max-width: $iPadWidthL1) {
+  .invertColors {
+    width: 25px;
+    height: 4px;
+    background-color: $greenBlue;
+  }
 
-nav {
-  justify-content: flex-end;
-}
+  .hamburger {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 22px;
+    margin: 2.2vh 20px 0px 0px;
+    transition: all 0.3s;
+  }
+  .hamburgerPatties {
+    background-color: $greenYellow;
+    width: 25px;
+    height: 4px;
+  }
 
-.linkBox {
-  position: static;
-  flex-direction: column;
-  height: 300px;
-  background-color: $greenBlue;
-  color: $yellow;
-  opacity: 0.85;
-  transition: all 0.4s;
-  z-index: 2;
-  padding: 15px;
-}
+  nav {
+    justify-content: flex-end;
+  }
 
-// linkbox start
-.linkBoxClosed {
-  @include transform(translate(220px, $hFHeight));
-}
-.linkBoxOpened {
-  @include transform(translate(45px, $hFHeight));
+  .linkBox {
+    position: static;
+    flex-direction: column;
+    height: 300px;
+    background-color: $greenBlue;
+    color: $yellow;
+    opacity: 0.85;
+    transition: all 0.4s;
+    z-index: 2;
+    padding: 15px;
+  }
+
+  // linkbox start
+  .linkBoxClosed {
+    @include transform(translate(220px, $hFHeight));
+  }
+  .linkBoxOpened {
+    @include transform(translate(45px, $hFHeight));
+  }
 }
 
 // Password Reset Request Assignments
@@ -495,28 +516,35 @@ select {
   color: $yellow;
 }
 
-// mobile View
-
-.registerSectionText {
-  display: none;
+@media (min-width: $iPadWidth) {
+  .registerSectionText {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+  }
+  .registerWelcomeText {
+    color: black;
+    letter-spacing: 0.3pt;
+    line-height: 20pt;
+    width: 400px;
+    border-radius: $corners;
+    box-shadow: $boxShadow;
+    padding: $boxPadding;
+    box-sizing: border-box;
+    background-color: $greenBlue;
+    margin-left: 40px;
+  }
 }
-.registerWelcomeText {
-  display: none;
-}
-//  full  view
 
-.registerSectionText {
-  @extend %columnFlex;
-  color: black;
-}
-
-.registerWelcomeText {
-  color: black;
-  letter-spacing: 0.3pt;
-  line-height: 20pt;
-  width: 400px;
-  @extend %blue-greenBox;
-  margin-left: 40px;
+@media (max-width: $iPadWidthL1) {
+  .registerSectionText {
+    display: none;
+  }
+  .registerWelcomeText {
+    display: none;
+  }
 }
 
 /* Registration Screen Graphic */
@@ -524,7 +552,7 @@ select {
   position: absolute;
   top: 0px;
   width: 100vw;
-  height: 100vh;
+  height: 101vh;
   background-color: $greenBlue;
 }
 
@@ -637,8 +665,8 @@ select {
 // My account assignments
 
 #myAccountBkgd {
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
   position: relative;
   @extend %columnFlex;
   @extend %yellow-GreenBox;
@@ -668,36 +696,46 @@ select {
   width: 220px;
 }
 
-// Full view
-.myAccountForm {
-  @extend %rowFlex;
+@media (min-width: $iPadWidth) {
+  .myAccountForm {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #nameEmailPassword {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #nameEmailPassword,
+  #address {
+    margin: 100px;
+  }
+
+  .accountPageText {
+    display: inline-block;
+  }
 }
 
-#nameEmailPassword {
-  @extend %columnFlex;
-}
+@media (max-width: $iPadWidthL1) {
+  .myAccountForm {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-#nameEmailPassword,
-#address {
-  margin: 100px;
-}
+  #nameEmailPassword,
+  #address {
+    margin: 0px;
+  }
 
-.accountPageText {
-  display: inline-block;
-}
-
-// mobile view
-.myAccountForm {
-  @extend %columnFlex;
-}
-
-#nameEmailPassword,
-#address {
-  margin: 0px;
-}
-
-.accountPageText {
-  display: none;
+  .accountPageText {
+    display: none;
+  }
 }
 
 // Footer Assignemnts
@@ -741,23 +779,29 @@ footer {
   @extend %wrapFlex;
 }
 
-// mobile
-
-#weedSearchForm {
-  @extend %wrapFlex;
-  display: flex;
-  background-color: $greenYellow;
-  width: 100vw;
-  height: 5vh;
+@media (min-width: $iPadWidth) {
+  #weedSearchForm {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 6vh;
+    width: 100vw;
+  }
 }
-
-// desktopOnly
-// #weedSearchForm {
-//   @extend %wrapFlex;
-//   position: fixed;
-//   top: 6vh;
-//   width: 100vw;
-// }
+@media (max-width: $iPadWidthL1) {
+  #weedSearchForm {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: $greenYellow;
+    width: 100vw;
+    height: 5vh;
+  }
+}
 
 // Thumbnail
 

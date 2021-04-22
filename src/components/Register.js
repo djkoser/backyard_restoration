@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { addRetrievedInfo } from '../redux/userInfoReducer';
-import Nav from './Nav';
 import WeatherLoader from './WeatherLoader'
 
 // props from Login email, password
