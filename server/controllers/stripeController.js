@@ -21,8 +21,8 @@ module.exports = {
           },
         ],
         mode: 'payment',
-        success_url: 'http://localhost:1314/#/donationSuccess',
-        cancel_url: 'http://localhost:1314/#/',
+        success_url: 'http://www.backyardrestoration.net/#/donationSuccess',
+        cancel_url: 'http://www.backyardrestoration.net/#/',
       });
       res.status(200).send({ id: session.id });
     } catch (err) { console.log(err) }
