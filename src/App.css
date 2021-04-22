@@ -621,6 +621,11 @@ select {
 }
 
 @media (min-width: 768px) {
+  #myAccountHeader {
+    color: black;
+    font-size: 30pt;
+  }
+
   .myAccountForm {
     display: inline-flex;
     justify-content: center;
@@ -636,7 +641,7 @@ select {
 
   #nameEmailPassword,
 #address {
-    margin: 100px;
+    margin: 50px;
   }
 
   .accountPageText {
@@ -644,6 +649,10 @@ select {
   }
 }
 @media (max-width: 767px) {
+  #myAccountHeader {
+    display: none;
+  }
+
   .myAccountForm {
     display: inline-flex;
     justify-content: center;

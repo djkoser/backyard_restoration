@@ -697,6 +697,10 @@ select {
 }
 
 @media (min-width: $iPadWidth) {
+  #myAccountHeader {
+    color: black;
+    font-size: 30pt;
+  }
   .myAccountForm {
     display: inline-flex;
     justify-content: center;
@@ -712,7 +716,7 @@ select {
 
   #nameEmailPassword,
   #address {
-    margin: 100px;
+    margin: 50px;
   }
 
   .accountPageText {
@@ -721,6 +725,9 @@ select {
 }
 
 @media (max-width: $iPadWidthL1) {
+  #myAccountHeader {
+    display: none;
+  }
   .myAccountForm {
     display: inline-flex;
     justify-content: center;

@@ -174,6 +174,7 @@ const MyAccount = (props) => {
     <div id="myAccountBkgd">
       <Nav invertColors={true} />
       <ToastContainer />
+      <h1 id="myAccountHeader">My Account</h1>
       <main className="myAccountForm" style={!loading ? { display: "inline-flex" } : { display: "none" }}>
         <div id="nameEmailPassword">
           <fieldset className=" editBoxes" >
@@ -187,13 +188,13 @@ const MyAccount = (props) => {
             <input className={`${editToggleEmail ? "disabledTheme" : null}`} disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value) }} />
           </fieldset>
           <button onClick={() => toggleEdit("email")}>{editToggleEmail ? "Edit" : "Submit"}</button>
+        </div>
+        <div id="address">
           <fieldset className="editBoxes" >
             <h2 className="accountPageText">Password</h2>
             <input className={`${editTogglePassword ? "disabledTheme" : null}`} disabled={editTogglePassword} type='password' value={password} onChange={e => { setPassword(e.target.value) }} />
           </fieldset>
           <button onClick={() => toggleEdit("password")}>{editTogglePassword ? "Edit" : "Submit"}</button>
-        </div>
-        <div id="address">
           <fieldset className="editBoxes" >
             <h2 className="accountPageText">Address</h2>
             <input className={`${editToggleAddress ? "disabledTheme" : null}`} disabled={editToggleAddress} type='text' value={street} onChange={e => { setStreet(e.target.value) }} />
