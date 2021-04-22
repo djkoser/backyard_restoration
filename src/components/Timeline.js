@@ -2,15 +2,31 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 // @ts-ignore
 import * as d3 from 'd3';
+import DKIM from 'nodemailer/lib/dkim';
 
 
 // From store userMethods[], gSeasonLength, firstGDD35
 
 const Timeline = (props) => {
 
+  // Calculates a year as January 1st through December 31st, this will the be axis display range
+  const currentDate = new Date()
+  const yrEndDate = new Date(currentDate.getFullYear(), 11, 31)
+  const yrStartDate = new Date(currentDate.getFullYear(), 0, 1)
+
   // Create chart viewbox width and height variables
   const { width, height, first_gdd35, last_gdd35, margin, userMethods } = props;
   // @ts-ignore
+
+  const colorGenerator = () => {
+    let output = []
+    let incr = 1 / userMethods.length
+
+    for (let i = (1 / userMethods.length); i <= 1; i += incr) {
+      output.push(d3.interpolateTurbo(i))
+    }
+    return output
+  }
 
   const avgSDateToMs = (dateString) => {
     let output = new Date()
@@ -18,26 +34,6 @@ const Timeline = (props) => {
     const zIndexedMonth = Number.parseInt(dateString.substring(0, 2))
     output.setMonth(zIndexedMonth)
     return output.getTime()
-  }
-
-  const colorGenerator = () => {
-    let output = []
-    let incr = 1 / userMethods.length
-
-    for (let i = (1 / userMethods.length); i < 1; i += incr) {
-      output.push(d3.interpolateTurbo(i))
-    }
-    return output
-  }
-  var colors = colorGenerator()
-
-  const xPosVal = (ind, j) => {
-    // xPosition is the sum of the previous elements' widths
-    let output = margin.left;
-    for (let i = 0; i < ind; i++) {
-      output += Number.parseInt(j[i].getAttribute('width'))
-    }
-    return output;
   }
 
   // function to store management method text as legend descriptions
@@ -52,124 +48,148 @@ const Timeline = (props) => {
   let d3Container = useRef()
   // initialize empty reference object for the d3Container -> The reference object has persistent  state, it will be assigned to SVG element manipulated by D3 in return
 
-  let currentDate;
-  let yrEndDate;
-  let yrStartDate;
-  let yr2ms;
-  let msBetweenGDD35;
-  let notGDD35ms;
-  let GDD35Prop;
-  let notGDD35Prop;
-
-  if (first_gdd35 && last_gdd35) {
-    // Calculates a year as January 1st through December 31st, this will the be axis display range
-    currentDate = new Date()
-    yrEndDate = new Date(currentDate.getFullYear(), 11, 31)
-    yrStartDate = new Date(currentDate.getFullYear(), 0, 1)
-    // Needed in order to calculate the bar width for certain months which is the  proportion of the year that is within the user's GDD35 growing window 
-    yr2ms = yrEndDate.getTime() - yrStartDate.getTime()
-    msBetweenGDD35 = avgSDateToMs(last_gdd35) - avgSDateToMs(first_gdd35);
-    notGDD35ms = yr2ms - msBetweenGDD35;
-    // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the viewbox width minus chart margins
-    GDD35Prop = ((msBetweenGDD35 / yr2ms) / 6) * (width - margin.left - margin.right)
-    // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multipleid by the viewbox width minus chart margins
-    notGDD35Prop = ((notGDD35ms / yr2ms) / 6) * (width - margin.left - margin.right);
-
-    // Assign height and width values, border and add axis
-  }
-
   useEffect(() => {
+
+    // INitialize x-axis scale object
+    const scale = d3.scaleTime()
+      .domain([yrStartDate, yrEndDate])
+      // Rather than extending from 0 to the full width and height of the chart, the starts and ends of the ranges are moved inward by the corresponding margins.
+      .range([margin.left, width - margin.right])
+
+    const tickFormat = d3.timeFormat("%b")
+
+    const xAxis = d3
+      .axisBottom(scale)
+      .tickFormat(d => tickFormat(d));
 
     // Associate reference object with SVG varable to be manipulated by D3
     const svg = d3.select(d3Container.current)
       .attr("class", "timelineSVG")
-
-      // Add Axis
+    // Add Axis to SVG
+    svg
       .append('g')
       // move the g element that will host the x axis to the bottom of the chart
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .attr("class", "timelineAxis")
-      .call(d3.axisBottom(xAxis))
-      // Select the xAxis Text and rotate labels for readibility. 
+      .call(xAxis)
+    // Select the xAxis Text and rotate labels for readibility. 
+
+    svg
+      .append("g")
+      .attr("class", "timelineBarContainer")
+
+    const text = svg
       .selectAll("text")
+
+    text
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
       .attr("dy", ".15em")
       .attr("transform", "rotate(-65)")
       .append('g')
-      .attr("transform", `translate(200,275)`)
+      .attr("transform", `translate(150,275)`)
       .attr("height", "25")
       .attr("width", "50")
-      .append('text')
-      .attr("font-size", "14")
-      .attr("font-family", "raleway")
-      .text('Month')
+
   }, [])
+
+  const rectangleMaker = (selection, gSelection, GDD35Prop, xPosVal, colors, ind) => {
+    const months = [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december"
+    ];
+    return gSelection
+      .append('rect')
+      .attr("width", GDD35Prop)
+      .attr("x", (_d) => xPosVal(ind))
+      .style("fill", (_d, i) => colors[i])
+      .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
+      .attr("class", "monthBoxes")
+      .merge(selection)
+      .attr("height", (d) => userMethods.length > 6 ? `${(250 - margin.bottom - margin.top - 50) / userMethods.length}` : "25")
+      .attr("y", (_d, i) => `${((height - margin.bottom) / userMethods.length) * i}`);
+  }
 
   const timelineUpdater = () => {
 
-    // Group chart update tasks that will be contingent upon data changes to a different useEffect that will re-render on change.
-    const svg = d3.select(d3Container.current)
-    // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
-    const gSelect = svg
-      .selectAll('g')
-      .data(userMethods)
-      .enter()
-      .append('g')
-      .attr("y", (d, i) => `${((height - margin.bottom) / userMethods.length) * i}`)
-      .attr("fill", (d, i) => colors[i])
+    if (first_gdd35 && last_gdd35) {
+      // Needed in order to calculate the bar width for certain months which is the  proportion of the year that is within the user's GDD35 growing window 
+      const yr2ms = yrEndDate.getTime() - yrStartDate.getTime()
+      const msBetweenGDD35 = avgSDateToMs(last_gdd35) - avgSDateToMs(first_gdd35);
+      const notGDD35ms = yr2ms - msBetweenGDD35;
+      // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the viewbox width minus chart margins
+      const GDD35Prop = ((msBetweenGDD35 / yr2ms) / 6) * (width - margin.left - margin.right)
+      // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multipleid by the viewbox width minus chart margins
+      const notGDD35Prop = ((notGDD35ms / yr2ms) / 6) * (width - margin.left - margin.right);
 
-    // Create new rect elements within g elements, one for each management timeframe
-    const rSelect = gSelect
-      .selectAll('rect')
-      .data((d) =>
-        [{ visibility: d.january, width: notGDD35Prop },
-        { visibility: d.february, width: notGDD35Prop },
-        { visibility: d.march, width: notGDD35Prop },
-        { visibility: d.april, width: notGDD35Prop },
-        { visibility: d.may, width: GDD35Prop },
-        { visibility: d.june, width: GDD35Prop },
-        { visibility: d.july, width: GDD35Prop },
-        { visibility: d.august, width: GDD35Prop },
-        { visibility: d.september, width: GDD35Prop },
-        { visibility: d.october, width: GDD35Prop },
-        { visibility: d.november, width: notGDD35Prop },
-        { visibility: d.december, width: notGDD35Prop }], d => d)
+      // Assign height and width values, border and add axis
 
-    rSelect
-      .enter()
-      .append('rect')
-      .attr("width", (d) => d.width)
-      .attr("height", (d) => userMethods.length > 6 ? `${(250 - margin.bottom - margin.top - 50) / userMethods.length}` : "25")
-      .attr("x", (d, ind, j) => xPosVal(ind, j))
-      .attr("y", (d, i, j) => j[i].parentElement.getAttribute('y'))
-      .style("fill", (d, i, j) => j[i].parentElement.getAttribute("color"))
-      .attr("visibility", (d) => Number.parseInt(d.visibility) ? "visible" : "hidden")
+      // Indicates which months are considered hypothetically within the GDD35 zone and which are not
+      const yearlyGDDPattern = [
+        notGDD35Prop,
+        notGDD35Prop,
+        notGDD35Prop,
+        notGDD35Prop,
+        GDD35Prop,
+        GDD35Prop,
+        GDD35Prop,
+        GDD35Prop,
+        GDD35Prop,
+        GDD35Prop,
+        notGDD35Prop,
+        notGDD35Prop];
 
-    gSelect
-      .exit()
-      .remove()
+      // Uses yearlyGDDPattern to determine the position of an element
 
-    rSelect
-      .exit()
-      .remove()
-  }
+      const xPosVal = (ind) => {
+        // xPosition is the sum of the previous elements' widths plus the left margin
+        let prevWidths = yearlyGDDPattern.slice(0, ind)
+        return ind === 0 ? margin.left : margin.left + prevWidths.reduce((prev, next) => prev + next)
+      }
+
+      let colors = colorGenerator()
+
+      // Group chart update tasks that will be contingent upon data changes to a different useEffect that will re-render on change.
+      const timelineBarContainer = d3.select(d3Container.current).select(".timelineBarContainer")
+
+      // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
+      const selection = timelineBarContainer
+        .selectAll('g')
+        .data(userMethods, d => d.method_id)
+
+      // Create new g elements with their selection and append them to timelineBarContainer
+      const gSelection = selection
+        .enter()
+        .append('g')
+        .attr("class", "methodBoxes")
+        .attr("id", d => d.method_id)
+
+
+      // Create new rect elements within g elements, one for each management timeframe/month
+
+      yearlyGDDPattern.forEach((el, ind) => rectangleMaker(monthSelection, gSelection, el, xPosVal, colors, ind))
+
+      // Remove unnecessary boxes;
+      selection.exit().remove();
+
+    }
+
+  };
 
   useEffect(() => {
-
-
-    console.log("useEffect1")
+    console.log("useEffect")
     timelineUpdater()
-
-  }, [userMethods, d3Container.current])
-
-
-  // INitialize x-axis object
-  const xAxis = d3.scaleTime()
-    .domain([yrStartDate, yrEndDate])
-    // Rather than extending from 0 to the full width and height of the chart, the starts and ends of the ranges are moved inward by the corresponding margins.
-    .range([margin.left, width - margin.right])
-
+  }, [userMethods])
 
   return (
     <>

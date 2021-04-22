@@ -21,7 +21,7 @@ const Dashboard = () => {
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
 
 
-  const chartMargin = { top: 20, right: 0, bottom: 90, left: 40 };
+  const chartMargin = { top: 20, right: 10, bottom: 30, left: 10 };
 
   return (
     <>
