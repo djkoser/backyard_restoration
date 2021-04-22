@@ -124,6 +124,9 @@ h5 {
   @extend %columnFlex;
 }
 
+#root {
+  background-color: $greenBlue;
+}
 .buttonBox {
   @extend %wrapFlex;
 }
