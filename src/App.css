@@ -139,6 +139,8 @@ em {
   border: solid #af6652 10px;
   max-height: 150px;
   max-width: 300px;
+  min-height: 95px;
+  min-width: 250px;
   height: 20vh;
   width: 70vw;
   box-shadow: 0px 2px 2px 0px grey;
@@ -149,6 +151,8 @@ em {
 #loginBox {
   max-height: 300px;
   max-width: 300px;
+  min-height: 240px;
+  min-width: 250px;
   width: 80vw;
   height: 45vh;
   margin-bottom: 20px;
@@ -202,6 +206,7 @@ nav {
   display: flex;
   width: 100vw;
   height: 7.5vh;
+  min-height: 50px;
 }
 
 .linkBox {
@@ -438,6 +443,7 @@ select {
   background-color: #a0d449;
   width: 100vw;
   height: 85vh;
+  overflow: scroll;
 }
 
 #registerForm {

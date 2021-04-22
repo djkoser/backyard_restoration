@@ -179,6 +179,8 @@ em {
   border: solid $brick 10px;
   max-height: 150px;
   max-width: 300px;
+  min-height: 95px;
+  min-width: 250px;
   height: 20vh;
   width: 70vw;
   box-shadow: $boxShadow;
@@ -191,6 +193,8 @@ em {
   @extend %yellow-GreenBox;
   max-height: 300px;
   max-width: 300px;
+  min-height: 240px;
+  min-width: 250px;
   width: 80vw;
   height: 45vh;
   margin-bottom: 20px;
@@ -244,6 +248,7 @@ nav {
   display: flex;
   width: 100vw;
   height: $hFHeight;
+  min-height: 50px;
 }
 
 .linkBox {
@@ -498,7 +503,9 @@ select {
   background-color: $greenYellow;
   width: 100vw;
   height: $bodyHeight;
+  overflow: scroll;
 }
+
 #registerForm {
   @extend %columnFlex;
   width: 200px;
