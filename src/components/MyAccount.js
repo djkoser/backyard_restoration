@@ -142,20 +142,18 @@ const MyAccount = (props) => {
           setEditToggleAddress(true);
           axios.put(`/api/user/address`, { street, city, state, zipcode })
             .then(res => {
-              setTimeout(() => {
-                dispatch(addRetrievedInfo(res.data));
-                const { email, first_name, last_name, street, city, state, zipcode } = res.data;
-                setFirstName(first_name);
-                setLastName(last_name);
-                setEmail(email);
-                setPassword("This is a fake password");
-                setStreet(street);
-                setCity(city);
-                setState(state);
-                setZipcode(zipcode);
-                setLoading(false);
-                toast.success("Your address has been updated successfully.");
-              }, 3000)
+              dispatch(addRetrievedInfo(res.data));
+              const { email, first_name, last_name, street, city, state, zipcode } = res.data;
+              setFirstName(first_name);
+              setLastName(last_name);
+              setEmail(email);
+              setPassword("This is a fake password");
+              setStreet(street);
+              setCity(city);
+              setState(state);
+              setZipcode(zipcode);
+              setLoading(false);
+              toast.success("Your address has been updated successfully.");
             })
             .catch(err => {
               setLoading(false)

@@ -21,9 +21,7 @@ const ResetPassword = (props) => {
         setPassword("")
         toast.success("Password Reset Successful! Logging you in...")
         setFailureMessage({ visibility: "hidden" })
-        setTimeout(() => {
-          props.history.push('/dash')
-        }, 2000)
+        props.history.push('/dash')
       })
       // @ts-ignore
       .catch(err => {
