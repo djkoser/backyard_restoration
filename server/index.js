@@ -13,6 +13,8 @@ const stripeController = require('./controllers/stripeController');
 
 const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
 
+app.use(express.static(`${__dirname}/../build`))
+
 app.use(express.json());
 app.use(
   session({

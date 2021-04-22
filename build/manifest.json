@@ -1,0 +1,8 @@
+{
+  "short_name": "Backyard Restoration",
+  "name": "Backyard Restoration.net",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#297374",
+  "background_color": "#ffffff"
+}
