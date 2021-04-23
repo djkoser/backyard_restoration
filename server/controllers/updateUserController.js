@@ -16,12 +16,17 @@ module.exports = {
   chgUserEmail: async (req, res) => {
     const db = req.app.get('db')
     const { email } = req.body;
-    const user_id = req.session.user.user_id;
-    try {
-      await db.updateUser.chgUserEmail(user_id, email);
-      req.session.user = { ...req.session.user, email };
-      res.status(200).send(req.session.user);
-    } catch (err) { console.log(err) }
+    const storedUser = await db.user.getUserCredentials(email.toLowerCase());
+    if (!storedUser.length) {
+      const user_id = req.session.user.user_id;
+      try {
+        await db.updateUser.chgUserEmail(user_id, email);
+        req.session.user = { ...req.session.user, email };
+        res.status(200).send(req.session.user);
+      } catch (err) { console.log(err) }
+    } else {
+      res.sendStatus(403);
+    }
   },
   chgUserPassword: async (req, res) => {
     const db = req.app.get('db')

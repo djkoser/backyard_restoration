@@ -59,10 +59,31 @@ const MyAccount = (props) => {
 
   const [loading, setLoading] = useState(false);
 
+  const refresh = () => {
+    setFirstName(firstNameRedux)
+    setLastName(lastNameRedux)
+    setEmail(emailRedux)
+    setStreet(streetRedux)
+    setCity(cityRedux)
+    setState(stateRedux)
+    setZipcode(zipcodeRedux)
+  }
+
+  const onError = () => {
+    dispatch(getUserInfo())
+    if (emailRedux && firstNameRedux && lastNameRedux && streetRedux && cityRedux && stateRedux && zipcodeRedux) {
+      toast.error("There was an error while attempting to change your credentials. If you are attempting to change your email, it is possible that you have an account with us under the email you're attempting to switch to. Otherwise, please notify us of this problem at BackyardRestorationNet@gmail.com and we will work to find a solution as quickly as possilble.")
+    } else { props.history.push('/') }
+  }
 
   useEffect(() => {
     dispatch(getUserInfo())
   }, [dispatch]);
+
+  useEffect(() => {
+    refresh()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [emailRedux, firstNameRedux, lastNameRedux, streetRedux, cityRedux, stateRedux, zipcodeRedux])
 
   const toggleEdit = (type) => {
     switch (type) {
@@ -74,19 +95,11 @@ const MyAccount = (props) => {
           axios.put(`/api/user/name`, { first_name: firstName, last_name: lastName })
             .then(res => {
               dispatch(addRetrievedInfo(res.data))
-              const { email, first_name, last_name, street, city, state, zipcode } = res.data;
-              setFirstName(first_name)
-              setLastName(last_name)
-              setEmail(email)
               setPassword("This is a fake password")
-              setStreet(street)
-              setCity(city)
-              setState(state)
-              setZipcode(zipcode)
               toast.success("Your name has been updated successfully.")
             })
-            .catch(err => toast.error("There was an error while attempting to change your credentials, please notify us of this problem at BackyardRestorationNet@gmail.com and we will work to find a solution as quickly as possilble."))
-        }
+            .catch(err => onError())
+        };
         return
       case "email":
         if (editToggleEmail) {
@@ -96,21 +109,12 @@ const MyAccount = (props) => {
           axios.put(`/api/user/email`, { email })
             .then(res => {
               dispatch(addRetrievedInfo(res.data))
-              const { email, first_name, last_name, street, city, state, zipcode } = res.data;
-              setFirstName(first_name)
-              setLastName(last_name)
-              setEmail(email)
               setPassword("This is a fake password")
-              setStreet(street)
-              setCity(city)
-              setState(state)
-              setZipcode(zipcode)
               toast.success("Your email has been updated successfully.")
 
             })
-            .catch(err => toast.error("There was an error while attempting to change your credentials, please notify us of this problem at BackyardRestorationNet@gmail.com and we will work to find a solution as quickly as possilble."))
-
-        }
+            .catch(err => onError())
+        };
         return
       case "password":
         if (editTogglePassword) {
@@ -121,20 +125,10 @@ const MyAccount = (props) => {
           axios.put(`/api/user/password`, { password })
             .then(res => {
               dispatch(addRetrievedInfo(res.data))
-              const { email, first_name, last_name, street, city, state, zipcode } = res.data;
-              setFirstName(first_name)
-              setLastName(last_name)
-              setEmail(email)
               setPassword("This is a fake password")
-              setStreet(street)
-              setCity(city)
-              setState(state)
-              setZipcode(zipcode)
               toast.success("Your password has been updated successfully.")
-
             })
-            .catch(err => toast.error("There was an error while attempting to change your credentials, please notify us of this problem at BackyardRestorationNet@gmail.com and we will work to find a solution as quickly as possilble."))
-
+            .catch(err => onError())
         }
         return
       case "address":
@@ -146,21 +140,13 @@ const MyAccount = (props) => {
           axios.put(`/api/user/address`, { street, city, state, zipcode })
             .then(res => {
               dispatch(addRetrievedInfo(res.data));
-              const { email, first_name, last_name, street, city, state, zipcode } = res.data;
-              setFirstName(first_name);
-              setLastName(last_name);
-              setEmail(email);
               setPassword("This is a fake password");
-              setStreet(street);
-              setCity(city);
-              setState(state);
-              setZipcode(zipcode);
               setLoading(false);
               toast.success("Your address has been updated successfully.");
             })
             .catch(err => {
-              setLoading(false)
-              toast.error("There was an error while attempting to change your credentials, please notify us of this problem at BackyardRestorationNet@gmail.com and we will work to find a solution as quickly as possilble.")
+              setLoading(false);
+              onError();
             })
         }
         return
@@ -169,7 +155,6 @@ const MyAccount = (props) => {
     }
   };
   // @ts-ignore
-
 
   return (
     <div id="myAccountBkgd">
