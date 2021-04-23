@@ -126,7 +126,6 @@ const Timeline = (props) => {
       .append('rect')
       .attr("width", GDD35Prop)
       .attr("x", (_d) => xPosVal(ind))
-      .style("fill", (_d, i) => colors[i])
       .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
       .attr("class", "monthBoxes")
       .transition()
@@ -198,6 +197,8 @@ const Timeline = (props) => {
         .merge(timelineBarContainer.selectAll(".methodBoxes"))
         .transition()
         .attr("transform", (_d, i) => `translate(0,${((height - margin.bottom) / userMethods.length) * i})`)
+        .attr("fill", (_d, i) => colors[i])
+
 
       // Create new rectangle elements within g elements, one for each management timeframe/month
 
