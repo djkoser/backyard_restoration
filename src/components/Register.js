@@ -37,7 +37,6 @@ const Register = (props) => {
       .then(async (res) => {
         dispatch(addRetrievedInfo(res.data));
         toast.success('Registration Successful! Logging you in to your new dashboard...')
-        // delay to push avoids strange error from NOAA Server ->  The proxy server received an invalid response from an upstream server.'The proxy server could not handle the request Reason: Error reading from remote server. Additionally, a 502 Bad Gateway  'error was encountered while trying to use an ErrorDocument. End Quote.  It is possible that the quick turnaround to push was causing some sort of timeout condition. 3 seconds allows for registration susccess message so this ends up being dual purpose. 
         setTimeout(() => props.history.push('./dash'), 3000);
       })
       .catch((err) => {
