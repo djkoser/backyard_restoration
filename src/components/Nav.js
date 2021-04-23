@@ -10,7 +10,7 @@ const Nav = (props) => {
       .then(res => {
         props.history.push('/')
       })
-      .catch(err => { console.log(err) })
+      .catch(err => props.history.push('/'))
   }
   return (
     <nav>

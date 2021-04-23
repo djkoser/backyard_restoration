@@ -35,18 +35,18 @@ const WeedPage = (props) => {
         setVegType(veg_type);
         setDescription(description)
       })
-      .catch(err => console.log(err))
+      .catch(err => props.history.push('/'))
     await axios.get(`/api/weeds/methods/${weed_id}`)
       .then(res => {
         setMgmtOptions(res.data);
       })
-      .catch(err => { console.log(err) })
+      .catch(err => props.history.push('/'))
     setLoading(false)
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getWeedDetails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 

@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 // @ts-ignore
 import * as d3 from 'd3';
-import DKIM from 'nodemailer/lib/dkim';
 
 
 // From store userMethods[], gSeasonLength, firstGDD35
@@ -13,6 +12,24 @@ const Timeline = (props) => {
   const currentDate = new Date()
   const yrEndDate = new Date(currentDate.getFullYear(), 11, 31)
   const yrStartDate = new Date(currentDate.getFullYear(), 0, 1)
+  const [legendOutput, setLegendOutput] = useState([(
+    <div className="d3Legend">
+    </div>)]);
+
+  const months = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+  ];
 
   // Create chart viewbox width and height variables
   const { width, height, first_gdd35, last_gdd35, margin, userMethods } = props;
@@ -20,7 +37,7 @@ const Timeline = (props) => {
 
   const colorGenerator = () => {
     let output = []
-    let incr = 1 / userMethods.length
+    let incr = 0.8 / userMethods.length
 
     for (let i = (1 / userMethods.length); i <= 1; i += incr) {
       output.push(d3.interpolateTurbo(i))
@@ -37,11 +54,20 @@ const Timeline = (props) => {
   }
 
   // function to store management method text as legend descriptions
-  const extractText = () => {
-    return userMethods.map(el => `Weed: ${el.common_name}: ${el.name} - ${el.description}`)
-  }
+  const extractText = () => userMethods.map(el => `Weed: ${el.common_name} - ${el.name}`)
 
-  const legendText = extractText()
+  const createLegend = (colors) => {
+    let legendText = extractText()
+
+    setLegendOutput(legendText.map((el, ind) => (
+      <div key={`legendBody${ind}`} className="legendBody">
+        <div key={`legendText${ind}`}>
+          <div style={{ backgroundColor: `${colors[ind]}` }} className="colorCode"></div>
+          {el}
+        </div>
+      </div>
+    )))
+  }
 
   // Bind D3 data to svg reference object, 
 
@@ -60,6 +86,7 @@ const Timeline = (props) => {
 
     const xAxis = d3
       .axisBottom(scale)
+      // @ts-ignore
       .tickFormat(d => tickFormat(d));
 
     // Associate reference object with SVG varable to be manipulated by D3
@@ -91,23 +118,10 @@ const Timeline = (props) => {
       .attr("height", "25")
       .attr("width", "50")
 
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, margin.bottom, margin.left, margin.right, width])
 
-  const rectangleMaker = (selection, gSelection, GDD35Prop, xPosVal, colors, ind) => {
-    const months = [
-      "january",
-      "february",
-      "march",
-      "april",
-      "may",
-      "june",
-      "july",
-      "august",
-      "september",
-      "october",
-      "november",
-      "december"
-    ];
+  const rectangleMaker = (gSelection, GDD35Prop, xPosVal, colors, ind) => {
     return gSelection
       .append('rect')
       .attr("width", GDD35Prop)
@@ -115,15 +129,16 @@ const Timeline = (props) => {
       .style("fill", (_d, i) => colors[i])
       .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
       .attr("class", "monthBoxes")
-      .merge(selection)
+      .transition()
       .attr("height", (d) => userMethods.length > 6 ? `${(250 - margin.bottom - margin.top - 50) / userMethods.length}` : "25")
-      .attr("y", (_d, i) => `${((height - margin.bottom) / userMethods.length) * i}`);
   }
+  // Prep variable for use at end of function -> legend color key and text
+
 
   const timelineUpdater = () => {
 
     if (first_gdd35 && last_gdd35) {
-      // Needed in order to calculate the bar width for certain months which is the  proportion of the year that is within the user's GDD35 growing window 
+      // Needed  to calculate the bar width for certain months which is the  proportion of the year that is within the user's GDD35 growing window 
       const yr2ms = yrEndDate.getTime() - yrStartDate.getTime()
       const msBetweenGDD35 = avgSDateToMs(last_gdd35) - avgSDateToMs(first_gdd35);
       const notGDD35ms = yr2ms - msBetweenGDD35;
@@ -163,32 +178,39 @@ const Timeline = (props) => {
       const timelineBarContainer = d3.select(d3Container.current).select(".timelineBarContainer")
 
       // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
+      // Selection represents existing data
       const selection = timelineBarContainer
         .selectAll('g')
         .data(userMethods, d => d.method_id)
 
+      // Remove unnecessary boxes;
+      selection.exit().remove();
+
       // Create new g elements with their selection and append them to timelineBarContainer
+      // Selection represents new data
       const gSelection = selection
         .enter()
         .append('g')
         .attr("class", "methodBoxes")
         .attr("id", d => d.method_id)
+      // merge existing methodBoxes to updated method boxes
+      gSelection
+        .merge(timelineBarContainer.selectAll(".methodBoxes"))
+        .transition()
+        .attr("transform", (_d, i) => `translate(0,${((height - margin.bottom) / userMethods.length) * i})`)
 
+      // Create new rectangle elements within g elements, one for each management timeframe/month
 
-      // Create new rect elements within g elements, one for each management timeframe/month
+      yearlyGDDPattern.forEach((el, ind) => rectangleMaker(gSelection, el, xPosVal, colors, ind))
 
-      yearlyGDDPattern.forEach((el, ind) => rectangleMaker(monthSelection, gSelection, el, xPosVal, colors, ind))
-
-      // Remove unnecessary boxes;
-      selection.exit().remove();
-
+      createLegend(colors)
     }
 
   };
 
   useEffect(() => {
-    console.log("useEffect")
     timelineUpdater()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userMethods])
 
   return (
@@ -199,6 +221,10 @@ const Timeline = (props) => {
         preserveAspectRatio="xMinYMin meet"
         viewBox={`0 0 ${width} ${height}`}
       ></svg>
+      <div id="legendContainer">
+        <h2 id="legendHeader">Legend</h2>
+        {legendOutput}
+      </div>
     </>
   );
 }

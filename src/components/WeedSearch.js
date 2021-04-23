@@ -15,7 +15,7 @@ const WeedSearch = (props) => {
   const getWeedsByType = () => {
     axios.get(`/api/weeds?vegType=${weedType}`)
       .then(res => setWeedList(res.data))
-      .catch(err => console.log(err))
+      .catch(err => props.history.push('/'))
   };
   const searchWeedsByKeyword = (e) => {
     e.preventDefault()
@@ -24,7 +24,7 @@ const WeedSearch = (props) => {
         setSearchText("")
         setWeedList(res.data)
       })
-      .catch(err => console.log(err))
+      .catch(err => props.history.push('/'))
   };
   useEffect(() => {
     getWeedsByType();

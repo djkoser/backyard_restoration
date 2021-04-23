@@ -234,14 +234,43 @@ em {
 }
 
 /* Timeline */
-#d3Container {
-  max-width: 1010px;
+#d3Container,
+.d3Legend,
+.legendBody {
+  max-width: 1000px;
   width: 90vw;
 }
 .timelineSVG {
   border: solid $brick;
 }
 .timelineAxis {
+  color: $brick;
+}
+
+.legendContainer {
+  @extend %columnFlex;
+}
+.legendBody {
+  display: inline-flex;
+  justify-content: flex-start;
+  @extend %brickBox;
+  @include fitContent(height);
+  color: $lightBlue;
+  font-weight: bold;
+  letter-spacing: 1.5pt;
+  margin: 2.5px;
+  font-size: 12pt;
+  padding: 10px;
+  width: 90vw;
+}
+
+.colorCode {
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-right: 15px;
+}
+#legendHeader {
   color: $brick;
 }
 
@@ -420,7 +449,7 @@ select {
 
 .switchPara {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   width: 95vw;
   height: 31px;
 }
