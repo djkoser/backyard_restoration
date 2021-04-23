@@ -35,7 +35,7 @@ const Login = (props) => {
         <h1 className="loginWelcomeText">Welcome to Our Community!</h1>
         <h4 className="loginWelcomeText"> BackyardRestoration.net is dedicated to providing you with the resources necessary to complete your own backyard ecological restorations.</h4>
         <h4 className="loginWelcomeText">This site is predominantly geared-toward prairie restorations in the upper midwest, but will be expanding to include other regions and ecosystems in the future.</h4>
-        <h4 className="loginWelcomeText">Simply click the "Register" Button to begin or log in with your email and password.</h4>
+        <h4 className="loginWelcomeText">Simply click the "Register" Button to begin, or log in with your email and password.</h4>
       </article>
       <div id="loginContainer">
         <ToastContainer />

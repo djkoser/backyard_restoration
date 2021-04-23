@@ -533,14 +533,12 @@ select {
 #registerBody {
   @extend %rowFlex;
   background-color: $greenYellow;
-  width: 100vw;
-  height: $bodyHeight;
-  overflow: scroll;
+  min-width: 100vw;
 }
 
 #registerForm {
   @extend %columnFlex;
-  width: 200px;
+  min-height: $bodyHeight;
 }
 
 .registerSections {

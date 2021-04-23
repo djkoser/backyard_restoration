@@ -470,13 +470,11 @@ select {
 
 #registerBody {
   background-color: #a0d449;
-  width: 100vw;
-  height: 85vh;
-  overflow: scroll;
+  min-width: 100vw;
 }
 
 #registerForm {
-  width: 200px;
+  min-height: 85vh;
 }
 
 .registerSections {
