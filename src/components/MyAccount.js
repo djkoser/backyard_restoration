@@ -1,13 +1,14 @@
 // @ts-ignore
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 // @ts-ignore
-import { addRetrievedInfo } from '../redux/userInfoReducer';
+import { addRetrievedInfo, getUserInfo } from '../redux/userInfoReducer';
 import Nav from './Nav';
 import Footer from './Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import WeatherLoader from './WeatherLoader';
+
 
 // props from store user_id, email, first_name, last_name, street, city, state, zipcode, getUserInfo()
 
@@ -59,7 +60,9 @@ const MyAccount = (props) => {
   const [loading, setLoading] = useState(false);
 
 
-
+  useEffect(() => {
+    dispatch(getUserInfo())
+  }, [dispatch]);
 
   const toggleEdit = (type) => {
     switch (type) {

@@ -1,9 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Footer from './Footer';
 import Nav from './Nav';
 import Timeline from './Timeline';
 import DashboardDropdowns from './DashboardDropdowns';
+import { getUserInfo } from '../redux/userInfoReducer';
+import { getMethods } from '../redux/mgmtMethodReducer';
 
 // props from store hZone, gSeasonLength firstGDD35
 
@@ -20,8 +22,13 @@ const Dashboard = () => {
   // @ts-ignore
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
 
-
   const chartMargin = { top: 20, right: 10, bottom: 30, left: 10 };
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserInfo())
+    dispatch(getMethods())
+  }, [dispatch]);
 
   return (
     <>

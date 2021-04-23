@@ -13,7 +13,7 @@ const Timeline = (props) => {
   const yrEndDate = new Date(currentDate.getFullYear(), 11, 31)
   const yrStartDate = new Date(currentDate.getFullYear(), 0, 1)
   const [legendOutput, setLegendOutput] = useState([(
-    <div className="d3Legend">
+    <div key="placeholder" className="d3Legend">
     </div>)]);
 
   const months = [
