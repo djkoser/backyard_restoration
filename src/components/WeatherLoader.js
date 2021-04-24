@@ -7,7 +7,7 @@ const WeatherLoader = (props) => {
       { display: "inline-flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }
       : { display: "none" }}>
       <div className="loaderText">
-        Calculating growing parameters for your location based upon 5 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA). This could take several minutes depending on their server traffic.
+        Calculating growing parameters for your location based upon 5 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA). This could take several minutes depending on server traffic.
         </div>
       <svg className="svgContainer" viewBox="0 0 620 600" preserveAspectRatio="xMinYMin meet">
         <svg x="340" y="80" id="sun" width="275" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet" >

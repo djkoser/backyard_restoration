@@ -91,7 +91,7 @@ module.exports = {
       edString = date2String(ed);
       sdString = date2String(sd);
       // 
-      await delay(200)
+      await delay(1000)
     }
 
     const hardinessZoneCalculator = (TMINAvg) => {

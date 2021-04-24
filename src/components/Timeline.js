@@ -121,15 +121,13 @@ const Timeline = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [height, margin.bottom, margin.left, margin.right, width])
 
-  const rectangleMaker = (gSelection, GDD35Prop, xPosVal, colors, ind) => {
+  const rectangleMaker = (gSelection, GDD35Prop, xPosVal, ind) => {
     return gSelection
       .append('rect')
       .attr("width", GDD35Prop)
       .attr("x", (_d) => xPosVal(ind))
       .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
       .attr("class", "monthBoxes")
-      .transition()
-      .attr("height", (d) => userMethods.length > 6 ? `${(250 - margin.bottom - margin.top - 50) / userMethods.length}` : "25")
   }
   // Prep variable for use at end of function -> legend color key and text
 
@@ -177,7 +175,7 @@ const Timeline = (props) => {
       const timelineBarContainer = d3.select(d3Container.current).select(".timelineBarContainer")
 
       // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
-      // Selection represents existing data
+      // Selection represents existing data and g elements
       const selection = timelineBarContainer
         .selectAll('g')
         .data(userMethods, d => d.method_id)
@@ -185,25 +183,39 @@ const Timeline = (props) => {
       // Remove unnecessary boxes;
       selection.exit().remove();
 
-      // Create new g elements with their selection and append them to timelineBarContainer
-      // Selection represents new data
+      // Create new g elements along with their selection and append them to timelineBarContainer
+      // gSelection represents new data
+      // 12 month boxes per g element
       const gSelection = selection
         .enter()
         .append('g')
         .attr("class", "methodBoxes")
         .attr("id", d => d.method_id)
-      // merge existing methodBoxes to updated method boxes
+
+      // merge existing methodBoxes to updated method boxes in order to update existing boxes and new boxes at same time
       gSelection
         .merge(timelineBarContainer.selectAll(".methodBoxes"))
         .transition()
         .attr("transform", (_d, i) => `translate(0,${((height - margin.bottom) / userMethods.length) * i})`)
         .attr("fill", (_d, i) => colors[i])
 
+      // Create 12 new rectangle elements within each g element, one for each management timeframe/month
 
-      // Create new rectangle elements within g elements, one for each management timeframe/month
+      yearlyGDDPattern.forEach((el, ind) => {
+        rectangleMaker(gSelection, el, xPosVal, ind)
+      })
 
-      yearlyGDDPattern.forEach((el, ind) => rectangleMaker(gSelection, el, xPosVal, colors, ind))
+      // due to map-based append, needed to isolate height assignment to new selection including new and old month boxes
+      const allMonthBoxes = timelineBarContainer
+        .selectAll(".methodBoxes")
+        .selectAll(".monthBoxes")
 
+      // update all month boxes to include adjust height value. 
+      allMonthBoxes
+        .transition()
+        .attr("height", (d) => userMethods.length > 6 ? `${(height - margin.bottom - margin.top - 50) / userMethods.length}` : "25")
+
+      // create legned to reflect each created method box. 
       createLegend(colors)
     }
 
