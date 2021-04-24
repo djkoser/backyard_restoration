@@ -155,6 +155,18 @@ const MyAccount = (props) => {
     }
   };
   // @ts-ignore
+  const deleteAccount = () => {
+    axios.delete("/api/deleteUser")
+      .then(res => {
+        toast.success("Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.")
+        setTimeout(() => {
+          props.history.push("/")
+        }, 5000)
+      })
+      .catch(err =>
+        toast.error("An error occured while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.")
+      )
+  }
 
   return (
     <div id="myAccountBkgd">
@@ -162,19 +174,6 @@ const MyAccount = (props) => {
       <ToastContainer />
       <h1 id="myAccountHeader">My Account</h1>
       <main className="myAccountForm" style={!loading ? { display: "inline-flex" } : { display: "none" }}>
-        <div id="nameEmailPassword">
-          <fieldset className=" editBoxes" >
-            <h2 className="accountPageText">Name</h2>
-            <input className={`${editToggleName ? "disabledTheme" : null}`} disabled={editToggleName} type='text' value={firstName} onChange={e => { setFirstName(e.target.value) }} />
-            <input className={`${editToggleName ? "disabledTheme" : null}`} disabled={editToggleName} type='text' value={lastName} onChange={e => { setLastName(e.target.value) }} />
-          </fieldset>
-          <button onClick={() => toggleEdit("name")}>{editToggleName ? "Edit" : "Submit"}</button>
-          <fieldset className="editBoxes" >
-            <h2 className="accountPageText">Email</h2>
-            <input className={`${editToggleEmail ? "disabledTheme" : null}`} disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value) }} />
-          </fieldset>
-          <button onClick={() => toggleEdit("email")}>{editToggleEmail ? "Edit" : "Submit"}</button>
-        </div>
         <div id="address">
           <fieldset className="editBoxes" >
             <h2 className="accountPageText">Password</h2>
@@ -190,6 +189,24 @@ const MyAccount = (props) => {
           </fieldset>
           <button onClick={() => toggleEdit("address")}>{editToggleAddress ? "Edit" : "Submit"}</button>
         </div>
+        <div id="nameEmailPassword">
+          <fieldset className=" editBoxes" >
+            <h2 className="accountPageText">Name</h2>
+            <input className={`${editToggleName ? "disabledTheme" : null}`} disabled={editToggleName} type='text' value={firstName} onChange={e => { setFirstName(e.target.value) }} />
+            <input className={`${editToggleName ? "disabledTheme" : null}`} disabled={editToggleName} type='text' value={lastName} onChange={e => { setLastName(e.target.value) }} />
+          </fieldset>
+          <button onClick={() => toggleEdit("name")}>{editToggleName ? "Edit" : "Submit"}</button>
+          <fieldset className="editBoxes" >
+            <h2 className="accountPageText">Email</h2>
+            <input className={`${editToggleEmail ? "disabledTheme" : null}`} disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value) }} />
+          </fieldset>
+          <button onClick={() => toggleEdit("email")}>{editToggleEmail ? "Edit" : "Submit"}</button>
+          <fieldset className="editBoxes" >
+            <h2 className="accountPageText">Delete My Account</h2>
+            <button onClick={() => deleteAccount()}>Delete Account</button>
+          </fieldset>
+        </div>
+        <br />
       </main>
       <WeatherLoader loading={loading} />
       <Footer />

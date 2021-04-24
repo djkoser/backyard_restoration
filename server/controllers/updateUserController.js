@@ -49,5 +49,12 @@ module.exports = {
       req.session.user = { ...req.session.user, first_name, last_name };
       res.status(200).send(req.session.user);
     } catch (err) { console.log(err) }
+  },
+  deleteUser: async (req, res) => {
+    const db = req.app.get('db');
+    const user_id = req.session.user.user_id;
+    db.updateUser.deleteUser(user_id)
+    req.session.destroy();
+    res.sendStatus(200)
   }
 }

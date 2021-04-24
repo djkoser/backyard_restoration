@@ -48,6 +48,7 @@ app.put("/api/user/password", authorize, updUserCtl.chgUserPassword);
 app.put("/api/user/name", authorize, updUserCtl.chgUserName);
 app.put("/api/pwdResetReq", passwordReset.resetPwdEmail);
 app.put("/api/pwdRS/:token", passwordReset.processReset);
+app.delete("/api/deleteUser", authorize, updUserCtl.deleteUser)
 // Methods Endpoints
 app.get("/api/wdctrl", authorize, methodsCtl.getMethods);
 app.put("/api/wdctrl/:ctlID", authorize, methodsCtl.toggleMethod);
