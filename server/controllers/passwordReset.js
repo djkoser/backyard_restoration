@@ -9,7 +9,7 @@ module.exports = {
     if (req.body.email === '') {
       res.sendStatus(400);
     } else {
-      const rtvdCreds = await db.user.getUserCredentials(req.body.email)
+      const rtvdCreds = await db.user.getUserCredentials(req.body.email.toLowerCase().replace(/\s/g, ""))
       if (rtvdCreds.length) {
         let expDate = new Date(Date.now() + (1000 * 60 * 60 * 24))
         const token = crypto.randomBytes(16).toString('hex')

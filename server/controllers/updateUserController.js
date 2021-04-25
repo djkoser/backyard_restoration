@@ -16,12 +16,13 @@ module.exports = {
   chgUserEmail: async (req, res) => {
     const db = req.app.get('db')
     const { email } = req.body;
-    const storedUser = await db.user.getUserCredentials(email.toLowerCase());
+    const emailFiltered = email.toLowerCase().replace(/\s/g, "")
+    const storedUser = await db.user.getUserCredentials(emailFiltered);
     if (!storedUser.length) {
       const user_id = req.session.user.user_id;
       try {
-        await db.updateUser.chgUserEmail(user_id, email);
-        req.session.user = { ...req.session.user, email };
+        await db.updateUser.chgUserEmail(user_id, emailFiltered);
+        req.session.user = { ...req.session.user, email: emailFiltered };
         res.status(200).send(req.session.user);
       } catch (err) { console.log(err) }
     } else {
