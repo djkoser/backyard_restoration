@@ -31,6 +31,12 @@ const MyAccount = (props) => {
   const stateRedux = useSelector(state => state.userInfoReducer.state);
   // @ts-ignore
   const zipcodeRedux = useSelector(state => state.userInfoReducer.zipcode);
+  // @ts-ignore
+  const firstGDD35Redux = useSelector(state => state.userInfoReducer.first_gdd35)
+  // @ts-ignore
+  const lastGDD35Redux = useSelector(state => state.userInfoReducer.last_gdd35)
+  // @ts-ignore
+  const hardinessZoneRedux = useSelector(state => state.userInfoReducer.hardiness_zone)
 
   // @ts-ignore
   const [firstName, setFirstName] = useState(firstNameRedux);
@@ -49,6 +55,12 @@ const MyAccount = (props) => {
   // @ts-ignore
   const [zipcode, setZipcode] = useState(zipcodeRedux);
   // @ts-ignore
+  const [first_gdd35, setFirstGDD35] = useState(firstGDD35Redux);
+  // @ts-ignore
+  const [last_gdd35, setLastGDD35] = useState(lastGDD35Redux);
+  // @ts-ignore
+  const [hardiness_zone, setHardinessZone] = useState(hardinessZoneRedux);
+  // @ts-ignore
   const [editToggleName, setEditToggleName] = useState(true);
   // @ts-ignore
   const [editToggleEmail, setEditToggleEmail] = useState(true);
@@ -56,6 +68,9 @@ const MyAccount = (props) => {
   const [editTogglePassword, setEditTogglePassword] = useState(true);
   // @ts-ignore
   const [editToggleAddress, setEditToggleAddress] = useState(true);
+  // @ts-ignore
+  const [editToggleGrwParams, setEditToggleGrwParams] = useState(true);
+
 
   const [loading, setLoading] = useState(false);
 
@@ -67,12 +82,16 @@ const MyAccount = (props) => {
     setCity(cityRedux)
     setState(stateRedux)
     setZipcode(zipcodeRedux)
+    setFirstGDD35(firstGDD35Redux)
+    setLastGDD35(lastGDD35Redux)
+    setHardinessZone(hardinessZoneRedux)
   }
 
-  const onError = () => {
-    dispatch(getUserInfo())
-    if (emailRedux && firstNameRedux && lastNameRedux && streetRedux && cityRedux && stateRedux && zipcodeRedux) {
-      toast.error("There was an error while attempting to change your credentials. If you are attempting to change your email, it is possible that you have an account with us under the email you're attempting to switch to. Otherwise, please notify us of this problem at BackyardRestorationNet@gmail.com and we will work to find a solution as quickly as possilble.")
+  const onError = async () => {
+    await dispatch(getUserInfo())
+    refresh()
+    if (emailRedux && firstNameRedux && lastNameRedux && streetRedux && cityRedux && stateRedux && zipcodeRedux && firstGDD35Redux && lastGDD35Redux && hardinessZoneRedux) {
+      toast.error("There was an error while attempting to change your credentials.")
     } else { props.history.push('/') }
   }
 
@@ -83,7 +102,7 @@ const MyAccount = (props) => {
   useEffect(() => {
     refresh()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailRedux, firstNameRedux, lastNameRedux, streetRedux, cityRedux, stateRedux, zipcodeRedux])
+  }, [emailRedux, firstNameRedux, lastNameRedux, streetRedux, cityRedux, stateRedux, zipcodeRedux, firstGDD35Redux, lastGDD35Redux, hardinessZoneRedux])
 
   const toggleEdit = (type) => {
     switch (type) {
@@ -113,7 +132,10 @@ const MyAccount = (props) => {
               toast.success("Your email has been updated successfully.")
 
             })
-            .catch(err => onError())
+            .catch(err => {
+              onError()
+              toast.error("It is possible that you have an account with us under the email you're attempting to switch to.")
+            })
         };
         return
       case "password":
@@ -138,15 +160,37 @@ const MyAccount = (props) => {
           setLoading(true)
           setEditToggleAddress(true);
           axios.put(`/api/user/address`, { street, city, state, zipcode })
-            .then(res => {
-              dispatch(addRetrievedInfo(res.data));
-              setPassword("This is a fake password");
-              setLoading(false);
-              toast.success("Your address has been updated successfully.");
+            .then(async res => {
+              if (typeof res.data !== "string") {
+                dispatch(addRetrievedInfo(res.data));
+                setPassword("This is a fake password");
+                setLoading(false);
+                toast.success("Your address has been updated successfully.");
+              } else {
+                toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.")
+                await setTimeout(() => props.history.push('/manualEntry'), 5000);
+              }
             })
             .catch(err => {
               setLoading(false);
               onError();
+            })
+        }
+        return
+      case "growingParams":
+        if (editToggleGrwParams) {
+          setEditToggleGrwParams(false);
+        } else {
+          setEditToggleGrwParams(true);
+          axios.put('/api/user/growingInfo', { first_gdd35, last_gdd35, hardiness_zone })
+            .then(res => {
+              dispatch(addRetrievedInfo(res.data));
+              setPassword("This is a fake password");
+              toast.success("Your growing parameters have been updated successfully.");
+            })
+            .catch(err => {
+              onError()
+              toast.error("You may have used the incorrect date format (MM-DD).")
             })
         }
         return
@@ -157,9 +201,9 @@ const MyAccount = (props) => {
   // @ts-ignore
   const deleteAccount = () => {
     axios.delete("/api/deleteUser")
-      .then(res => {
+      .then(async res => {
         toast.success("Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.")
-        setTimeout(() => {
+        await setTimeout(() => {
           props.history.push("/")
         }, 5000)
       })
@@ -174,6 +218,46 @@ const MyAccount = (props) => {
       <ToastContainer />
       <h1 id="myAccountHeader">My Account</h1>
       <main className="myAccountForm" style={!loading ? { display: "inline-flex" } : { display: "none" }}>
+        <div id="startHardiness">
+          <fieldset className=" editBoxes" >
+            <h2 className="accountPageText">Season Start and End Dates (MM-DD).</h2>
+            <input className={`${editToggleGrwParams ? "disabledTheme" : null}`} disabled={editToggleGrwParams} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value) }} />
+            <input className={`${editToggleGrwParams ? "disabledTheme" : null}`} disabled={editToggleGrwParams} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value) }} />
+            <h2 className="accountPageText"> USDA Hardiness Zone.</h2>
+            <br />
+            <h4> (Can be found via the following link)</h4>
+            <h4><a href="https://planthardiness.ars.usda.gov/" target="_blank" rel="noreferrer noopener">Click Here</a></h4>
+            <select className={`${editToggleGrwParams ? "disabledTheme" : null}`} disabled={editToggleGrwParams} value={hardiness_zone} onChange={e => { setHardinessZone(e.target.value) }}>
+              <option value="1a">Zone 1a: -60F - -55F </option>
+              <option value="1b">Zone 1b: -55F - -50F </option>
+              <option value="2a">Zone 2a: -50F - -45F </option>
+              <option value="2b">Zone 2b: -45F - -40F </option>
+              <option value="3a">Zone 3a: -40F - -35F </option>
+              <option value="3b">Zone 3b: -35F - -30F </option>
+              <option value="4a">Zone 4a: -30F - -25F </option>
+              <option value="4b">Zone 4b: -25F - -20F </option>
+              <option value="5a">Zone 5a: -20F - -15F </option>
+              <option value="5b">Zone 5b: -15F - -10F </option>
+              <option value="6a">Zone 6a: -10F - -5F </option>
+              <option value="6b">Zone 6b: -5F - 0F </option>
+              <option value="7a">Zone 7a: 0F - 5F </option>
+              <option value="7b">Zone 7b: 5F - 10F </option>
+              <option value="8a">Zone 8a: 10F - 15F </option>
+              <option value="8b">Zone 8b: 15F - 20F </option>
+              <option value="9a">Zone 9a: 20F - 25F </option>
+              <option value="9b">Zone 9b: 25F - 30F </option>
+              <option value="10a">Zone 10a: 30F - 35F </option>
+              <option value="10b">Zone 10b: 35F - 40F </option>
+              <option value="11a">Zone 11a: 40F - 45F </option>
+              <option value="11b">Zone 11b: 45F - 50F </option>
+              <option value="12a">Zone 12a: 50F - 55F </option>
+              <option value="12b">Zone 12b: 55F - 60F </option>
+              <option value="13a">Zone 13a: 60F - 65F </option>
+              <option value="13b">Zone 13b: 65F - 70F </option>
+            </select>
+          </fieldset>
+          <button onClick={() => toggleEdit("growingParams")}>{editToggleGrwParams ? "Edit" : "Submit"}</button>
+        </div>
         <div id="address">
           <fieldset className="editBoxes" >
             <h2 className="accountPageText">Password</h2>

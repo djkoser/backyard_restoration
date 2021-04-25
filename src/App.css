@@ -1,4 +1,4 @@
-.searchFigures,
+#NOAAHangupForm, .searchFigures,
 .searchLinks, .editBoxes, #myAccountBkgd, .dropdownBox, #loginBox, #growingInfoBox, .legendBody, #dashboardDecoration {
   border-radius: 5px;
   box-shadow: 0px 2px 2px 0px grey;
@@ -18,14 +18,15 @@
   background-color: #a0d449;
 }
 
-.searchFigures,
+#NOAAHangupForm, .searchFigures,
 .searchLinks, .editBoxes {
   background-color: #297373;
 }
 
-#weedDescriptionBox, .searchFigures,
+#NOAAHangupForm, #growingParamsUpdate, #NOAAHangupBody, #weedDescriptionBox, .searchFigures,
 .searchLinks, #donationBox, .editBoxes, #nameEmailPassword,
-#address, #myAccountBkgd, .registerSections, #registerForm, .dropdownBox, #dashboardDecoration, #submitResetBody, #resetReqBox, .legendContainer, #loginBox, #siteTitleBorder, #loginContainer, .App {
+#address,
+#startHardiness, #myAccountBkgd, .registerSections, #registerForm, .dropdownBox, #dashboardDecoration, #submitResetBody, #resetReqBox, .legendContainer, #loginBox, #siteTitleBorder, #loginContainer, .App {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -675,7 +676,8 @@ select {
   }
 
   #nameEmailPassword,
-#address {
+#address,
+#startHardiness {
     margin: 50px;
   }
 
@@ -775,6 +777,12 @@ footer {
 
 #descImage {
   width: 100vw;
+}
+
+#NOAAHangupBody {
+  background-color: #a0d449;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 /*# sourceMappingURL=App.css.map */

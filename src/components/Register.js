@@ -35,9 +35,14 @@ const Register = (props) => {
     setLoading(true)
     axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
       .then(async (res) => {
-        dispatch(addRetrievedInfo(res.data));
-        toast.success('Registration Successful! Logging you in to your new dashboard...')
-        setTimeout(() => props.history.push('./dash'), 3000);
+        if (typeof res.data !== "string") {
+          dispatch(addRetrievedInfo(res.data));
+          toast.success('Registration Successful! Logging you in to your new dashboard...')
+          await setTimeout(() => props.history.push('./dash'), 3000);
+        } else {
+          toast.warning("NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.")
+          await setTimeout(() => props.history.push('/manualEntry'), 5000);
+        }
       })
       .catch((err) => {
         setLoading(false)

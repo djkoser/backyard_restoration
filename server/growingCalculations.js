@@ -6,7 +6,7 @@ const axiosRetry = require('axios-retry');
 module.exports = {
   getGrowingParams: async (zipcode, street, city, state, db) => {
     // @ts-ignore
-    axiosRetry(axios, { retries: 10, retryDelay: axiosRetry.exponentialDelay, retryCondition: axiosRetry.isRetryableError });
+    axiosRetry(axios, { retries: 50, retryDelay: axiosRetry.exponentialDelay, retryCondition: axiosRetry.isRetryableError });
 
     // Creates a bounding box from from a lat/long coordinate -> will be used for gathering a list of weather stations surrounding the user's lat-long -> from stack overflow, courtesy of Federico A Rampnoni (comverted by me from Python)
     // degrees to radians
@@ -36,7 +36,7 @@ module.exports = {
     // # assuming local approximation of Earth surface as a sphere
     // # of radius given by WGS84
     // Default is set high on purpose due to many stations not making data available on API
-    const boundingBox = (latitudeInDegrees, longitudeInDegrees, halfSideInKm = 10) => {
+    const boundingBox = (latitudeInDegrees, longitudeInDegrees, halfSideInKm) => {
       const lat = deg2rad(latitudeInDegrees)
       const lon = deg2rad(longitudeInDegrees)
       const halfSide = 1000 * halfSideInKm
@@ -80,7 +80,7 @@ module.exports = {
       let TMIN = [];
       try {
         // @ts-ignore
-        await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
+        await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${null}&enddate=${edString}&limit=1000&${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
           .then(res => {
             res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
           })
@@ -185,7 +185,7 @@ module.exports = {
           hardiness_zone: hardinessZoneCalculator(TMINAvg[0].round),
           first_gdd35: avgDateString(seasonStarts),
           last_gdd35: avgDateString(seasonEnds),
-          growing_season_length: averageSeasonLength(seasonEnds, seasonStarts)
+          growing_season_length: Math.round(averageSeasonLength(seasonEnds, seasonStarts))
         }
       } catch (err) { console.log(err) }
     };
@@ -203,7 +203,7 @@ module.exports = {
               .then(async res => {
                 // Check if station list returns results if not, expand the search area by 20 km2
                 if (res.data.results) {
-                  // Run the query 5 times getting any available data from the towers collected during the second request reducing the year value each time to get 5 years of data
+                  // Run the query 10 times getting any available data from the towers collected during the second request reducing the year value each time to get 10 years of data
                   // Must run seperate queries to get around NOAA 1-year Data limitation
                   try {
                     const output1 = getDataFromNOAA(edString, sdString, stationString)
@@ -215,8 +215,18 @@ module.exports = {
                     const output4 = getDataFromNOAA(edString, sdString, stationString)
                     await forBlock();
                     const output5 = getDataFromNOAA(edString, sdString, stationString)
+                    await forBlock();
+                    const output6 = getDataFromNOAA(edString, sdString, stationString)
+                    await forBlock();
+                    const output7 = getDataFromNOAA(edString, sdString, stationString)
+                    await forBlock();
+                    const output8 = getDataFromNOAA(edString, sdString, stationString)
+                    await forBlock();
+                    const output9 = getDataFromNOAA(edString, sdString, stationString)
+                    await forBlock();
+                    const output10 = getDataFromNOAA(edString, sdString, stationString)
 
-                    APIOutputs = await Promise.all([output1, output2, output3, output4, output5]);
+                    APIOutputs = await Promise.all([output1, output2, output3, output4, output5, output6, output7, output8, output9, output10]);
 
                   } catch (err) { console.log(err) }
                 } else { return null }
@@ -233,7 +243,7 @@ module.exports = {
     try {
       // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
       // @ts-ignore
-      await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}&address`)
+      await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}`)
         .then(async res => {
           try {
             const location = res.data.results[0].geometry.location;
@@ -245,8 +255,8 @@ module.exports = {
             while (foundTowers === false) {
               if (APIOutputs) {
                 foundTowers = true;
-                thisTMINMAX.TMIN = [...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN]
-                thisTMINMAX.TMAX = [...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN];
+                thisTMINMAX.TMIN = [...APIOutputs[0].TMIN, ...APIOutputs[1].TMIN, ...APIOutputs[2].TMIN, ...APIOutputs[3].TMIN, ...APIOutputs[4].TMIN, ...APIOutputs[5].TMIN, ...APIOutputs[6].TMIN, ...APIOutputs[7].TMIN, ...APIOutputs[8].TMIN, ...APIOutputs[9].TMIN]
+                thisTMINMAX.TMAX = [...APIOutputs[0].TMAX, ...APIOutputs[1].TMAX, ...APIOutputs[2].TMAX, ...APIOutputs[3].TMAX, ...APIOutputs[4].TMAX, ...APIOutputs[5].TMAX, ...APIOutputs[6].TMAX, ...APIOutputs[7].TMAX, ...APIOutputs[8].TMAX, ...APIOutputs[9].TMAX];
               } else if (!APIOutputs && foundTowers === false) {
                 searchHalfSide += 2.5;
                 coordinateArray = boundingBox(location.lat, location.lng, searchHalfSide);

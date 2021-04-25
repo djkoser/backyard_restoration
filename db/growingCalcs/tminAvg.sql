@@ -1,4 +1,4 @@
--- Keep only five lowest data points
+-- Keep only 8 lowest data points
 SELECT
   round(AVG(minTemp))
 FROM (
@@ -12,5 +12,5 @@ FROM (
   FROM tmin
 GROUP BY obs_year) tmp2) tmp
 WHERE
-  rn < 6;
+  rn < 9;
 

@@ -714,7 +714,8 @@ select {
 }
 
 #nameEmailPassword,
-#address {
+#address,
+#startHardiness {
   @extend %columnFlex;
 }
 
@@ -754,7 +755,8 @@ select {
   }
 
   #nameEmailPassword,
-  #address {
+  #address,
+  #startHardiness {
     margin: 50px;
   }
 
@@ -878,4 +880,22 @@ footer {
 
 #descImage {
   width: 100vw;
+}
+
+// NOAA Hangup Page
+
+#NOAAHangupBody {
+  @extend %columnFlex;
+  background-color: $greenYellow;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+#growingParamsUpdate {
+  @extend %columnFlex;
+}
+
+#NOAAHangupForm {
+  @extend %columnFlex;
+  @extend %blue-greenBox;
 }

@@ -124,9 +124,9 @@ const Timeline = (props) => {
   const rectangleMaker = (gSelection, GDD35Prop, xPosVal, ind) => {
     return gSelection
       .append('rect')
+      .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
       .attr("width", GDD35Prop)
       .attr("x", (_d) => xPosVal(ind))
-      .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
       .attr("class", "monthBoxes")
   }
   // Prep variable for use at end of function -> legend color key and text

@@ -9,6 +9,7 @@ import ResetPassword from "./components/ResetPassword";
 import RequestPasswordReset from "./components/RequestPasswordReset";
 import StripeThankYou from "./components/StripeThankYou";
 import Stripe from "./components/Stripe";
+import NOAAHangupPage from "./components/NOAAHangupPage";
 
 export default (
   <Switch>
@@ -22,5 +23,6 @@ export default (
     <Route path='/search/:vegType' component={WeedSearch} />
     <Route path='/donation/success' component={StripeThankYou} />
     <Route path='/donation' component={Stripe} />
+    <Route path='/manualEntry' component={NOAAHangupPage} />
   </Switch>
 )

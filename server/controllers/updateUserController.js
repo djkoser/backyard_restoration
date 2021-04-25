@@ -1,6 +1,24 @@
 const bcrypt = require("bcryptjs");
 
 const { getGrowingParams } = require('../growingCalculations');
+
+const growingSeasonLengthCalc = (firstGDD35, lastGDD35) => {
+  // normalize to current year
+  const currentDate = new Date()
+  const firstGDD35Date = new Date(currentDate.getFullYear(), Number.parseInt(firstGDD35.match(/\d\d/)), Number.parseInt(firstGDD35.substring(3, 5).match(/\d\d/)));
+  const lastGDD35Date = new Date(currentDate.getFullYear(), Number.parseInt(lastGDD35.match(/\d\d/)), Number.parseInt(lastGDD35.substring(3, 5).match(/\d\d/)));
+
+  // convert to milleseconds
+  const millesecondsFirst = firstGDD35Date.getTime();
+  const millesecondsLast = lastGDD35Date.getTime();
+
+  // Calculate the difference between start and end dates for each year
+  const difference = millesecondsLast - millesecondsFirst
+  // Convert each difference into days
+  return difference / 1000 / 60 / 60 / 24;
+}
+
+
 module.exports = {
   chgUserAddress: async (req, res) => {
     const db = req.app.get('db')
@@ -11,7 +29,10 @@ module.exports = {
       await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone);
       req.session.user = { ...req.session.user, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
       res.status(200).send(req.session.user);
-    } catch (err) { console.log(err) }
+    } catch (err) {
+      await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, null, null, null, null);
+      res.status(200).send("Manual Entry");
+    }
   },
   chgUserEmail: async (req, res) => {
     const db = req.app.get('db')
@@ -50,6 +71,24 @@ module.exports = {
       req.session.user = { ...req.session.user, first_name, last_name };
       res.status(200).send(req.session.user);
     } catch (err) { console.log(err) }
+  },
+  changeGrowingInfo: async (req, res) => {
+    const db = req.app.get('db')
+    const { first_gdd35, last_gdd35, hardiness_zone } = req.body;
+    const firstGDD35Filtered = first_gdd35.replace(/\s/g).substring(0, 5);
+    const lastGDD35Filtered = last_gdd35.replace(/\s/g).substring(0, 5);
+
+    if (Number.parseInt(firstGDD35Filtered.match(/\d\d/)) <= 12 && Number.parseInt(firstGDD35Filtered.substring(3, 5).match(/\d\d/)) <= 31 && Number.parseInt(lastGDD35Filtered.match(/\d\d/)) <= 12 && Number.parseInt(lastGDD35Filtered.substring(3, 5).match(/\d\d/)) <= 31) {
+      const user_id = req.session.user.user_id;
+      const growingSeasonLength = growingSeasonLengthCalc(firstGDD35Filtered, lastGDD35Filtered);
+      try {
+        await db.updateUser.chgGrowingInfo(user_id, firstGDD35Filtered, lastGDD35Filtered, hardiness_zone, growingSeasonLength)
+        req.session.user = { ...req.session.user, first_gdd35: firstGDD35Filtered, last_gdd35: lastGDD35Filtered, hardiness_zone, growing_season_length: Math.round(growingSeasonLength) };
+        res.status(200).send(req.session.user);
+      } catch (err) { console.log(err) }
+    } else {
+      res.sendStatus(400)
+    }
   },
   deleteUser: async (req, res) => {
     const db = req.app.get('db');
