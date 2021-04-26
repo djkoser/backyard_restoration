@@ -181,6 +181,8 @@ module.exports = {
         const TMINAvg = await db.growingCalcs.tminAvg();
         const seasonStarts = await db.growingCalcs.GDD35SpringTransitions();
         const seasonEnds = await db.growingCalcs.GDD35WinterTransitions();
+        await db.growingCalcs.truncateTMAX();
+        await db.growingCalcs.truncateTMIN();
         return {
           hardiness_zone: hardinessZoneCalculator(TMINAvg[0].round),
           first_gdd35: avgDateString(seasonStarts),
