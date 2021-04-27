@@ -53,7 +53,7 @@ CREATE TABLE user_info (
   city text,
   state text,
   zipcode varchar(5),
-  hash VARCHAR(60),
+  hash text,
   growing_season_length int,
   first_gdd35 varchar(5),
   last_gdd35 varchar(5),
