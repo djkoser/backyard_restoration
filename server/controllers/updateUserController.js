@@ -39,7 +39,7 @@ module.exports = {
     const { email } = req.body;
     const emailFiltered = email.toLowerCase().replace(/\s/g, "")
     const storedUser = await db.user.getUserCredentials(emailFiltered);
-    if (!storedUser.length) {
+    if (storedUser.length===0) {
       const user_id = req.session.user.user_id;
       try {
         await db.updateUser.chgUserEmail(user_id, emailFiltered);

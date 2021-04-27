@@ -10,7 +10,7 @@ module.exports = {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
       const storedUser = await db.user.getUserCredentials(emailFiltered);
-      if (!storedUser.length) {
+      if (storedUser.length===0) {
         try {
           const { hardiness_zone, first_gdd35, last_gdd35, growing_season_length } = await getGrowingParams(zipcode, street, city, state, db);
           const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd35, last_gdd35, hardiness_zone)
@@ -34,7 +34,7 @@ module.exports = {
     const emailFiltered = email.toLowerCase().replace(/\s/g, "")
     try {
       const storedUser = await db.user.getUserCredentials(emailFiltered);
-      if (storedUser.length) {
+      if (storedUser.length===0) {
         if (await bcrypt.compare(password, storedUser[0].hash)) {
           req.session.user = storedUser[0];
           return res.status(200).send(req.session.user);
