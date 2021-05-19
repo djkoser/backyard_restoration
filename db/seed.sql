@@ -81,9 +81,27 @@ CREATE TABLE management_method (
   december varchar(1)
 );
 
+CREATE TABLE native_plant (
+  native_id serial PRIMARY KEY, 
+  common_name text,
+  botanical_name text,
+  moisture text,
+  sun text,
+  height int,
+  bloom_time text,
+  src text
+);
+
 CREATE TABLE user_management_method (
   id serial PRIMARY KEY,
   user_id int REFERENCES user_info (user_id),
   method_id int REFERENCES management_method (method_id)
+);
+
+CREATE TABLE user_native_plant (
+  id serial PRIMARY KEY, 
+  user_id int REFERENCES user_info (user_id),
+  native_id int REFERENCES native_plant(native_id),
+  project_notes text
 );
 
