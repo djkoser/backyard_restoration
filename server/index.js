@@ -10,6 +10,7 @@ const updUserCtl = require("./controllers/updateUserController");
 const { authorize } = require("./middleware/authMiddleware");
 const passwordReset = require('./controllers/passwordReset');
 const stripeController = require('./controllers/stripeController');
+const nativeController = require('./controllers/nativePlantsController');
 
 const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
 
@@ -57,6 +58,11 @@ app.put("/api/wdctrl/:ctlID", authorize, methodsCtl.toggleMethod);
 app.get("/api/weeds", authorize, weedCtl.weedsByTypeKw);
 app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);
 app.get("/api/weeds/methods/:weedID", authorize, weedCtl.weedMethods);
+// Native Plants Endpoints
+app.get("/api/native", authorize, nativeController.searchPlants);
+app.put("/api/native/notes/:nativeID", authorize, nativeController.updateProjectNotes);
+app.post("/api/native/add/:nativeID", authorize, nativeController.addToList);
+app.delete("/api/native/delete/:nativeID", authorize, nativeController.removeFromList);
 // Stripe EndPoint
 app.post('/api/donate', authorize, stripeController.checkout);
 

@@ -60,6 +60,7 @@
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-sql": "^1.2.0",
     "redux-devtools-extension": "^2.13.9"
   },
   "build": "node --max_old_space_size=8192 <entry_file_path> --progress --env.<dev/prod>"

@@ -105,3 +105,16 @@ CREATE TABLE user_native_plant (
   project_notes text
 );
 
+CREATE OR REPLACE FUNCTION searchNatives(
+    in whereClause text
+)
+RETURNS TABLE (	native_id int, common_name text, botanical_name text, moisture text, sun text, height int, bloom_time text, src text)
+LANGUAGE plpgsql
+AS $$
+    DECLARE
+        searchString text = CONCAT('SELECT * FROM native_plant WHERE ', whereClause); 
+    BEGIN
+        RETURN QUERY
+        EXECUTE (searchString);
+    END;
+$$;

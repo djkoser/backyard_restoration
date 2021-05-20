@@ -10,7 +10,7 @@ module.exports = {
       res.sendStatus(400);
     } else {
       const rtvdCreds = await db.user.getUserCredentials(req.body.email.toLowerCase().replace(/\s/g, ""))
-      if (rtvdCreds.length>0) {
+      if (rtvdCreds.length > 0) {
         let expDate = new Date(Date.now() + (1000 * 60 * 60 * 24))
         const token = crypto.randomBytes(16).toString('hex')
         db.updateUser.pwdReset(rtvdCreds[0].user_id, token, expDate)
@@ -54,14 +54,14 @@ module.exports = {
     const db = req.app.get('db');
     if (req.params.token) {
       const userCreds = await db.updateUser.getCredsByResetToken(req.params.token)
-      if (userCreds.length>0) {
+      if (userCreds.length > 0) {
         if (userCreds[0].reset_password_expiration.getTime() >= Date.now()) {
           const { newPassword } = req.body;
           try {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(newPassword, salt);
             await db.updateUser.chgUserPassword(userCreds[0].user_id, hash);
-            req.session.user = { ...userCreds[0], ...{ hash: hash, pwd_reset_token: "" } };
+            req.session.user = { ...userCreds[0] };
             await db.updateUser.removeResetToken(userCreds[0].user_id);
             res.status(200).send(req.session.user);
           } catch (err) { console.log(err) }

@@ -39,7 +39,7 @@ module.exports = {
     const { email } = req.body;
     const emailFiltered = email.toLowerCase().replace(/\s/g, "")
     const storedUser = await db.user.getUserCredentials(emailFiltered);
-    if (storedUser.length===0) {
+    if (storedUser.length === 0) {
       const user_id = req.session.user.user_id;
       try {
         await db.updateUser.chgUserEmail(user_id, emailFiltered);
@@ -58,7 +58,6 @@ module.exports = {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
       await db.updateUser.chgUserPassword(user_id, hash);
-      req.session.user = { ...req.session.user, hash };
       res.status(200).send(req.session.user);
     } catch (err) { console.log(err) }
   },
