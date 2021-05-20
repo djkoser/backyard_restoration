@@ -56,15 +56,54 @@ module.exports = {
   },
   addToList: async (req, res) => {
     const db = await req.app.get('db');
-
-
+    const { user_id } = req.session.user;
+    const { nativeID } = req.params;
+    try {
+      const check = await db.nativePlants.checkExistingList(user_id, nativeID);
+      if (check.length === 0) {
+        await db.nativePlants.addToList(user_id, nativeID)
+        const newList = await db.nativePlants.getUserNatives(user_id)
+        res.status(200).send(newList);
+      } else {
+        res.sendStatus(400);
+      };
+    } catch {
+      res.sendStatus(500);
+    };
   },
   updateProjectNotes: async (req, res) => {
     const db = await req.app.get('db');
-
+    const { user_id } = req.session.user;
+    const { nativeID } = req.params;
+    const { notes } = req.body;
+    try {
+      const check = await db.nativePlants.checkExistingList(user_id, nativeID);
+      if (check.length > 0) {
+        await db.nativePlants.updateProjectNotes(user_id, nativeID, notes)
+        const newList = await db.nativePlants.getUserNatives(user_id)
+        res.status(200).send(newList);
+      } else {
+        res.sendStatus(400);
+      };
+    } catch {
+      res.sendStatus(500);
+    };
   },
   removeFromList: async (req, res) => {
     const db = await req.app.get('db');
-
+    const { user_id } = req.session.user;
+    const { nativeID } = req.params;
+    try {
+      const check = await db.nativePlants.checkExistingList(user_id, nativeID);
+      if (check.length > 0) {
+        await db.nativePlants.removeFromList(user_id, nativeID)
+        const newList = await db.nativePlants.getUserNatives(user_id)
+        res.status(200).send(newList);
+      } else {
+        res.sendStatus(400);
+      };
+    } catch {
+      res.sendStatus(500);
+    };
   }
 }
