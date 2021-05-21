@@ -105,5 +105,15 @@ module.exports = {
     } catch {
       res.sendStatus(500);
     };
+  },
+  getUserNatives: async (req, res) => {
+    const db = await req.app.get('db');
+    const { user_id } = req.session.user;
+    try {
+      const natives = await db.nativePlants.getUserNatives(user_id);
+      res.status(200).send(natives);
+    } catch {
+      res.sendStatus(500);
+    };
   }
 }

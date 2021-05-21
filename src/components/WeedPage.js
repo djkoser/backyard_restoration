@@ -59,7 +59,7 @@ const WeedPage = (props) => {
         <h2><em>{botanicalName}</em></h2>
         <h3>{annualPerennialBiennial === "a" ? "Annual" : annualPerennialBiennial === "p" ? "Perennial" : "Biennial"} {vegType === "f" ? "Forb" : vegType === "g" ? "Graminoid" : "Woody"}</h3>
         <img id="descImage" alt={`${botanicalName} commonly known as ${commonName}`} src={src} />
-        <section>
+        <section id="descParagraph">
           <h4>Description</h4>
           <article>
             <h4 >{description}</h4>
@@ -73,13 +73,13 @@ const WeedPage = (props) => {
           {switches}
         </div>
       </fieldset>
+      <Footer />
     </>
   )
 
   return (
     <>
       { loading ? <></> : output}
-      <Footer />
     </>
   )
 };

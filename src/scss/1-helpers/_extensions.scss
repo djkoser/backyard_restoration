@@ -1,0 +1,52 @@
+%box {
+  border-radius: $corners;
+  box-shadow: $boxShadow;
+  padding: $boxPadding;
+  box-sizing: border-box;
+}
+
+%lightBlueBox {
+  @extend %box;
+  background-color: $lightBlue;
+}
+%brickBox {
+  @extend %box;
+  background-color: $brick;
+}
+%yellow-GreenBox {
+  @extend %box;
+  background-color: $greenYellow;
+}
+%blue-greenBox {
+  @extend %box;
+  background-color: $greenBlue;
+}
+
+%columnFlex {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+%wrapFlex {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+%rowFlex {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%headerDefaults {
+  @include fitContent(height);
+  @include fitContent(width);
+  text-align: center;
+  margin: 15px 15px 15px 15px;
+  color: $yellow;
+  font-weight: bold;
+}

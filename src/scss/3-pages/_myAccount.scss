@@ -1,0 +1,84 @@
+#myAccountBkgd {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+  @extend %columnFlex;
+  @extend %yellow-GreenBox;
+}
+
+.myAccountForm {
+  min-height: calc(100vh - (2 * #{$hFHeight}));
+}
+
+#nameEmailPassword,
+#address,
+#startHardiness {
+  @extend %columnFlex;
+}
+
+.editBoxes {
+  @extend %columnFlex;
+  @extend %blue-greenBox;
+  padding: $boxPadding;
+  margin: 0px 0px 0px 0px;
+  max-width: 250px;
+  min-width: 250px;
+}
+
+.disabledTheme {
+  background-color: transparent;
+  text-align: center;
+  color: $yellow;
+  font-size: 20pt;
+  width: 220px;
+}
+
+@media (min-width: $iPadWidth) {
+  #myAccountHeader {
+    color: black;
+    font-size: 30pt;
+  }
+  .myAccountForm {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #nameEmailPassword {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #nameEmailPassword,
+  #address,
+  #startHardiness {
+    margin: 50px;
+  }
+
+  .accountPageText {
+    display: inline-block;
+  }
+}
+
+@media (max-width: $iPadWidthL1) {
+  #myAccountHeader {
+    display: none;
+  }
+  .myAccountForm {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #nameEmailPassword,
+  #address {
+    margin: 0px;
+  }
+
+  .accountPageText {
+    display: none;
+  }
+}

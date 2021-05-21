@@ -1,0 +1,9 @@
+#donationBox {
+  @extend %columnFlex;
+  min-height: calc(100vh - (2 * #{$hFHeight}));
+  max-width: 450px;
+}
+
+#donationInput {
+  @extend %wrapFlex;
+}

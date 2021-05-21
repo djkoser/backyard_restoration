@@ -60,6 +60,7 @@ app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);
 app.get("/api/weeds/methods/:weedID", authorize, weedCtl.weedMethods);
 // Native Plants Endpoints
 app.get("/api/native", authorize, nativeController.searchPlants);
+app.get("/api/native/user", authorize, nativeController.getUserNatives);
 app.put("/api/native/notes/:nativeID", authorize, nativeController.updateProjectNotes);
 app.post("/api/native/add/:nativeID", authorize, nativeController.addToList);
 app.delete("/api/native/delete/:nativeID", authorize, nativeController.removeFromList);

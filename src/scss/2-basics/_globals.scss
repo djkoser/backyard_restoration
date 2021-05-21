@@ -1,0 +1,94 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+input {
+  border: none;
+  border-radius: $corners;
+  margin: 10px 0px 5px 0px;
+  font-size: 14pt;
+  height: 18pt;
+}
+
+label {
+  font-size: 14pt;
+  font-weight: bold;
+}
+h1 {
+  @extend %headerDefaults;
+  font-size: 24pt;
+}
+h2 {
+  @extend %headerDefaults;
+  font-size: 20pt;
+}
+
+h3 {
+  @extend %headerDefaults;
+  font-size: 16pt;
+}
+
+h4 {
+  @extend %headerDefaults;
+  font-size: 14pt;
+}
+h5 {
+  font-size: 12pt;
+  color: black;
+  margin: 5px 5px 5px 5px;
+}
+
+#root {
+  background-color: $greenBlue;
+}
+
+.App {
+  box-sizing: border-box;
+  font-family: $font-stack;
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: visible;
+  background-color: $greenBlue;
+  @extend %columnFlex;
+}
+
+.buttonBox {
+  @extend %wrapFlex;
+}
+
+button {
+  background-color: $brick;
+  box-shadow: none;
+  border: none;
+  border-radius: $corners;
+  padding: 7px;
+  margin: 10px 5px 10px 5px;
+  color: $lightBlue;
+  font-size: 12pt;
+  letter-spacing: 0.75px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+Link,
+Link:hover,
+Link:focus,
+Link:active,
+.logoutLink {
+  text-decoration: none;
+  color: $yellow;
+  font-size: 14pt;
+  margin: 15px 0px 15px 0px;
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}

@@ -1,0 +1,10 @@
+@mixin fitContent($property) {
+  $property: moz-fit-content;
+  $property: fit-content;
+}
+
+@mixin transform($property) {
+  -webkit-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}

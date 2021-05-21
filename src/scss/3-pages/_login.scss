@@ -1,0 +1,64 @@
+#loginComponent {
+  @extend %rowFlex;
+}
+
+#loginContainer {
+  @extend %columnFlex;
+}
+
+#siteTitleBorder {
+  @extend %columnFlex;
+  background-color: transparent;
+  border: solid $brick 10px;
+  max-height: 150px;
+  max-width: 300px;
+  min-height: 95px;
+  min-width: 250px;
+  height: 20vh;
+  width: 70vw;
+  box-shadow: $boxShadow;
+  margin-bottom: 30px;
+  color: $yellow;
+}
+
+#loginBox {
+  @extend %columnFlex;
+  @extend %yellow-GreenBox;
+  max-height: 300px;
+  max-width: 300px;
+  min-height: 240px;
+  min-width: 250px;
+  width: 80vw;
+  height: 45vh;
+  margin-bottom: 20px;
+}
+
+#forgotPwdLink {
+  color: black;
+}
+
+@media (min-width: $iPadWidth) {
+  #mobileWelcomeText {
+    display: none;
+  }
+  #loginWelcomeTextBox {
+    // Unfortunatley, cannot @extend selectors accross media queries.
+    border-radius: $corners;
+    box-shadow: $boxShadow;
+    padding: $boxPadding;
+    box-sizing: border-box;
+    background-color: $lightBlue;
+    width: 400px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+  }
+  .loginWelcomeText {
+    color: black;
+    line-height: 26.5pt;
+  }
+}
+@media (max-width: $iPadWidthL1) {
+  #loginWelcomeTextBox {
+    display: none;
+  }
+}

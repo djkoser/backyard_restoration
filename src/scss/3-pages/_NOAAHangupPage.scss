@@ -1,0 +1,15 @@
+#NOAAHangupBody {
+  @extend %columnFlex;
+  background-color: $greenYellow;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+#growingParamsUpdate {
+  @extend %columnFlex;
+}
+
+#NOAAHangupForm {
+  @extend %columnFlex;
+  @extend %blue-greenBox;
+}

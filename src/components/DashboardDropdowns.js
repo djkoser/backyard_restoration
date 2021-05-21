@@ -46,7 +46,6 @@ const DashboardDropdowns = (props) => {
         <br />
         {switches}
       </fieldset>
-
     </>
   )
 }

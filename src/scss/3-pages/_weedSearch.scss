@@ -1,0 +1,54 @@
+#weedSearchBody {
+  min-width: 100vw;
+  background-color: $greenYellow;
+  @extend %wrapFlex;
+}
+
+#searchResultsBox {
+  min-height: calc(100vh - (2 * #{$hFHeight}));
+  margin-top: 80px;
+  @extend %wrapFlex;
+}
+
+@media (min-width: $iPadWidth) {
+  #weedSearchForm {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 6vh;
+    width: 100vw;
+  }
+}
+@media (max-width: $iPadWidthL1) {
+  #weedSearchForm {
+    position: relative;
+    top: 0px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: $greenYellow;
+    width: 100vw;
+    height: 5vh;
+  }
+}
+
+// Thumbnail
+
+.searchFigures,
+.searchLinks {
+  @extend %blue-greenBox;
+  @extend %columnFlex;
+  width: 225px;
+  height: 350px;
+  margin: 5px;
+}
+
+.searchImages {
+  height: 250px;
+  width: 200px;
+  object-fit: cover;
+}
