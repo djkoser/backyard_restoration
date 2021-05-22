@@ -1,6 +1,7 @@
+// @ts-nocheck
 import React, { useRef, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-// @ts-ignore
+
 import * as d3 from 'd3';
 
 
@@ -33,7 +34,7 @@ const Timeline = (props) => {
 
   // Create chart viewbox width and height variables
   const { width, height, first_gdd35, last_gdd35, margin, userMethods } = props;
-  // @ts-ignore
+
 
   const colorGenerator = () => {
     let output = []
@@ -87,7 +88,7 @@ const Timeline = (props) => {
 
     const xAxis = d3
       .axisBottom(scale)
-      // @ts-ignore
+
       .tickFormat(d => tickFormat(d));
 
     // Associate reference object with SVG varable to be manipulated by D3

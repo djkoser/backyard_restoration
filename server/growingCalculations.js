@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { GOOGLE_API_KEY, NOAA_TOKEN } = process.env;
 const axios = require('axios');
 const axiosRetry = require('axios-retry');
@@ -5,7 +6,6 @@ const axiosRetry = require('axios-retry');
 
 module.exports = {
   getGrowingParams: async (zipcode, street, city, state, db) => {
-    // @ts-ignore
     axiosRetry(axios, { retries: 10, retryDelay: axiosRetry.exponentialDelay, retryCondition: axiosRetry.isRetryableError });
 
     // Creates a bounding box from from a lat/long coordinate -> will be used for gathering a list of weather stations surrounding the user's lat-long -> from stack overflow, courtesy of Federico A Rampnoni (comverted by me from Python)
@@ -79,7 +79,6 @@ module.exports = {
       let TMAX = [];
       let TMIN = [];
       try {
-        // @ts-ignore
         await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
           .then(res => {
             res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
@@ -194,13 +193,11 @@ module.exports = {
 
     const apiLogic = async (coordinateString) => {
       let APIOutputs;
-      // @ts-ignore
       await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=${coordinateString}&dataset=GHCND&datatypeid=TMIN&datatypeid=TMAX&endDate=${edString}&limit=1000`, { headers: { token: NOAA_TOKEN } })
         .then(async res => {
           // Concatenate station names into a string for data request
           if (res.data.results) {
             const stationString = res.data.results.reduce((acc, next) => acc + (acc ? "stationid=" + next.id + "&" : "stationid=" + next.id + "&"), "");
-            // @ts-ignore
             await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationString}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
               .then(async res => {
                 // Check if station list returns results if not, expand the search area by 20 km2
@@ -244,7 +241,6 @@ module.exports = {
     const thisTMINMAX = { TMIN: [], TMAX: [] };
     try {
       // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
-      // @ts-ignore
       await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}`)
         .then(async res => {
           try {

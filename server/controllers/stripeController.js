@@ -1,5 +1,6 @@
+//@ts-nocheck
 const { STRIPE_SECRET_KEY } = process.env
-// @ts-ignore
+
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
 module.exports = {

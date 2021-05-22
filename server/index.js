@@ -1,3 +1,4 @@
+//@ts-nocheck
 require("dotenv").config();
 const massive = require("massive");
 const express = require("express");
@@ -28,7 +29,7 @@ app.use(
 
 massive({
   connectionString: CONNECTION_STRING,
-  // @ts-ignore
+
   ssl: { rejectUnauthorized: 0 }
 }).then((dbInstance) => {
   app.set("db", dbInstance)

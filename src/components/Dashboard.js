@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Footer from './Footer';
@@ -10,16 +11,16 @@ import { getMethods } from '../redux/mgmtMethodReducer';
 // props from store hZone, gSeasonLength firstGDD35
 
 const Dashboard = () => {
-  // @ts-ignore
+
   const hardiness_zone = useSelector(state => state.userInfoReducer.hardiness_zone)
-  // @ts-ignore
+
   const growing_season_length = useSelector(state => state.userInfoReducer.growing_season_length)
-  // @ts-ignore
+
   const first_gdd35 = useSelector(state => state.userInfoReducer.first_gdd35)
-  // @ts-ignore
+
   const last_gdd35 = useSelector(state => state.userInfoReducer.last_gdd35)
 
-  // @ts-ignore
+
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
 
   const chartMargin = { top: 40, right: 10, bottom: 30, left: 10 };

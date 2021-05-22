@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import SwitchMaker from './SwitchMaker';
 import axios from 'axios';
@@ -8,7 +9,7 @@ const DashboardDropdowns = (props) => {
   const [weedOptions, setWeedOptions] = useState([]);
   const [switches, setSwitches] = useState([]);
 
-  // @ts-ignore
+
   const getWeedsByVegType = (vegType) => {
     axios.get(`/api/weeds?vegType=${vegType}`)
       .then(res => {

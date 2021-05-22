@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -19,7 +20,7 @@ const WeedPage = (props) => {
   const [mgmtOptions, setMgmtOptions] = useState([]);
   const [switches, setSwitches] = useState([<></>]);
 
-  // @ts-ignore
+
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
   // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
   const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ const WeedPage = (props) => {
   useEffect(() => {
     setSwitches(mgmtOptions.map(el => (<SwitchMaker key={`method${el.method_id}`} userMethods={userMethods} weedMethod={el} />)))
   }, [mgmtOptions, userMethods]);
-  // @ts-ignore
+
 
   const getWeedDetails = async () => {
     await axios.get(`/api/weeds/${id}`)

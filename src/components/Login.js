@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -9,7 +10,7 @@ import { getMethods } from '../redux/mgmtMethodReducer'
 const Login = (props) => {
 
   const dispatch = useDispatch();
-  // @ts-ignore
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';

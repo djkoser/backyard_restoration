@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleMethod } from '../redux/mgmtMethodReducer';
@@ -7,7 +8,7 @@ const SwitchMaker = (props) => {
   const dispatch = useDispatch()
   // Determine if weed method is in user method list and check inputs accordingly
 
-  // @ts-ignore
+
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
 
   const { weedMethod } = props;

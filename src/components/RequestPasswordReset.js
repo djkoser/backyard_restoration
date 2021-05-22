@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,14 +12,14 @@ const RequestPasswordReset = (props) => {
   const submitRequest = (event) => {
     event.preventDefault()
     axios.put("/api/pwdResetReq", { email })
-      // @ts-ignore
+
       .then(res => {
         setEmail("");
         toast.success('Password Reset Request Submitted Successfully')
         setSuccessMessage({ visibility: "visible" })
         setFailureMessage({ visibility: "hidden" })
       })
-      // @ts-ignore
+
       .catch(err => {
         setEmail("");
         toast.error('Password Reset Request Failed.')
@@ -44,13 +45,13 @@ const RequestPasswordReset = (props) => {
       </form>
       <Link to={"/"}>Back to Login</Link>
       <article
-        // @ts-ignore
+
         style={successMessage}>
         <h4> Your password reset request has been submitted successfully! Please check your email for a link to reset your password. (These often end up in SPAM, so please check there if you're having trouble finding it).</h4>
 
       </article>
       <article
-        // @ts-ignore
+
         style={failureMessage}>
         <h4> We did not find an account under the email address provided. Please try again or register for a new account using the "Register" button on our login page.</h4>
       </article>

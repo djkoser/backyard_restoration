@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios from 'axios';
 
 const initialState = {
@@ -21,9 +22,9 @@ export const getUserNatives = () => {
   };
   return action;
 };
-export const addUserNative = () => {
+export const addUserNative = (nativeID) => {
   const userNatives = axios
-    .get(`/api/native/user`)
+    .post(`/api/native/add/${nativeID}`)
     .then(res => res.data)
     .catch(err => initialState);
   const action = {
@@ -32,9 +33,9 @@ export const addUserNative = () => {
   };
   return action;
 };
-export const updateProjectNotes = () => {
+export const updateProjectNotes = (nativeID, notes) => {
   const userNatives = axios
-    .get(`/api/native/user`)
+    .get(`/api/native/notes/${nativeID}`, { notes })
     .then(res => res.data)
     .catch(err => initialState);
   const action = {
@@ -43,9 +44,9 @@ export const updateProjectNotes = () => {
   };
   return action;
 };
-export const removeUserNative = () => {
+export const removeUserNative = (nativeID) => {
   const userNatives = axios
-    .get(`/api/native/user`)
+    .get(`/api/native/delete/${nativeID}`)
     .then(res => res.data)
     .catch(err => initialState);
   const action = {

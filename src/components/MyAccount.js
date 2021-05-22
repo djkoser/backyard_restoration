@@ -1,8 +1,8 @@
-// @ts-ignore
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-// @ts-ignore
+
 import { addRetrievedInfo, getUserInfo } from '../redux/userInfoReducer';
 import Nav from './Nav';
 import Footer from './Footer';
@@ -10,65 +10,62 @@ import { ToastContainer, toast } from 'react-toastify';
 import WeatherLoader from './WeatherLoader';
 
 
-// props from store user_id, email, first_name, last_name, street, city, state, zipcode, getUserInfo()
-
-// @ts-ignore
 const MyAccount = (props) => {
 
 
   const dispatch = useDispatch()
-  // @ts-ignore
+
   const emailRedux = useSelector(state => state.userInfoReducer.email);
-  // @ts-ignore
+
   const firstNameRedux = useSelector(state => state.userInfoReducer.first_name);
-  // @ts-ignore
+
   const lastNameRedux = useSelector(state => state.userInfoReducer.last_name);
-  // @ts-ignore
+
   const streetRedux = useSelector(state => state.userInfoReducer.street);
-  // @ts-ignore
+
   const cityRedux = useSelector(state => state.userInfoReducer.city);
-  // @ts-ignore
+
   const stateRedux = useSelector(state => state.userInfoReducer.state);
-  // @ts-ignore
+
   const zipcodeRedux = useSelector(state => state.userInfoReducer.zipcode);
-  // @ts-ignore
+
   const firstGDD35Redux = useSelector(state => state.userInfoReducer.first_gdd35)
-  // @ts-ignore
+
   const lastGDD35Redux = useSelector(state => state.userInfoReducer.last_gdd35)
-  // @ts-ignore
+
   const hardinessZoneRedux = useSelector(state => state.userInfoReducer.hardiness_zone)
 
-  // @ts-ignore
+
   const [firstName, setFirstName] = useState(firstNameRedux);
-  // @ts-ignore
+
   const [lastName, setLastName] = useState(lastNameRedux);
-  // @ts-ignore
+
   const [email, setEmail] = useState(emailRedux);
-  // @ts-ignore
+
   const [password, setPassword] = useState("This is a fake password");
-  // @ts-ignore
+
   const [street, setStreet] = useState(streetRedux);
-  // @ts-ignore
+
   const [city, setCity] = useState(cityRedux);
-  // @ts-ignore
+
   const [state, setState] = useState(stateRedux);
-  // @ts-ignore
+
   const [zipcode, setZipcode] = useState(zipcodeRedux);
-  // @ts-ignore
+
   const [first_gdd35, setFirstGDD35] = useState(firstGDD35Redux);
-  // @ts-ignore
+
   const [last_gdd35, setLastGDD35] = useState(lastGDD35Redux);
-  // @ts-ignore
+
   const [hardiness_zone, setHardinessZone] = useState(hardinessZoneRedux);
-  // @ts-ignore
+
   const [editToggleName, setEditToggleName] = useState(true);
-  // @ts-ignore
+
   const [editToggleEmail, setEditToggleEmail] = useState(true);
-  // @ts-ignore
+
   const [editTogglePassword, setEditTogglePassword] = useState(true);
-  // @ts-ignore
+
   const [editToggleAddress, setEditToggleAddress] = useState(true);
-  // @ts-ignore
+
   const [editToggleGrwParams, setEditToggleGrwParams] = useState(true);
 
 
@@ -198,7 +195,7 @@ const MyAccount = (props) => {
         break
     }
   };
-  // @ts-ignore
+
   const deleteAccount = () => {
     axios.delete("/api/deleteUser")
       .then(async res => {
