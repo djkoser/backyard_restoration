@@ -237,6 +237,7 @@ const Timeline = (props) => {
       ></svg>
       <div id="legendContainer">
         <h2 className='hidden' id="legendHeader">Legend</h2>
+        {userMethods.length === 0 ? <h4 id='legendMessage'>Legend Entries Will Appear Here, Use "Select Management Options" or "Weeds Information" to Add Management Methods</h4> : <></>}
         {legendOutput}
       </div>
     </>

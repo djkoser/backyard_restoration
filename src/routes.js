@@ -10,6 +10,7 @@ import RequestPasswordReset from "./components/RequestPasswordReset";
 import StripeThankYou from "./components/StripeThankYou";
 import Stripe from "./components/Stripe";
 import NOAAHangupPage from "./components/NOAAHangupPage";
+import NativeSelector from "./components/NativeSelector";
 
 export default (
   <Switch>
@@ -24,5 +25,6 @@ export default (
     <Route path='/donation/success' component={StripeThankYou} />
     <Route path='/donation' component={Stripe} />
     <Route path='/manualEntry' component={NOAAHangupPage} />
+    <Route path='/nativesSelector' component={NativeSelector} />
   </Switch>
 )
