@@ -6,7 +6,7 @@ const axiosRetry = require('axios-retry');
 module.exports = {
   getGrowingParams: async (zipcode, street, city, state, db) => {
     // @ts-ignore
-    axiosRetry(axios, { retries: 50, retryDelay: axiosRetry.exponentialDelay, retryCondition: axiosRetry.isRetryableError });
+    axiosRetry(axios, { retries: 10, retryDelay: axiosRetry.exponentialDelay, retryCondition: axiosRetry.isRetryableError });
 
     // Creates a bounding box from from a lat/long coordinate -> will be used for gathering a list of weather stations surrounding the user's lat-long -> from stack overflow, courtesy of Federico A Rampnoni (comverted by me from Python)
     // degrees to radians
