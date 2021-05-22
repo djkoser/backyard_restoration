@@ -22,19 +22,23 @@
   @extend %blue-greenBox;
   padding: $boxPadding;
   margin: 0px 0px 0px 0px;
-  max-width: 250px;
-  min-width: 250px;
 }
 
-.disabledTheme {
+.myAccountInput:disabled {
   background-color: transparent;
   text-align: center;
   color: $yellow;
-  font-size: 20pt;
-  width: 220px;
+  font-size: 16pt;
 }
 
-@media (min-width: $iPadWidth) {
+.myAccountInput {
+  width: 100%;
+}
+
+@media (min-width: 935px) {
+  .editBoxes {
+    width: 250px;
+  }
   #myAccountHeader {
     color: black;
     font-size: 30pt;
@@ -57,7 +61,11 @@
   }
 }
 
-@media (max-width: $iPadWidthL1) {
+@media (max-width: 934px) {
+  .editBoxes {
+    width: 80vw;
+    max-width: 400px;
+  }
   #myAccountHeader {
     display: none;
   }

@@ -6,12 +6,7 @@ const Thumbnail = (props) => {
   const { weed_id, common_name, botanical_name, src } = props.weedInfo
   return (
     <figure className='searchFigures'>
-      <Link className='searchLinks' to={{
-        pathname: `/weed/${weed_id}`,
-        state: {
-          weed_id
-        }
-      }}>
+      <Link className='searchLinks' to={`/weed/${weed_id}`}>
         <img className='searchImages' alt={`${botanical_name} commonly known as ${common_name}`} src={src} />
         <figcaption>
           <br />

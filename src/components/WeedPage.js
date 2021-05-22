@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Nav from './Nav';
 import Footer from './Footer';
 import SwitchMaker from './SwitchMaker';
 import WeatherLoader from './WeatherLoader';
-// From Store userMethods[], getMethods(), addMethod() removeMethod()
+import { getMethods } from '../redux/mgmtMethodReducer';
 
 const WeedPage = (props) => {
-  const { weed_id } = props.location.state
+  const { id } = props.match.params
 
   const [src, setSrc] = useState("");
   const [commonName, setCommonName] = useState("");
@@ -17,16 +17,31 @@ const WeedPage = (props) => {
   const [vegType, setVegType] = useState("");
   const [description, setDescription] = useState("");
   const [mgmtOptions, setMgmtOptions] = useState([]);
+  const [switches, setSwitches] = useState([<></>]);
 
   // @ts-ignore
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
   // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMethods())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  useEffect(() => {
+    if (id) {
+      getWeedDetails()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
+  useEffect(() => {
+    setSwitches(mgmtOptions.map(el => (<SwitchMaker key={`method${el.method_id}`} userMethods={userMethods} weedMethod={el} />)))
+  }, [mgmtOptions, userMethods]);
   // @ts-ignore
 
   const getWeedDetails = async () => {
-    await axios.get(`/api/weeds/${weed_id}`)
+    await axios.get(`/api/weeds/${id}`)
       .then(res => {
         const { src, common_name, botanical_name, annual_perennial_biennial, veg_type, description } = res.data;
         setSrc(src);
@@ -37,7 +52,7 @@ const WeedPage = (props) => {
         setDescription(description)
       })
       .catch(err => props.history.push('/'))
-    await axios.get(`/api/weeds/methods/${weed_id}`)
+    await axios.get(`/api/weeds/methods/${id}`)
       .then(res => {
         setMgmtOptions(res.data);
       })
@@ -45,13 +60,6 @@ const WeedPage = (props) => {
     setLoading(false)
   };
 
-  useEffect(() => {
-    getWeedDetails()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-
-  const switches = mgmtOptions.map(el => (<SwitchMaker key={`method${el.method_id}`} userMethods={userMethods} weedMethod={el} />))
   const output = (
     <>
       <Nav />

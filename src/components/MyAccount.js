@@ -221,14 +221,14 @@ const MyAccount = (props) => {
         <main className="myAccountForm" style={!loading ? { display: "inline-flex" } : { display: "none" }}>
           <div id="startHardiness">
             <fieldset className=" editBoxes" >
-              <h2 className="accountPageText">Season Start and End Dates (MM-DD).</h2>
-              <input className={`${editToggleGrwParams ? "disabledTheme" : null}`} disabled={editToggleGrwParams} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value) }} />
-              <input className={`${editToggleGrwParams ? "disabledTheme" : null}`} disabled={editToggleGrwParams} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value) }} />
-              <h2 className="accountPageText"> USDA Hardiness Zone.</h2>
+              <h3 className="accountPageText">Season Start and End Dates</h3>
+              <h4 className="accountPageText">(MM-DD)</h4>
+              <input className='myAccountInput' disabled={editToggleGrwParams} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleGrwParams} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value) }} />
+              <h3 className="accountPageText"> USDA Hardiness Zone.</h3>
               <br />
-              <h4> (Can be found via the following link)</h4>
-              <h4><a href="https://planthardiness.ars.usda.gov/" target="_blank" rel="noreferrer noopener">Click Here</a></h4>
-              <select className={`${editToggleGrwParams ? "disabledTheme" : null}`} disabled={editToggleGrwParams} value={hardiness_zone} onChange={e => { setHardinessZone(e.target.value) }}>
+              <h4><a href="https://planthardiness.ars.usda.gov/" target="_blank" rel="noreferrer noopener">Need Help? Click Here</a></h4>
+              <select className='myAccountInput' disabled={editToggleGrwParams} value={hardiness_zone} onChange={e => { setHardinessZone(e.target.value) }}>
                 <option value="1a">Zone 1a: -60F - -55F </option>
                 <option value="1b">Zone 1b: -55F - -50F </option>
                 <option value="2a">Zone 2a: -50F - -45F </option>
@@ -261,33 +261,33 @@ const MyAccount = (props) => {
           </div>
           <div id="address">
             <fieldset className="editBoxes" >
-              <h2 className="accountPageText">Password</h2>
-              <input className={`${editTogglePassword ? "disabledTheme" : null}`} disabled={editTogglePassword} type='password' value={password} onChange={e => { setPassword(e.target.value) }} />
+              <h3 className="accountPageText">Password</h3>
+              <input className='myAccountInput' disabled={editTogglePassword} type='password' value={password} onChange={e => { setPassword(e.target.value) }} />
             </fieldset>
             <button onClick={() => toggleEdit("password")}>{editTogglePassword ? "Edit" : "Submit"}</button>
             <fieldset className="editBoxes" >
-              <h2 className="accountPageText">Address</h2>
-              <input className={`${editToggleAddress ? "disabledTheme" : null}`} disabled={editToggleAddress} type='text' value={street} onChange={e => { setStreet(e.target.value) }} />
-              <input className={`${editToggleAddress ? "disabledTheme" : null}`} disabled={editToggleAddress} type='text' value={city} onChange={e => { setCity(e.target.value) }} />
-              <input className={`${editToggleAddress ? "disabledTheme" : null}`} disabled={editToggleAddress} type='text' value={state} onChange={e => { setState(e.target.value) }} />
-              <input className={`${editToggleAddress ? "disabledTheme" : null}`} disabled={editToggleAddress} type='text' value={zipcode} onChange={e => { setZipcode(e.target.value) }} />
+              <h3 className="accountPageText">Address</h3>
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={street} onChange={e => { setStreet(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={city} onChange={e => { setCity(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={state} onChange={e => { setState(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={zipcode} onChange={e => { setZipcode(e.target.value) }} />
             </fieldset>
             <button onClick={() => toggleEdit("address")}>{editToggleAddress ? "Edit" : "Submit"}</button>
           </div>
           <div id="nameEmailPassword">
             <fieldset className=" editBoxes" >
-              <h2 className="accountPageText">Name</h2>
-              <input className={`${editToggleName ? "disabledTheme" : null}`} disabled={editToggleName} type='text' value={firstName} onChange={e => { setFirstName(e.target.value) }} />
-              <input className={`${editToggleName ? "disabledTheme" : null}`} disabled={editToggleName} type='text' value={lastName} onChange={e => { setLastName(e.target.value) }} />
+              <h3 className="accountPageText">Name</h3>
+              <input className='myAccountInput' disabled={editToggleName} type='text' value={firstName} onChange={e => { setFirstName(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleName} type='text' value={lastName} onChange={e => { setLastName(e.target.value) }} />
             </fieldset>
             <button onClick={() => toggleEdit("name")}>{editToggleName ? "Edit" : "Submit"}</button>
             <fieldset className="editBoxes" >
-              <h2 className="accountPageText">Email</h2>
-              <input className={`${editToggleEmail ? "disabledTheme" : null}`} disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value) }} />
+              <h3 className="accountPageText">Email</h3>
+              <input className='myAccountInput' disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value) }} />
             </fieldset>
             <button onClick={() => toggleEdit("email")}>{editToggleEmail ? "Edit" : "Submit"}</button>
             <fieldset className="editBoxes" >
-              <h2 className="accountPageText">Delete My Account</h2>
+              <h3 className="accountPageText">Delete My Account</h3>
               <button onClick={() => deleteAccount()}>Delete Account</button>
             </fieldset>
           </div>
