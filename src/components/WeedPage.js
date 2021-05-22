@@ -4,6 +4,7 @@ import axios from 'axios';
 import Nav from './Nav';
 import Footer from './Footer';
 import SwitchMaker from './SwitchMaker';
+import WeatherLoader from './WeatherLoader';
 // From Store userMethods[], getMethods(), addMethod() removeMethod()
 
 const WeedPage = (props) => {
@@ -79,7 +80,10 @@ const WeedPage = (props) => {
 
   return (
     <>
-      { loading ? <></> : output}
+      { loading ? <>
+        <WeatherLoader loading='true' noText="true" />
+        <h3>Loading, Please Wait</h3>
+      </> : output}
     </>
   )
 };

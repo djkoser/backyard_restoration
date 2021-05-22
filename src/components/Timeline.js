@@ -61,8 +61,9 @@ const Timeline = (props) => {
 
     setLegendOutput(legendText.map((el, ind) => (
       <div key={`legendBody${ind}`} className="legendBody">
-        <div key={`legendText${ind}`}>
-          <div style={{ backgroundColor: `${colors[ind]}` }} className="colorCode"></div>
+        <div className='legendText' key={`legendText${ind}`}>
+          <div style={{ backgroundColor: `${colors[ind]}` }} className="colorCode">
+          </div>
           {el}
         </div>
       </div>
@@ -235,7 +236,7 @@ const Timeline = (props) => {
         viewBox={`0 0 ${width} ${height}`}
       ></svg>
       <div id="legendContainer">
-        <h2 id="legendHeader">Legend</h2>
+        <h2 className='hidden' id="legendHeader">Legend</h2>
         {legendOutput}
       </div>
     </>

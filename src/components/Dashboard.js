@@ -41,7 +41,7 @@ const Dashboard = () => {
             <h5><strong>Average Season Start Date:    </strong>{first_gdd35}</h5>
             <h5><strong>Average Season End Date:    </strong>{last_gdd35}</h5>
           </section>
-          <h2 id="dashHeader"><strong>Weed Management Timeline</strong></h2>
+          <h2 className='hidden' id="timelineHeader"><strong>Weed Management Timeline</strong></h2>
         </div>
         <div id="d3Container">
           <Timeline height={300} width={400} first_gdd35={first_gdd35} last_gdd35={last_gdd35} userMethods={userMethods} margin={chartMargin} />

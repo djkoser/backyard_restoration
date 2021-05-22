@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Footer from './Footer';
 import Nav from './Nav';
 import Thumbnail from './Thumbnail';
+import WeatherLoader from './WeatherLoader';
 
 // props vegType 
 const WeedSearch = (props) => {
@@ -55,6 +56,9 @@ const WeedSearch = (props) => {
     <Footer />
   </>)
 
-  return (loading ? <></> : output)
+  return (loading ? <>
+    <WeatherLoader loading='true' noText="true" />
+    <h3>Loading, Please Wait</h3>
+  </> : output)
 }
 export default WeedSearch

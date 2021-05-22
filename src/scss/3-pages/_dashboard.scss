@@ -1,27 +1,17 @@
-#dashHeader {
+#timelineHeader {
   color: $brick;
   font-weight: bolder;
-}
-
-#timelineHeaderBox {
-  @extend %wrapFlex;
-  width: 100%;
-}
-#growingInfoBox {
-  @extend %brickBox;
-  max-width: 400px;
-  width: 85vw;
-  padding: $boxPadding;
-  margin: 10px 20px 10px 0px;
+  margin-top: 30px;
 }
 
 #dashboardDecoration {
   @extend %columnFlex;
   @extend %lightBlueBox;
-  padding: 20px;
+  // padding: 20px;
   @include fitContent(height);
   @include fitContent(width);
 }
+
 // DashDropdowns
 
 #dropdownLegend {
@@ -45,6 +35,8 @@ select {
 .switchBody {
   border: dotted black thin;
   padding: 30px;
+  width: 100%;
+  margin: 5px 0px 5px 0px;
 }
 .switchPara {
   max-width: 950px;

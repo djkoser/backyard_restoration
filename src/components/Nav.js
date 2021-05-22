@@ -30,7 +30,7 @@ const Nav = (props) => {
           setMobileOpenClose(false);
         }} to='/nativesSelector'>Native Plant Selector</Link>
         <div id='weedsMenu'>
-          <h4 id='weedInfo' onClick={() => setWeedOpenClose(!weedOpenClose)}><strong>Weed Info</strong></h4>
+          <h4 id='weedInfo' onClick={() => setWeedOpenClose(!weedOpenClose)}><strong>Weeds Information</strong></h4>
           <div className={`weedLinkBox ${weedOpenClose ? "weedLinkBoxOpened" : "weedLinkBoxClosed"}`}>
             <Link onClick={() => {
               setWeedOpenClose(false);

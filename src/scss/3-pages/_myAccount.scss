@@ -3,7 +3,7 @@
   min-width: 100vw;
   position: relative;
   @extend %columnFlex;
-  @extend %yellow-GreenBox;
+  background-color: $greenYellow;
 }
 
 .myAccountForm {
@@ -14,6 +14,7 @@
 #address,
 #startHardiness {
   @extend %columnFlex;
+  margin: 30px;
 }
 
 .editBoxes {
@@ -49,12 +50,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-
-  #nameEmailPassword,
-  #address,
-  #startHardiness {
-    margin: 50px;
   }
 
   .accountPageText {
