@@ -35,7 +35,7 @@ nav {
   .weedLinkBoxClosed {
     top: -150px;
     z-index: -1;
-    background-color: $greenBlueClear;
+    opacity: 0;
   }
   .linkBox {
     position: fixed;
@@ -86,7 +86,7 @@ nav {
   .linkBox {
     position: static;
     flex-direction: column;
-    height: 400px;
+    height: 415px;
     background-color: $greenBlueTransparent;
     color: $yellow;
     transition: all 0.4s;
