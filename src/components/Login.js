@@ -52,7 +52,7 @@ const Login = (props) => {
             state: {
               email
             }
-          }}><strong>Forgot Password</strong></Link>
+          }}><strong style={{ cursor: "pointer" }}>Forgot Password</strong></Link>
           <div className="buttonBox">
             <button id="loginButton" onClick={(e) => {
               e.preventDefault();

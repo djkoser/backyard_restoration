@@ -30,7 +30,7 @@ const Nav = (props) => {
           setMobileOpenClose(false);
         }} to='/nativesSelector'>Native Plant Selector</Link>
         <div id='weedsMenu'>
-          <h4 id='weedInfo' onClick={() => setWeedOpenClose(!weedOpenClose)}><strong>Weeds Information</strong></h4>
+          <h4 id='weedInfo' onClick={() => setWeedOpenClose(!weedOpenClose)}><strong style={{ cursor: "pointer" }}>Weeds Information</strong></h4>
           <div className={`weedLinkBox ${weedOpenClose ? "weedLinkBoxOpened" : "weedLinkBoxClosed"}`}>
             <Link onClick={() => {
               setWeedOpenClose(false);
@@ -46,7 +46,7 @@ const Nav = (props) => {
             }} to='/search/g' ><strong>Graminoids</strong></Link>
           </div>
         </div>
-        <span className="logoutLink" onClick={() => logout()}><strong>Logout</strong></span>
+        <span className="logoutLink" onClick={() => logout()}><strong style={{ cursor: "pointer" }}>Logout</strong></span>
       </div>
       <div className="hamburger" onClick={() => setMobileOpenClose(!mobileOpenClose)}>
         <div className={`${invertColors ? "invertColors" : "hamburgerPatties"} `}></div>
