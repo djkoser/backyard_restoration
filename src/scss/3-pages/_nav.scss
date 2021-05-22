@@ -13,7 +13,6 @@ nav {
   position: relative;
   background-color: $greenBlue;
   padding: 15px;
-  opacity: 90%;
   transition: all 0.3s;
 }
 
@@ -29,7 +28,8 @@ nav {
   }
   .weedLinkBoxOpened {
     top: 0px;
-    z-index: 1000;
+    z-index: 1;
+    opacity: 90%;
   }
 
   .weedLinkBoxClosed {
