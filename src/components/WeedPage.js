@@ -1,15 +1,15 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
-import Nav from './Nav';
-import Footer from './Footer';
-import SwitchMaker from './SwitchMaker';
-import WeatherLoader from './WeatherLoader';
-import { getMethods } from '../redux/mgmtMethodReducer';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import Nav from "./Nav";
+import Footer from "./Footer";
+import SwitchMaker from "./SwitchMaker";
+import WeatherLoader from "./WeatherLoader";
+import { getMethods } from "../redux/mgmtMethodReducer";
 
 const WeedPage = (props) => {
-  const { id } = props.match.params
+  const { id } = props.match.params;
 
   const [src, setSrc] = useState("");
   const [commonName, setCommonName] = useState("");
@@ -26,18 +26,16 @@ const WeedPage = (props) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMethods())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    dispatch(getMethods());
+  }, []);
   useEffect(() => {
     if (id) {
-      getWeedDetails()
+      getWeedDetails();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [id]);
 
   useEffect(() => {
-    setSwitches(mgmtOptions.map(el => (<SwitchMaker key={`method${el.method_id}`} userMethods={userMethods} weedMethod={el} />)))
+    setSwitches(mgmtOptions.map(el => (<SwitchMaker key={`method${el.method_id}`} userMethods={userMethods} weedMethod={el} />)));
   }, [mgmtOptions, userMethods]);
 
 
@@ -50,15 +48,15 @@ const WeedPage = (props) => {
         setBotanicalName(botanical_name);
         setAnnualPerennialBiennial(annual_perennial_biennial);
         setVegType(veg_type);
-        setDescription(description)
+        setDescription(description);
       })
-      .catch(err => props.history.push('/'))
+      .catch(() => props.history.push("/"));
     await axios.get(`/api/weeds/methods/${id}`)
       .then(res => {
         setMgmtOptions(res.data);
       })
-      .catch(err => props.history.push('/'))
-    setLoading(false)
+      .catch(() => props.history.push("/"));
+    setLoading(false);
   };
 
   const output = (
@@ -85,7 +83,7 @@ const WeedPage = (props) => {
       </fieldset>
       <Footer />
     </>
-  )
+  );
 
   return (
     <>
@@ -94,7 +92,7 @@ const WeedPage = (props) => {
         <h3>Loading, Please Wait</h3>
       </> : output}
     </>
-  )
+  );
 };
 
-export default WeedPage
+export default WeedPage;

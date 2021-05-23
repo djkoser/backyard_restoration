@@ -1,3 +1,4 @@
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
@@ -27,4 +28,4 @@ export default (
     <Route path='/manualEntry' component={NOAAHangupPage} />
     <Route path='/nativesSelector' component={NativeSelector} />
   </Switch>
-)
+);

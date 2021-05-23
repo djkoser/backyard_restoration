@@ -1,11 +1,11 @@
 // @ts-nocheck
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { toggleMethod } from '../redux/mgmtMethodReducer';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleMethod } from "../redux/mgmtMethodReducer";
 
 
 const SwitchMaker = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // Determine if weed method is in user method list and check inputs accordingly
 
 
@@ -13,9 +13,9 @@ const SwitchMaker = (props) => {
 
   const { weedMethod } = props;
 
-  let checked = false
+  let checked = false;
   if (userMethods.reduce((acc, el) => weedMethod.method_id === el.method_id ? ++acc : acc, 0)) {
-    checked = true
+    checked = true;
   }
   return (
     <div className='switchBody'>
@@ -42,7 +42,7 @@ const SwitchMaker = (props) => {
         <strong>Description: </strong>{weedMethod.description}
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default SwitchMaker
+export default SwitchMaker;

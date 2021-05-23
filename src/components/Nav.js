@@ -1,7 +1,7 @@
 // @ts-nocheck
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
 
 const Nav = (props) => {
   const { invertColors } = props;
@@ -9,14 +9,14 @@ const Nav = (props) => {
   const [weedOpenClose, setWeedOpenClose] = useState(false);
 
   const logout = () => {
-    axios.delete('/api/logout')
-      .then(res => {
-        props.history.push('/')
+    axios.delete("/api/logout")
+      .then(() => {
+        props.history.push("/");
       })
-      .catch(err => props.history.push('/'))
-  }
+      .catch(() => props.history.push("/"));
+  };
   return (
-    <nav className={invertColors ? 'greenYellowBackground' : null}>
+    <nav className={invertColors ? "greenYellowBackground" : null}>
       <div className={`linkBox ${mobileOpenClose ? "linkBoxOpened" : "linkBoxClosed"}`} >
         <Link onClick={() => {
           setWeedOpenClose(false);
@@ -55,6 +55,6 @@ const Nav = (props) => {
         <div className={`${invertColors ? "invertColors" : "hamburgerPatties"} `}></div>
       </div>
     </nav >
-  )
-}
-export default withRouter(Nav)
+  );
+};
+export default withRouter(Nav);

@@ -1,24 +1,24 @@
 // @ts-nocheck
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Footer from './Footer';
-import Nav from './Nav';
-import Timeline from './Timeline';
-import DashboardDropdowns from './DashboardDropdowns';
-import { getUserInfo } from '../redux/userInfoReducer';
-import { getMethods } from '../redux/mgmtMethodReducer';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Footer from "./Footer";
+import Nav from "./Nav";
+import Timeline from "./Timeline";
+import DashboardDropdowns from "./DashboardDropdowns";
+import { getUserInfo } from "../redux/userInfoReducer";
+import { getMethods } from "../redux/mgmtMethodReducer";
 
 // props from store hZone, gSeasonLength firstGDD35
 
 const Dashboard = () => {
 
-  const hardiness_zone = useSelector(state => state.userInfoReducer.hardiness_zone)
+  const hardiness_zone = useSelector(state => state.userInfoReducer.hardiness_zone);
 
-  const growing_season_length = useSelector(state => state.userInfoReducer.growing_season_length)
+  const growing_season_length = useSelector(state => state.userInfoReducer.growing_season_length);
 
-  const first_gdd35 = useSelector(state => state.userInfoReducer.first_gdd35)
+  const first_gdd35 = useSelector(state => state.userInfoReducer.first_gdd35);
 
-  const last_gdd35 = useSelector(state => state.userInfoReducer.last_gdd35)
+  const last_gdd35 = useSelector(state => state.userInfoReducer.last_gdd35);
 
 
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
@@ -27,8 +27,8 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUserInfo())
-    dispatch(getMethods())
+    dispatch(getUserInfo());
+    dispatch(getMethods());
   }, [dispatch]);
 
   return (
@@ -51,6 +51,6 @@ const Dashboard = () => {
       <DashboardDropdowns />
       <Footer />
     </>
-  )
-}
-export default Dashboard
+  );
+};
+export default Dashboard;

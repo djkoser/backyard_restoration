@@ -1,12 +1,14 @@
+/* eslint-disable react/no-unescaped-entities */
 // @ts-nocheck
-import React, { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import Nav from './Nav';
+import React, { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import Nav from "./Nav";
 
 
+// eslint-disable-next-line no-undef
 const { REACT_APP_STRIPE_PUBLISHABLE_KEY } = process.env;
 
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -17,17 +19,17 @@ const Stripe = () => {
   const toPaymentPage = async () => {
     if (donationAmount.match(/\d*.\d{2}/) && donationAmount.match(/\d*.\d{2}/)[0] === donationAmount && Number.parseFloat(donationAmount) >= 1) {
       const stripe = await stripePromise;
-      axios.post('/api/donate', { donationAmount: (Number.parseFloat(donationAmount) * 100).toString() })
+      axios.post("/api/donate", { donationAmount: (Number.parseFloat(donationAmount) * 100).toString() })
         .then(async res => {
           await stripe.redirectToCheckout({
             sessionId: res.data.id
-          })
+          });
         })
-        .catch(() => toast.error("Unfortunately, your donation did not process successfully. Please inform us of this issue by contacting us at BackyardRestorationNet@gmail.com, and we will work to resolve it as quickly as possible. Thank you for your attempted donation!"))
+        .catch(() => toast.error("Unfortunately, your donation did not process successfully. Please inform us of this issue by contacting us at BackyardRestorationNet@gmail.com, and we will work to resolve it as quickly as possible. Thank you for your attempted donation!"));
     } else {
-      toast.warn('Please enter a value greater than 1 dollar in the format "0.00". Thank you!')
+      toast.warn("Please enter a value greater than 1 dollar in the format \"0.00\". Thank you!");
     }
-  }
+  };
 
   return (
     <>
@@ -45,7 +47,7 @@ const Stripe = () => {
       </div>
       <Link to="/dash">Back to Dashboard</Link>
     </>
-  )
-}
+  );
+};
 
-export default Stripe
+export default Stripe;

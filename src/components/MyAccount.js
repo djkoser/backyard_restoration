@@ -1,19 +1,19 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
-import { addRetrievedInfo, getUserInfo } from '../redux/userInfoReducer';
-import Nav from './Nav';
-import Footer from './Footer';
-import { ToastContainer, toast } from 'react-toastify';
-import WeatherLoader from './WeatherLoader';
+import { addRetrievedInfo, getUserInfo } from "../redux/userInfoReducer";
+import Nav from "./Nav";
+import Footer from "./Footer";
+import { ToastContainer, toast } from "react-toastify";
+import WeatherLoader from "./WeatherLoader";
 
 
 const MyAccount = (props) => {
 
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const emailRedux = useSelector(state => state.userInfoReducer.email);
 
@@ -29,11 +29,11 @@ const MyAccount = (props) => {
 
   const zipcodeRedux = useSelector(state => state.userInfoReducer.zipcode);
 
-  const firstGDD35Redux = useSelector(state => state.userInfoReducer.first_gdd35)
+  const firstGDD35Redux = useSelector(state => state.userInfoReducer.first_gdd35);
 
-  const lastGDD35Redux = useSelector(state => state.userInfoReducer.last_gdd35)
+  const lastGDD35Redux = useSelector(state => state.userInfoReducer.last_gdd35);
 
-  const hardinessZoneRedux = useSelector(state => state.userInfoReducer.hardiness_zone)
+  const hardinessZoneRedux = useSelector(state => state.userInfoReducer.hardiness_zone);
 
 
   const [firstName, setFirstName] = useState(firstNameRedux);
@@ -72,34 +72,33 @@ const MyAccount = (props) => {
   const [loading, setLoading] = useState(false);
 
   const refresh = () => {
-    setFirstName(firstNameRedux)
-    setLastName(lastNameRedux)
-    setEmail(emailRedux)
-    setStreet(streetRedux)
-    setCity(cityRedux)
-    setState(stateRedux)
-    setZipcode(zipcodeRedux)
-    setFirstGDD35(firstGDD35Redux)
-    setLastGDD35(lastGDD35Redux)
-    setHardinessZone(hardinessZoneRedux)
-  }
+    setFirstName(firstNameRedux);
+    setLastName(lastNameRedux);
+    setEmail(emailRedux);
+    setStreet(streetRedux);
+    setCity(cityRedux);
+    setState(stateRedux);
+    setZipcode(zipcodeRedux);
+    setFirstGDD35(firstGDD35Redux);
+    setLastGDD35(lastGDD35Redux);
+    setHardinessZone(hardinessZoneRedux);
+  };
 
   const onError = async () => {
-    await dispatch(getUserInfo())
-    refresh()
+    await dispatch(getUserInfo());
+    refresh();
     if (emailRedux && firstNameRedux && lastNameRedux && streetRedux && cityRedux && stateRedux && zipcodeRedux && firstGDD35Redux && lastGDD35Redux && hardinessZoneRedux) {
-      toast.error("There was an error while attempting to change your credentials.")
-    } else { props.history.push('/') }
-  }
+      toast.error("There was an error while attempting to change your credentials.");
+    } else { props.history.push("/"); }
+  };
 
   useEffect(() => {
-    dispatch(getUserInfo())
+    dispatch(getUserInfo());
   }, [dispatch]);
 
   useEffect(() => {
-    refresh()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailRedux, firstNameRedux, lastNameRedux, streetRedux, cityRedux, stateRedux, zipcodeRedux, firstGDD35Redux, lastGDD35Redux, hardinessZoneRedux])
+    refresh();
+  }, [emailRedux, firstNameRedux, lastNameRedux, streetRedux, cityRedux, stateRedux, zipcodeRedux, firstGDD35Redux, lastGDD35Redux, hardinessZoneRedux]);
 
   const toggleEdit = (type) => {
     switch (type) {
@@ -108,55 +107,55 @@ const MyAccount = (props) => {
           setEditToggleName(false);
         } else {
           setEditToggleName(true);
-          axios.put(`/api/user/name`, { first_name: firstName, last_name: lastName })
+          axios.put("/api/user/name", { first_name: firstName, last_name: lastName })
             .then(res => {
-              dispatch(addRetrievedInfo(res.data))
-              setPassword("This is a fake password")
-              toast.success("Your name has been updated successfully.")
+              dispatch(addRetrievedInfo(res.data));
+              setPassword("This is a fake password");
+              toast.success("Your name has been updated successfully.");
             })
-            .catch(err => onError())
-        };
-        return
+            .catch(() => onError());
+        }
+        return;
       case "email":
         if (editToggleEmail) {
           setEditToggleEmail(false);
         } else {
           setEditToggleEmail(true);
-          axios.put(`/api/user/email`, { email })
+          axios.put("/api/user/email", { email })
             .then(res => {
-              dispatch(addRetrievedInfo(res.data))
-              setPassword("This is a fake password")
-              toast.success("Your email has been updated successfully.")
+              dispatch(addRetrievedInfo(res.data));
+              setPassword("This is a fake password");
+              toast.success("Your email has been updated successfully.");
 
             })
-            .catch(err => {
-              onError()
-              toast.error("It is possible that you have an account with us under the email you're attempting to switch to.")
-            })
-        };
-        return
+            .catch(() => {
+              onError();
+              toast.error("It is possible that you have an account with us under the email you're attempting to switch to.");
+            });
+        }
+        return;
       case "password":
         if (editTogglePassword) {
           setEditTogglePassword(false);
-          setPassword("")
+          setPassword("");
         } else {
           setEditTogglePassword(true);
-          axios.put(`/api/user/password`, { password })
+          axios.put("/api/user/password", { password })
             .then(res => {
-              dispatch(addRetrievedInfo(res.data))
-              setPassword("This is a fake password")
-              toast.success("Your password has been updated successfully.")
+              dispatch(addRetrievedInfo(res.data));
+              setPassword("This is a fake password");
+              toast.success("Your password has been updated successfully.");
             })
-            .catch(err => onError())
+            .catch(() => onError());
         }
-        return
+        return;
       case "address":
         if (editToggleAddress) {
           setEditToggleAddress(false);
         } else {
-          setLoading(true)
+          setLoading(true);
           setEditToggleAddress(true);
-          axios.put(`/api/user/address`, { street, city, state, zipcode })
+          axios.put("/api/user/address", { street, city, state, zipcode })
             .then(async res => {
               if (typeof res.data !== "string") {
                 dispatch(addRetrievedInfo(res.data));
@@ -164,50 +163,50 @@ const MyAccount = (props) => {
                 setLoading(false);
                 toast.success("Your address has been updated successfully.");
               } else {
-                toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.")
-                await setTimeout(() => props.history.push('/manualEntry'), 5000);
+                toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
+                await setTimeout(() => props.history.push("/manualEntry"), 5000);
               }
             })
-            .catch(err => {
+            .catch(() => {
               setLoading(false);
               onError();
-            })
+            });
         }
-        return
+        return;
       case "growingParams":
         if (editToggleGrwParams) {
           setEditToggleGrwParams(false);
         } else {
           setEditToggleGrwParams(true);
-          axios.put('/api/user/growingInfo', { first_gdd35, last_gdd35, hardiness_zone })
+          axios.put("/api/user/growingInfo", { first_gdd35, last_gdd35, hardiness_zone })
             .then(res => {
               dispatch(addRetrievedInfo(res.data));
               setPassword("This is a fake password");
               toast.success("Your growing parameters have been updated successfully.");
             })
-            .catch(err => {
-              onError()
-              toast.error("You may have used the incorrect date format (MM-DD).")
-            })
+            .catch(() => {
+              onError();
+              toast.error("You may have used the incorrect date format (MM-DD).");
+            });
         }
-        return
+        return;
       default:
-        break
+        break;
     }
   };
 
   const deleteAccount = () => {
     axios.delete("/api/deleteUser")
-      .then(async res => {
-        toast.success("Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.")
+      .then(async () => {
+        toast.success("Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.");
         await setTimeout(() => {
-          props.history.push("/")
-        }, 5000)
+          props.history.push("/");
+        }, 5000);
       })
-      .catch(err =>
+      .catch(() =>
         toast.error("An error occured while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.")
-      )
-  }
+      );
+  };
 
   return (
     <>
@@ -220,12 +219,12 @@ const MyAccount = (props) => {
             <fieldset className=" editBoxes" >
               <h3 className="accountPageText">Season Start and End Dates</h3>
               <h4 className="accountPageText">(MM-DD)</h4>
-              <input className='myAccountInput' disabled={editToggleGrwParams} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value) }} />
-              <input className='myAccountInput' disabled={editToggleGrwParams} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleGrwParams} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value); }} />
+              <input className='myAccountInput' disabled={editToggleGrwParams} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value); }} />
               <h3 className="accountPageText"> USDA Hardiness Zone.</h3>
               <br />
               <h4><a href="https://planthardiness.ars.usda.gov/" target="_blank" rel="noreferrer noopener">Need Help? Click Here</a></h4>
-              <select className='myAccountInput' disabled={editToggleGrwParams} value={hardiness_zone} onChange={e => { setHardinessZone(e.target.value) }}>
+              <select className='myAccountInput' disabled={editToggleGrwParams} value={hardiness_zone} onChange={e => { setHardinessZone(e.target.value); }}>
                 <option value="1a">Zone 1a: -60F - -55F </option>
                 <option value="1b">Zone 1b: -55F - -50F </option>
                 <option value="2a">Zone 2a: -50F - -45F </option>
@@ -259,28 +258,28 @@ const MyAccount = (props) => {
           <div id="address">
             <fieldset className="editBoxes" >
               <h3 className="accountPageText">Password</h3>
-              <input className='myAccountInput' disabled={editTogglePassword} type='password' value={password} onChange={e => { setPassword(e.target.value) }} />
+              <input className='myAccountInput' disabled={editTogglePassword} type='password' value={password} onChange={e => { setPassword(e.target.value); }} />
             </fieldset>
             <button onClick={() => toggleEdit("password")}>{editTogglePassword ? "Edit" : "Submit"}</button>
             <fieldset className="editBoxes" >
               <h3 className="accountPageText">Address</h3>
-              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={street} onChange={e => { setStreet(e.target.value) }} />
-              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={city} onChange={e => { setCity(e.target.value) }} />
-              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={state} onChange={e => { setState(e.target.value) }} />
-              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={zipcode} onChange={e => { setZipcode(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={street} onChange={e => { setStreet(e.target.value); }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={city} onChange={e => { setCity(e.target.value); }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={state} onChange={e => { setState(e.target.value); }} />
+              <input className='myAccountInput' disabled={editToggleAddress} type='text' value={zipcode} onChange={e => { setZipcode(e.target.value); }} />
             </fieldset>
             <button onClick={() => toggleEdit("address")}>{editToggleAddress ? "Edit" : "Submit"}</button>
           </div>
           <div id="nameEmailPassword">
             <fieldset className=" editBoxes" >
               <h3 className="accountPageText">Name</h3>
-              <input className='myAccountInput' disabled={editToggleName} type='text' value={firstName} onChange={e => { setFirstName(e.target.value) }} />
-              <input className='myAccountInput' disabled={editToggleName} type='text' value={lastName} onChange={e => { setLastName(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleName} type='text' value={firstName} onChange={e => { setFirstName(e.target.value); }} />
+              <input className='myAccountInput' disabled={editToggleName} type='text' value={lastName} onChange={e => { setLastName(e.target.value); }} />
             </fieldset>
             <button onClick={() => toggleEdit("name")}>{editToggleName ? "Edit" : "Submit"}</button>
             <fieldset className="editBoxes" >
               <h3 className="accountPageText">Email</h3>
-              <input className='myAccountInput' disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value) }} />
+              <input className='myAccountInput' disabled={editToggleEmail} type='text' value={email} onChange={e => { setEmail(e.target.value); }} />
             </fieldset>
             <button onClick={() => toggleEdit("email")}>{editToggleEmail ? "Edit" : "Submit"}</button>
             <fieldset className="editBoxes" >
@@ -294,6 +293,6 @@ const MyAccount = (props) => {
       </div>
       <Footer />
     </>
-  )
-}
-export default MyAccount
+  );
+};
+export default MyAccount;

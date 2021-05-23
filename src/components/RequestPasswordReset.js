@@ -1,32 +1,33 @@
+/* eslint-disable react/no-unescaped-entities */
 // @ts-nocheck
-import React, { useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const RequestPasswordReset = (props) => {
-  const [email, setEmail] = useState(props.location.state.email)
-  const [successMessage, setSuccessMessage] = useState({ visibility: "hidden" })
-  const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" })
+  const [email, setEmail] = useState(props.location.state.email);
+  const [successMessage, setSuccessMessage] = useState({ visibility: "hidden" });
+  const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" });
 
   const submitRequest = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     axios.put("/api/pwdResetReq", { email })
 
-      .then(res => {
+      .then(() => {
         setEmail("");
-        toast.success('Password Reset Request Submitted Successfully')
-        setSuccessMessage({ visibility: "visible" })
-        setFailureMessage({ visibility: "hidden" })
+        toast.success("Password Reset Request Submitted Successfully");
+        setSuccessMessage({ visibility: "visible" });
+        setFailureMessage({ visibility: "hidden" });
       })
 
-      .catch(err => {
+      .catch(() => {
         setEmail("");
-        toast.error('Password Reset Request Failed.')
-        setSuccessMessage({ visibility: "hidden" })
-        setFailureMessage({ visibility: "visible" })
-      })
-  }
+        toast.error("Password Reset Request Failed.");
+        setSuccessMessage({ visibility: "hidden" });
+        setFailureMessage({ visibility: "visible" });
+      });
+  };
 
   return (
     <div id="resetReqBox">
@@ -56,7 +57,7 @@ const RequestPasswordReset = (props) => {
         <h4> We did not find an account under the email address provided. Please try again or register for a new account using the "Register" button on our login page.</h4>
       </article>
     </div>
-  )
-}
+  );
+};
 
-export default RequestPasswordReset
+export default RequestPasswordReset;

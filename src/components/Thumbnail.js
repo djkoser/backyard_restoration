@@ -1,10 +1,10 @@
 // @ts-nocheck
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 // props commonName, botanicalName from WeedSearch
 const Thumbnail = (props) => {
-  const { weed_id, common_name, botanical_name, src } = props.weedInfo
+  const { weed_id, common_name, botanical_name, src } = props.weedInfo;
   return (
     <figure className='searchFigures'>
       <Link className='searchLinks' to={`/weed/${weed_id}`}>
@@ -23,6 +23,6 @@ const Thumbnail = (props) => {
 
       </Link>
     </figure >
-  )
-}
-export default Thumbnail
+  );
+};
+export default Thumbnail;

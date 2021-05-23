@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 //@ts-nocheck
 require("dotenv").config();
 const massive = require("massive");
@@ -9,13 +10,13 @@ const userCtl = require("./controllers/userController");
 const weedCtl = require("./controllers/weedController");
 const updUserCtl = require("./controllers/updateUserController");
 const { authorize } = require("./middleware/authMiddleware");
-const passwordReset = require('./controllers/passwordReset');
-const stripeController = require('./controllers/stripeController');
-const nativeController = require('./controllers/nativePlantsController');
+const passwordReset = require("./controllers/passwordReset");
+const stripeController = require("./controllers/stripeController");
+const nativeController = require("./controllers/nativePlantsController");
 
 const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
 
-app.use(express.static(`${__dirname}/../build`))
+app.use(express.static(`${__dirname}/../build`));
 
 app.use(express.json());
 app.use(
@@ -25,18 +26,18 @@ app.use(
     secret: SESSION_SECRET,
     cookie: { maxAge: 1000 * 60 * 60 * 24 },
   })
-)
+);
 
 massive({
   connectionString: CONNECTION_STRING,
 
   ssl: { rejectUnauthorized: 0 }
 }).then((dbInstance) => {
-  app.set("db", dbInstance)
+  app.set("db", dbInstance);
   app.listen(PORT, () =>
     console.log(`DB Mounted and Server Connected on Port ${PORT}`)
-  )
-})
+  );
+});
 
 // User Endpoints
 app.post("/api/register", userCtl.newUser);
@@ -66,6 +67,6 @@ app.put("/api/native/notes/:nativeID", authorize, nativeController.updateProject
 app.post("/api/native/add/:nativeID", authorize, nativeController.addToList);
 app.delete("/api/native/delete/:nativeID", authorize, nativeController.removeFromList);
 // Stripe EndPoint
-app.post('/api/donate', authorize, stripeController.checkout);
+app.post("/api/donate", authorize, stripeController.checkout);
 
 

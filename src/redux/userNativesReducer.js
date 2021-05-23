@@ -1,5 +1,5 @@
 // @ts-nocheck
-import axios from 'axios';
+import axios from "axios";
 
 const initialState = {
   userNatives: [],
@@ -13,9 +13,9 @@ const REMOVE_USER_NATIVE = "REMOVE_USER_NATIVE";
 
 export const getUserNatives = () => {
   const userNatives = axios
-    .get(`/api/native/user`)
+    .get("/api/native/user")
     .then(res => res.data)
-    .catch(err => initialState);
+    .catch(() => initialState);
   const action = {
     type: GET_USER_NATIVES,
     payload: userNatives
@@ -26,7 +26,7 @@ export const addUserNative = (nativeID) => {
   const userNatives = axios
     .post(`/api/native/add/${nativeID}`)
     .then(res => res.data)
-    .catch(err => initialState);
+    .catch(() => initialState);
   const action = {
     type: ADD_USER_NATIVE,
     payload: userNatives
@@ -37,7 +37,7 @@ export const updateProjectNotes = (nativeID, notes) => {
   const userNatives = axios
     .get(`/api/native/notes/${nativeID}`, { notes })
     .then(res => res.data)
-    .catch(err => initialState);
+    .catch(() => initialState);
   const action = {
     type: UPDATE_PROJECT_NOTES,
     payload: userNatives
@@ -48,7 +48,7 @@ export const removeUserNative = (nativeID) => {
   const userNatives = axios
     .get(`/api/native/delete/${nativeID}`)
     .then(res => res.data)
-    .catch(err => initialState);
+    .catch(() => initialState);
   const action = {
     type: REMOVE_USER_NATIVE,
     payload: userNatives
@@ -59,30 +59,30 @@ export const removeUserNative = (nativeID) => {
 export default function userInfoReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER_NATIVES + "_PENDING":
-      return { ...state, ...{ loading: true, failed: false } }
+      return { ...state, ...{ loading: true, failed: false } };
     case GET_USER_NATIVES + "_FULFILLED":
-      return { ...state, ...action.payload, ...{ loading: false, failed: false } }
+      return { ...state, ...action.payload, ...{ loading: false, failed: false } };
     case GET_USER_NATIVES + "_REJECTED":
-      return { ...state, ...{ loading: false, failed: true } }
+      return { ...state, ...{ loading: false, failed: true } };
     case ADD_USER_NATIVE + "_PENDING":
-      return { ...state, ...{ loading: true, failed: false } }
+      return { ...state, ...{ loading: true, failed: false } };
     case ADD_USER_NATIVE + "_FULFILLED":
-      return { ...state, ...action.payload, ...{ loading: false, failed: false } }
+      return { ...state, ...action.payload, ...{ loading: false, failed: false } };
     case ADD_USER_NATIVE + "_REJECTED":
-      return { ...state, ...{ loading: false, failed: true } }
+      return { ...state, ...{ loading: false, failed: true } };
     case UPDATE_PROJECT_NOTES + "_PENDING":
-      return { ...state, ...{ loading: true, failed: false } }
+      return { ...state, ...{ loading: true, failed: false } };
     case UPDATE_PROJECT_NOTES + "_FULFILLED":
-      return { ...state, ...action.payload, ...{ loading: false, failed: false } }
+      return { ...state, ...action.payload, ...{ loading: false, failed: false } };
     case UPDATE_PROJECT_NOTES + "_REJECTED":
-      return { ...state, ...{ loading: false, failed: true } }
+      return { ...state, ...{ loading: false, failed: true } };
     case REMOVE_USER_NATIVE + "_PENDING":
-      return { ...state, ...{ loading: true, failed: false } }
+      return { ...state, ...{ loading: true, failed: false } };
     case REMOVE_USER_NATIVE + "_FULFILLED":
-      return { ...state, ...action.payload, ...{ loading: false, failed: false } }
+      return { ...state, ...action.payload, ...{ loading: false, failed: false } };
     case REMOVE_USER_NATIVE + "_REJECTED":
-      return { ...state, ...{ loading: false, failed: true } }
+      return { ...state, ...{ loading: false, failed: true } };
     default:
-      return state
+      return state;
   }
 }

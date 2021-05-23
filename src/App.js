@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React from 'react';
-import routes from './routes';
+import React from "react";
+import routes from "./routes";
 
 function App() {
   return (

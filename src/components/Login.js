@@ -1,11 +1,11 @@
 // @ts-nocheck
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import { addRetrievedInfo } from '../redux/userInfoReducer';
-import { getMethods } from '../redux/mgmtMethodReducer'
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { addRetrievedInfo } from "../redux/userInfoReducer";
+import { getMethods } from "../redux/mgmtMethodReducer";
 
 const Login = (props) => {
 
@@ -15,20 +15,20 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = () => {
-    axios.post('/api/login', { email, password })
+    axios.post("/api/login", { email, password })
       .then((res) => {
-        dispatch(getMethods())
+        dispatch(getMethods());
         dispatch(addRetrievedInfo(res.data));
-        props.history.push("/dash")
+        props.history.push("/dash");
       })
-      .catch((err) => {
+      .catch(() => {
         setPassword("");
         setEmail("");
-        toast.error("Incorrect username or password, please try again or register for an account.")
-      })
+        toast.error("Incorrect username or password, please try again or register for an account.");
+      });
   };
   const register = () => {
-    props.history.push('/register')
+    props.history.push("/register");
   };
   return (
     <div id="loginComponent">
@@ -36,6 +36,7 @@ const Login = (props) => {
         <h1 className="loginWelcomeText">Welcome to Our Community!</h1>
         <h4 className="loginWelcomeText"> BackyardRestoration.net is dedicated to providing you with the resources necessary to complete your own backyard ecological restorations.</h4>
         <h4 className="loginWelcomeText">This site is predominantly geared-toward prairie restorations in the upper midwest, but will be expanding to include other regions and ecosystems in the future.</h4>
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <h4 className="loginWelcomeText">Simply click the "Register" Button to begin, or log in with your email and password.</h4>
       </article>
       <div id="loginContainer">
@@ -49,7 +50,7 @@ const Login = (props) => {
           <label htmlFor="passwordLoginInput">Password</label>
           <input id="passwordLoginInput" placeholder='Password' type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
           <Link id="forgotPwdLink" to={{
-            pathname: './requestReset',
+            pathname: "./requestReset",
             state: {
               email
             }
@@ -72,6 +73,6 @@ const Login = (props) => {
         <h1 id="mobileWelcomeText" ><strong>Welcome</strong></h1>
       </div>
     </div>
-  )
-}
-export default Login
+  );
+};
+export default Login;

@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
 
@@ -8,7 +8,7 @@ const Footer = () => {
     <footer>
       <Link id="donationLink" to='/donation'>Donate</Link>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;

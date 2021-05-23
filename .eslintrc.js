@@ -1,4 +1,5 @@
-export default {
+// eslint-disable-next-line no-undef
+module.exports = {
     "env": {
         "browser": true,
         "es2021": true
@@ -18,11 +19,18 @@ export default {
         "react"
     ],
     "rules": {
-        "react/prop-types": "off"
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "react/prop-types": 0
     }
 };

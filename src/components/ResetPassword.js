@@ -1,36 +1,37 @@
+/* eslint-disable react/no-unescaped-entities */
 // @ts-nocheck
-import React, { useState } from 'react';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useState } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 
 const ResetPassword = (props) => {
 
 
-  const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" })
-  const [password, setPassword] = useState("")
+  const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" });
+  const [password, setPassword] = useState("");
 
 
   const submitChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     axios.put(`/api/pwdRS/${props.match.params.token}`, { newPassword: password })
 
-      .then(res => {
-        setPassword("")
-        toast.success("Password Reset Successful! Logging you in...")
-        setFailureMessage({ visibility: "hidden" })
-        props.history.push('/dash')
+      .then(() => {
+        setPassword("");
+        toast.success("Password Reset Successful! Logging you in...");
+        setFailureMessage({ visibility: "hidden" });
+        props.history.push("/dash");
       })
 
-      .catch(err => {
-        setPassword("")
-        toast.error('Your password reset request has expired. Please try again using the "Forgot Password" link on our login page.')
-        setFailureMessage({ visibility: "visible" })
-      })
-  }
+      .catch(() => {
+        setPassword("");
+        toast.error("Your password reset request has expired. Please try again using the \"Forgot Password\" link on our login page.");
+        setFailureMessage({ visibility: "visible" });
+      });
+  };
 
   return (
     <main id="submitResetBody">
@@ -53,8 +54,8 @@ const ResetPassword = (props) => {
         <Link to={"/"}>Back to Login</Link>
       </article>
     </main>
-  )
-}
+  );
+};
 
 
-export default ResetPassword
+export default ResetPassword;
