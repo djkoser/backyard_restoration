@@ -1,1 +1,1 @@
-SELECT * FROM native_plants;
+SELECT * FROM native_plant;

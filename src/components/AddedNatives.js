@@ -6,10 +6,10 @@ import { ToastContainer } from "react-toastify";
 
 
 const AddedNatives = () => {
-  const [eSpring, seteSpring] = useState([<></>]);
-  const [lSpring, setLSpring] = useState([<></>]);
-  const [summer, setSummer] = useState([<></>]);
-  const [fall, setFall] = useState([<></>]);
+  const [eSpring, seteSpring] = useState([]);
+  const [lSpring, setLSpring] = useState([]);
+  const [summer, setSummer] = useState([]);
+  const [fall, setFall] = useState([]);
 
   const userNatives = useSelector(state => state.userNativesReducer.userNatives);
 

@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 //Props from app.js -myPlantsList addToMyPlants
 const NativeSearchBar = (props) => {
 
-  const [botanicalNameInput, setBotanicalNameInput] = useState("");
-  const [commonNameInput, setCommonNameInput] = useState("");
+  const [botanicalCommonNameInput, setBotanicalCommonNameInput] = useState("");
   const [sunInput, setSunInput] = useState("");
   const [bloomTimeInput, setBloomTimeInput] = useState("");
   const [minHeightInput, setMinHeightInput] = useState("");
@@ -20,18 +19,23 @@ const NativeSearchBar = (props) => {
   }, []);
 
   const clearSearch = () => {
-    setBotanicalNameInput("");
-    setCommonNameInput("");
+    setBotanicalCommonNameInput("");
     setSunInput("");
     setBloomTimeInput("");
     setMinHeightInput("");
     setMaxHeightInput("");
     setMoistureInput("");
+    searchPlants();
   };
 
-  const searchPlants = () => {
+  const searchPlants = (botanicalCommonNameInput,
+    sunInput,
+    bloomTimeInput,
+    minHeightInput,
+    maxHeightInput,
+    moistureInput) => {
 
-    axios.get(`/api/native?${botanicalNameInput ? "name=botanicalNameInput" : null}${commonNameInput ? "&" : null}?${commonNameInput ? "name=commonNameInput" : null}${sunInput ? "&" : null}${sunInput ? "sun=sunInput" : null}${bloomTimeInput ? "&" : null}${bloomTimeInput ? "bloomTime=bloomTimeInput" : null}${minHeightInput ? "&" : null}${minHeightInput ? "minHeight=minHeightInput" : null}${maxHeightInput ? "&" : null}${maxHeightInput ? "maxHeight=maxHeightInput" : null}${moistureInput ? "&" : null}${moistureInput ? "moisture=moistureInput" : null}`)
+    axios.get(`/api/native?${botanicalCommonNameInput ? `name=${botanicalCommonNameInput}` : ""}${sunInput ? "&" : ""}${sunInput ? `sun=${sunInput}` : ""}${bloomTimeInput ? "&" : ""}${bloomTimeInput ? `bloomTime=${bloomTimeInput}` : ""}${minHeightInput ? "&" : ""}${minHeightInput ? `minHeight=${minHeightInput}` : ""}${maxHeightInput ? "&" : ""}${maxHeightInput ? `maxHeight=${maxHeightInput}` : ""}${moistureInput ? "&" : ""}${moistureInput ? `moisture=${moistureInput}` : ""}`)
       .then(res => setSearchResults(res.data))
       .catch(() => toast.error("Search failed, please try again"));
   };
@@ -39,14 +43,11 @@ const NativeSearchBar = (props) => {
   return (
     <div className='searchResults'>
       <form>
-        <label htmlFor='botNameInput'>Botanical Name
-            <input id='botNameInput' type='text' onChange={e => { setBotanicalNameInput(e.target.value); }} value={botanicalNameInput} placeholder={"Botanical Name"}></input>
-        </label>
-        <label htmlFor='comNameInput'>Common Name
-            <input id='comNameInput' type='text' onChange={e => { setCommonNameInput(e.target.value); }} value={commonNameInput} placeholder={"Common Name"}></input>
+        <label htmlFor='botNameInput'>Botanical/Common Name
+            <input id='botNameInput' type='text' onChange={e => { setBotanicalCommonNameInput(e.target.value); }} value={botanicalCommonNameInput} placeholder={"Botanical/Common Name"}></input>
         </label>
         <label htmlFor='sunDropdown'>Sun
-            <select id='sunDropdown' onChange={e => { setCommonNameInput(e.target.value); }} value={sunInput}>
+            <select id='sunDropdown' onChange={e => { setSunInput(e.target.value); }} value={sunInput}>
             <option value={""}></option>
             <option value={"Full"}>Full</option>
             <option value={"Full, Partial"}>Full, Partial</option>
@@ -85,7 +86,12 @@ const NativeSearchBar = (props) => {
         </label>
         <button className={"searchButton"} onClick={e => {
           e.preventDefault();
-          searchPlants();
+          searchPlants(botanicalCommonNameInput,
+            sunInput,
+            bloomTimeInput,
+            minHeightInput,
+            maxHeightInput,
+            moistureInput);
         }}>Search</button>
         <button className={"searchButton"} onClick={event => {
           event.preventDefault();

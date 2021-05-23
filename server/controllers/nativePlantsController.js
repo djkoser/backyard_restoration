@@ -5,20 +5,21 @@ module.exports = {
     const db = await req.app.get("db");
     const { name, moisture, sun, minHeight, maxHeight, bloomTime } = req.query;
     let searchString = "";
+    console.log(name, moisture, sun, minHeight, maxHeight, bloomTime);
     try {
       if (name) {
         searchString = `(common_name ILIKE '%${name}%') OR (botanical_name ILIKE '%${name}%')`;
       }
       if (moisture) {
         if (!searchString) {
-          searchString = `moisture = ${moisture}`;
+          searchString = `moisture = '${moisture}'`;
         } else {
           searchString = searchString + ` AND moisture = '${moisture}'`;
         }
       }
       if (sun) {
         if (!searchString) {
-          searchString = `sun = ${sun}`;
+          searchString = `sun = '${sun}'`;
         } else {
           searchString = searchString + ` AND sun = '${sun}'`;
         }
@@ -27,14 +28,14 @@ module.exports = {
         if (!searchString) {
           searchString = `height >= ${minHeight}`;
         } else {
-          searchString = searchString + ` AND height >= '${minHeight}'`;
+          searchString = searchString + ` AND height >= ${minHeight}`;
         }
       }
       if (maxHeight) {
         if (!searchString) {
-          searchString = `height >= ${maxHeight}`;
+          searchString = `height <= ${maxHeight}`;
         } else {
-          searchString = searchString + ` AND height <= '${maxHeight}'`;
+          searchString = searchString + ` AND height <= ${maxHeight}`;
         }
       }
       if (bloomTime) {
@@ -46,6 +47,7 @@ module.exports = {
       }
       if (bloomTime || minHeight || maxHeight || sun || moisture || name) {
         searchString = searchString + ";";
+        console.log(searchString);
         const results = await db.nativePlants.searchNatives(searchString);
         res.status(200).send(results);
       } else {
