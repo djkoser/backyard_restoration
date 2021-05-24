@@ -1,4 +1,5 @@
-SELECT 
+SELECT
+  np.native_id,
   np.common_name,
   np.botanical_name, 
   np.moisture,

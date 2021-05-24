@@ -5,7 +5,6 @@ module.exports = {
     const db = await req.app.get("db");
     const { name, moisture, sun, minHeight, maxHeight, bloomTime } = req.query;
     let searchString = "";
-    console.log(name, moisture, sun, minHeight, maxHeight, bloomTime);
     try {
       if (name) {
         searchString = `(common_name ILIKE '%${name}%') OR (botanical_name ILIKE '%${name}%')`;
@@ -47,7 +46,6 @@ module.exports = {
       }
       if (bloomTime || minHeight || maxHeight || sun || moisture || name) {
         searchString = searchString + ";";
-        console.log(searchString);
         const results = await db.nativePlants.searchNatives(searchString);
         res.status(200).send(results);
       } else {
@@ -69,7 +67,8 @@ module.exports = {
         const newList = await db.nativePlants.getUserNatives(user_id);
         res.status(200).send(newList);
       } else {
-        res.sendStatus(400);
+        const newList = await db.nativePlants.getUserNatives(user_id);
+        res.status(200).send(newList);
       }
     } catch {
       res.sendStatus(500);
@@ -81,14 +80,9 @@ module.exports = {
     const { nativeID } = req.params;
     const { notes } = req.body;
     try {
-      const check = await db.nativePlants.checkExistingList(user_id, nativeID);
-      if (check.length > 0) {
-        await db.nativePlants.updateProjectNotes(user_id, nativeID, notes);
-        const newList = await db.nativePlants.getUserNatives(user_id);
-        res.status(200).send(newList);
-      } else {
-        res.sendStatus(400);
-      }
+      await db.nativePlants.updateProjectNotes(user_id, nativeID, notes);
+      const newList = await db.nativePlants.getUserNatives(user_id);
+      res.status(200).send(newList);
     } catch {
       res.sendStatus(500);
     }
@@ -98,14 +92,9 @@ module.exports = {
     const { user_id } = req.session.user;
     const { nativeID } = req.params;
     try {
-      const check = await db.nativePlants.checkExistingList(user_id, nativeID);
-      if (check.length > 0) {
-        await db.nativePlants.removeFromList(user_id, nativeID);
-        const newList = await db.nativePlants.getUserNatives(user_id);
-        res.status(200).send(newList);
-      } else {
-        res.sendStatus(400);
-      }
+      await db.nativePlants.removeFromList(user_id, nativeID);
+      const newList = await db.nativePlants.getUserNatives(user_id);
+      res.status(200).send(newList);
     } catch {
       res.sendStatus(500);
     }

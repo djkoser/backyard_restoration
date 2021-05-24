@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Nav from "./Nav";
 import NativeThumbnail from "./NativeThumbnail";
 import NativesSearchBar from "./NativesSearchBar";
+import { ToastContainer } from "react-toastify";
+import AddedNatives from "./AddedNatives";
 
 const NativeSelector = () => {
   const [searchResults, setSearchResults] = useState([{}]);
@@ -14,8 +16,10 @@ const NativeSelector = () => {
 
   return (
     <>
+      <ToastContainer />
       <Nav />
       <NativesSearchBar setSearchResults={setSearchResults} />
+      <AddedNatives />
       <main>
         {searchResultsJSX}
       </main>

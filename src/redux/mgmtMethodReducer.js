@@ -9,6 +9,7 @@ const initialState = {
 
 const GET_METHODS = "GET_METHODS";
 const TOGGLE_METHOD = "TOGGLE_METHOD";
+const RESET_STORE = "RESET_STORE";
 
 export const getMethods = () => {
   const methods = axios
@@ -35,6 +36,8 @@ export const toggleMethod = (methodID) => {
   return action;
 };
 
+
+
 export default function mgmtMethodReducer(state = initialState, action) {
   switch (action.type) {
     case GET_METHODS + "_PENDING":
@@ -49,6 +52,12 @@ export default function mgmtMethodReducer(state = initialState, action) {
       return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } };
     case TOGGLE_METHOD + "_REJECTED":
       return { ...state, ...{ failed: true, loading: false } };
+    case RESET_STORE:
+      return {
+        userMethods: [],
+        loading: false,
+        failed: false
+      };
     default:
       return state;
   }

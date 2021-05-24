@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 
@@ -7,10 +8,11 @@ const Nav = (props) => {
   const { invertColors } = props;
   const [mobileOpenClose, setMobileOpenClose] = useState(false);
   const [weedOpenClose, setWeedOpenClose] = useState(false);
-
+  const dispatch = useDispatch();
   const logout = () => {
     axios.delete("/api/logout")
       .then(() => {
+        dispatch({ type: "RESET_STORE" });
         props.history.push("/");
       })
       .catch(() => props.history.push("/"));

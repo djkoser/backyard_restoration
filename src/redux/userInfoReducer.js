@@ -19,6 +19,7 @@ const initialState = {
 
 const GET_USER_INFO = "GET_USER_INFO";
 const ADD_RETRIEVED_INFO = "ADD_RETRIEVED_INFO";
+const RESET_STORE = "RESET_STORE";
 
 export const getUserInfo = () => {
   const userInfo = axios
@@ -52,6 +53,22 @@ export default function userInfoReducer(state = initialState, action) {
       return { ...state, ...{ loading: false, failed: true } };
     case ADD_RETRIEVED_INFO:
       return { ...state, ...action.payload };
+    case RESET_STORE:
+      return {
+        user_id: 0,
+        email: "",
+        first_name: "",
+        last_name: "",
+        street: "",
+        city: "",
+        state: "",
+        zipcode: "",
+        growing_season_length: 0,
+        first_gdd35: "",
+        hardiness_zone: "",
+        loading: false,
+        failed: false
+      };
     default:
       return state;
   }
