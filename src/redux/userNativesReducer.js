@@ -38,7 +38,7 @@ export const addUserNative = (nativeID) => {
 };
 export const updateProjectNotes = (nativeID, notes) => {
   const userNatives = axios
-    .get(`/api/native/notes/${nativeID}`, { notes })
+    .put(`/api/native/notes/${nativeID}`, { notes })
     .then(res => res.data)
     .catch(() => initialState.userNatives);
   const action = {
@@ -49,7 +49,7 @@ export const updateProjectNotes = (nativeID, notes) => {
 };
 export const removeUserNative = (nativeID) => {
   const userNatives = axios
-    .get(`/api/native/delete/${nativeID}`)
+    .delete(`/api/native/delete/${nativeID}`)
     .then(res => res.data)
     .catch(() => initialState.userNatives);
   const action = {

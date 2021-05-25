@@ -39,10 +39,10 @@ const AddedNatives = () => {
         }
       });
 
-      lSpringTemp = lSpringTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} bloom_time={el.bloom_time} src={el.src} project_notes={el.project_notes} />);
-      eSpringTemp = eSpringTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} bloom_time={el.bloom_time} src={el.src} project_notes={el.project_notes} />);
-      summerTemp = summerTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} bloom_time={el.bloom_time} src={el.src} project_notes={el.project_notes} />);
-      fallTemp = fallTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} bloom_time={el.bloom_time} src={el.src} project_notes={el.project_notes} />);
+      lSpringTemp = lSpringTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} src={el.src} project_notes={el.project_notes} />);
+      eSpringTemp = eSpringTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} src={el.src} project_notes={el.project_notes} />);
+      summerTemp = summerTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} src={el.src} project_notes={el.project_notes} />);
+      fallTemp = fallTemp.map(el => <NativeAdded key={`addedNative${el.native_id}`} native_id={el.native_id} botanical_name={el.botanical_name} common_name={el.common_name} moisture={el.moisture} sun={el.sun} height={el.height} src={el.src} project_notes={el.project_notes} />);
 
       setESpring(eSpringTemp);
       setLSpring(lSpringTemp);
