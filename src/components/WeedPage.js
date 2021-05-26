@@ -20,7 +20,7 @@ const WeedPage = (props) => {
   const [mgmtOptions, setMgmtOptions] = useState([]);
   const [switches, setSwitches] = useState([<></>]);
 
-
+  const loadingRedux = useSelector(state => state.mgmtMethodReducer.loading);
   const userMethods = useSelector(state => state.mgmtMethodReducer.userMethods);
   // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
   const [loading, setLoading] = useState(true);
@@ -87,7 +87,7 @@ const WeedPage = (props) => {
 
   return (
     <>
-      { loading ? <>
+      { loading || loadingRedux ? <>
         <WeatherLoader loading='true' noText="true" />
         <h3>Loading, Please Wait</h3>
       </> : output}

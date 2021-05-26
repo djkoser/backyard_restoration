@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import NativeAdded from "./NativeAdded";
 import { getUserNatives } from "../redux/userNativesReducer";
 
-
 const AddedNatives = () => {
   const dispatch = useDispatch();
   const [eSpring, setESpring] = useState([]);
@@ -13,6 +12,7 @@ const AddedNatives = () => {
   const [fall, setFall] = useState([]);
 
   const userNatives = useSelector(state => state.userNativesReducer.userNatives);
+
   useEffect(() => {
     dispatch(getUserNatives());
   }, []);
@@ -52,21 +52,22 @@ const AddedNatives = () => {
   }, [userNatives]);
 
   return (
-    <aside>
+    < aside id="addedNativesAside" >
       <h1 className="toPrint ">Project Notes</h1>
-      <section><h2 id='eSpringH'>Early Spring-<strong>{eSpring.length}</strong> in List</h2>
+
+      <section className='bloomTimeBox'><h3 id='eSpringH'>Early Spring-<strong>{eSpring.length}</strong> in List</h3>
         <br />
         {eSpring}
       </section>
-      <section><h2 id='lSpringH'>Late Spring-<strong>{lSpring.length}</strong> in List</h2>
+      <section className='bloomTimeBox'><h3 id='lSpringH'>Late Spring-<strong>{lSpring.length}</strong> in List</h3>
         <br />
         {lSpring}
       </section>
-      <section><h2 id='summerH'>Summer-<strong>{summer.length}</strong> in List</h2>
+      <section className='bloomTimeBox'><h3 id='summerH'>Summer-<strong>{summer.length}</strong> in List</h3>
         <br />
         {summer}
       </section>
-      <section><h2 id='fallH'>Fall-<strong>{fall.length}</strong> in List</h2>
+      <section className='bloomTimeBox'><h3 id='fallH'>Fall-<strong>{fall.length}</strong> in List</h3>
         <br />
         {fall}
       </section>
@@ -76,8 +77,7 @@ const AddedNatives = () => {
         <br />
         <br />
       </div>
-    </aside>
-  );
+    </aside >);
 };
 
 export default AddedNatives;

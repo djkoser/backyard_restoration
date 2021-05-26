@@ -20,9 +20,9 @@ const NativeThumbnail = (props) => {
           toast.warning("This plant has already been added to your list, please select another");
         }
       }} className="nativeThumbnail">
-        <img src={src} alt={`${botanical_name}, commonly known as ${common_name}`} />
+        <img className="searchResultImage" src={src} alt={`${botanical_name}, commonly known as ${common_name}`} />
         <figcaption>
-          <h5><strong>Botanical Name: </strong>{botanical_name}</h5>
+          <h5><strong>Botanical Name: </strong><em>{botanical_name}</em></h5>
           <h5><strong>Common Name: </strong>{common_name}</h5>
           <h5><strong>Moisture: </strong>{moisture}</h5>
           <h5><strong>Sun: </strong>{sun}</h5>

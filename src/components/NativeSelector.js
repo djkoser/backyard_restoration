@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
+// import { useSelector } from "react-redux";
 import Nav from "./Nav";
 import NativeThumbnail from "./NativeThumbnail";
 import NativesSearchBar from "./NativesSearchBar";
@@ -20,7 +21,7 @@ const NativeSelector = () => {
       <Nav />
       <NativesSearchBar setSearchResults={setSearchResults} />
       <AddedNatives />
-      <main>
+      <main id="nativeSearchResults">
         {searchResultsJSX}
       </main>
     </>

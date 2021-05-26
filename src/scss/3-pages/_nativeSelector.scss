@@ -1,0 +1,93 @@
+#nativeSearchResults,
+#searchContainer,
+#weatherLoaderBoxSearch {
+  margin-right: 35vw;
+  @extend %wrapFlex;
+  width: 60vw;
+}
+
+#searchContainer {
+  margin: 0px 35vw 20px 0px;
+  border: solid $yellow;
+  padding: 10px;
+}
+
+#searchInputs {
+  @extend %wrapFlex;
+}
+
+.searchLabel {
+  margin: 0px 5px 0px 20px;
+  color: $yellow;
+}
+
+#weatherLoaderBoxAdded,
+#addedNativesAside {
+  position: fixed;
+  top: calc(#{$hFHeight} + 12px);
+  right: 10px;
+  width: 35vw;
+}
+
+#addedNativesAside {
+  max-height: calc(100vh - #{$hFHeight + 20px});
+  overflow-y: scroll;
+  border: solid $yellow;
+  padding: 20px;
+}
+
+.nativeAddedInputs {
+  @extend %wrapFlex;
+}
+
+#eSpringH,
+#lSpringH,
+#summerH,
+#fallH {
+  color: $brick;
+}
+
+.nativeAddedLI {
+  list-style: none;
+  background-color: $greenYellow;
+  padding: 10px;
+  border: solid black;
+  margin: 7.5px 0px 7.5px 0px;
+}
+
+.nativeAddedPic {
+  float: left;
+  margin-right: 10px;
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+}
+
+.nativeAddedText {
+  margin: 10px 5px 10px 5px;
+}
+
+.bloomTimeBox {
+  background-color: $lightBlue;
+  height: fit-content;
+  width: calc(35vw - 40px);
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+}
+.nativeThumbnail {
+  border: solid black;
+  display: inline-flex;
+  @extend %columnFlex;
+  width: 230px;
+  height: 375px;
+  padding: 5px;
+  margin: 5px;
+  background-color: $greenYellow;
+}
+
+.searchResultImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin: 0px 0px 20px 0px;
+}
