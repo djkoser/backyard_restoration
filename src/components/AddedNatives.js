@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import NativeAdded from "./NativeAdded";
 import { getUserNatives } from "../redux/userNativesReducer";
 
-const AddedNatives = () => {
+const AddedNatives = (props) => {
   const dispatch = useDispatch();
   const [eSpring, setESpring] = useState([]);
   const [lSpring, setLSpring] = useState([]);
@@ -15,6 +15,7 @@ const AddedNatives = () => {
 
   useEffect(() => {
     dispatch(getUserNatives());
+
   }, []);
 
   useEffect(() => {
@@ -52,24 +53,32 @@ const AddedNatives = () => {
   }, [userNatives]);
 
   return (
-    < aside id="addedNativesAside" >
-      <h1 className="toPrint ">Project Notes</h1>
-
-      <section className='bloomTimeBox'><h3 id='eSpringH'>Early Spring-<strong>{eSpring.length}</strong> in List</h3>
+    < aside id="addedNativesAside" className={props.searchAdded ? "addedClosed" : "addedOpen"} >
+      <button className="nativeSelectorVis" onClick={() => props.setSearchAdded(!props.searchAdded)}>To Search</button>
+      <button id="printButton" onClick={() => window.print()}>Print</button>
+      <h1 className="addedHeaders">Project Notes</h1>
+      <h4 className="addedHeaders">(Click Image to Remove from List)</h4>
+      <section className={`bloomTimeBox ${eSpring.length === 0 ? "hideInPrint" : ""}`}><h3 id='eSpringH'>Early Spring-<strong>{eSpring.length}</strong> in List</h3>
         <br />
-        {eSpring}
+        <ul>
+          {eSpring}
+        </ul>
       </section>
-      <section className='bloomTimeBox'><h3 id='lSpringH'>Late Spring-<strong>{lSpring.length}</strong> in List</h3>
+      <section className={`bloomTimeBox ${lSpring.length === 0 ? "hideInPrint" : ""}`}><h3 id='lSpringH'>Late Spring-<strong>{lSpring.length}</strong> in List</h3>
         <br />
-        {lSpring}
+        <ul>
+          {lSpring}
+        </ul>
       </section>
-      <section className='bloomTimeBox'><h3 id='summerH'>Summer-<strong>{summer.length}</strong> in List</h3>
+      <section className={`bloomTimeBox ${summer.length === 0 ? "hideInPrint" : ""}`}><h3 id='summerH'>Summer-<strong>{summer.length}</strong> in List</h3>
         <br />
         {summer}
       </section>
-      <section className='bloomTimeBox'><h3 id='fallH'>Fall-<strong>{fall.length}</strong> in List</h3>
+      <section className={`bloomTimeBox ${fall.length === 0 ? "hideInPrint" : ""}`}><h3 id='fallH'>Fall-<strong>{fall.length}</strong> in List</h3>
         <br />
-        {fall}
+        <ul>
+          {fall}
+        </ul>
       </section>
       <div className='toPrint'>
         End of List

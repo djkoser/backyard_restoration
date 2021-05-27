@@ -63,9 +63,9 @@ const Timeline = (props) => {
 
     setLegendOutput(legendText.map((el, ind) => (
       <div key={`legendBody${ind}`} className="legendBody">
-        <div className='legendText' key={`legendText${ind}`}>
-          <div style={{ backgroundColor: `${colors[ind]}` }} className="colorCode">
-          </div>
+        <div style={{ backgroundColor: `${colors[ind]}` }} className="colorCode">
+        </div>
+        <div className="legendText" >
           {el}
         </div>
       </div>

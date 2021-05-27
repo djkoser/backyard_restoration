@@ -36,28 +36,34 @@
 }
 
 .legendBody {
-  display: inline-flex;
-  justify-content: flex-start;
   @extend %brickBox;
   @include fitContent(height);
+  margin: 2.5px 0px 2.5px 0px;
+  width: 90vw;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  max-width: 550px;
+}
+
+.legendText {
+  font-size: 12pt;
   color: $lightBlue;
   font-weight: bold;
   letter-spacing: 1.5pt;
-  margin: 2.5px 0px 2.5px 0px;
-  font-size: 12pt;
-  padding: 10px;
-  width: 90vw;
+  text-align: center;
 }
 
 .colorCode {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   float: left;
   margin-right: 15px;
 }
 #legendHeader {
   color: $brick;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 #legendMessage {

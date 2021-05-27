@@ -1,18 +1,17 @@
-#nativeSearchResults,
-#searchContainer,
-#weatherLoaderBoxSearch {
-  margin-right: 35vw;
-  @extend %wrapFlex;
-  width: 60vw;
+.toPrint,
+.nativeSelectorVis {
+  display: none;
+}
+
+#nativeSearchResults {
+  flex: 1 1 auto;
 }
 
 #searchContainer {
-  margin: 0px 35vw 20px 0px;
   border: solid $yellow;
-  padding: 10px;
 }
 
-#searchInputs {
+.searchInputAndLabel {
   @extend %wrapFlex;
 }
 
@@ -21,23 +20,25 @@
   color: $yellow;
 }
 
-#weatherLoaderBoxAdded,
-#addedNativesAside {
-  position: fixed;
-  top: calc(#{$hFHeight} + 12px);
-  right: 10px;
-  width: 35vw;
+#addedNativesAside,
+#searchInputs,
+.bloomTimeBox,
+.nativeAddedLI {
+  padding: 15px;
 }
 
-#addedNativesAside {
-  max-height: calc(100vh - #{$hFHeight + 20px});
-  overflow-y: scroll;
-  border: solid $yellow;
-  padding: 20px;
+#printButton {
+  float: right;
+}
+
+.addedHeaders {
+  width: fit-content;
+  margin: auto;
 }
 
 .nativeAddedInputs {
   @extend %wrapFlex;
+  width: 100%;
 }
 
 #eSpringH,
@@ -65,20 +66,27 @@
 
 .nativeAddedText {
   margin: 10px 5px 10px 5px;
+  width: 75%;
+  resize: none;
+  font-size: 12pt;
+  font-family: $font-stack;
+}
+
+.nativeAddedText:disabled {
+  background: transparent;
+  color: black;
 }
 
 .bloomTimeBox {
   background-color: $lightBlue;
   height: fit-content;
-  width: calc(35vw - 40px);
-  padding: 10px;
   margin: 10px 0px 10px 0px;
 }
 .nativeThumbnail {
   border: solid black;
   display: inline-flex;
   @extend %columnFlex;
-  width: 230px;
+  width: 220px;
   height: 375px;
   padding: 5px;
   margin: 5px;
@@ -89,5 +97,81 @@
   width: 150px;
   height: 150px;
   object-fit: cover;
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 10px 0px;
+}
+
+.editProjectNotesButton {
+  margin: 0px;
+}
+
+@media (min-width: $iPadWidth) {
+  .bloomTimeBox {
+    width: calc(35vw - 40px);
+  }
+  #searchContainer {
+    margin: 0px 35vw 20px 0px;
+  }
+  #addedNativesAside {
+    position: fixed;
+    top: calc(#{$hFHeight} + 12px);
+    right: 10px;
+    width: 35vw;
+    border: solid $yellow;
+    max-height: calc(100vh - #{$hFHeight + 20px});
+    overflow-y: scroll;
+  }
+  #searchInputs,
+  #nativeSearchResults,
+  #searchContainer,
+  #weatherLoaderBoxSearch {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 60vw;
+  }
+
+  #nativeSearchResults,
+  #searchContainer,
+  #weatherLoaderBoxSearch {
+    margin-right: 35vw;
+  }
+}
+
+@media (max-width: $iPadWidthL1) {
+  .nativeSelectorVis {
+    display: inline-block;
+  }
+
+  #addedNativesAside,
+  #searchContainer,
+  #nativeSearchResults {
+    width: 90vw;
+    margin: 0px;
+  }
+
+  #weatherLoaderBoxSearch {
+    width: 100vw;
+    margin: 0px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .addedClosed {
+    display: none;
+  }
+  .addedOpen {
+    display: inline-block;
+    position: static;
+  }
+  .searchClosed {
+    display: none;
+  }
+  .searchOpen {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 }

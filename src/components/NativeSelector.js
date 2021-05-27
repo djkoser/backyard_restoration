@@ -10,6 +10,8 @@ import AddedNatives from "./AddedNatives";
 const NativeSelector = () => {
   const [searchResults, setSearchResults] = useState([{}]);
   const [searchResultsJSX, setSearchResultsJSX] = useState([]);
+  const [searchAdded, setSearchAdded] = useState(true);
+
 
   useEffect(() => {
     setSearchResultsJSX(searchResults.map(el => <NativeThumbnail key={`${el.botanical_name}ID${el.native_id}`} native_id={el.native_id} common_name={el.common_name} botanical_name={el.botanical_name} moisture={el.moisture} sun={el.sun} height={el.height} bloom_time={el.bloom_time} src={el.src} />));
@@ -19,9 +21,9 @@ const NativeSelector = () => {
     <>
       <ToastContainer />
       <Nav />
-      <NativesSearchBar setSearchResults={setSearchResults} />
-      <AddedNatives />
-      <main id="nativeSearchResults">
+      <NativesSearchBar setSearchResults={setSearchResults} setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
+      <AddedNatives setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
+      <main className={searchAdded ? "searchOpen " : "searchClosed"} id="nativeSearchResults">
         {searchResultsJSX}
       </main>
     </>

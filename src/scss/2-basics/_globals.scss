@@ -93,3 +93,16 @@ Link:active,
 em {
   font-style: italic;
 }
+
+/* Global Pseudo Classes */
+button:hover {
+  background-color: $yellow;
+  color: $greenBlue;
+  font-weight: bold;
+}
+img:hover {
+  border: solid thick $yellow;
+}
+li > div > img:hover {
+  border: solid thick red;
+}

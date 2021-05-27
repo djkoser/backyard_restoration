@@ -1,0 +1,71 @@
+@media print {
+  .App,
+  .bloomTimeBox,
+  .nativeAddedText,
+  .nativeAddedLI {
+    background-color: white;
+    height: fit-content;
+    overflow: visible;
+  }
+
+  ol,
+  ul,
+  .bloomTimeBox {
+    margin: 0px;
+  }
+
+  .toPrint {
+    display: inline;
+  }
+
+  .hideInPrint {
+    display: none;
+  }
+
+  .nativeAddedLI {
+    height: fit-content;
+  }
+
+  #searchContainer,
+  #nativeSearchResults,
+  nav,
+  button,
+  h4,
+  textarea {
+    display: none;
+  }
+
+  #addedNativesAside {
+    position: static;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: auto;
+    height: fit-content;
+    max-height: fit-content;
+    padding: 0px;
+    margin: 0in;
+    border: none;
+    overflow: visible;
+  }
+
+  .bloomTimeBox {
+    width: 100%;
+  }
+
+  h1,
+  #eSpringH,
+  #lSpringH,
+  #summerH,
+  #fallH {
+    color: black;
+  }
+
+  h1 {
+    font-size: 20pt;
+    margin: 0px;
+  }
+}

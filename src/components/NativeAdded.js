@@ -17,17 +17,18 @@ const NativeAdded = (props) => {
   }, [editing]);
 
   return (
-    <li className="nativeAddedLI">
+    <div className="nativeAddedLI">
       <div>
         <img className="nativeAddedPic" onClick={() => dispatch(removeUserNative(native_id))} alt={`${botanical_name}, commonly known as ${common_name}.`} src={src} width='50px' />
         <strong>Common Name: </strong>{common_name}, <strong>Botanical Name: </strong><em>{botanical_name}</em>, <strong>Moisture: </strong>{moisture}, <strong>Sun: </strong>{sun}, <strong>Height: </strong>{height} in
       </div>
-      <div className='nativeAddedInputs'>
+      <li className='nativeAddedInputs'>
         <button className="editProjectNotesButton" onClick={() => setEditing(!editing)}>{!project_notes && !editing ? "Add Notes" : project_notes && !editing ? "Edit Notes" : "Submit"}</button>
-        {project_notes ? (<span>Notes: </span>) : null}
-        <textarea className='nativeAddedText' disabled={editing ? false : true} onChange={e => setProjectNotesInput(e.target.value)} value={projectNotesInput}></textarea>
-      </div>
-    </li>
+        <span className={`toPrint ${project_notes ? "" : "hideInPrint"}`} >Notes: </span>
+        <span className="toPrint">{project_notes}</span>
+        <textarea rows="2" className='nativeAddedText' disabled={editing ? false : true} onChange={e => setProjectNotesInput(e.target.value)} value={projectNotesInput}></textarea>
+      </li>
+    </div>
   );
 };
 
