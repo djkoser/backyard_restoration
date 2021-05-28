@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   authorize: (req, res, next) => {
     if (req.session.user) {
@@ -6,4 +7,4 @@ module.exports = {
       return res.sendStatus(403);
     }
   }
-}
+};
