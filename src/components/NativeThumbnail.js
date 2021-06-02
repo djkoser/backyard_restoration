@@ -13,7 +13,7 @@ const NativeThumbnail = (props) => {
   return (
     <>
       <figure onClick={() => {
-        if (userNatives.reduce((acc, el) => el.native_id !== native_id ? acc = true : acc = false, false) || userNatives.length === 0) {
+        if (!userNatives.reduce((acc, el) => el.native_id === native_id ? ++acc : acc, 0) || userNatives.length === 0) {
           dispatch(addUserNative(native_id));
         } else {
           toast.warning("This plant has already been added to your list, please select another");

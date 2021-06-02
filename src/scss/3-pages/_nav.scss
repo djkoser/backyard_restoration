@@ -119,7 +119,7 @@ nav {
 
   // linkbox start
   .linkBoxClosed {
-    @include transform(translate(255px, $hFHeight));
+    @include transform(translate(260px, $hFHeight));
   }
   .linkBoxOpened {
     @include transform(translate(45px, $hFHeight));

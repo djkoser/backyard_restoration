@@ -7,6 +7,7 @@ import NativesSearchBar from "./NativesSearchBar";
 import { ToastContainer } from "react-toastify";
 import AddedNatives from "./AddedNatives";
 import { getUserNatives } from "../redux/userNativesReducer";
+import WeatherLoader from "./WeatherLoader";
 
 
 const NativeSelector = () => {
@@ -14,6 +15,7 @@ const NativeSelector = () => {
   const [searchResults, setSearchResults] = useState();
   const [searchResultsJSX, setSearchResultsJSX] = useState([]);
   const [searchAdded, setSearchAdded] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getUserNatives());
@@ -29,13 +31,23 @@ const NativeSelector = () => {
     <>
       <ToastContainer />
       <Nav />
-      <NativesSearchBar setSearchResults={setSearchResults} setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
+      <NativesSearchBar setLoadingParent={setLoading} setSearchResults={setSearchResults} setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
       <AddedNatives setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
       <main className={searchAdded ? "searchOpen " : "searchClosed"} id="nativeSearchResults">
-        {searchResultsJSX}
+        {
+          loading ?
+            (
+              <>
+                <WeatherLoader noText={true} />
+                <h3>Loading, Please Wait</h3>
+              </>
+            ) : searchResultsJSX
+        }
       </main>
     </>
   );
 };
+
+
 
 export default NativeSelector;
