@@ -34,7 +34,7 @@ module.exports = {
       res.status(200).send(req.session.user);
     } catch (err) {
       await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, null, null, null, null);
-      res.status(200).send("Manual Entry");
+      res.status(500).send("Manual Entry");
     }
   },
   chgUserEmail: async (req, res) => {

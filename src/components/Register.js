@@ -36,18 +36,18 @@ const Register = (props) => {
     setLoading(true);
     axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
       .then(async (res) => {
-        if (typeof res.data !== "string") {
-          dispatch(addRetrievedInfo(res.data));
-          toast.success("Registration Successful! Logging you in to your new dashboard...");
-          await setTimeout(() => props.history.push("./dash"), 3000);
-        } else {
-          toast.warning("NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
-          await setTimeout(() => props.history.push("/manualEntry"), 5000);
-        }
+        dispatch(addRetrievedInfo(res.data));
+        toast.success("Registration Successful! Logging you in to your new dashboard...");
+        await setTimeout(() => props.history.push("./dash"), 3000);
       })
-      .catch(() => {
+      .catch((err) => {
         setLoading(false);
-        toast.error("A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the \"Forgot Password\" link.");
+        if (err.response.data === "Manual Entry") {
+          toast.warning("NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
+          setTimeout(() => props.history.push("/manualEntry"), 5000);
+        } else {
+          toast.error("A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the \"Forgot Password\" link.");
+        }
       });
   };
   return loading

@@ -84,9 +84,8 @@ const MyAccount = (props) => {
     setHardinessZone(hardinessZoneRedux);
   };
 
-  const onError = async () => {
-    await dispatch(getUserInfo());
-    refresh();
+  const onError = () => {
+    dispatch(getUserInfo());
     if (emailRedux && firstNameRedux && lastNameRedux && streetRedux && cityRedux && stateRedux && zipcodeRedux && firstGDD35Redux && lastGDD35Redux && hardinessZoneRedux) {
       toast.error("There was an error while attempting to change your credentials.");
     } else { props.history.push("/"); }
@@ -94,7 +93,7 @@ const MyAccount = (props) => {
 
   useEffect(() => {
     dispatch(getUserInfo());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     refresh();
@@ -156,20 +155,20 @@ const MyAccount = (props) => {
           setLoading(true);
           setEditToggleAddress(true);
           axios.put("/api/user/address", { street, city, state, zipcode })
-            .then(async res => {
-              if (typeof res.data !== "string") {
-                dispatch(addRetrievedInfo(res.data));
-                setPassword("This is a fake password");
-                setLoading(false);
-                toast.success("Your address has been updated successfully.");
-              } else {
-                toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
-                await setTimeout(() => props.history.push("/manualEntry"), 5000);
-              }
-            })
-            .catch(() => {
+            .then(res => {
+              dispatch(addRetrievedInfo(res.data));
+              setPassword("This is a fake password");
               setLoading(false);
-              onError();
+              toast.success("Your address has been updated successfully.");
+            })
+            .catch((err) => {
+              setLoading(false);
+              if (err.response.data === "Manual Entry") {
+                toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
+                setTimeout(() => props.history.push("/manualEntry"), 5000);
+              } else {
+                onError();
+              }
             });
         }
         return;
