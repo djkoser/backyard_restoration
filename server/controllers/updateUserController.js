@@ -31,10 +31,10 @@ module.exports = {
       const { hardiness_zone, first_gdd35, last_gdd35, growing_season_length } = await getGrowingParams(zipcode, street, city, state, db);
       await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone);
       req.session.user = { ...req.session.user, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
-      res.status(200).send(req.session.user);
+      return res.status(200).send(req.session.user);
     } catch (err) {
       await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, null, null, null, null);
-      res.status(500).send("Manual Entry");
+      return res.status(500).send("Manual Entry");
     }
   },
   chgUserEmail: async (req, res) => {
@@ -47,10 +47,10 @@ module.exports = {
       try {
         await db.updateUser.chgUserEmail(user_id, emailFiltered);
         req.session.user = { ...req.session.user, email: emailFiltered };
-        res.status(200).send(req.session.user);
-      } catch (err) { console.log(err); }
+        return res.status(200).send(req.session.user);
+      } catch (err) { return console.log(err); }
     } else {
-      res.sendStatus(403);
+      return res.sendStatus(403);
     }
   },
   chgUserPassword: async (req, res) => {
@@ -61,8 +61,8 @@ module.exports = {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
       await db.updateUser.chgUserPassword(user_id, hash);
-      res.status(200).send(req.session.user);
-    } catch (err) { console.log(err); }
+      return res.status(200).send(req.session.user);
+    } catch (err) { return console.log(err); }
   },
   chgUserName: async (req, res) => {
     const db = req.app.get("db");
@@ -71,8 +71,8 @@ module.exports = {
     try {
       await db.updateUser.chgUserName(user_id, first_name, last_name);
       req.session.user = { ...req.session.user, first_name, last_name };
-      res.status(200).send(req.session.user);
-    } catch (err) { console.log(err); }
+      return res.status(200).send(req.session.user);
+    } catch (err) { return console.log(err); }
   },
   changeGrowingInfo: async (req, res) => {
     const db = req.app.get("db");
@@ -86,10 +86,10 @@ module.exports = {
       try {
         await db.updateUser.chgGrowingInfo(user_id, firstGDD35Filtered, lastGDD35Filtered, hardiness_zone, growingSeasonLength);
         req.session.user = { ...req.session.user, first_gdd35: firstGDD35Filtered, last_gdd35: lastGDD35Filtered, hardiness_zone, growing_season_length: Math.round(growingSeasonLength) };
-        res.status(200).send(req.session.user);
-      } catch (err) { console.log(err); }
+        return res.status(200).send(req.session.user);
+      } catch (err) { return console.log(err); }
     } else {
-      res.sendStatus(400);
+      return res.sendStatus(400);
     }
   },
   deleteUser: async (req, res) => {
@@ -97,6 +97,6 @@ module.exports = {
     const user_id = req.session.user.user_id;
     db.updateUser.deleteUser(user_id);
     req.session.destroy();
-    res.sendStatus(200);
+    return res.sendStatus(200);
   }
 };
