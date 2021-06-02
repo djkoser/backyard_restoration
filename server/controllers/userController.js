@@ -23,7 +23,7 @@ module.exports = {
           const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, null, null, null, null);
           const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length: null, first_gdd35: null, last_gdd35: null, hardiness_zone: null };
           req.session.user = newUser;
-          return res.status(500).send("Manual Entry");
+          return res.status(400).send("Manual Entry");
         }
       } else {
         return res.sendStatus(403);
