@@ -1,15 +1,13 @@
-/* Registration Screen Graphic */
+/* Loading Screen Graphic */
 #loaderBox {
-  position: absolute;
-  top: 0px;
-  width: 70%;
-  height: 100%;
   background-color: $greenBlue;
+  width: 70%;
+  max-width: 700px;
+  @extend %columnFlex;
 }
 
 .svgContainer {
-  width: 70%;
-  max-width: 700px;
+  width: 100%;
 }
 
 .loaderText {

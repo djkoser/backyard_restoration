@@ -55,9 +55,11 @@ const WeedSearch = (props) => {
     <Footer />
   </>);
 
-  return (loading ? <>
-    <WeatherLoader loading='true' noText="true" />
-    <h3>Loading, Please Wait</h3>
-  </> : output);
+  return loading ? (
+    <>
+      <WeatherLoader noText="true" />
+      <h3>Loading, Please Wait</h3>
+    </>
+  ) : output;
 };
 export default WeedSearch;

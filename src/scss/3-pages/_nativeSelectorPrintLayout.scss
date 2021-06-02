@@ -4,7 +4,7 @@
   .nativeAddedText,
   .nativeAddedLI {
     background-color: white;
-    height: fit-content;
+    @include fitContent(height);
     overflow: visible;
   }
 
@@ -20,10 +20,6 @@
 
   .hideInPrint {
     display: none;
-  }
-
-  .nativeAddedLI {
-    height: fit-content;
   }
 
   #searchContainer,
@@ -44,8 +40,7 @@
     justify-content: flex-start;
     align-items: center;
     width: auto;
-    height: fit-content;
-    max-height: fit-content;
+    @include fitContent(height);
     padding: 0px;
     margin: 0in;
     border: none;

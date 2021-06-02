@@ -77,6 +77,7 @@ const Timeline = (props) => {
   let d3Container = useRef();
   // initialize empty reference object for the d3Container -> The reference object has persistent  state, it will be assigned to SVG element manipulated by D3 in return
 
+  // Create x-axis
   useEffect(() => {
 
     // INitialize x-axis scale object
@@ -99,7 +100,7 @@ const Timeline = (props) => {
     svg
       .append("g")
       // move the g element that will host the x axis to the bottom of the chart
-      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .attr("transform", `translate(0,${height - 30})`)
       .attr("class", "timelineAxis")
       .call(xAxis);
     // Select the xAxis Text and rotate labels for readibility. 
@@ -121,13 +122,13 @@ const Timeline = (props) => {
       .attr("height", "25")
       .attr("width", "50");
 
-  }, [height, margin.bottom, margin.left, margin.right, width]);
+  }, [height, margin.left, margin.right, width]);
 
   const rectangleMaker = (gSelection, GDD35Prop, xPosVal, ind) => {
     return gSelection
       .append("rect")
       .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
-      .attr("width", GDD35Prop)
+      .attr("width", GDD35Prop + 0.5)
       .attr("x", () => xPosVal(ind))
       .attr("class", "monthBoxes");
   };
@@ -198,7 +199,7 @@ const Timeline = (props) => {
       gSelection
         .merge(timelineBarContainer.selectAll(".methodBoxes"))
         .transition()
-        .attr("transform", (_d, i) => `translate(0,${((height - margin.bottom) / userMethods.length) * i})`)
+        .attr("transform", (_d, i) => `translate(0,${(((height - margin.top - margin.bottom - 25) / userMethods.length) * i) + margin.top})`)
         .attr("fill", (_d, i) => colors[i]);
 
       // Create 12 new rectangle elements within each g element, one for each management timeframe/month
@@ -213,9 +214,11 @@ const Timeline = (props) => {
         .selectAll(".monthBoxes");
 
       // update all month boxes to include adjust height value. 
+      // 25 = width of x-axis
+      // 60 = cumulative space between bars
       allMonthBoxes
         .transition()
-        .attr("height", () => userMethods.length > 6 ? `${(height - margin.bottom - margin.top - 50) / userMethods.length}` : "25");
+        .attr("height", () => userMethods.length > 6 ? `${(height - margin.bottom - margin.top - 25 - 60) / userMethods.length} ` : "25");
 
       // create legned to reflect each created method box. 
       createLegend(colors);
@@ -233,7 +236,7 @@ const Timeline = (props) => {
       <svg
         ref={d3Container}
         preserveAspectRatio="xMinYMin meet"
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`0 0 ${width} ${height} `}
       ></svg>
       <div id="legendContainer">
         <h2 className='hidden' id="legendHeader">Legend</h2>

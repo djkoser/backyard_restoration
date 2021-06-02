@@ -1,7 +1,9 @@
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  max-width: 100vw;
 }
+
 input {
   border: none;
   border-radius: $corners;
@@ -10,6 +12,11 @@ input {
   height: 18pt;
 }
 
+select {
+  text-align-last: center;
+  -ms-text-align-last: center;
+  -moz-text-align-last: center;
+}
 label {
   font-size: 14pt;
   font-weight: bold;
@@ -40,14 +47,14 @@ h5 {
 
 #root {
   background-color: $greenBlue;
+  overflow-x: hidden;
 }
 
 .App {
   box-sizing: border-box;
   font-family: $font-stack;
-  min-width: 100vw;
   min-height: 100vh;
-  overflow-x: hidden;
+  width: 100vw;
   overflow-y: visible;
   background-color: $greenBlue;
   @extend %columnFlex;
@@ -95,14 +102,8 @@ em {
 }
 
 /* Global Pseudo Classes */
-button:hover {
+button:hover,
+button:active {
   background-color: $yellow;
   color: $greenBlue;
-  font-weight: bold;
-}
-img:hover {
-  border: solid thick $yellow;
-}
-li > div > img:hover {
-  border: solid thick red;
 }

@@ -20,6 +20,10 @@
   color: $yellow;
 }
 
+#weatherLoaderBoxSearch {
+  @extend %columnFlex;
+}
+
 #addedNativesAside,
 #searchInputs,
 .bloomTimeBox,
@@ -27,18 +31,35 @@
   padding: 15px;
 }
 
+#addedNativesAside {
+  position: fixed;
+  top: calc(#{$hFHeight} + 12px);
+  right: 10px;
+  width: 35vw;
+  border: solid $yellow;
+  max-height: calc(100% - (#{$hFHeight} + 30px));
+  overflow-y: scroll;
+}
+
 #printButton {
   float: right;
 }
 
 .addedHeaders {
-  width: fit-content;
+  @include fitContent(height);
   margin: auto;
 }
 
 .nativeAddedInputs {
   @extend %wrapFlex;
   width: 100%;
+}
+
+.searchResultImage:hover {
+  border: solid thick $yellow;
+}
+.nativeAddedPic:hover {
+  border: solid thick red;
 }
 
 #eSpringH,
@@ -79,7 +100,7 @@
 
 .bloomTimeBox {
   background-color: $lightBlue;
-  height: fit-content;
+  @include fitContent(height);
   margin: 10px 0px 10px 0px;
 }
 .nativeThumbnail {
@@ -110,15 +131,6 @@
   }
   #searchContainer {
     margin: 0px 35vw 20px 0px;
-  }
-  #addedNativesAside {
-    position: fixed;
-    top: calc(#{$hFHeight} + 12px);
-    right: 10px;
-    width: 35vw;
-    border: solid $yellow;
-    max-height: calc(100vh - #{$hFHeight + 20px});
-    overflow-y: scroll;
   }
   #searchInputs,
   #nativeSearchResults,
@@ -153,10 +165,6 @@
   #weatherLoaderBoxSearch {
     width: 100vw;
     margin: 0px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
   }
   .addedClosed {
     display: none;

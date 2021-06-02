@@ -1,22 +1,15 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import NativeAdded from "./NativeAdded";
-import { getUserNatives } from "../redux/userNativesReducer";
 
 const AddedNatives = (props) => {
-  const dispatch = useDispatch();
   const [eSpring, setESpring] = useState([]);
   const [lSpring, setLSpring] = useState([]);
   const [summer, setSummer] = useState([]);
   const [fall, setFall] = useState([]);
 
   const userNatives = useSelector(state => state.userNativesReducer.userNatives);
-
-  useEffect(() => {
-    dispatch(getUserNatives());
-
-  }, []);
 
   useEffect(() => {
     if (userNatives.length > 0) {
