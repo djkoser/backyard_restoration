@@ -33,8 +33,8 @@ module.exports = {
       req.session.user = { ...req.session.user, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
       return res.status(200).send(req.session.user);
     } catch (err) {
-      await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, null, null, null, null);
-      return res.status(400).send("Manual Entry");
+      await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, "", "", "", "");
+      return res.status(500).send("Manual Entry");
     }
   },
   chgUserEmail: async (req, res) => {
