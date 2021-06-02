@@ -196,9 +196,9 @@ const MyAccount = (props) => {
 
   const deleteAccount = () => {
     axios.delete("/api/deleteUser")
-      .then(async () => {
+      .then(() => {
         toast.success("Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.");
-        await setTimeout(() => {
+        setTimeout(() => {
           props.history.push("/");
         }, 5000);
       })

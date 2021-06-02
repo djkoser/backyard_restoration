@@ -35,10 +35,10 @@ const Register = (props) => {
     setZipcode("");
     setLoading(true);
     axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
-      .then(async (res) => {
+      .then((res) => {
         dispatch(addRetrievedInfo(res.data));
         toast.success("Registration Successful! Logging you in to your new dashboard...");
-        await setTimeout(() => props.history.push("./dash"), 3000);
+        setTimeout(() => props.history.push("./dash"), 3000);
       })
       .catch((err) => {
         setLoading(false);
