@@ -159,16 +159,16 @@ const MyAccount = (props) => {
               .then(res => {
                 dispatch(addRetrievedInfo(res.data));
                 setPassword("This is a fake password");
-                setLoading(false);
                 toast.success("Your address has been updated successfully.");
+                setTimeout(() => setLoading(false), 5000);
               })
               .catch((err) => {
                 if (err.response.data === "Manual Entry") {
                   toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
                   setTimeout(() => props.history.push("/manualEntry"), 5000);
                 } else {
-                  setLoading(false);
                   onError();
+                  setTimeout(() => setLoading(false), 5000);
                 }
               });
           } else {
