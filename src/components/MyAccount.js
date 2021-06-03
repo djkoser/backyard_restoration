@@ -221,9 +221,9 @@ const MyAccount = (props) => {
     )
     : (
       <>
+        <ToastContainer />
         <div id="myAccountBkgd">
           <Nav invertColors={true} />
-          <ToastContainer />
           <h1 id="myAccountHeader">My Account</h1>
           <main className="myAccountForm" style={!loading ? { display: "inline-flex" } : { display: "none" }}>
             <div id="startHardiness">
