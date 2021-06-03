@@ -8,27 +8,25 @@ module.exports = {
     const { email, password, first_name, last_name, street, city, state, zipcode } = req.body;
     const emailFiltered = email.toLowerCase().replace(/\s/g, "");
     const db = req.app.get("db");
-    try {
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(password, salt);
-      const storedUser = await db.user.getUserCredentials(emailFiltered);
-      if (storedUser.length === 0) {
-        try {
-          const { hardiness_zone, first_gdd35, last_gdd35, growing_season_length } = await getGrowingParams(zipcode, street, city, state, db);
-          const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd35, last_gdd35, hardiness_zone);
-          const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
-          req.session.user = newUser;
-          return res.status(200).send(newUser);
-        } catch (err) {
-          const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, 0, null, null, null);
-          const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length: 0, first_gdd35: null, last_gdd35: null, hardiness_zone: null };
-          req.session.user = newUser;
-          return res.status(500).send("Manual Entry");
-        }
-      } else {
-        return res.sendStatus(403);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const storedUser = await db.user.getUserCredentials(emailFiltered);
+    if (storedUser.length === 0) {
+      try {
+        const { hardiness_zone, first_gdd35, last_gdd35, growing_season_length } = await getGrowingParams(zipcode, street, city, state, db);
+        const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, hash, growing_season_length, first_gdd35, last_gdd35, hardiness_zone);
+        const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length, first_gdd35, last_gdd35, hardiness_zone };
+        req.session.user = newUser;
+        return res.status(200).send(newUser);
+      } catch (err) {
+        const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, 0, null, null, null);
+        const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length: 0, first_gdd35: null, last_gdd35: null, hardiness_zone: null };
+        req.session.user = newUser;
+        return res.status(500).send("Manual Entry");
       }
-    } catch (err) { console.log(err); }
+    } else {
+      return res.sendStatus(403);
+    }
   },
   login: async (req, res) => {
     const db = req.app.get("db");
