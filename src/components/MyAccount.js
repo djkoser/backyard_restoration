@@ -125,7 +125,6 @@ const MyAccount = (props) => {
               dispatch(addRetrievedInfo(res.data));
               setPassword("This is a fake password");
               toast.success("Your email has been updated successfully.");
-
             })
             .catch(() => {
               onError();
@@ -154,22 +153,28 @@ const MyAccount = (props) => {
         } else {
           setLoading(true);
           setEditToggleAddress(true);
-          axios.put("/api/user/address", { street, city, state, zipcode })
-            .then(res => {
-              dispatch(addRetrievedInfo(res.data));
-              setPassword("This is a fake password");
-              setLoading(false);
-              toast.success("Your address has been updated successfully.");
-            })
-            .catch((err) => {
-              setLoading(false);
-              if (err.response.data === "Manual Entry") {
-                toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
-                setTimeout(() => props.history.push("/manualEntry"), 5000);
-              } else {
-                onError();
-              }
-            });
+          const digitChecker = zipcode.match(/\D/g);
+          if (zipcode.length <= 5 && !digitChecker) {
+            axios.put("/api/user/address", { street, city, state, zipcode })
+              .then(res => {
+                dispatch(addRetrievedInfo(res.data));
+                setPassword("This is a fake password");
+                setLoading(false);
+                toast.success("Your address has been updated successfully.");
+              })
+              .catch((err) => {
+                if (err.response.data === "Manual Entry") {
+                  toast.warning("NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
+                  setTimeout(() => props.history.push("/manualEntry"), 5000);
+                } else {
+                  setLoading(false);
+                  onError();
+                }
+              });
+          } else {
+            setLoading(false);
+            toast.error("Please enter a 5 digit zipcode, thank you");
+          }
         }
         return;
       case "growingParams":
@@ -208,7 +213,12 @@ const MyAccount = (props) => {
   };
 
   return loading
-    ? <WeatherLoader />
+    ? (
+      <>
+        <WeatherLoader />
+        <ToastContainer />
+      </>
+    )
     : (
       <>
         <div id="myAccountBkgd">

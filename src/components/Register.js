@@ -25,33 +25,44 @@ const Register = (props) => {
 
   const createNewUser = (e) => {
     e.preventDefault();
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setStreet("");
-    setCity("");
-    setState("");
-    setZipcode("");
-    setLoading(true);
-    axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
-      .then((res) => {
-        dispatch(addRetrievedInfo(res.data));
-        toast.success("Registration Successful! Logging you in to your new dashboard...");
-        setTimeout(() => props.history.push("./dash"), 3000);
-      })
-      .catch((err) => {
-        setLoading(false);
-        if (err.response.data === "Manual Entry") {
-          toast.warning("NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
-          setTimeout(() => props.history.push("/manualEntry"), 5000);
-        } else {
-          toast.error("A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the \"Forgot Password\" link.");
-        }
-      });
+    const digitChecker = zipcode.match(/\D/g);
+    if (zipcode.length <= 5 && !digitChecker) {
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setStreet("");
+      setCity("");
+      setState("");
+      setZipcode("");
+      setLoading(true);
+      axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
+        .then((res) => {
+          dispatch(addRetrievedInfo(res.data));
+          toast.success("Registration Successful! Logging you in to your new dashboard...");
+          setTimeout(() => props.history.push("./dash"), 3000);
+        })
+        .catch((err) => {
+          if (err.response.data === "Manual Entry") {
+            toast.warning("NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
+            setTimeout(() => props.history.push("/manualEntry"), 5000);
+          } else {
+            setLoading(false);
+            toast.error("A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the \"Forgot Password\" link.");
+          }
+        });
+    } else {
+      setLoading(false);
+      toast.error("Please enter a 5 digit zipcode, thank you");
+    }
   };
   return loading
-    ? <WeatherLoader />
+    ? (
+      <>
+        <ToastContainer />
+        <WeatherLoader />
+      </>
+    )
     : (
       <>
         <ToastContainer />

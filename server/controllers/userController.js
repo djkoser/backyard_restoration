@@ -20,8 +20,8 @@ module.exports = {
           req.session.user = newUser;
           return res.status(200).send(newUser);
         } catch (err) {
-          const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, "", "", "", "");
-          const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length: "", first_gdd35: "", last_gdd35: "", hardiness_zone: "" };
+          const user_id = await db.user.newUser(emailFiltered, first_name, last_name, street, city, state, zipcode, 0, null, null, null);
+          const newUser = { user_id: user_id[0].user_id, email: emailFiltered, first_name, last_name, street, city, state, zipcode, growing_season_length: 0, first_gdd35: null, last_gdd35: null, hardiness_zone: null };
           req.session.user = newUser;
           return res.status(500).send("Manual Entry");
         }
