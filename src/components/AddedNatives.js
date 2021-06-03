@@ -12,7 +12,8 @@ const AddedNatives = (props) => {
   const userNatives = useSelector(state => state.userNativesReducer.userNatives);
 
   useEffect(() => {
-    if (userNatives.length > 0) {
+
+    if (typeof userNatives === "object") {
       let eSpringTemp = [];
       let lSpringTemp = [];
       let summerTemp = [];
@@ -43,6 +44,7 @@ const AddedNatives = (props) => {
       setSummer(summerTemp);
       setFall(fallTemp);
     }
+
   }, [userNatives]);
 
   return (
