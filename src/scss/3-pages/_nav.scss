@@ -2,6 +2,7 @@ nav {
   display: flex;
   width: 100vw;
   height: $hFHeight;
+  margin-bottom: auto;
 }
 
 .linkBox {
@@ -15,6 +16,12 @@ nav {
   padding: 15px;
   transition: all 0.3s;
 }
+.hamburgerPatties,
+.invertColors {
+  margin: 2px 0px 2px 0px;
+  width: 25px;
+  height: 4px;
+}
 
 @media (min-width: $iPadWidth) {
   #weedsMenu {
@@ -27,7 +34,7 @@ nav {
     flex-direction: column;
   }
   .weedLinkBoxOpened {
-    top: 1px;
+    top: 0px;
     z-index: 1;
     background-color: $greenBlueTransparent;
   }
@@ -64,25 +71,17 @@ nav {
   }
   .hamburger {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    justify-content: space-between;
-    width: 25px;
-    height: 22px;
-    margin: 2.2vh 20px 0px 0px;
+    margin: auto 20px auto 20px;
     transition: all 0.3s;
   }
   .invertColors {
-    width: 25px;
-    height: 4px;
     background-color: $greenBlue;
   }
 
   .hamburgerPatties {
     background-color: $greenYellow;
-    width: 25px;
-    height: 4px;
   }
   .linkBox {
     position: static;
@@ -119,9 +118,9 @@ nav {
 
   // linkbox start
   .linkBoxClosed {
-    @include transform(translate(260px, $hFHeight));
+    @include transform(translate(275px, $hFHeight));
   }
   .linkBoxOpened {
-    @include transform(translate(45px, $hFHeight));
+    @include transform(translate(70px, $hFHeight));
   }
 }
