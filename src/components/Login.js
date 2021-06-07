@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -10,6 +10,16 @@ import { getMethods } from "../redux/mgmtMethodReducer";
 const Login = (props) => {
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    axios.get("/api/check")
+      .then(res => {
+        console.log(res.data);
+        if (res.data === "logged-in") {
+          props.history.push("/dash");
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
 
 
   const [email, setEmail] = useState("");

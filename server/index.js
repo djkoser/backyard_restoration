@@ -44,6 +44,7 @@ app.post("/api/register", userCtl.newUser);
 app.post("/api/login", userCtl.login);
 app.get("/api/user", authorize, userCtl.getInfo);
 app.delete("/api/logout", userCtl.logout);
+app.get("/api/check", userCtl.checkForCookie);
 // Update user Endpoints
 app.put("/api/user/address", authorize, updUserCtl.chgUserAddress);
 app.put("/api/user/email", authorize, updUserCtl.chgUserEmail);

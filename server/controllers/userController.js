@@ -54,6 +54,13 @@ module.exports = {
 
   getInfo: async (req, res) => {
     res.status(200).send(req.session.user);
+  },
+  checkForCookie: (req, res) => {
+    if (req.session.user) {
+      res.status(200).send("logged-in");
+    } else {
+      res.sendStatus(200);
+    }
   }
 };
 
