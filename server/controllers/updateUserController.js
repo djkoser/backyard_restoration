@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-undef
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 
 // eslint-disable-next-line no-undef
-const { getGrowingParams } = require("../growingCalculations");
+const { getGrowingParams } = require('../growingCalculations');
 
 const growingSeasonLengthCalc = (firstGDD35, lastGDD35) => {
   // normalize to current year
@@ -24,7 +24,7 @@ const growingSeasonLengthCalc = (firstGDD35, lastGDD35) => {
 // eslint-disable-next-line no-undef
 module.exports = {
   chgUserAddress: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     const { street, city, state, zipcode } = req.body;
     const user_id = req.session.user.user_id;
     try {
@@ -34,13 +34,13 @@ module.exports = {
       return res.status(200).send(req.session.user);
     } catch (err) {
       await db.updateUser.chgUserAddress(user_id, street, city, state, zipcode, 0, null, null, null);
-      return res.status(500).send("Manual Entry");
+      return res.status(500).send('Manual Entry');
     }
   },
   chgUserEmail: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     const { email } = req.body;
-    const emailFiltered = email.toLowerCase().replace(/\s/g, "");
+    const emailFiltered = email.toLowerCase().replace(/\s/g, '');
     const storedUser = await db.user.getUserCredentials(emailFiltered);
     if (storedUser.length === 0) {
       const user_id = req.session.user.user_id;
@@ -54,7 +54,7 @@ module.exports = {
     }
   },
   chgUserPassword: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     const { password } = req.body;
     const user_id = req.session.user.user_id;
     try {
@@ -65,7 +65,7 @@ module.exports = {
     } catch (err) { return console.log(err); }
   },
   chgUserName: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     const { first_name, last_name } = req.body;
     const user_id = req.session.user.user_id;
     try {
@@ -75,7 +75,7 @@ module.exports = {
     } catch (err) { return console.log(err); }
   },
   changeGrowingInfo: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     const { first_gdd35, last_gdd35, hardiness_zone } = req.body;
     const firstGDD35Filtered = first_gdd35.replace(/\s/g).substring(0, 5);
     const lastGDD35Filtered = last_gdd35.replace(/\s/g).substring(0, 5);
@@ -93,7 +93,7 @@ module.exports = {
     }
   },
   deleteUser: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     const user_id = req.session.user.user_id;
     db.updateUser.deleteUser(user_id);
     req.session.destroy();

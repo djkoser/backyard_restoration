@@ -1,44 +1,44 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { addRetrievedInfo } from "../redux/userInfoReducer";
-import { getMethods } from "../redux/mgmtMethodReducer";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { addRetrievedInfo } from '../redux/userInfoReducer';
+import { getMethods } from '../redux/mgmtMethodReducer';
 
 const Login = (props) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get("/api/check")
+    axios.get('/api/check')
       .then(res => {
         console.log(res.data);
-        if (res.data === "logged-in") {
-          props.history.push("/dash");
+        if (res.data === 'logged-in') {
+          props.history.push('/dash');
         }
       })
       .catch(err => console.log(err));
   }, []);
 
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const login = () => {
-    axios.post("/api/login", { email, password })
+    axios.post('/api/login', { email, password })
       .then((res) => {
         dispatch(getMethods());
         dispatch(addRetrievedInfo(res.data));
-        props.history.push("/dash");
+        props.history.push('/dash');
       })
       .catch(() => {
-        setPassword("");
-        setEmail("");
-        toast.error("Incorrect username or password, please try again or register for an account.");
+        setPassword('');
+        setEmail('');
+        toast.error('Incorrect username or password, please try again or register for an account.');
       });
   };
   const register = () => {
-    props.history.push("/register");
+    props.history.push('/register');
   };
   return (
     <div id="loginComponent">
@@ -60,18 +60,18 @@ const Login = (props) => {
           <label htmlFor="passwordLoginInput">Password</label>
           <input id="passwordLoginInput" placeholder='Password' type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
           <Link id="forgotPwdLink" to={{
-            pathname: "./requestReset",
+            pathname: './requestReset',
             state: {
               email
             }
-          }}><strong style={{ cursor: "pointer" }}>Forgot Password</strong></Link>
+          }}><strong style={{ cursor: 'pointer' }}>Forgot Password</strong></Link>
           <div className="buttonBox">
             <button id="loginButton" onClick={(e) => {
               e.preventDefault();
               if (email && password) {
                 login();
               } else {
-                toast.error("Please enter a username and password or click below to register for an account.");
+                toast.error('Please enter a username and password or click below to register for an account.');
               }
             }}>Login</button>
             <button id="registerButton" onClick={(e) => {

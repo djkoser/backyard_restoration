@@ -1,8 +1,8 @@
 // @ts-nocheck
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addUserNative } from "../redux/userNativesReducer";
-import { toast } from "react-toastify";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUserNative } from '../redux/userNativesReducer';
+import { toast } from 'react-toastify';
 
 
 const NativeThumbnail = (props) => {
@@ -16,7 +16,7 @@ const NativeThumbnail = (props) => {
         if (!userNatives.reduce((acc, el) => el.native_id === native_id ? ++acc : acc, 0) || userNatives.length === 0) {
           dispatch(addUserNative(native_id));
         } else {
-          toast.warning("This plant has already been added to your list, please select another");
+          toast.warning('This plant has already been added to your list, please select another');
         }
       }} className="nativeThumbnail">
         <img className="searchResultImage" src={src} alt={`${botanical_name}, commonly known as ${common_name}`} />

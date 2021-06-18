@@ -1,7 +1,7 @@
 // @ts-nocheck
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleMethod } from "../redux/mgmtMethodReducer";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleMethod } from '../redux/mgmtMethodReducer';
 
 
 const SwitchMaker = (props) => {
@@ -23,8 +23,8 @@ const SwitchMaker = (props) => {
         <span><strong>Name: </strong>
           {weedMethod.name}</span>
         <div className='switchFlexBox'>
-          <div style={checked ? null : { transform: "translateY(15px)" }} className="switch" >
-            <h5 style={checked ? null : { transform: "translateY(-6px)" }} className="switchLabel">{checked ? "Remove from Timeline" : "Add to Timeline"}</h5>
+          <div style={checked ? null : { transform: 'translateY(15px)' }} className="switch" >
+            <h5 style={checked ? null : { transform: 'translateY(-6px)' }} className="switchLabel">{checked ? 'Remove from Timeline' : 'Add to Timeline'}</h5>
             <input type="checkbox"
               id={`switch${weedMethod.method_id}`}
               checked={checked}

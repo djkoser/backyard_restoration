@@ -1,14 +1,14 @@
 // @ts-nocheck
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import Footer from "./Footer";
-import Nav from "./Nav";
-import Thumbnail from "./Thumbnail";
-import WeatherLoader from "./WeatherLoader";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import Footer from './Footer';
+import Nav from './Nav';
+import Thumbnail from './Thumbnail';
+import WeatherLoader from './WeatherLoader';
 
 // props vegType 
 const WeedSearch = (props) => {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [weedList, setWeedList] = useState([]);
   const weedType = props.match.params.vegType;
 
@@ -21,18 +21,18 @@ const WeedSearch = (props) => {
         setWeedList(res.data);
         setLoading(false);
       })
-      .catch(() => props.history.push("/"));
+      .catch(() => props.history.push('/'));
   };
   const searchWeedsByKeyword = (e) => {
     setLoading(true);
     e.preventDefault();
     axios.get(`/api/weeds?vegType=${weedType}&keyword=${encodeURI(searchText)}`)
       .then(res => {
-        setSearchText("");
+        setSearchText('');
         setWeedList(res.data);
         setLoading(false);
       })
-      .catch(() => props.history.push("/"));
+      .catch(() => props.history.push('/'));
   };
   useEffect(() => {
     getWeedsByType();
@@ -46,7 +46,7 @@ const WeedSearch = (props) => {
       <form id="weedSearchForm" onSubmit={(e) => searchWeedsByKeyword(e)}>
         <input type="text" placeholder="Weed Name" value={searchText} onChange={e => setSearchText(e.target.value)}></input>
         <button >Search</button>
-        <button >Show All {weedType === "f" ? "Forb" : weedType === "g" ? "Graminoid" : "Woody"} Species</button>
+        <button >Show All {weedType === 'f' ? 'Forb' : weedType === 'g' ? 'Graminoid' : 'Woody'} Species</button>
       </form>
       <div id="searchResultsBox">
         {searchResults}

@@ -1,11 +1,11 @@
 // @ts-nocheck
-import axios from "axios";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { addRetrievedInfo } from "../redux/userInfoReducer";
-import WeatherLoader from "./WeatherLoader";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addRetrievedInfo } from '../redux/userInfoReducer';
+import WeatherLoader from './WeatherLoader';
 
 // props from Login email, password
 
@@ -13,47 +13,47 @@ const Register = (props) => {
 
   const dispatch = useDispatch();
 
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zipcode, setZipcode] = useState('');
   const [loading, setLoading] = useState(false);
 
   const createNewUser = (e) => {
     e.preventDefault();
     const digitChecker = zipcode.match(/\D/g);
     if (zipcode.length <= 5 && !digitChecker) {
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setStreet("");
-      setCity("");
-      setState("");
-      setZipcode("");
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+      setStreet('');
+      setCity('');
+      setState('');
+      setZipcode('');
       setLoading(true);
-      axios.post("/api/register", { email, password, first_name, last_name, street, city, state, zipcode })
+      axios.post('/api/register', { email, password, first_name, last_name, street, city, state, zipcode })
         .then((res) => {
           dispatch(addRetrievedInfo(res.data));
-          toast.success("Registration Successful! Logging you in to your new dashboard...");
-          setTimeout(() => props.history.push("./dash"), 3000);
+          toast.success('Registration Successful! Logging you in to your new dashboard...');
+          setTimeout(() => props.history.push('./dash'), 3000);
         })
         .catch((err) => {
-          if (err.response.data === "Manual Entry") {
-            toast.warning("NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.");
-            setTimeout(() => props.history.push("/manualEntry"), 5000);
+          if (err.response.data === 'Manual Entry') {
+            toast.warning('NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.');
+            setTimeout(() => props.history.push('/manualEntry'), 5000);
           } else {
             setLoading(false);
-            toast.error("A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the \"Forgot Password\" link.");
+            toast.error('A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the "Forgot Password" link.');
           }
         });
     } else {
       setLoading(false);
-      toast.error("Please enter a 5 digit zipcode, thank you");
+      toast.error('Please enter a 5 digit zipcode, thank you');
     }
   };
   return loading
@@ -66,7 +66,7 @@ const Register = (props) => {
     : (
       <>
         <ToastContainer />
-        <section id="registerBody" style={loading ? { visibility: "hidden" } : { visibility: "visible" }}>
+        <section id="registerBody" style={loading ? { visibility: 'hidden' } : { visibility: 'visible' }}>
           <form id="registerForm" onSubmit={e => { createNewUser(e); }}>
             <section className="registerSections">
               <h3 className="registerSectionText">Name</h3>
@@ -97,7 +97,7 @@ const Register = (props) => {
             <h4 >If you have any privacy concerns or questions regarding the site, please contact us at BackyardRestorationNet@gmail.com.</h4>
           </article>
         </section>
-        <Link id="backToLoginLink" to={"/"}>Back to Login</Link>
+        <Link id="backToLoginLink" to={'/'}>Back to Login</Link>
       </>
     );
 };

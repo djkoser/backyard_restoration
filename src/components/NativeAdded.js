@@ -1,7 +1,7 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { removeUserNative, updateProjectNotes } from "../redux/userNativesReducer";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { removeUserNative, updateProjectNotes } from '../redux/userNativesReducer';
 
 const NativeAdded = (props) => {
   const dispatch = useDispatch();
@@ -23,8 +23,8 @@ const NativeAdded = (props) => {
         <strong>Common Name: </strong>{common_name}, <strong>Botanical Name: </strong><em>{botanical_name}</em>, <strong>Moisture: </strong>{moisture}, <strong>Sun: </strong>{sun}, <strong>Height: </strong>{height} in
       </div>
       <li className='nativeAddedInputs'>
-        <button className="editProjectNotesButton" onClick={() => setEditing(!editing)}>{!project_notes && !editing ? "Add Notes" : project_notes && !editing ? "Edit Notes" : "Submit"}</button>
-        <span className={`toPrint ${project_notes ? "" : "hideInPrint"}`} >Notes: </span>
+        <button className="editProjectNotesButton" onClick={() => setEditing(!editing)}>{!project_notes && !editing ? 'Add Notes' : project_notes && !editing ? 'Edit Notes' : 'Submit'}</button>
+        <span className={`toPrint ${project_notes ? '' : 'hideInPrint'}`} >Notes: </span>
         <span className="toPrint">{project_notes}</span>
         <textarea rows="2" className='nativeAddedText' disabled={editing ? false : true} onChange={e => setProjectNotesInput(e.target.value)} value={projectNotesInput}></textarea>
       </li>

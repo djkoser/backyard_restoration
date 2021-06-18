@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   getMethods: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     try {
       const { user_id } = req.session.user;
       const methods = await db.method.getMethods(user_id);
@@ -11,7 +11,7 @@ module.exports = {
   },
   toggleMethod: async (req, res) => {
     // Methods Endpoints
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     try {
       const { user_id } = req.session.user;
       const { ctlID } = req.params;

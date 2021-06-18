@@ -2,9 +2,9 @@
 // eslint-disable-next-line no-undef
 const { GOOGLE_API_KEY, NOAA_TOKEN } = process.env;
 // eslint-disable-next-line no-undef
-const axios = require("axios");
+const axios = require('axios');
 // eslint-disable-next-line no-undef
-const axiosRetry = require("axios-retry");
+const axiosRetry = require('axios-retry');
 
 
 // eslint-disable-next-line no-undef
@@ -85,7 +85,7 @@ module.exports = {
         let TMIN = [];
         await axios.get(`https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&units=standard&startdate=${sdString}&enddate=${edString}&limit=1000&${stationList}includemetadata=false`, { headers: { token: NOAA_TOKEN } })
           .then(res => {
-            res.data.results.forEach(el => el.datatype === "TMIN" ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
+            res.data.results.forEach(el => el.datatype === 'TMIN' ? TMIN.push({ value: el.value, date: el.date }) : TMAX.push({ value: el.value, date: el.date }));
           })
           .catch(err => { console.log(err); });
         return { TMAX, TMIN };
@@ -103,32 +103,32 @@ module.exports = {
 
       const hardinessZoneCalculator = (TMINAvg) => {
         const zoneMap =
-          [{ low: -60, high: -55, zone: "1a" },
-          { low: -55, high: -50, zone: "1b" },
-          { low: -50, high: -45, zone: "2a" },
-          { low: -45, high: -40, zone: "2b" },
-          { low: -40, high: -35, zone: "3a" },
-          { low: -35, high: -30, zone: "3b" },
-          { low: -30, high: -25, zone: "4a" },
-          { low: -25, high: -20, zone: "4b" },
-          { low: -20, high: -15, zone: "5a" },
-          { low: -15, high: -10, zone: "5b" },
-          { low: -10, high: -5, zone: "6a" },
-          { low: -5, high: 0, zone: "6b" },
-          { low: 0, high: 5, zone: "7a" },
-          { low: 5, high: 10, zone: "7b" },
-          { low: 10, high: 15, zone: "8a" },
-          { low: 15, high: 20, zone: "8b" },
-          { low: 20, high: 25, zone: "9a" },
-          { low: 25, high: 30, zone: "9b" },
-          { low: 30, high: 35, zone: "10a" },
-          { low: 35, high: 40, zone: "10b" },
-          { low: 40, high: 45, zone: "11a" },
-          { low: 45, high: 50, zone: "11b" },
-          { low: 50, high: 55, zone: "12a" },
-          { low: 55, high: 60, zone: "12b" },
-          { low: 60, high: 65, zone: "13a" },
-          { low: 65, high: 70, zone: "13b" }];
+          [{ low: -60, high: -55, zone: '1a' },
+          { low: -55, high: -50, zone: '1b' },
+          { low: -50, high: -45, zone: '2a' },
+          { low: -45, high: -40, zone: '2b' },
+          { low: -40, high: -35, zone: '3a' },
+          { low: -35, high: -30, zone: '3b' },
+          { low: -30, high: -25, zone: '4a' },
+          { low: -25, high: -20, zone: '4b' },
+          { low: -20, high: -15, zone: '5a' },
+          { low: -15, high: -10, zone: '5b' },
+          { low: -10, high: -5, zone: '6a' },
+          { low: -5, high: 0, zone: '6b' },
+          { low: 0, high: 5, zone: '7a' },
+          { low: 5, high: 10, zone: '7b' },
+          { low: 10, high: 15, zone: '8a' },
+          { low: 15, high: 20, zone: '8b' },
+          { low: 20, high: 25, zone: '9a' },
+          { low: 25, high: 30, zone: '9b' },
+          { low: 30, high: 35, zone: '10a' },
+          { low: 35, high: 40, zone: '10b' },
+          { low: 40, high: 45, zone: '11a' },
+          { low: 45, high: 50, zone: '11b' },
+          { low: 50, high: 55, zone: '12a' },
+          { low: 55, high: 60, zone: '12b' },
+          { low: 60, high: 65, zone: '13a' },
+          { low: 65, high: 70, zone: '13b' }];
         for (let i = 0; i < zoneMap.length; i++) {
           if (TMINAvg >= zoneMap[i].low && TMINAvg <= zoneMap[i].high) {
             return zoneMap[i].zone;
@@ -177,7 +177,7 @@ module.exports = {
           .then(async res => {
             // Concatenate station names into a string for data request
             if (res.data.results) {
-              let stationString = "";
+              let stationString = '';
               let foundData = false;
               while (!foundData && index < res.data.results.length) {
                 stationString = `stationid=${res.data.results[index].id}&`;
@@ -247,12 +247,12 @@ module.exports = {
       // collector for initial axios requests
       const thisTMINMAX = { TMIN: [], TMAX: [] };
       // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
-      await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + "+" + city + "+" + state + "+" + zipcode)}&key=${GOOGLE_API_KEY}`)
+      await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(street + '+' + city + '+' + state + '+' + zipcode)}&key=${GOOGLE_API_KEY}`)
         .then(async res => {
           const location = res.data.results[0].geometry.location;
           searchHalfSide += 0.5;
           let coordinateArray = boundingBox(location.lat, location.lng, searchHalfSide);
-          let coordinateString = coordinateArray.join(",");
+          let coordinateString = coordinateArray.join(',');
           // Expand the half side of the bounding box by 0.5 km and whole side by 1km until data is found. 
           let APIOutputs = await apiLogic(coordinateString);
           while (foundTowers === false) {
@@ -263,7 +263,7 @@ module.exports = {
             } else if (!APIOutputs && foundTowers === false) {
               searchHalfSide += 2.5;
               coordinateArray = boundingBox(location.lat, location.lng, searchHalfSide);
-              coordinateString = coordinateArray.join(",");
+              coordinateString = coordinateArray.join(',');
               APIOutputs = await apiLogic(coordinateString);
             }
           }

@@ -1,8 +1,8 @@
 // @ts-nocheck
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 const Nav = (props) => {
   const { invertColors } = props;
@@ -10,16 +10,16 @@ const Nav = (props) => {
   const [weedOpenClose, setWeedOpenClose] = useState(false);
   const dispatch = useDispatch();
   const logout = () => {
-    axios.delete("/api/logout")
+    axios.delete('/api/logout')
       .then(() => {
-        dispatch({ type: "RESET_STORE" });
-        props.history.push("/");
+        dispatch({ type: 'RESET_STORE' });
+        props.history.push('/');
       })
-      .catch(() => props.history.push("/"));
+      .catch(() => props.history.push('/'));
   };
   return (
-    <nav className={invertColors ? "greenYellowBackground" : null}>
-      <div className={`linkBox ${mobileOpenClose ? "linkBoxOpened" : "linkBoxClosed"}`} >
+    <nav className={invertColors ? 'greenYellowBackground' : null}>
+      <div className={`linkBox ${mobileOpenClose ? 'linkBoxOpened' : 'linkBoxClosed'}`} >
         <Link onClick={() => {
           setWeedOpenClose(false);
           setMobileOpenClose(false);
@@ -33,8 +33,8 @@ const Nav = (props) => {
           setMobileOpenClose(false);
         }} to='/nativesSelector'>Native Plant Selector</Link>
         <div id='weedsMenu'>
-          <h4 id='weedInfo' onClick={() => setWeedOpenClose(!weedOpenClose)}><strong style={{ cursor: "pointer" }}>Weeds Information</strong></h4>
-          <div className={`weedLinkBox ${weedOpenClose ? "weedLinkBoxOpened" : "weedLinkBoxClosed"}`}>
+          <h4 id='weedInfo' onClick={() => setWeedOpenClose(!weedOpenClose)}><strong style={{ cursor: 'pointer' }}>Weeds Information</strong></h4>
+          <div className={`weedLinkBox ${weedOpenClose ? 'weedLinkBoxOpened' : 'weedLinkBoxClosed'}`}>
             <Link onClick={() => {
               setWeedOpenClose(false);
               setMobileOpenClose(false);
@@ -49,12 +49,12 @@ const Nav = (props) => {
             }} to='/search/g' ><strong>Graminoids</strong></Link>
           </div>
         </div>
-        <span className="logoutLink" onClick={() => logout()}><strong style={{ cursor: "pointer" }}>Logout</strong></span>
+        <span className="logoutLink" onClick={() => logout()}><strong style={{ cursor: 'pointer' }}>Logout</strong></span>
       </div>
       <div className="hamburger" onClick={() => setMobileOpenClose(!mobileOpenClose)}>
-        <div className={`${invertColors ? "invertColors" : "hamburgerPatties"} `}></div>
-        <div className={`${invertColors ? "invertColors" : "hamburgerPatties"} `}></div>
-        <div className={`${invertColors ? "invertColors" : "hamburgerPatties"} `}></div>
+        <div className={`${invertColors ? 'invertColors' : 'hamburgerPatties'} `}></div>
+        <div className={`${invertColors ? 'invertColors' : 'hamburgerPatties'} `}></div>
+        <div className={`${invertColors ? 'invertColors' : 'hamburgerPatties'} `}></div>
       </div>
     </nav >
   );

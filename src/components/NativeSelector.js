@@ -1,13 +1,13 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import Nav from "./Nav";
-import NativeThumbnail from "./NativeThumbnail";
-import NativesSearchBar from "./NativesSearchBar";
-import { ToastContainer } from "react-toastify";
-import AddedNatives from "./AddedNatives";
-import { getUserNatives } from "../redux/userNativesReducer";
-import WeatherLoader from "./WeatherLoader";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Nav from './Nav';
+import NativeThumbnail from './NativeThumbnail';
+import NativesSearchBar from './NativesSearchBar';
+import { ToastContainer } from 'react-toastify';
+import AddedNatives from './AddedNatives';
+import { getUserNatives } from '../redux/userNativesReducer';
+import WeatherLoader from './WeatherLoader';
 
 
 const NativeSelector = () => {
@@ -33,7 +33,7 @@ const NativeSelector = () => {
       <Nav />
       <NativesSearchBar setLoadingParent={setLoading} setSearchResults={setSearchResults} setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
       <AddedNatives setSearchAdded={setSearchAdded} searchAdded={searchAdded} />
-      <main className={searchAdded ? "searchOpen " : "searchClosed"} id="nativeSearchResults">
+      <main className={searchAdded ? 'searchOpen ' : 'searchClosed'} id="nativeSearchResults">
         {
           loading ?
             (

@@ -1,17 +1,17 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import MyAccount from "./components/MyAccount";
-import Register from "./components/Register";
-import WeedPage from "./components/WeedPage";
-import WeedSearch from "./components/WeedSearch";
-import ResetPassword from "./components/ResetPassword";
-import RequestPasswordReset from "./components/RequestPasswordReset";
-import StripeThankYou from "./components/StripeThankYou";
-import Stripe from "./components/Stripe";
-import NOAAHangupPage from "./components/NOAAHangupPage";
-import NativeSelector from "./components/NativeSelector";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import Login from './components/Login';
+import MyAccount from './components/MyAccount';
+import Register from './components/Register';
+import WeedPage from './components/WeedPage';
+import WeedSearch from './components/WeedSearch';
+import ResetPassword from './components/ResetPassword';
+import RequestPasswordReset from './components/RequestPasswordReset';
+import StripeThankYou from './components/StripeThankYou';
+import Stripe from './components/Stripe';
+import NOAAHangupPage from './components/NOAAHangupPage';
+import NativeSelector from './components/NativeSelector';
 
 export default (
   <Switch>

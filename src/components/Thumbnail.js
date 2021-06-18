@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 // props commonName, botanicalName from WeedSearch
 const Thumbnail = (props) => {

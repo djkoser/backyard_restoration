@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   weedsByTypeKw: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     if (req.query.vegType && req.query.keyword) {
       try {
         const { vegType, keyword } = req.query;
@@ -17,7 +17,7 @@ module.exports = {
     } else { return res.sendStatus(400); }
   },
   weedDetails: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     if (req.params.weedID) {
       try {
         const { weedID } = req.params;
@@ -27,7 +27,7 @@ module.exports = {
     } else { return res.sendStatus(400); }
   },
   weedMethods: async (req, res) => {
-    const db = req.app.get("db");
+    const db = req.app.get('db');
     if (req.params.weedID) {
       try {
         const { weedID } = req.params;

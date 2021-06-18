@@ -1,14 +1,14 @@
 // @ts-nocheck
-import React from "react";
+import React from 'react';
 //  Weather-Themed Loading SVG Adapted from Tim Holman's Work as Listed on Codepen - I thought this particularly lengthy loading screen deserved a solid weather-themed loading graphic. Much time spent reconfiguring CSS to be more adapted to mobile view (retained relative positions of SVGs) by turning animation into a series of nested SVGs. Also added animateTransform element for rotation to account for coordinate system difference in SVG as opposed to CSS keyfrmames 
 const WeatherLoader = (props) => {
   const { noText } = props;
 
   return (
     <div id="loaderBox">
-      <div className="loaderText" style={noText ? { display: "none" } : null}>
+      <div className="loaderText" style={noText ? { display: 'none' } : null}>
         Calculating growing parameters for your location based upon 10 years of local weather data, courtesy of the National Oceanic and Atmospheric Administration (NOAA). This could take several minutes depending on server traffic.
-        </div>
+      </div>
       <svg className="svgContainer" viewBox="0 0 620 600" preserveAspectRatio="xMinYMin meet">
         <svg x="340" y="80" id="sun" width="275" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet" >
           <g transform-origin="5 5">

@@ -1,8 +1,8 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
-import SwitchMaker from "./SwitchMaker";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import SwitchMaker from './SwitchMaker';
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 const DashboardDropdowns = (props) => {
 
@@ -17,7 +17,7 @@ const DashboardDropdowns = (props) => {
           <option key={`weed${el.weed_id}`} value={el.weed_id} >{el.common_name}</option>
         )));
       })
-      .catch(() => props.history.push("/"));
+      .catch(() => props.history.push('/'));
   };
 
   const getWeedMethodsByID = (weed_id) => {
@@ -25,10 +25,10 @@ const DashboardDropdowns = (props) => {
       .then(res => {
         setSwitches(res.data.map(el => (<SwitchMaker key={`method${el.method_id}`} weedMethod={el} />)));
       })
-      .catch(() => props.history.push("/"));
+      .catch(() => props.history.push('/'));
   };
   useEffect(() => {
-    getWeedsByVegType("f");
+    getWeedsByVegType('f');
   }, []);
 
   return (

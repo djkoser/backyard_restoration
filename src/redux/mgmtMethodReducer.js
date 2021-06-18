@@ -1,5 +1,5 @@
 // @ts-nocheck
-import axios from "axios";
+import axios from 'axios';
 
 const initialState = {
   userMethods: [],
@@ -7,13 +7,13 @@ const initialState = {
   failed: false
 };
 
-const GET_METHODS = "GET_METHODS";
-const TOGGLE_METHOD = "TOGGLE_METHOD";
-const RESET_STORE = "RESET_STORE";
+const GET_METHODS = 'GET_METHODS';
+const TOGGLE_METHOD = 'TOGGLE_METHOD';
+const RESET_STORE = 'RESET_STORE';
 
 export const getMethods = () => {
   const methods = axios
-    .get("/api/wdctrl")
+    .get('/api/wdctrl')
     .then(res => res.data)
     .catch(() => initialState.userMethods);
   const action = {
@@ -40,17 +40,17 @@ export const toggleMethod = (methodID) => {
 
 export default function mgmtMethodReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_METHODS + "_PENDING":
+    case GET_METHODS + '_PENDING':
       return { ...state, ...{ failed: false, loading: true } };
-    case GET_METHODS + "_FULFILLED":
+    case GET_METHODS + '_FULFILLED':
       return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } };
-    case GET_METHODS + "_REJECTED":
+    case GET_METHODS + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } };
-    case TOGGLE_METHOD + "_PENDING":
+    case TOGGLE_METHOD + '_PENDING':
       return { ...state, ...{ failed: false, loading: true } };
-    case TOGGLE_METHOD + "_FULFILLED":
+    case TOGGLE_METHOD + '_FULFILLED':
       return { ...state, ...{ failed: false, loading: false, userMethods: action.payload } };
-    case TOGGLE_METHOD + "_REJECTED":
+    case TOGGLE_METHOD + '_REJECTED':
       return { ...state, ...{ failed: true, loading: false } };
     case RESET_STORE:
       return {

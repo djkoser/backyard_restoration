@@ -2,9 +2,9 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   searchPlants: async (req, res) => {
-    const db = await req.app.get("db");
+    const db = await req.app.get('db');
     const { name, moisture, sun, minHeight, maxHeight, bloomTime } = req.query;
-    let searchString = "";
+    let searchString = '';
     try {
       if (name) {
         searchString = `(common_name ILIKE '%${name}%') OR (botanical_name ILIKE '%${name}%')`;
@@ -45,7 +45,7 @@ module.exports = {
         }
       }
       if (bloomTime || minHeight || maxHeight || sun || moisture || name) {
-        searchString = searchString + ";";
+        searchString = searchString + ';';
         const results = await db.nativePlants.searchNatives(searchString);
         res.status(200).send(results);
       } else {
@@ -57,7 +57,7 @@ module.exports = {
     }
   },
   addToList: async (req, res) => {
-    const db = await req.app.get("db");
+    const db = await req.app.get('db');
     const { user_id } = req.session.user;
     const { nativeID } = req.params;
     try {
@@ -75,7 +75,7 @@ module.exports = {
     }
   },
   updateProjectNotes: async (req, res) => {
-    const db = await req.app.get("db");
+    const db = await req.app.get('db');
     const { user_id } = req.session.user;
     const { nativeID } = req.params;
     const { notes } = req.body;
@@ -88,7 +88,7 @@ module.exports = {
     }
   },
   removeFromList: async (req, res) => {
-    const db = await req.app.get("db");
+    const db = await req.app.get('db');
     const { user_id } = req.session.user;
     const { nativeID } = req.params;
     try {
@@ -100,7 +100,7 @@ module.exports = {
     }
   },
   getUserNatives: async (req, res) => {
-    const db = await req.app.get("db");
+    const db = await req.app.get('db');
     const { user_id } = req.session.user;
     try {
       const natives = await db.nativePlants.getUserNatives(user_id);

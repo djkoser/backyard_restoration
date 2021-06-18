@@ -1,31 +1,31 @@
 /* eslint-disable react/no-unescaped-entities */
 // @ts-nocheck
-import React, { useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const RequestPasswordReset = (props) => {
   const [email, setEmail] = useState(props.location.state.email);
-  const [successMessage, setSuccessMessage] = useState({ visibility: "hidden" });
-  const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" });
+  const [successMessage, setSuccessMessage] = useState({ visibility: 'hidden' });
+  const [failureMessage, setFailureMessage] = useState({ visibility: 'hidden' });
 
   const submitRequest = (event) => {
     event.preventDefault();
-    axios.put("/api/pwdResetReq", { email })
+    axios.put('/api/pwdResetReq', { email })
 
       .then(() => {
-        setEmail("");
-        toast.success("Password Reset Request Submitted Successfully");
-        setSuccessMessage({ visibility: "visible" });
-        setFailureMessage({ visibility: "hidden" });
+        setEmail('');
+        toast.success('Password Reset Request Submitted Successfully');
+        setSuccessMessage({ visibility: 'visible' });
+        setFailureMessage({ visibility: 'hidden' });
       })
 
       .catch(() => {
-        setEmail("");
-        toast.error("Password Reset Request Failed.");
-        setSuccessMessage({ visibility: "hidden" });
-        setFailureMessage({ visibility: "visible" });
+        setEmail('');
+        toast.error('Password Reset Request Failed.');
+        setSuccessMessage({ visibility: 'hidden' });
+        setFailureMessage({ visibility: 'visible' });
       });
   };
 
@@ -44,7 +44,7 @@ const RequestPasswordReset = (props) => {
         ></input>
         <button id="resetReqButton">Request Reset</button>
       </form>
-      <Link to={"/"}>Back to Login</Link>
+      <Link to={'/'}>Back to Login</Link>
       <article
 
         style={successMessage}>

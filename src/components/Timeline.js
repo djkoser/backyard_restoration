@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 // @ts-nocheck
-import React, { useRef, useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useRef, useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import * as d3 from "d3";
+import * as d3 from 'd3';
 
 
 // From store userMethods[], gSeasonLength, firstGDD35
@@ -19,18 +19,18 @@ const Timeline = (props) => {
     </div>)]);
 
   const months = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december"
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december'
   ];
 
   // Create chart viewbox width and height variables
@@ -86,7 +86,7 @@ const Timeline = (props) => {
       // Rather than extending from 0 to the full width and height of the chart, the starts and ends of the ranges are moved inward by the corresponding margins.
       .range([margin.left, width - margin.right]);
 
-    const tickFormat = d3.timeFormat("%b");
+    const tickFormat = d3.timeFormat('%b');
 
     const xAxis = d3
       .axisBottom(scale)
@@ -95,42 +95,42 @@ const Timeline = (props) => {
 
     // Associate reference object with SVG varable to be manipulated by D3
     const svg = d3.select(d3Container.current)
-      .attr("class", "timelineSVG");
+      .attr('class', 'timelineSVG');
     // Add Axis to SVG
     svg
-      .append("g")
+      .append('g')
       // move the g element that will host the x axis to the bottom of the chart
-      .attr("transform", `translate(0,${height - 30})`)
-      .attr("class", "timelineAxis")
+      .attr('transform', `translate(0,${height - 30})`)
+      .attr('class', 'timelineAxis')
       .call(xAxis);
     // Select the xAxis Text and rotate labels for readibility. 
 
     svg
-      .append("g")
-      .attr("class", "timelineBarContainer");
+      .append('g')
+      .attr('class', 'timelineBarContainer');
 
     const text = svg
-      .selectAll("text");
+      .selectAll('text');
 
     text
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-65)")
-      .append("g")
-      .attr("transform", "translate(150,275)")
-      .attr("height", "25")
-      .attr("width", "50");
+      .style('text-anchor', 'end')
+      .attr('dx', '-.8em')
+      .attr('dy', '.15em')
+      .attr('transform', 'rotate(-65)')
+      .append('g')
+      .attr('transform', 'translate(150,275)')
+      .attr('height', '25')
+      .attr('width', '50');
 
   }, [height, margin.left, margin.right, width]);
 
   const rectangleMaker = (gSelection, GDD35Prop, xPosVal, ind) => {
     return gSelection
-      .append("rect")
-      .attr("visibility", (d) => Number.parseInt(d[months[ind]]) ? "visible" : "hidden")
-      .attr("width", GDD35Prop + 0.5)
-      .attr("x", () => xPosVal(ind))
-      .attr("class", "monthBoxes");
+      .append('rect')
+      .attr('visibility', (d) => Number.parseInt(d[months[ind]]) ? 'visible' : 'hidden')
+      .attr('width', GDD35Prop + 0.5)
+      .attr('x', () => xPosVal(ind))
+      .attr('class', 'monthBoxes');
   };
   // Prep variable for use at end of function -> legend color key and text
 
@@ -175,12 +175,12 @@ const Timeline = (props) => {
       let colors = colorGenerator();
 
       // Group chart update tasks that will be contingent upon data changes to a different useEffect that will re-render on change.
-      const timelineBarContainer = d3.select(d3Container.current).select(".timelineBarContainer");
+      const timelineBarContainer = d3.select(d3Container.current).select('.timelineBarContainer');
 
       // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
       // Selection represents existing data and g elements
       const selection = timelineBarContainer
-        .selectAll("g")
+        .selectAll('g')
         .data(userMethods, d => d.method_id);
 
       // Remove unnecessary boxes;
@@ -191,16 +191,16 @@ const Timeline = (props) => {
       // 12 month boxes per g element
       const gSelection = selection
         .enter()
-        .append("g")
-        .attr("class", "methodBoxes")
-        .attr("id", d => d.method_id);
+        .append('g')
+        .attr('class', 'methodBoxes')
+        .attr('id', d => d.method_id);
 
       // merge existing methodBoxes to updated method boxes in order to update existing boxes and new boxes at same time
       gSelection
-        .merge(timelineBarContainer.selectAll(".methodBoxes"))
+        .merge(timelineBarContainer.selectAll('.methodBoxes'))
         .transition()
-        .attr("transform", (_d, i) => `translate(0,${(((height - margin.top - margin.bottom - 25) / userMethods.length) * i) + margin.top})`)
-        .attr("fill", (_d, i) => colors[i]);
+        .attr('transform', (_d, i) => `translate(0,${(((height - margin.top - margin.bottom - 25) / userMethods.length) * i) + margin.top})`)
+        .attr('fill', (_d, i) => colors[i]);
 
       // Create 12 new rectangle elements within each g element, one for each management timeframe/month
 
@@ -210,15 +210,15 @@ const Timeline = (props) => {
 
       // due to map-based append, needed to isolate height assignment to new selection including new and old month boxes
       const allMonthBoxes = timelineBarContainer
-        .selectAll(".methodBoxes")
-        .selectAll(".monthBoxes");
+        .selectAll('.methodBoxes')
+        .selectAll('.monthBoxes');
 
       // update all month boxes to include adjust height value. 
       // 25 = width of x-axis
       // 60 = cumulative space between bars
       allMonthBoxes
         .transition()
-        .attr("height", () => userMethods.length > 6 ? `${(height - margin.bottom - margin.top - 25 - 60) / userMethods.length} ` : "25");
+        .attr('height', () => userMethods.length > 6 ? `${(height - margin.bottom - margin.top - 25 - 60) / userMethods.length} ` : '25');
 
       // create legned to reflect each created method box. 
       createLegend(colors);

@@ -1,24 +1,24 @@
 // @ts-nocheck
-import React, { useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { addRetrievedInfo } from "../redux/userInfoReducer";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addRetrievedInfo } from '../redux/userInfoReducer';
 
 const NOAAHangupPage = (props) => {
-  const [first_gdd35, setFirstGDD35] = useState("MM-DD");
-  const [last_gdd35, setLastGDD35] = useState("MM-DD");
-  const [hardiness_zone, setHardinessZone] = useState("");
+  const [first_gdd35, setFirstGDD35] = useState('MM-DD');
+  const [last_gdd35, setLastGDD35] = useState('MM-DD');
+  const [hardiness_zone, setHardinessZone] = useState('');
   const dispatch = useDispatch();
 
   const submitUpdates = () => {
-    axios.put("/api/user/growingInfo", { first_gdd35, last_gdd35, hardiness_zone })
+    axios.put('/api/user/growingInfo', { first_gdd35, last_gdd35, hardiness_zone })
       .then(async res => {
         dispatch(addRetrievedInfo(res.data));
-        toast.success("Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.");
-        await setTimeout(() => props.history.push("/dash"), 3000);
+        toast.success('Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.');
+        await setTimeout(() => props.history.push('/dash'), 3000);
       })
-      .catch(() => toast.error("An error occured while attempting to add your growing information to your account. Please unsure that you have used the correct formatting within the start and end dates boxes (MM-DD). Thank you."));
+      .catch(() => toast.error('An error occured while attempting to add your growing information to your account. Please unsure that you have used the correct formatting within the start and end dates boxes (MM-DD). Thank you.'));
   };
   return (
     <main id="NOAAHangupBody">
@@ -27,8 +27,8 @@ const NOAAHangupPage = (props) => {
         <fieldset id="NOAAHangupForm" >
           <h2 className="NOAAHangupText">Season Start and End Dates (MM-DD).</h2>
           <h4>These dates represent the first and last dates of the season when average daily temperatures are just above freezing.</h4><br /><h4> Note: these are not traditional growing season start and end dates.</h4>
-          <input onFocus={() => setFirstGDD35("")} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value); }} />
-          <input onFocus={() => setLastGDD35("")} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value); }} />
+          <input onFocus={() => setFirstGDD35('')} type='text' value={first_gdd35} onChange={e => { setFirstGDD35(e.target.value); }} />
+          <input onFocus={() => setLastGDD35('')} type='text' value={last_gdd35} onChange={e => { setLastGDD35(e.target.value); }} />
           <h2 className="accountPageText"> Please select your USDA Hardiness Zone.</h2>
           <br />
           <h4> (Can be found via the following link)</h4>

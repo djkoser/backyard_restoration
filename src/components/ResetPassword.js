@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 // @ts-nocheck
-import React, { useState } from "react";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 
 const ResetPassword = (props) => {
 
 
-  const [failureMessage, setFailureMessage] = useState({ visibility: "hidden" });
-  const [password, setPassword] = useState("");
+  const [failureMessage, setFailureMessage] = useState({ visibility: 'hidden' });
+  const [password, setPassword] = useState('');
 
 
   const submitChange = (event) => {
@@ -20,16 +20,16 @@ const ResetPassword = (props) => {
     axios.put(`/api/pwdRS/${props.match.params.token}`, { newPassword: password })
 
       .then(() => {
-        setPassword("");
-        toast.success("Password Reset Successful! Logging you in...");
-        setFailureMessage({ visibility: "hidden" });
-        props.history.push("/dash");
+        setPassword('');
+        toast.success('Password Reset Successful! Logging you in...');
+        setFailureMessage({ visibility: 'hidden' });
+        props.history.push('/dash');
       })
 
       .catch(() => {
-        setPassword("");
-        toast.error("Your password reset request has expired. Please try again using the \"Forgot Password\" link on our login page.");
-        setFailureMessage({ visibility: "visible" });
+        setPassword('');
+        toast.error('Your password reset request has expired. Please try again using the "Forgot Password" link on our login page.');
+        setFailureMessage({ visibility: 'visible' });
       });
   };
 
@@ -51,7 +51,7 @@ const ResetPassword = (props) => {
 
         style={failureMessage}>
         <h4 >'Your password reset request has expired. Please try again using the "Forgot Password" link on our login page.'</h4>
-        <Link to={"/"}>Back to Login</Link>
+        <Link to={'/'}>Back to Login</Link>
       </article>
     </main>
   );

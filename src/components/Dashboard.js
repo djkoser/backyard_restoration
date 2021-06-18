@@ -1,12 +1,12 @@
 // @ts-nocheck
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Footer from "./Footer";
-import Nav from "./Nav";
-import Timeline from "./Timeline";
-import DashboardDropdowns from "./DashboardDropdowns";
-import { getUserInfo } from "../redux/userInfoReducer";
-import { getMethods } from "../redux/mgmtMethodReducer";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Footer from './Footer';
+import Nav from './Nav';
+import Timeline from './Timeline';
+import DashboardDropdowns from './DashboardDropdowns';
+import { getUserInfo } from '../redux/userInfoReducer';
+import { getMethods } from '../redux/mgmtMethodReducer';
 
 // props from store hZone, gSeasonLength firstGDD35
 
