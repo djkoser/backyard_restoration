@@ -19,7 +19,7 @@ const NativeAdded = (props) => {
   return (
     <div className="nativeAddedLI">
       <div>
-        <img className="nativeAddedPic" onClick={() => dispatch(removeUserNative(native_id))} alt={`${botanical_name}, commonly known as ${common_name}.`} src={src} width='50px' />
+        <img className="nativeAddedPic" onClick={() => dispatch(removeUserNative(native_id))} alt={`Added plant ${botanical_name}, commonly known as ${common_name}.`} src={src} width='50px' />
         <strong>Common Name: </strong>{common_name}, <strong>Botanical Name: </strong><em>{botanical_name}</em>, <strong>Moisture: </strong>{moisture}, <strong>Sun: </strong>{sun}, <strong>Height: </strong>{height} in
       </div>
       <li className='nativeAddedInputs'>

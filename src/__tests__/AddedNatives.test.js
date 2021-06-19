@@ -1,7 +1,7 @@
 // @ts-nocheck 
 /* eslint-disable no-undef */
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import AddedNatives from '../components/AddedNatives';
 import { Provider } from 'react-redux';
 import { rootReducer } from '../redux/store';
@@ -27,19 +27,19 @@ describe('Test NativesAdded', () => {
 
 
   it('Renders added natives present within store', () => {
-    const { getAllByText, getByText, getByRole } = render(
+    render(
       <Provider store={store}>
         <AddedNatives />
       </Provider>,
     );
-    expect(getByText(/(botNameTest)+/i)).toBeInTheDocument();
-    expect(getByText(/(comNameTest)+/i)).toBeInTheDocument();
-    expect(getByText(/(moistTest)/i)).toBeInTheDocument();
-    expect(getByText(/(sunTest)+/i)).toBeInTheDocument();
-    expect(getByText(/(heightTest)+/i)).toBeInTheDocument();
-    expect(getByRole('img')).toHaveAttribute('src', 'srcTest');
-    expect(getByRole('img')).toHaveAttribute('alt', 'botNameTest, commonly known as comNameTest.');
-    expect(getAllByText(/(projectNotesTest)+/i)).toHaveLength(2);
+    expect(screen.getByText(/(botNameTest)+/i)).toBeInTheDocument();
+    expect(screen.getByText(/(comNameTest)+/i)).toBeInTheDocument();
+    expect(screen.getByText(/(moistTest)/i)).toBeInTheDocument();
+    expect(screen.getByText(/(sunTest)+/i)).toBeInTheDocument();
+    expect(screen.getByText(/(heightTest)+/i)).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('src', 'srcTest');
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'Added plant botNameTest, commonly known as comNameTest.');
+    expect(screen.getAllByText(/(projectNotesTest)+/i)).toHaveLength(2);
   });
 });
 
