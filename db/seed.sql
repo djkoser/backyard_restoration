@@ -22,6 +22,10 @@ DROP TABLE tmin;
 
 DROP TABLE tmax;
 
+DROP TABLE weed;
+DROP TABLE user_native_plant; 
+DROP TABLE native_plant; 
+
 CREATE TABLE tmin (
   id serial PRIMARY KEY,
   temperature int,
