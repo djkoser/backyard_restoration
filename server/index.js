@@ -14,7 +14,7 @@ const passwordReset = require('./controllers/passwordReset');
 const stripeController = require('./controllers/stripeController');
 const nativeController = require('./controllers/nativePlantsController');
 
-const { CONNECTION_STRING, SESSION_SECRET, PORT } = process.env;
+const { CONNECTION_STRING, SESSION_SECRET, PORT, POSTGRES_PASSWORD } = process.env;
 
 app.use(express.static(`${__dirname}/../build`));
 
@@ -29,9 +29,13 @@ app.use(
 );
 
 massive({
-  connectionString: CONNECTION_STRING,
-
-  ssl: { rejectUnauthorized: 0 }
+  host: 'localhost',
+  port: 5432,
+  database: 'backyard_restoration',
+  user: 'postgres',
+  password: POSTGRES_PASSWORD,
+  ssl: false,
+  poolSize: 10
 }).then((dbInstance) => {
   app.set('db', dbInstance);
   app.listen(PORT, () =>

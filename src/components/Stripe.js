@@ -39,7 +39,7 @@ const Stripe = () => {
         <h2>Thank you for your donation!</h2>
         <h4>Please enter your preferred donation amount in the box provided using the format "0.00". Due to service charges, we are only accepting donations greater than $1.00.</h4>
         <div id="donationInput">
-          <input value={donationAmount} onChange={(e) => setDonationAmount(e.target.value)} type='text' id='donationInput' onFocus={() => setDonationAmount('')} onBlur={async () => await setTimeout(() => setDonationAmount('$0.00'), 250)} />
+          <input value={donationAmount} onChange={(e) => setDonationAmount(e.target.value)} type='text' id='donationInput' onFocus={() => setDonationAmount('')} onBlur={async () => setTimeout(() => setDonationAmount('$0.00'), 250)} />
           <button role="link" onClick={() => toPaymentPage()} >
             Proceed to Payment
           </button >
