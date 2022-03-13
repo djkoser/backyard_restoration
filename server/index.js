@@ -1,20 +1,20 @@
 /* eslint-disable no-undef */
 //@ts-nocheck
-require('dotenv').config();
-const massive = require('massive');
-const express = require('express');
+require("dotenv").config();
+const massive = require("massive");
+const express = require("express");
 const app = express();
-const session = require('express-session');
-const methodsCtl = require('./controllers/methodController');
-const userCtl = require('./controllers/userController');
-const weedCtl = require('./controllers/weedController');
-const updUserCtl = require('./controllers/updateUserController');
-const { authorize } = require('./middleware/authMiddleware');
-const passwordReset = require('./controllers/passwordReset');
-const stripeController = require('./controllers/stripeController');
-const nativeController = require('./controllers/nativePlantsController');
+const session = require("express-session");
+const methodsCtl = require("./controllers/methodController");
+const userCtl = require("./controllers/userController");
+const weedCtl = require("./controllers/weedController");
+const updUserCtl = require("./controllers/updateUserController");
+const { authorize } = require("./middleware/authMiddleware");
+const passwordReset = require("./controllers/passwordReset");
+const stripeController = require("./controllers/stripeController");
+const nativeController = require("./controllers/nativePlantsController");
 
-const { CONNECTION_STRING, SESSION_SECRET, PORT, POSTGRES_PASSWORD } = process.env;
+const { SESSION_SECRET, PORT, POSTGRES_PASSWORD } = process.env;
 
 app.use(express.static(`${__dirname}/../build`));
 
@@ -24,54 +24,50 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: SESSION_SECRET,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
   })
 );
 
 massive({
-  host: 'localhost',
+  host: "localhost",
   port: 5432,
-  database: 'backyard_restoration',
-  user: 'postgres',
+  database: "backyard_restoration",
+  user: "postgres",
   password: POSTGRES_PASSWORD,
   ssl: false,
   poolSize: 10
 }).then((dbInstance) => {
-  app.set('db', dbInstance);
-  app.listen(PORT, () =>
-    console.log(`DB Mounted and Server Connected on Port ${PORT}`)
-  );
+  app.set("db", dbInstance);
+  app.listen(PORT, () => console.log(`DB Mounted and Server Connected on Port ${PORT}`));
 });
 
 // User Endpoints
-app.post('/api/register', userCtl.newUser);
-app.post('/api/login', userCtl.login);
-app.get('/api/user', authorize, userCtl.getInfo);
-app.delete('/api/logout', userCtl.logout);
-app.get('/api/check', userCtl.checkForCookie);
+app.post("/api/register", userCtl.newUser);
+app.post("/api/login", userCtl.login);
+app.get("/api/user", authorize, userCtl.getInfo);
+app.delete("/api/logout", userCtl.logout);
+app.get("/api/check", userCtl.checkForCookie);
 // Update user Endpoints
-app.put('/api/user/address', authorize, updUserCtl.chgUserAddress);
-app.put('/api/user/email', authorize, updUserCtl.chgUserEmail);
-app.put('/api/user/password', authorize, updUserCtl.chgUserPassword);
-app.put('/api/user/name', authorize, updUserCtl.chgUserName);
-app.put('/api/pwdResetReq', passwordReset.resetPwdEmail);
-app.put('/api/pwdRS/:token', passwordReset.processReset);
-app.delete('/api/deleteUser', authorize, updUserCtl.deleteUser);
-app.put('/api/user/growingInfo', authorize, updUserCtl.changeGrowingInfo);
+app.put("/api/user/address", authorize, updUserCtl.chgUserAddress);
+app.put("/api/user/email", authorize, updUserCtl.chgUserEmail);
+app.put("/api/user/password", authorize, updUserCtl.chgUserPassword);
+app.put("/api/user/name", authorize, updUserCtl.chgUserName);
+app.put("/api/pwdResetReq", passwordReset.resetPwdEmail);
+app.put("/api/pwdRS/:token", passwordReset.processReset);
+app.delete("/api/deleteUser", authorize, updUserCtl.deleteUser);
+app.put("/api/user/growingInfo", authorize, updUserCtl.changeGrowingInfo);
 // Methods Endpoints
-app.get('/api/wdctrl', authorize, methodsCtl.getMethods);
-app.put('/api/wdctrl/:ctlID', authorize, methodsCtl.toggleMethod);
+app.get("/api/wdctrl", authorize, methodsCtl.getMethods);
+app.put("/api/wdctrl/:ctlID", authorize, methodsCtl.toggleMethod);
 // Weeds Endpoints
-app.get('/api/weeds', authorize, weedCtl.weedsByTypeKw);
-app.get('/api/weeds/:weedID', authorize, weedCtl.weedDetails);
-app.get('/api/weeds/methods/:weedID', authorize, weedCtl.weedMethods);
+app.get("/api/weeds", authorize, weedCtl.weedsByTypeKw);
+app.get("/api/weeds/:weedID", authorize, weedCtl.weedDetails);
+app.get("/api/weeds/methods/:weedID", authorize, weedCtl.weedMethods);
 // Native Plants Endpoints
-app.get('/api/native', authorize, nativeController.searchPlants);
-app.get('/api/native/user', authorize, nativeController.getUserNatives);
-app.put('/api/native/notes/:nativeID', authorize, nativeController.updateProjectNotes);
-app.post('/api/native/add/:nativeID', authorize, nativeController.addToList);
-app.delete('/api/native/delete/:nativeID', authorize, nativeController.removeFromList);
+app.get("/api/native", authorize, nativeController.searchPlants);
+app.get("/api/native/user", authorize, nativeController.getUserNatives);
+app.put("/api/native/notes/:nativeID", authorize, nativeController.updateProjectNotes);
+app.post("/api/native/add/:nativeID", authorize, nativeController.addToList);
+app.delete("/api/native/delete/:nativeID", authorize, nativeController.removeFromList);
 // Stripe EndPoint
-app.post('/api/donate', authorize, stripeController.checkout);
-
-
+app.post("/api/donate", authorize, stripeController.checkout);
