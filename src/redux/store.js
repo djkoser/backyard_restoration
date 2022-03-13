@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import mgmtMethodReducer from './mgmtMethodReducer';
@@ -9,9 +9,7 @@ import userNativesReducer from './userNativesReducer';
 export const rootReducer = combineReducers({
   mgmtMethodReducer,
   userInfoReducer,
-  userNativesReducer,
+  userNativesReducer
 });
 
 export default createStore(rootReducer, composeWithDevTools(applyMiddleware(promiseMiddleware)));
-
-

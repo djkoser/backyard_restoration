@@ -18,6 +18,8 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "react/prop-types": 0,
+    "comma-dangle": ["error", "never"],
+    "no-unused-vars": 0,
     "no-return-await": ["error"]
   }
 }
