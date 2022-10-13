@@ -30,7 +30,7 @@ describe('Test NativesAdded', () => {
     render(
       <Provider store={store}>
         <AddedNatives />
-      </Provider>,
+      </Provider>
     );
     expect(screen.getByText(/(botNameTest)+/i)).toBeInTheDocument();
     expect(screen.getByText(/(comNameTest)+/i)).toBeInTheDocument();

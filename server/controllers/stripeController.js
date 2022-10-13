@@ -17,12 +17,12 @@ module.exports = {
             price_data: {
               currency: 'usd',
               product_data: {
-                name: 'donation',
+                name: 'donation'
               },
-              unit_amount_decimal: Number.parseInt(req.body.donationAmount),
+              unit_amount_decimal: Number.parseInt(req.body.donationAmount)
             },
-            quantity: 1,
-          },
+            quantity: 1
+          }
         ],
         mode: 'payment',
         success_url: 'https://backyardrestoration.net/#/donation/success',
