@@ -3,10 +3,12 @@
 SELECT
   *
 FROM (
+  -- Table contains the observation date 
   SELECT
     obs_date,
     ROW_NUMBER() OVER (PARTITION BY (obs_year) ORDER BY obs_date DESC) rn
 FROM (
+  -- tmp contains the observation date of the minimum temperature, 
 SELECT
   tmin.observation_date obs_date,
   tmin.temperature tmin_temp,
