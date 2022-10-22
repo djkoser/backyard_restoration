@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 //@ts-nocheck
-require('dotenv').config();
 const massive = require('massive');
 const express = require('express');
 const app = express();
@@ -14,7 +13,7 @@ const passwordReset = require('./controllers/passwordReset');
 const stripeController = require('./controllers/stripeController');
 const nativeController = require('./controllers/nativePlantsController');
 
-const { SESSION_SECRET, PORT, POSTGRES_PASSWORD } = process.env;
+const { SESSION_SECRET, PORT, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_USER, POSTGRES_DATABASE } = process.env;
 
 app.use(express.static(`${__dirname}/../build`));
 
@@ -29,10 +28,10 @@ app.use(
 );
 
 massive({
-  host: 'localhost',
+  host: POSTGRES_HOST,
   port: 5432,
-  database: 'backyard_restoration',
-  user: 'postgres',
+  database: POSTGRES_DATABASE,
+  user: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   ssl: false,
   poolSize: 10
