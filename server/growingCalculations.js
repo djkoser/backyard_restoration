@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 // eslint-disable-next-line no-undef
 const { GOOGLE_API_KEY, NOAA_TOKEN } = process.env;
 // eslint-disable-next-line no-undef

@@ -1,11 +1,7 @@
-//@ts-nocheck
-// eslint-disable-next-line no-undef
 const { STRIPE_SECRET_KEY } = process.env;
 
-// eslint-disable-next-line no-undef
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
-// eslint-disable-next-line no-undef
 module.exports = {
   checkout: async (req, res) => {
     try {
@@ -25,8 +21,8 @@ module.exports = {
           }
         ],
         mode: 'payment',
-        success_url: 'https://backyardrestoration.net/#/donation/success',
-        cancel_url: 'https://backyardrestoration.net/#/'
+        success_url: 'https://backyardrestoration.net/donation/success',
+        cancel_url: 'https://backyardrestoration.net/'
       });
       res.status(200).send({ id: session.id });
     } catch (err) { console.log(err); }

@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-//@ts-nocheck
+require('dotenv').config(); 
 const massive = require('massive');
 const express = require('express');
 const app = express();

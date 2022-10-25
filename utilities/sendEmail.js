@@ -20,7 +20,7 @@ module.exports = {
             <p  style='font-size: 14pt'>If this request was not made by you, please reset your password immediately using the "Reset Password" link on our login page.</p>
             <p  style='font-size: 14pt'>Otherwise, please click on the following link within 24 hours to reset your password.</p>
           </main>
-          <a href="https://backyardrestoration.net/#/resetPassword/${token}"> Reset Password </a>`
+          <a href="https://backyardrestoration.net/resetPassword/${token}"> Reset Password </a>`
     };
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
