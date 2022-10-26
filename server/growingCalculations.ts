@@ -63,18 +63,20 @@ export class GrowingCalculations {
   */
   private async retrieveAPIData() {
     try {
-      // Get lat and long from Google Maps API for Use with FCC lat/long-to-FIPS API
+      // Get lat and long from Google Maps API
       const googleResult = await this.convertAddressToCoordinate();
 
-      const { location } = googleResult.data.results[0].geometry;
+      const googleResults = googleResult.data?.results?.[0]?.geometry?.location;
+      if (googleResults === undefined) throw new Error('retrieveAPIData: lat and lng could not be obtained from the user\'s address via Google Maps');
+      const { lat, lng } = googleResults;
       let searchHalfSide = this.boundingBoxSide / 2;
-      let coordinateArray = this.boundingBox(location.lat, location.lng, searchHalfSide);
+      let coordinateArray = this.boundingBox(lat, lng, searchHalfSide);
       let coordinateString = coordinateArray.join(',');
-      // Expand the half side of the bounding box by 0.5 km and whole side by 1km until data is found.
+      // Expand the half side of the bounding box by the boundingBoxGrowFactor until data is found.
       let apiOutputs = await this.returnResultsFromFirstStationWithData(coordinateString);
       while (!apiOutputs) {
         searchHalfSide += this.boundingBoxGrowFactor / 2;
-        coordinateArray = this.boundingBox(location.lat, location.lng, searchHalfSide);
+        coordinateArray = this.boundingBox(lat, lng, searchHalfSide);
         coordinateString = coordinateArray.join(',');
         apiOutputs = await this.returnResultsFromFirstStationWithData(coordinateString);
       }
@@ -158,7 +160,7 @@ export class GrowingCalculations {
   }
 
   /**
-   * Filter the lower TMAX values (if multiple present on same day) out of the data if present
+   * Filter out the lower TMAX values (if multiple present on same day) out of the data if present
    */
   private selectHighestDuplicates() {
     const observationDateMap: { [obsDate: string]: number } = {};
@@ -178,7 +180,7 @@ export class GrowingCalculations {
 
 
   /**
-   * Filter the the higher TMIN values (if multiple presenton same day) out of the data if present
+   * Filter out the the higher TMIN values (if multiple present on same day) out of the data if present
    */
   private selectLowestDuplicates() {
     const observationDateMap: { [obsDate: string]: number } = {};
