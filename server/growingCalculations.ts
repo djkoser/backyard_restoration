@@ -1,19 +1,27 @@
-
 const { GOOGLE_API_KEY, NOAA_TOKEN } = process.env;
 import axios from 'axios';
-import axiosRetry from 'axios-retry';
-
+// import axiosRetry from 'axios-retry';
 export class GrowingCalculations {
   private zipcode: string;
   private street: string;
   private city: string;
   private state: string;
   private currentDate: Date;
-  private numberOfYearsToRetrieve: number;
-  private boundingBoxSide: number;
-  private boundingBoxGrowFactor: number;
-  private TMAX: { observation_date: string, temperature: number }[];
-  private TMIN: { observation_date: string, temperature: number }[];
+  private TMAX?: { observation_date: string, temperature: number }[];
+  private TMIN?: { observation_date: string, temperature: number }[];
+  private tminMaxMap?: Map<string, { TMIN?: number, TMAX?: number, GDD?: number, lagNonZeroGDDP?: number, lagZeroGDDP?: number, leadNonZeroGDDP?: number, leadZeroGDDP?: number }>;
+  // The number of km to increase the bounding box by with each expanding area search for weather towers with data
+  private boundingBoxGrowFactor = 5;
+  // Total number of years of temperature data to work with
+  private numberOfYearsToRetrieve = 10;
+  // The side of the bonding box (in km) surrounding the user's location in which to search for weather stations
+  private boundingBoxSide = 1;
+  // The number of days to look before and after a date to determine if the date represents a season start or end
+  private leadingLaggingDays = 28;
+  // The minimum percentage of leading days with non-zero (season start) or zero (season end) growing degree days in order to qualify it as a season start/end.
+  private minimumSeasonStartQualifierPercentage = 0.95;
+  // The maximum percentage of lagging days with zero (season start) or non-zero (season end) growing degree days in order to qualify it as a season start/end.
+  private maximumSeasonStartQualifierPercentage = 0.05;
   /**
    * 
    * @param zipcode The User's zipcode
@@ -27,24 +35,24 @@ export class GrowingCalculations {
     this.city = city;
     this.state = state;
     this.currentDate = new Date();
-    this.numberOfYearsToRetrieve = 10;
-    // Notated in Km
-    this.boundingBoxSide = 1;
-    // Number of Km to grow the box with each failed attempt to find towers;
-    this.boundingBoxGrowFactor = 5;
     this.TMAX = [];
     this.TMIN = [];
-
-    this.configureAxiosRetry();
+    // this.configureAxiosRetry();
   }
   /** An initializer that makes all necessary API calls and calculates all requisite growing paramters pertaining to the user's location*/
   async calculateGrowingParams() {
     // Get TMIN and TMAX data from the weather station closest to the user's location
     await this.retrieveAPIData();
+    // Clean the data
     this.selectHighestDuplicates();
     this.selectLowestDuplicates();
-    const TMINAvg = this.TMIN.reduce((acc, tminObj) => acc + tminObj.temperature, 0) / this.TMIN.length;
-    const TMAXAvg = this.TMAX.reduce((acc, tminObj) => acc + tminObj.temperature, 0) / this.TMAX.length;
+    this.sortTMINTMAX();
+    // Create an observation_date -> {TMIN, TMAX, GDD } map using filtered for season starts and ends calculation
+    this.mapTMINTMAX();
+
+    const TMINAvg = this.TMIN ? this.TMIN.reduce((acc, tminObj) => acc + tminObj.temperature, 0) / this.TMIN.length : 0;
+    const TMAXAvg = this.TMAX ? this.TMAX.reduce((acc, tminObj) => acc + tminObj.temperature, 0) / this.TMAX.length : 0;
+
     const seasonStarts = this.gdd35SpringTransitions();
     const seasonEnds = this.gdd35WinterTransitions();
     return {
@@ -55,9 +63,101 @@ export class GrowingCalculations {
     };
   }
 
-  private gdd35SpringTransitions(): Date[] { }
-  private gdd35WinterTransitions(): Date[] { }
+  private gdd35SpringTransitions(): Date[] {
 
+    const gdd35SpringTransitionDates: Date[] = [];
+    if (this.tminMaxMap) this.tminMaxMap.forEach((value, key) => {
+      const { lagNonZeroGDDP, leadNonZeroGDDP, GDD } = value;
+      // spring transitions are defined as days of positive GDD in which the percentage of lagging non-zero growing degree days is less than the maximumSeasonStartQualifierPercentage and the percentage of leading non-zero growing degree days is greater than the minimumSeasonStartQualifierPercentage;
+      if (lagNonZeroGDDP && leadNonZeroGDDP && GDD && GDD > 0 && lagNonZeroGDDP < this.maximumSeasonStartQualifierPercentage && leadNonZeroGDDP > this.minimumSeasonStartQualifierPercentage) {
+        gdd35SpringTransitionDates.push(new Date(key));
+      }
+    });
+    return gdd35SpringTransitionDates;
+  }
+  private gdd35WinterTransitions(): Date[] {
+
+    const gdd35SpringTransitionDates: Date[] = [];
+    if (this.tminMaxMap) this.tminMaxMap.forEach((value, key) => {
+      const { lagZeroGDDP, leadZeroGDDP, GDD } = value;
+      // winter transitions are defined as days of 0 GDD in which the percentage of lagging zero growing degree days is less than the maximumSeasonStartQualifierPercentage and the percentage of leading zero growing degree days is greater than the minimumSeasonStartQualifierPercentage;
+      if (lagZeroGDDP && leadZeroGDDP && GDD && GDD === 0 && lagZeroGDDP < this.maximumSeasonStartQualifierPercentage && leadZeroGDDP > this.minimumSeasonStartQualifierPercentage) {
+        gdd35SpringTransitionDates.push(new Date(key));
+      }
+    });
+    return gdd35SpringTransitionDates;
+  }
+
+
+
+
+  /** Return the GDD values from the leading and lagging observation dates
+   * @param observationDate the date in which to determine leading and lagging GDD values
+  */
+  private getLeadAndLagGDDs(observationDate: string): { leadGDDs: number[], lagGDDs: number[] } {
+    const currentLeadDate = new Date(observationDate);
+    const currentLagDate = new Date(observationDate);
+    // generate observation dates to search for
+    const leadingObservationDates: string[] = [];
+    const laggingObservationDates: string[] = [];
+    for (let index = this.leadingLaggingDays; index > 0; index--) {
+      currentLeadDate.setDate(currentLeadDate.getDate() + 1);
+      currentLagDate.setDate(currentLagDate.getDate() - 1);
+
+      leadingObservationDates.push(this.date2String(currentLeadDate));
+      laggingObservationDates.push(this.date2String(currentLagDate));
+    }
+
+    return {
+      leadGDDs: leadingObservationDates.map((obsDate) => {
+        const mapValue = this.tminMaxMap ? this.tminMaxMap.get(obsDate) : undefined;
+        return mapValue ? mapValue.GDD : undefined;
+      }).filter((gdd) => typeof gdd === 'number') as number[],
+
+      lagGDDs: laggingObservationDates.map((obsDate) => {
+        const mapValue = this.tminMaxMap ? this.tminMaxMap.get(obsDate) : undefined;
+        return mapValue ? mapValue.GDD : undefined;
+      }).filter((gdd) => typeof gdd === 'number') as number[]
+    };
+
+  }
+
+
+  /** Maps sorted TMIN and TMAX objects to observation_date map keys, discarding any observation dates that are missing either TMIN or TMAX, calculates the GDD for that day and determines the percentage of leading and lagging days with and without non-zero GDD */
+  private mapTMINTMAX(): void {
+    this.tminMaxMap = new Map();
+    if (this.TMIN) this.TMIN.forEach(({ temperature, observation_date }) => { if (this.tminMaxMap) this.tminMaxMap.set(observation_date, { TMIN: temperature }); }
+    );
+    if (this.TMAX) this.TMAX.forEach(({ temperature, observation_date }) => {
+      if (this.tminMaxMap && this.tminMaxMap.has(observation_date)) {
+        const existing = this.tminMaxMap.get(observation_date) as { TMIN: number, TMAX?: number, GDD?: number };
+        existing.TMAX = temperature;
+        existing.GDD = this.calculateGDD35(existing.TMIN, existing.TMAX);
+      }
+    });
+    if (this.tminMaxMap)
+      this.tminMaxMap.forEach((value, key) => {
+        const { lagGDDs, leadGDDs } = this.getLeadAndLagGDDs(key);
+        value.lagNonZeroGDDP = lagGDDs.length ? lagGDDs.reduce((count, gdd) => gdd > 0 ? count + 1 : count, 0) / lagGDDs.length : undefined;
+        value.lagZeroGDDP = lagGDDs.length ? lagGDDs.reduce((count, gdd) => gdd === 0 ? count + 1 : count, 0) / lagGDDs.length : undefined;
+        value.leadNonZeroGDDP = leadGDDs.length ? leadGDDs.reduce((count, gdd) => gdd > 0 ? count + 1 : count, 0) / lagGDDs.length : undefined;
+        value.leadZeroGDDP = leadGDDs.length ? leadGDDs.reduce((count, gdd) => gdd === 0 ? count + 1 : count, 0) / lagGDDs.length : undefined;
+      });
+  }
+
+  /** Sorts TMIN and TMAX data ascending by date */
+  private sortTMINTMAX() {
+    if (this.TMAX) this.TMAX.sort((tempObjectA, tempObjectB) =>
+      new Date(tempObjectA.observation_date).getTime() - new Date(tempObjectB.observation_date).getTime()
+    );
+  }
+  /** Utility function to calculate GDD35 
+   * @param tmax - maximum temperature for that day
+   * @param tmin - minimum temperature for that day
+  */
+  private calculateGDD35(tmax: number, tmin: number): number {
+    return ((tmax + tmin) / 2) - 35;
+  }
   /** Gets TMIN and TMAX data from the closest weather stations relative to the user's location  
    * 
   */
@@ -73,14 +173,16 @@ export class GrowingCalculations {
       let coordinateArray = this.boundingBox(lat, lng, searchHalfSide);
       let coordinateString = coordinateArray.join(',');
       // Expand the half side of the bounding box by the boundingBoxGrowFactor until data is found.
-      let apiOutputs = await this.returnResultsFromFirstStationWithData(coordinateString);
+      let apiOutputs = await this.returnResultsFromFirstStationWithData(coordinateString); //?
       while (!apiOutputs) {
         searchHalfSide += this.boundingBoxGrowFactor / 2;
         coordinateArray = this.boundingBox(lat, lng, searchHalfSide);
         coordinateString = coordinateArray.join(',');
         apiOutputs = await this.returnResultsFromFirstStationWithData(coordinateString);
       }
-      const { TMIN, TMAX } = apiOutputs.reduce((apiOutputAcc, currentOutput) => { return { TMIN: [...apiOutputAcc.TMIN, ...currentOutput.TMIN], TMAX: [...apiOutputAcc.TMAX, ...currentOutput.TMIN] }; }, { TMIN: [], TMAX: [] });
+      const { TMIN, TMAX } = apiOutputs.reduce((apiOutputAcc, currentOutput) => {
+        return { TMIN: [...apiOutputAcc.TMIN, ...currentOutput.TMIN], TMAX: [...apiOutputAcc.TMAX, ...currentOutput.TMIN] };
+      }, { TMIN: [], TMAX: [] });
       this.TMIN = TMIN;
       this.TMAX = TMAX;
     } catch (err) {
@@ -138,7 +240,7 @@ export class GrowingCalculations {
     if (stationList.data.results) {
       // query the stations in the current bounding box for TMIN and TMAX data, getting results from the first station with data
       for (let i = 0; i < stationList.data.results.length; i++) {
-        const tempData = await this.getTMINandTMAXFromNOAA(edString, sdString, stationList.data.results[i].id);
+        const tempData = await this.getTMINandTMAXFromNOAA(edString, sdString, stationList.data.results[i].id).catch(() => { return { TMIN: [], TMAX: [] }; });
         // Get the prescribed number of years of historical temperature data if this station contains it, if not, proceed to the next station in the bounding box
         if (tempData.TMAX.length && tempData.TMIN.length) {
           // Run the query, reducing the year value each time to obtain each year of historical data,
@@ -146,6 +248,7 @@ export class GrowingCalculations {
           const promises: ReturnType<typeof this.getTMINandTMAXFromNOAA>[] = [];
           for (let i = this.numberOfYearsToRetrieve; i > 0; i--) {
             promises.push(this.getTMINandTMAXFromNOAA(edString, sdString, stationList.data.results[i].id));
+            console.log('test');
             sd = this.less1Year(sd);
             ed = this.less1Year(ed);
             edString = this.date2String(ed);
@@ -164,7 +267,7 @@ export class GrowingCalculations {
    */
   private selectHighestDuplicates() {
     const observationDateMap: { [obsDate: string]: number } = {};
-    this.TMAX.forEach(tmax => {
+    if (this.TMAX) this.TMAX.forEach(tmax => {
       if (observationDateMap[tmax.observation_date] !== undefined) {
         const existing = observationDateMap[tmax.observation_date];
         if (tmax.temperature > existing) {
@@ -184,7 +287,7 @@ export class GrowingCalculations {
    */
   private selectLowestDuplicates() {
     const observationDateMap: { [obsDate: string]: number } = {};
-    this.TMIN.forEach(tmin => {
+    if (this.TMIN) this.TMIN.forEach(tmin => {
       if (observationDateMap[tmin.observation_date] !== undefined) {
         const existing = observationDateMap[tmin.observation_date];
         if (tmin.temperature < existing) {
@@ -327,13 +430,13 @@ export class GrowingCalculations {
   }
 
   /** Configures axios for retry on exponitial delay */
-  private configureAxiosRetry() {
-    axiosRetry(axios, {
-      retries: 10,
-      retryDelay: axiosRetry.exponentialDelay,
-      retryCondition: axiosRetry.isRetryableError
-    });
-  }
+  // private configureAxiosRetry() {
+  //   axiosRetry(axios, {
+  //     retries: 10,
+  //     retryDelay: axiosRetry.exponentialDelay,
+  //     retryCondition: axiosRetry.isRetryableError
+  //   });
+  // }
 
   /** Computes the average date from a list of dates and resturns it as YYYY-MM-DD
    * @param seasonStartsEnds an array of objects containing an obs_date key with a Date object key 

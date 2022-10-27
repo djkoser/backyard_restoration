@@ -53,20 +53,6 @@
         "caughtErrorsIgnorePattern": "_.*|input"
       }
     ],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE"
-        ],
-        "selector": [
-          "parameter"
-        ],
-        "leadingUnderscore": "allow"
-      }
-    ],
     "@typescript-eslint/no-floating-promises": [
       "error"
     ],
