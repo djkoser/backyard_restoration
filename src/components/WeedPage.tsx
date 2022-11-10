@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -12,8 +11,8 @@ import { ManagementMethod } from '../types';
 import { AppStore } from '../redux/store';
 
 const WeedPage: React.FC = () => {
-  const navigate = useNavigate(); 
-  const { id } = useParams(); 
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const [src, setSrc] = useState('');
   const [commonName, setCommonName] = useState('');
@@ -42,10 +41,7 @@ const WeedPage: React.FC = () => {
   useEffect(() => {
     setSwitches(
       mgmtOptions.map((el) => (
-        <SwitchMaker
-          key={`method${el.method_id}`}
-          weedMethod={el}
-        />
+        <SwitchMaker key={`method${el.method_id}`} weedMethod={el} />
       ))
     );
   }, [mgmtOptions, userMethods]);
@@ -81,7 +77,7 @@ const WeedPage: React.FC = () => {
 
   const output = (
     <>
-      <Nav invertColors={ false } />
+      <Nav invertColors={false} />
       <section className="weedDescriptionBox">
         <h2>{commonName}</h2>
         <h2>

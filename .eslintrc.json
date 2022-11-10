@@ -7,7 +7,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -15,36 +16,16 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module",
-    "project": [
-      "./tsconfig.json"
-    ]
+    "project": ["./tsconfig.json"]
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "import"
-  ],
+  "plugins": ["react", "@typescript-eslint", "import", "prettier"],
   "rules": {
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "semi": ["error", "always"],
     "react/prop-types": 0,
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
+    "comma-dangle": ["error", "never"],
     "no-unused-vars": 0,
-    "no-return-await": [
-      "error"
-    ],
-    "prefer-const": [
-      "error"
-    ],
+    "no-return-await": ["error"],
+    "prefer-const": ["error"],
     "@typescript-eslint/no-unused-vars": [
       1,
       {
@@ -53,12 +34,8 @@
         "caughtErrorsIgnorePattern": "_.*|input"
       }
     ],
-    "@typescript-eslint/no-floating-promises": [
-      "error"
-    ],
-    "@typescript-eslint/member-ordering": [
-      "error"
-    ],
+    "@typescript-eslint/no-floating-promises": ["error"],
+    "@typescript-eslint/member-ordering": ["error"],
     "@typescript-eslint/no-use-before-define": "off",
     "prefer-destructuring": [
       "error",

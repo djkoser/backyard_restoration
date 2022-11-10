@@ -1,1 +1,0 @@
-SELECT * FROM native_plant;

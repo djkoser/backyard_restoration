@@ -1,4 +1,3 @@
-
 import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { UserNativesState, UserNative } from '../types';
@@ -12,7 +11,7 @@ const initialState: UserNativesState = {
 export const getUserNatives = () => {
   const userNatives = axios
     .get('/api/native/user')
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch(() => initialState.userNatives);
   const action = {
     type: 'GET_USER_NATIVES' as const,
@@ -24,7 +23,7 @@ export const getUserNatives = () => {
 export const addUserNative = (nativeID: string) => {
   const userNatives: Promise<UserNative[]> = axios
     .post(`/api/native/add/${nativeID}`)
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch(() => initialState.userNatives);
   const action = {
     type: 'ADD_USER_NATIVE' as const,
@@ -36,7 +35,7 @@ export const addUserNative = (nativeID: string) => {
 export const updateProjectNotes = (nativeID: string, notes: string) => {
   const userNatives: Promise<UserNative[]> = axios
     .put(`/api/native/notes/${nativeID}`, { notes })
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch(() => initialState.userNatives);
   const action = {
     type: 'UPDATE_PROJECT_NOTES' as const,
@@ -48,7 +47,7 @@ export const updateProjectNotes = (nativeID: string, notes: string) => {
 export const removeUserNative = (nativeID: string) => {
   const userNatives: Promise<UserNative[]> = axios
     .delete(`/api/native/delete/${nativeID}`)
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch(() => initialState.userNatives);
   const action = {
     type: 'REMOVE_USER_NATIVE' as const,
@@ -57,16 +56,23 @@ export const removeUserNative = (nativeID: string) => {
   return action;
 };
 
-const pending: CaseReducer<UserNativesState, PayloadAction<undefined>> = (state) => {
+const pending: CaseReducer<UserNativesState, PayloadAction<undefined>> = (
+  state
+) => {
   state.loading = true;
   state.failed = false;
 };
-const reject: CaseReducer<UserNativesState, PayloadAction<undefined>> = (state) => {
+const reject: CaseReducer<UserNativesState, PayloadAction<undefined>> = (
+  state
+) => {
   state.loading = false;
   state.failed = true;
 };
 
-const fulfill: CaseReducer<UserNativesState, PayloadAction<UserNative[]>> = (state, action) => {
+const fulfill: CaseReducer<UserNativesState, PayloadAction<UserNative[]>> = (
+  state,
+  action
+) => {
   state.loading = false;
   state.failed = false;
   state.userNatives = action.payload;
@@ -77,19 +83,37 @@ const userNativesSlice = createSlice({
   initialState,
   reducers: {
     GET_USER_NATIVES: (state, action: PayloadAction<Promise<UserNative[]>>) => {
-      console.log('Is payload a promise? -> ', action.payload instanceof Promise);
+      console.log(
+        'Is payload a promise? -> ',
+        action.payload instanceof Promise
+      );
       return state;
     },
     ADD_USER_NATIVE: (state, action: PayloadAction<Promise<UserNative[]>>) => {
-      console.log('Is payload a promise? -> ', action.payload instanceof Promise);
+      console.log(
+        'Is payload a promise? -> ',
+        action.payload instanceof Promise
+      );
       return state;
     },
-    UPDATE_PROJECT_NOTES: (state, action: PayloadAction<Promise<UserNative[]>>) => {
-      console.log('Is payload a promise? -> ', action.payload instanceof Promise);
+    UPDATE_PROJECT_NOTES: (
+      state,
+      action: PayloadAction<Promise<UserNative[]>>
+    ) => {
+      console.log(
+        'Is payload a promise? -> ',
+        action.payload instanceof Promise
+      );
       return state;
     },
-    REMOVE_USER_NATIVE: (state, action: PayloadAction<Promise<UserNative[]>>) => {
-      console.log('Is payload a promise? -> ', action.payload instanceof Promise);
+    REMOVE_USER_NATIVE: (
+      state,
+      action: PayloadAction<Promise<UserNative[]>>
+    ) => {
+      console.log(
+        'Is payload a promise? -> ',
+        action.payload instanceof Promise
+      );
       return state;
     },
     RESET_STORE: () => {
@@ -100,7 +124,10 @@ const userNativesSlice = createSlice({
     GET_USER_NATIVES_PENDING: (state, action: PayloadAction<undefined>) => {
       pending(state, action);
     },
-    GET_USER_NATIVES_FULFILLED: (state, action: PayloadAction<UserNative[]>) => {
+    GET_USER_NATIVES_FULFILLED: (
+      state,
+      action: PayloadAction<UserNative[]>
+    ) => {
       fulfill(state, action);
     },
     GET_USER_NATIVES_REJECTED: (state, action) => {
@@ -118,16 +145,25 @@ const userNativesSlice = createSlice({
     UPDATE_PROJECT_NOTES_PENDING: (state, action: PayloadAction<undefined>) => {
       pending(state, action);
     },
-    UPDATE_PROJECT_NOTES_FULFILLED: (state, action: PayloadAction<UserNative[]>) => {
+    UPDATE_PROJECT_NOTES_FULFILLED: (
+      state,
+      action: PayloadAction<UserNative[]>
+    ) => {
       fulfill(state, action);
     },
-    UPDATE_PROJECT_NOTES_REJECTED: (state, action: PayloadAction<undefined>) => {
+    UPDATE_PROJECT_NOTES_REJECTED: (
+      state,
+      action: PayloadAction<undefined>
+    ) => {
       reject(state, action);
     },
     REMOVE_USER_NATIVE_PENDING: (state, action: PayloadAction<undefined>) => {
       pending(state, action);
     },
-    REMOVE_USER_NATIVE_FULFILLED: (state, action: PayloadAction<UserNative[]>) => {
+    REMOVE_USER_NATIVE_FULFILLED: (
+      state,
+      action: PayloadAction<UserNative[]>
+    ) => {
       fulfill(state, action);
     },
     REMOVE_USER_NATIVE_REJECTED: (state, action: PayloadAction<undefined>) => {
@@ -136,4 +172,4 @@ const userNativesSlice = createSlice({
   }
 });
 
-export default userNativesSlice; 
+export default userNativesSlice;

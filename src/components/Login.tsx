@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -7,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { getMethods } from '../redux/mgmtMethodSlice';
 
 const Login: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -28,7 +27,7 @@ const Login: React.FC = () => {
       .post('/api/login', { email, password })
       .then((res) => {
         dispatch(getMethods());
-        dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+        dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
         navigate('/dash');
       })
       .catch(() => {
@@ -59,8 +58,8 @@ const Login: React.FC = () => {
         </h4>
         {/* eslint-disable-next-line react/no-unescaped-entities */}
         <h4 className="loginWelcomeText">
-          Simply click the {'"'}Register{'"'} Button to begin, or log in with your email
-          and password.
+          Simply click the {'"'}Register{'"'} Button to begin, or log in with
+          your email and password.
         </h4>
       </article>
       <div id="loginContainer">
@@ -87,11 +86,7 @@ const Login: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
-          <Link
-            id="forgotPwdLink"
-            to='./requestReset'
-            state={email}
-          >
+          <Link id="forgotPwdLink" to="./requestReset" state={email}>
             <strong style={{ cursor: 'pointer' }}>Forgot Password</strong>
           </Link>
           <div className="buttonBox">
@@ -129,4 +124,3 @@ const Login: React.FC = () => {
   );
 };
 export default Login;
-

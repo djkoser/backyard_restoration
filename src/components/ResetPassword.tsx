@@ -7,8 +7,8 @@ import type * as CSS from 'csstype';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const ResetPassword: React.FC = () => {
-  const navigate = useNavigate(); 
-  const routeParams = useParams<{ token: string }>(); 
+  const navigate = useNavigate();
+  const routeParams = useParams<{ token: string }>();
   const [failureMessage, setFailureMessage] = useState<CSS.Properties>({
     visibility: 'hidden'
   });

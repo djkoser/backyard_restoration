@@ -1,4 +1,3 @@
-
 import { configureStore } from '@reduxjs/toolkit';
 import promiseMiddleware from 'redux-promise-middleware';
 import managementMethodSlice from './mgmtMethodSlice';
@@ -13,9 +12,8 @@ const store = configureStore({
   },
   middleware: [promiseMiddleware] as const,
   devTools: true
-}
-);
+});
 
-export type AppStore = ReturnType<typeof store.getState>
+export type AppStore = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export default store;

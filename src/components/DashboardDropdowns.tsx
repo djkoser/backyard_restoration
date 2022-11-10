@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ManagementMethod, Weed } from '../types';
 
 const DashboardDropdowns: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [weedOptions, setWeedOptions] = useState<JSX.Element[]>([]);
   const [switches, setSwitches] = useState<JSX.Element[]>([]);
 

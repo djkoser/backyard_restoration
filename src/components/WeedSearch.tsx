@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Footer from './Footer';
@@ -10,7 +9,7 @@ import { Weed } from '../types';
 
 // props vegType
 const WeedSearch: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { vegType } = useParams<{ vegType: string }>();
   const [searchText, setSearchText] = useState('');
   const [weedList, setWeedList] = useState<Weed[]>([]);
@@ -60,11 +59,7 @@ const WeedSearch: React.FC = () => {
           <button>Search</button>
           <button>
             Show All{' '}
-            {vegType === 'f'
-              ? 'Forb'
-              : vegType === 'g'
-              ? 'Graminoid'
-              : 'Woody'}{' '}
+            {vegType === 'f' ? 'Forb' : vegType === 'g' ? 'Graminoid' : 'Woody'}{' '}
             Species
           </button>
         </form>

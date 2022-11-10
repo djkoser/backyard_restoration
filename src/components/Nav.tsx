@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,7 +5,7 @@ import axios from 'axios';
 import { NavProps } from '../types';
 
 const Nav: React.FC<NavProps> = (props) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { invertColors } = props;
   const [mobileOpenClose, setMobileOpenClose] = useState(false);
   const [weedOpenClose, setWeedOpenClose] = useState(false);
