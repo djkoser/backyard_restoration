@@ -131,195 +131,6 @@ export const deleteWeed = /* GraphQL */ `
     }
   }
 `;
-export const createUserInfo = /* GraphQL */ `
-  mutation CreateUserInfo(
-    $input: CreateUserInfoInput!
-    $condition: ModelUserInfoConditionInput
-  ) {
-    createUserInfo(input: $input, condition: $condition) {
-      email
-      firstName
-      lastName
-      street
-      city
-      state
-      zipcode
-      growingSeasonLength
-      firstGdd45
-      lastGdd45
-      hardinessZone
-      managementMethods {
-        items {
-          methodId
-          name
-          description
-          january
-          february
-          march
-          april
-          may
-          june
-          july
-          august
-          september
-          october
-          november
-          december
-          createdAt
-          updatedAt
-          weedManagementMethodsId
-          userInfoManagementMethodsId
-          managementMethodWeedIdId
-        }
-        nextToken
-      }
-      nativePlants {
-        items {
-          nativeId
-          botanicalName
-          commonName
-          moisture
-          sun
-          height
-          bloomTime
-          src
-          createdAt
-          updatedAt
-          userInfoNativePlantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUserInfo = /* GraphQL */ `
-  mutation UpdateUserInfo(
-    $input: UpdateUserInfoInput!
-    $condition: ModelUserInfoConditionInput
-  ) {
-    updateUserInfo(input: $input, condition: $condition) {
-      email
-      firstName
-      lastName
-      street
-      city
-      state
-      zipcode
-      growingSeasonLength
-      firstGdd45
-      lastGdd45
-      hardinessZone
-      managementMethods {
-        items {
-          methodId
-          name
-          description
-          january
-          february
-          march
-          april
-          may
-          june
-          july
-          august
-          september
-          october
-          november
-          december
-          createdAt
-          updatedAt
-          weedManagementMethodsId
-          userInfoManagementMethodsId
-          managementMethodWeedIdId
-        }
-        nextToken
-      }
-      nativePlants {
-        items {
-          nativeId
-          botanicalName
-          commonName
-          moisture
-          sun
-          height
-          bloomTime
-          src
-          createdAt
-          updatedAt
-          userInfoNativePlantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUserInfo = /* GraphQL */ `
-  mutation DeleteUserInfo(
-    $input: DeleteUserInfoInput!
-    $condition: ModelUserInfoConditionInput
-  ) {
-    deleteUserInfo(input: $input, condition: $condition) {
-      email
-      firstName
-      lastName
-      street
-      city
-      state
-      zipcode
-      growingSeasonLength
-      firstGdd45
-      lastGdd45
-      hardinessZone
-      managementMethods {
-        items {
-          methodId
-          name
-          description
-          january
-          february
-          march
-          april
-          may
-          june
-          july
-          august
-          september
-          october
-          november
-          december
-          createdAt
-          updatedAt
-          weedManagementMethodsId
-          userInfoManagementMethodsId
-          managementMethodWeedIdId
-        }
-        nextToken
-      }
-      nativePlants {
-        items {
-          nativeId
-          botanicalName
-          commonName
-          moisture
-          sun
-          height
-          bloomTime
-          src
-          createdAt
-          updatedAt
-          userInfoNativePlantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createManagementMethod = /* GraphQL */ `
   mutation CreateManagementMethod(
     $input: CreateManagementMethodInput!
@@ -509,6 +320,198 @@ export const deleteNativePlant = /* GraphQL */ `
     }
   }
 `;
+export const createUserInfo = /* GraphQL */ `
+  mutation CreateUserInfo(
+    $input: CreateUserInfoInput!
+    $condition: ModelUserInfoConditionInput
+  ) {
+    createUserInfo(input: $input, condition: $condition) {
+      email
+      firstName
+      lastName
+      street
+      city
+      state
+      zipcode
+      growingSeasonLength
+      firstGdd45
+      lastGdd45
+      hardinessZone
+      managementMethods {
+        items {
+          methodId
+          name
+          description
+          january
+          february
+          march
+          april
+          may
+          june
+          july
+          august
+          september
+          october
+          november
+          december
+          createdAt
+          updatedAt
+          weedManagementMethodsId
+          userInfoManagementMethodsId
+          managementMethodWeedIdId
+        }
+        nextToken
+      }
+      nativePlants {
+        items {
+          nativeId
+          botanicalName
+          commonName
+          moisture
+          sun
+          height
+          bloomTime
+          src
+          createdAt
+          updatedAt
+          userInfoNativePlantsId
+        }
+        nextToken
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserInfo = /* GraphQL */ `
+  mutation UpdateUserInfo(
+    $input: UpdateUserInfoInput!
+    $condition: ModelUserInfoConditionInput
+  ) {
+    updateUserInfo(input: $input, condition: $condition) {
+      email
+      firstName
+      lastName
+      street
+      city
+      state
+      zipcode
+      growingSeasonLength
+      firstGdd45
+      lastGdd45
+      hardinessZone
+      managementMethods {
+        items {
+          methodId
+          name
+          description
+          january
+          february
+          march
+          april
+          may
+          june
+          july
+          august
+          september
+          october
+          november
+          december
+          createdAt
+          updatedAt
+          weedManagementMethodsId
+          userInfoManagementMethodsId
+          managementMethodWeedIdId
+        }
+        nextToken
+      }
+      nativePlants {
+        items {
+          nativeId
+          botanicalName
+          commonName
+          moisture
+          sun
+          height
+          bloomTime
+          src
+          createdAt
+          updatedAt
+          userInfoNativePlantsId
+        }
+        nextToken
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserInfo = /* GraphQL */ `
+  mutation DeleteUserInfo(
+    $input: DeleteUserInfoInput!
+    $condition: ModelUserInfoConditionInput
+  ) {
+    deleteUserInfo(input: $input, condition: $condition) {
+      email
+      firstName
+      lastName
+      street
+      city
+      state
+      zipcode
+      growingSeasonLength
+      firstGdd45
+      lastGdd45
+      hardinessZone
+      managementMethods {
+        items {
+          methodId
+          name
+          description
+          january
+          february
+          march
+          april
+          may
+          june
+          july
+          august
+          september
+          october
+          november
+          december
+          createdAt
+          updatedAt
+          weedManagementMethodsId
+          userInfoManagementMethodsId
+          managementMethodWeedIdId
+        }
+        nextToken
+      }
+      nativePlants {
+        items {
+          nativeId
+          botanicalName
+          commonName
+          moisture
+          sun
+          height
+          bloomTime
+          src
+          createdAt
+          updatedAt
+          userInfoNativePlantsId
+        }
+        nextToken
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createUserNativePlant = /* GraphQL */ `
   mutation CreateUserNativePlant(
     $input: CreateUserNativePlantInput!
@@ -530,6 +533,7 @@ export const createUserNativePlant = /* GraphQL */ `
         userInfoNativePlantsId
       }
       projectNotes
+      owner
       createdAt
       updatedAt
       userNativePlantNativeIdId
@@ -557,6 +561,7 @@ export const updateUserNativePlant = /* GraphQL */ `
         userInfoNativePlantsId
       }
       projectNotes
+      owner
       createdAt
       updatedAt
       userNativePlantNativeIdId
@@ -584,6 +589,7 @@ export const deleteUserNativePlant = /* GraphQL */ `
         userInfoNativePlantsId
       }
       projectNotes
+      owner
       createdAt
       updatedAt
       userNativePlantNativeIdId

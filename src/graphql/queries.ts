@@ -75,106 +75,6 @@ export const listWeeds = /* GraphQL */ `
     }
   }
 `;
-export const getUserInfo = /* GraphQL */ `
-  query GetUserInfo($email: ID!) {
-    getUserInfo(email: $email) {
-      email
-      firstName
-      lastName
-      street
-      city
-      state
-      zipcode
-      growingSeasonLength
-      firstGdd45
-      lastGdd45
-      hardinessZone
-      managementMethods {
-        items {
-          methodId
-          name
-          description
-          january
-          february
-          march
-          april
-          may
-          june
-          july
-          august
-          september
-          october
-          november
-          december
-          createdAt
-          updatedAt
-          weedManagementMethodsId
-          userInfoManagementMethodsId
-          managementMethodWeedIdId
-        }
-        nextToken
-      }
-      nativePlants {
-        items {
-          nativeId
-          botanicalName
-          commonName
-          moisture
-          sun
-          height
-          bloomTime
-          src
-          createdAt
-          updatedAt
-          userInfoNativePlantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserInfos = /* GraphQL */ `
-  query ListUserInfos(
-    $email: ID
-    $filter: ModelUserInfoFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listUserInfos(
-      email: $email
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        email
-        firstName
-        lastName
-        street
-        city
-        state
-        zipcode
-        growingSeasonLength
-        firstGdd45
-        lastGdd45
-        hardinessZone
-        managementMethods {
-          nextToken
-        }
-        nativePlants {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getManagementMethod = /* GraphQL */ `
   query GetManagementMethod($methodId: ID!) {
     getManagementMethod(methodId: $methodId) {
@@ -311,65 +211,6 @@ export const listNativePlants = /* GraphQL */ `
         createdAt
         updatedAt
         userInfoNativePlantsId
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserNativePlant = /* GraphQL */ `
-  query GetUserNativePlant($id: ID!) {
-    getUserNativePlant(id: $id) {
-      id
-      nativeId {
-        nativeId
-        botanicalName
-        commonName
-        moisture
-        sun
-        height
-        bloomTime
-        src
-        createdAt
-        updatedAt
-        userInfoNativePlantsId
-      }
-      projectNotes
-      createdAt
-      updatedAt
-      userNativePlantNativeIdId
-    }
-  }
-`;
-export const listUserNativePlants = /* GraphQL */ `
-  query ListUserNativePlants(
-    $filter: ModelUserNativePlantFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserNativePlants(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        nativeId {
-          nativeId
-          botanicalName
-          commonName
-          moisture
-          sun
-          height
-          bloomTime
-          src
-          createdAt
-          updatedAt
-          userInfoNativePlantsId
-        }
-        projectNotes
-        createdAt
-        updatedAt
-        userNativePlantNativeIdId
       }
       nextToken
     }
@@ -537,6 +378,169 @@ export const nativePlantByCommonName = /* GraphQL */ `
         createdAt
         updatedAt
         userInfoNativePlantsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserInfo = /* GraphQL */ `
+  query GetUserInfo($email: ID!) {
+    getUserInfo(email: $email) {
+      email
+      firstName
+      lastName
+      street
+      city
+      state
+      zipcode
+      growingSeasonLength
+      firstGdd45
+      lastGdd45
+      hardinessZone
+      managementMethods {
+        items {
+          methodId
+          name
+          description
+          january
+          february
+          march
+          april
+          may
+          june
+          july
+          august
+          september
+          october
+          november
+          december
+          createdAt
+          updatedAt
+          weedManagementMethodsId
+          userInfoManagementMethodsId
+          managementMethodWeedIdId
+        }
+        nextToken
+      }
+      nativePlants {
+        items {
+          nativeId
+          botanicalName
+          commonName
+          moisture
+          sun
+          height
+          bloomTime
+          src
+          createdAt
+          updatedAt
+          userInfoNativePlantsId
+        }
+        nextToken
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserInfos = /* GraphQL */ `
+  query ListUserInfos(
+    $email: ID
+    $filter: ModelUserInfoFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserInfos(
+      email: $email
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        email
+        firstName
+        lastName
+        street
+        city
+        state
+        zipcode
+        growingSeasonLength
+        firstGdd45
+        lastGdd45
+        hardinessZone
+        managementMethods {
+          nextToken
+        }
+        nativePlants {
+          nextToken
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserNativePlant = /* GraphQL */ `
+  query GetUserNativePlant($id: ID!) {
+    getUserNativePlant(id: $id) {
+      id
+      nativeId {
+        nativeId
+        botanicalName
+        commonName
+        moisture
+        sun
+        height
+        bloomTime
+        src
+        createdAt
+        updatedAt
+        userInfoNativePlantsId
+      }
+      projectNotes
+      owner
+      createdAt
+      updatedAt
+      userNativePlantNativeIdId
+    }
+  }
+`;
+export const listUserNativePlants = /* GraphQL */ `
+  query ListUserNativePlants(
+    $filter: ModelUserNativePlantFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserNativePlants(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        nativeId {
+          nativeId
+          botanicalName
+          commonName
+          moisture
+          sun
+          height
+          bloomTime
+          src
+          createdAt
+          updatedAt
+          userInfoNativePlantsId
+        }
+        projectNotes
+        owner
+        createdAt
+        updatedAt
+        userNativePlantNativeIdId
       }
       nextToken
     }

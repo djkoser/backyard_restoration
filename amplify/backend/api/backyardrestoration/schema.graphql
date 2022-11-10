@@ -1,9 +1,9 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY {
-  globalAuthRule: AuthRule = { allow: public }
-} # FOR TESTING ONLY!
-type Weed @model {
+# input AMPLIFY {
+#   globalAuthRule: AuthRule = { allow: public }
+# } # FOR TESTING ONLY!
+type Weed @model @auth(rules: [{ allow: public, operations: [read] }]) {
   weedId: ID! @primaryKey
   vegetationType: String!
     @index(name: "byVegetationType", queryField: "weedByVegetationType")
@@ -17,8 +17,10 @@ type Weed @model {
   src: String!
 }
 
-type UserInfo @model {
-  email: ID! @primaryKey
+type UserInfo @model @auth(rules: [{ allow: owner }]) {
+  email: ID!
+    @primaryKey
+    @auth(rules: [{ allow: owner, operations: [read, delete] }])
   firstName: String @default(value: "")
   lastName: String @default(value: "")
   street: String @default(value: "")
@@ -31,9 +33,12 @@ type UserInfo @model {
   hardinessZone: String!
   managementMethods: [ManagementMethod] @hasMany
   nativePlants: [NativePlant] @hasMany
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
-type ManagementMethod @model {
+type ManagementMethod
+  @model
+  @auth(rules: [{ allow: public, operations: [read] }]) {
   methodId: ID! @primaryKey
   weedId: Weed! @hasOne
   name: String!
@@ -52,7 +57,7 @@ type ManagementMethod @model {
   december: Int!
 }
 
-type NativePlant @model {
+type NativePlant @model @auth(rules: [{ allow: public, operations: [read] }]) {
   nativeId: ID! @primaryKey
   botanicalName: String!
     @index(
@@ -73,8 +78,9 @@ type NativePlant @model {
   src: String!
 }
 
-type UserNativePlant @model {
+type UserNativePlant @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   nativeId: NativePlant @hasOne
   projectNotes: String!
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }

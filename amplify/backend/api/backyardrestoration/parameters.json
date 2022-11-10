@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "backyardrestoration",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbackyardrestorationfd71a7f7",
+      "Outputs.UserPoolId"
+    ]
+  }
 }
