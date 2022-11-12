@@ -13,8 +13,8 @@ const Register: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [street, setStreet] = useState('');
@@ -40,8 +40,8 @@ const Register: React.FC = () => {
         .post('/api/register', {
           email,
           password,
-          first_name,
-          last_name,
+          firstName,
+          lastName,
           street,
           city,
           state,
@@ -95,7 +95,7 @@ const Register: React.FC = () => {
             <input
               placeholder="First Name"
               type="text"
-              value={first_name}
+              value={firstName}
               onChange={(e) => {
                 setFirstName(e.target.value);
               }}
@@ -103,7 +103,7 @@ const Register: React.FC = () => {
             <input
               placeholder="Last Name"
               type="text"
-              value={last_name}
+              value={lastName}
               onChange={(e) => {
                 setLastName(e.target.value);
               }}

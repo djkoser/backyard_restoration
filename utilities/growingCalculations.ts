@@ -62,14 +62,14 @@ export class GrowingCalculations {
       this.gdd45WinterTransitions()
     );
 
-    const first_gdd45 = this.avgDateString(seasonStarts);
-    const last_gdd45 = this.avgDateString(seasonEnds);
+    const firstGdd45 = this.avgDateString(seasonStarts);
+    const lastGdd45 = this.avgDateString(seasonEnds);
     return {
-      hardiness_zone: this.hardinessZoneCalculator(TMINAvg),
-      first_gdd45,
-      last_gdd45,
-      growing_season_length: Math.round(
-        this.averageSeasonLength(last_gdd45, first_gdd45)
+      hardinessZone: this.hardinessZoneCalculator(TMINAvg),
+      firstGdd45,
+      lastGdd45,
+      growingSeasonLength: Math.round(
+        this.averageSeasonLength(lastGdd45, firstGdd45)
       )
     };
   }

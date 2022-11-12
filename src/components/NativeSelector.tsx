@@ -25,14 +25,14 @@ const NativeSelector: React.FC = () => {
       setSearchResultsJSX(
         searchResults.map((el) => (
           <NativeThumbnail
-            key={`${el.botanical_name}ID${el.native_id}`}
-            native_id={el.native_id}
-            common_name={el.common_name}
-            botanical_name={el.botanical_name}
+            key={`${el.botanicalName}ID${el.nativeId}`}
+            nativeId={el.nativeId}
+            commonName={el.commonName}
+            botanicalName={el.botanicalName}
             moisture={el.moisture}
             sun={el.sun}
             height={el.height}
-            bloom_time={el.bloom_time}
+            bloomTime={el.bloomTime}
             src={el.src}
           />
         ))

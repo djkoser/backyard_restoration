@@ -12,10 +12,10 @@ export async function register(userInfo: {
   city?: string;
   state?: string;
   zipcode?: string;
-  hardiness_zone?: string;
-  first_gdd45?: string;
-  last_gdd45?: string;
-  growing_season_length?: number;
+  hardinessZone?: string;
+  firstGdd45?: string;
+  lastGdd45?: string;
+  growingSeasonLength?: number;
 }) {
   try {
     const {
@@ -30,7 +30,7 @@ export async function register(userInfo: {
       ...userInfoLet
     } = userInfo;
 
-    let { hardiness_zone, first_gdd45, last_gdd45, growing_season_length } =
+    let { hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
       userInfoLet;
 
     const { user } = await Auth.signUp({
@@ -46,16 +46,16 @@ export async function register(userInfo: {
     });
     console.log(user);
     if (
-      !hardiness_zone &&
-      !first_gdd45 &&
-      !last_gdd45 &&
-      !growing_season_length &&
+      !hardinessZone &&
+      !firstGdd45 &&
+      !lastGdd45 &&
+      !growingSeasonLength &&
       street &&
       city &&
       state &&
       zipcode
     ) {
-      ({ hardiness_zone, first_gdd45, last_gdd45, growing_season_length } =
+      ({ hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
         await new GrowingCalculations(
           zipcode,
           street,
@@ -71,10 +71,10 @@ export async function register(userInfo: {
       city,
       state,
       zipcode,
-      hardinessZone: hardiness_zone as string,
-      firstGdd45: first_gdd45 as string,
-      lastGdd45: last_gdd45 as string,
-      growingSeasonLength: growing_season_length as number
+      hardinessZone: hardinessZone as string,
+      firstGdd45: firstGdd45 as string,
+      lastGdd45: lastGdd45 as string,
+      growingSeasonLength: growingSeasonLength as number
     };
     await API.graphql(graphqlOperation(createUserInfo, { input }));
     return user;

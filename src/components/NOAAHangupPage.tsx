@@ -7,17 +7,17 @@ import { UserInfoState } from '../types';
 
 const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
-  const [first_gdd35, setFirstGDD35] = useState('MM-DD');
-  const [last_gdd35, setLastGDD35] = useState('MM-DD');
-  const [hardiness_zone, setHardinessZone] = useState('');
+  const [firstGdd45, setFirstGDD35] = useState('MM-DD');
+  const [lastGdd45, setLastGDD35] = useState('MM-DD');
+  const [hardinessZone, setHardinessZone] = useState('');
   const dispatch = useDispatch();
 
   const submitUpdates = () => {
     axios
       .put<UserInfoState>('/api/user/growingInfo', {
-        first_gdd35,
-        last_gdd35,
-        hardiness_zone
+        firstGdd45,
+        lastGdd45,
+        hardinessZone
       })
       .then(async (res) => {
         dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
@@ -52,7 +52,7 @@ const NOAAHangupPage: React.FC = () => {
           <input
             onFocus={() => setFirstGDD35('')}
             type="text"
-            value={first_gdd35}
+            value={firstGdd45}
             onChange={(e) => {
               setFirstGDD35(e.target.value);
             }}
@@ -60,7 +60,7 @@ const NOAAHangupPage: React.FC = () => {
           <input
             onFocus={() => setLastGDD35('')}
             type="text"
-            value={last_gdd35}
+            value={lastGdd45}
             onChange={(e) => {
               setLastGDD35(e.target.value);
             }}
@@ -81,7 +81,7 @@ const NOAAHangupPage: React.FC = () => {
             </a>
           </h4>
           <select
-            value={hardiness_zone}
+            value={hardinessZone}
             onChange={(e) => {
               setHardinessZone(e.target.value);
             }}

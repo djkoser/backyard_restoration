@@ -41,7 +41,7 @@ const WeedPage: React.FC = () => {
   useEffect(() => {
     setSwitches(
       mgmtOptions.map((el) => (
-        <SwitchMaker key={`method${el.method_id}`} weedMethod={el} />
+        <SwitchMaker key={`method${el.methodId}`} weedMethod={el} />
       ))
     );
   }, [mgmtOptions, userMethods]);
@@ -52,15 +52,15 @@ const WeedPage: React.FC = () => {
       .then((res) => {
         const {
           src,
-          common_name,
-          botanical_name,
+          commonName,
+          botanicalName,
           annual_perennial_biennial,
           veg_type,
           description
         } = res.data;
         setSrc(src);
-        setCommonName(common_name);
-        setBotanicalName(botanical_name);
+        setCommonName(commonName);
+        setBotanicalName(botanicalName);
         setAnnualPerennialBiennial(annual_perennial_biennial);
         setVegType(veg_type);
         setDescription(description);

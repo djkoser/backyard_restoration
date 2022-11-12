@@ -32,7 +32,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   ] as const;
 
   // Create chart viewbox width and height variables
-  const { width, height, first_gdd35, last_gdd35, margin, userMethods } = props;
+  const { width, height, firstGdd45, lastGdd45, margin, userMethods } = props;
 
   const colorGenerator = () => {
     const output = [];
@@ -54,7 +54,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
 
   // function to store management method text as legend descriptions
   const extractText = () =>
-    userMethods.map((el) => `Weed: ${el.common_name} - ${el.name}`);
+    userMethods.map((el) => `Weed: ${el.weedCommonName} - ${el.name}`);
 
   const createLegend = (colors: string[]) => {
     const legendText = extractText();
@@ -132,9 +132,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   ) => {
     return gSelection
       .append('rect')
-      .attr('visibility', (d) =>
-        Number.parseInt(d[months[ind]]) ? 'visible' : 'hidden'
-      )
+      .attr('visibility', (d) => (d[months[ind]] ? 'visible' : 'hidden'))
       .attr('width', GDD35Prop + 0.5)
       .attr('x', xPosVal(ind))
       .attr('class', 'monthBoxes');
@@ -142,11 +140,10 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   // Prep variable for use at end of function -> legend color key and text
 
   const timelineUpdater = () => {
-    if (first_gdd35 && last_gdd35) {
+    if (firstGdd45 && lastGdd45) {
       // Needed  to calculate the bar width for certain months which is the  proportion of the year that is within the user's GDD35 growing window
       const yr2ms = yrEndDate.getTime() - yrStartDate.getTime();
-      const msBetweenGDD35 =
-        avgSDateToMs(last_gdd35) - avgSDateToMs(first_gdd35);
+      const msBetweenGDD35 = avgSDateToMs(lastGdd45) - avgSDateToMs(firstGdd45);
       const notGDD35ms = yr2ms - msBetweenGDD35;
       // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the viewbox width minus chart margins
       const GDD35Prop =
@@ -194,7 +191,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
       // Selection represents existing data and g elements
       const selection = timelineBarContainer
         .selectAll<SVGElement, ManagementMethod>('g')
-        .data(userMethods, (d) => d.method_id);
+        .data(userMethods, (d) => d.methodId);
 
       // Remove unnecessary boxes;
       selection.exit().remove();
@@ -206,7 +203,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
         .enter()
         .append('g')
         .attr('class', 'methodBoxes')
-        .attr('id', (d) => d.method_id);
+        .attr('id', (d) => d.methodId);
 
       // merge existing methodBoxes to updated method boxes in order to update existing boxes and new boxes at same time
       gSelection

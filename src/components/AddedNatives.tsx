@@ -22,7 +22,7 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
       const fallTempData: UserNative[] = [];
 
       userNatives.forEach((el) => {
-        switch (el.bloom_time) {
+        switch (el.bloomTime) {
           case 'Late Spring':
             return eSpringTempData.push(el);
           case 'Summer':
@@ -38,57 +38,57 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
 
       const lSpringTempElements = eSpringTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={`addedNative${el.nativeId}`}
+          nativeId={el.nativeId}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
       const eSpringTempElements = lSpringTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={`addedNative${el.nativeId}`}
+          nativeId={el.nativeId}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
       const summerTempElements = summerTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={`addedNative${el.nativeId}`}
+          nativeId={el.nativeId}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
       const fallTempElements = fallTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={`addedNative${el.nativeId}`}
+          nativeId={el.nativeId}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 

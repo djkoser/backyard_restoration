@@ -1,43 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import SwitchMaker from './SwitchMaker';
-import axios from 'axios';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ManagementMethod, Weed } from '../types';
+import {
+  GetWeedQuery,
+  GetWeedQueryVariables,
+  WeedByVegetationTypeQuery,
+  WeedByVegetationTypeQueryVariables
+} from '../API';
+import { getWeed, weedByVegetationType } from '../graphql/queries';
+import { ManagementMethod } from '../types';
+import SwitchMaker from './SwitchMaker';
 
 const DashboardDropdowns: React.FC = () => {
   const navigate = useNavigate();
   const [weedOptions, setWeedOptions] = useState<JSX.Element[]>([]);
   const [switches, setSwitches] = useState<JSX.Element[]>([]);
 
-  const getWeedsByVegType = (vegType: string) => {
-    axios
-      .get<Weed[]>(`/api/weeds?vegType=${vegType}`)
-      .then((res) => {
-        setWeedOptions(
-          res.data.map((el) => (
-            <option key={`weed${el.weed_id}`} value={el.weed_id}>
-              {el.common_name}
+  const getWeedsByVegType = async (vegetationType: string) => {
+    try {
+      const query: WeedByVegetationTypeQueryVariables = { vegetationType };
+      const weeds = (await API.graphql(
+        graphqlOperation(weedByVegetationType, query)
+      )) as GraphQLResult<WeedByVegetationTypeQuery>;
+
+      const weedOptions: JSX.Element[] = weeds.data?.weedByVegetationType?.items
+        ?.map
+        ? weeds.data.weedByVegetationType.items.map((el) => (
+            <option key={`weed${el?.weedId}`} value={el?.weedId}>
+              {el?.commonName}
             </option>
           ))
-        );
-      })
-      .catch(() => navigate('/'));
+        : [];
+
+      setWeedOptions(weedOptions);
+    } catch {
+      navigate('/');
+    }
   };
 
-  const getWeedMethodsByID = (weedID: string) => {
-    axios
-      .get<ManagementMethod[]>(`/api/weeds/methods/${weedID}`)
-      .then((res) => {
+  const getWeedMethodsByID = async (weedId: string) => {
+    try {
+      const query: GetWeedQueryVariables = { weedId };
+
+      const weed = (await API.graphql(
+        graphqlOperation(getWeed, query)
+      )) as GraphQLResult<GetWeedQuery>;
+
+      if (weed.data?.getWeed?.managementMethods?.items.map) {
+        const methodsCleaned = (
+          weed.data.getWeed.managementMethods.items.filter(
+            (el) => el
+          ) as unknown as ManagementMethod[]
+        ).map((el) => {
+          return {
+            ...el,
+            weedCommonName: weed?.data?.getWeed?.commonName as string
+          };
+        });
+
         setSwitches(
-          res.data.map((el) => (
-            <SwitchMaker key={`method${el.method_id}`} weedMethod={el} />
+          methodsCleaned.map((el) => (
+            <SwitchMaker key={`method${el.methodId}`} weedMethod={el} />
           ))
         );
-      })
-      .catch(() => navigate('/'));
+      }
+    } catch {
+      navigate('/');
+    }
   };
   useEffect(() => {
-    getWeedsByVegType('f');
+    void getWeedsByVegType('f');
   }, []);
 
   return (

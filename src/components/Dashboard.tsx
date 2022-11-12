@@ -12,20 +12,20 @@ import { ManagementMethod } from '../types';
 // props from store hZone, gSeasonLength firstGDD35
 
 const Dashboard: React.FC = () => {
-  const hardiness_zone = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.hardiness_zone
+  const hardinessZone = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.hardinessZone
   );
 
-  const growing_season_length = useSelector<AppStore, number>(
-    (state) => state.userInfoReducer.growing_season_length
+  const growingSeasonLength = useSelector<AppStore, number>(
+    (state) => state.userInfoReducer.growingSeasonLength
   );
 
-  const first_gdd35 = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.first_gdd35
+  const firstGdd45 = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.firstGdd45
   );
 
-  const last_gdd35 = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.last_gdd35
+  const lastGdd45 = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.lastGdd45
   );
 
   const userMethods = useSelector<AppStore, ManagementMethod[]>(
@@ -48,19 +48,19 @@ const Dashboard: React.FC = () => {
           <section id="growingInfoBox">
             <h5>
               <strong>Zone: </strong>
-              {hardiness_zone}
+              {hardinessZone}
             </h5>
             <h5>
               <strong>Average Growing Days (GDD35): </strong>
-              {growing_season_length}
+              {growingSeasonLength}
             </h5>
             <h5>
               <strong>Average Season Start Date: </strong>
-              {first_gdd35}
+              {firstGdd45}
             </h5>
             <h5>
               <strong>Average Season End Date: </strong>
-              {last_gdd35}
+              {lastGdd45}
             </h5>
           </section>
           <h2 className="hidden" id="timelineHeader">
@@ -71,8 +71,8 @@ const Dashboard: React.FC = () => {
           <Timeline
             height={300}
             width={400}
-            first_gdd35={first_gdd35}
-            last_gdd35={last_gdd35}
+            firstGdd45={firstGdd45}
+            lastGdd45={lastGdd45}
             userMethods={userMethods}
             margin={chartMargin}
           />

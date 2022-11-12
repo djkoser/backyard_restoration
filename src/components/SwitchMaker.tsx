@@ -18,8 +18,7 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
   let checked = false;
   if (
     userMethods.reduce(
-      (acc: number, el) =>
-        weedMethod.method_id === el.method_id ? ++acc : acc,
+      (acc: number, el) => (weedMethod.methodId === el.methodId ? ++acc : acc),
       0
     )
   ) {
@@ -53,13 +52,13 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
             </h5>
             <input
               type="checkbox"
-              id={`switch${weedMethod.method_id}`}
+              id={`switch${weedMethod.methodId}`}
               checked={checked}
               onChange={() => {
-                dispatch(toggleMethod(weedMethod.method_id));
+                dispatch(toggleMethod(weedMethod.methodId));
               }}
             />
-            <label htmlFor={`switch${weedMethod.method_id}`}>
+            <label htmlFor={`switch${weedMethod.methodId}`}>
               <span className="switchSpan"></span>
             </label>
           </div>

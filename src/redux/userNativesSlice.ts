@@ -38,7 +38,7 @@ export const updateProjectNotes = (nativeID: string, notes: string) => {
     .then((res) => res.data)
     .catch(() => initialState.userNatives);
   const action = {
-    type: 'UPDATE_PROJECT_NOTES' as const,
+    type: 'UPDATE_projectNotes' as const,
     payload: userNatives
   };
   return action;
@@ -96,7 +96,7 @@ const userNativesSlice = createSlice({
       );
       return state;
     },
-    UPDATE_PROJECT_NOTES: (
+    UPDATE_projectNotes: (
       state,
       action: PayloadAction<Promise<UserNative[]>>
     ) => {
@@ -142,19 +142,16 @@ const userNativesSlice = createSlice({
     ADD_USER_NATIVE_REJECTED: (state, action: PayloadAction<undefined>) => {
       reject(state, action);
     },
-    UPDATE_PROJECT_NOTES_PENDING: (state, action: PayloadAction<undefined>) => {
+    UPDATE_projectNotes_PENDING: (state, action: PayloadAction<undefined>) => {
       pending(state, action);
     },
-    UPDATE_PROJECT_NOTES_FULFILLED: (
+    UPDATE_projectNotes_FULFILLED: (
       state,
       action: PayloadAction<UserNative[]>
     ) => {
       fulfill(state, action);
     },
-    UPDATE_PROJECT_NOTES_REJECTED: (
-      state,
-      action: PayloadAction<undefined>
-    ) => {
+    UPDATE_projectNotes_REJECTED: (state, action: PayloadAction<undefined>) => {
       reject(state, action);
     },
     REMOVE_USER_NATIVE_PENDING: (state, action: PayloadAction<undefined>) => {

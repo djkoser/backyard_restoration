@@ -3,18 +3,18 @@ import { UserInfoState } from '../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: UserInfoState = {
-  user_id: 0,
+  userId: 0,
   email: '',
-  first_name: '',
-  last_name: '',
+  firstName: '',
+  lastName: '',
   street: '',
   city: '',
   state: '',
   zipcode: '',
-  growing_season_length: 0,
-  first_gdd35: '',
-  last_gdd35: '',
-  hardiness_zone: '',
+  growingSeasonLength: 0,
+  firstGdd45: '',
+  lastGdd45: '',
+  hardinessZone: '',
   loading: false,
   failed: false
 };

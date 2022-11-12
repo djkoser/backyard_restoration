@@ -18,11 +18,11 @@ const MyAccount: React.FC = () => {
   );
 
   const firstNameRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.first_name
+    (state) => state.userInfoReducer.firstName
   );
 
   const lastNameRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.last_name
+    (state) => state.userInfoReducer.lastName
   );
 
   const streetRedux = useSelector<AppStore, string>(
@@ -42,15 +42,15 @@ const MyAccount: React.FC = () => {
   );
 
   const firstGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.first_gdd35
+    (state) => state.userInfoReducer.firstGdd45
   );
 
   const lastGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.last_gdd35
+    (state) => state.userInfoReducer.lastGdd45
   );
 
   const hardinessZoneRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.hardiness_zone
+    (state) => state.userInfoReducer.hardinessZone
   );
 
   const [firstName, setFirstName] = useState(firstNameRedux);
@@ -69,11 +69,11 @@ const MyAccount: React.FC = () => {
 
   const [zipcode, setZipcode] = useState(zipcodeRedux);
 
-  const [first_gdd35, setFirstGDD35] = useState(firstGDD35Redux);
+  const [firstGdd45, setFirstGDD35] = useState(firstGDD35Redux);
 
-  const [last_gdd35, setLastGDD35] = useState(lastGDD35Redux);
+  const [lastGdd45, setLastGDD35] = useState(lastGDD35Redux);
 
-  const [hardiness_zone, setHardinessZone] = useState(hardinessZoneRedux);
+  const [hardinessZone, setHardinessZone] = useState(hardinessZoneRedux);
 
   const [editToggleName, setEditToggleName] = useState(true);
 
@@ -150,8 +150,8 @@ const MyAccount: React.FC = () => {
           setEditToggleName(true);
           axios
             .put('/api/user/name', {
-              first_name: firstName,
-              last_name: lastName
+              firstName: firstName,
+              lastName: lastName
             })
             .then((res) => {
               dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
@@ -237,9 +237,9 @@ const MyAccount: React.FC = () => {
           setEditToggleGrwParams(true);
           axios
             .put('/api/user/growingInfo', {
-              first_gdd35,
-              last_gdd35,
-              hardiness_zone
+              firstGdd45,
+              lastGdd45,
+              hardinessZone
             })
             .then((res) => {
               dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
@@ -302,7 +302,7 @@ const MyAccount: React.FC = () => {
                 className="myAccountInput"
                 disabled={editToggleGrwParams}
                 type="text"
-                value={first_gdd35}
+                value={firstGdd45}
                 onChange={(e) => {
                   setFirstGDD35(e.target.value);
                 }}
@@ -311,7 +311,7 @@ const MyAccount: React.FC = () => {
                 className="myAccountInput"
                 disabled={editToggleGrwParams}
                 type="text"
-                value={last_gdd35}
+                value={lastGdd45}
                 onChange={(e) => {
                   setLastGDD35(e.target.value);
                 }}
@@ -330,7 +330,7 @@ const MyAccount: React.FC = () => {
               <select
                 className="myAccountInput"
                 disabled={editToggleGrwParams}
-                value={hardiness_zone}
+                value={hardinessZone}
                 onChange={(e) => {
                   setHardinessZone(e.target.value);
                 }}

@@ -8,13 +8,13 @@ import type { NativeThumbnailProps, UserNative } from '../types';
 const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
   const dispatch = useDispatch();
   const {
-    native_id,
-    common_name,
-    botanical_name,
+    nativeId,
+    commonName,
+    botanicalName,
     moisture,
     sun,
     height,
-    bloom_time,
+    bloomTime,
     src
   } = props;
   const userNatives = useSelector<AppStore, UserNative[]>(
@@ -27,12 +27,12 @@ const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
         onClick={() => {
           if (
             !userNatives.reduce(
-              (acc, el) => (el.native_id === native_id ? ++acc : acc),
+              (acc, el) => (el.nativeId === nativeId ? ++acc : acc),
               0
             ) ||
             userNatives.length === 0
           ) {
-            dispatch(addUserNative(native_id));
+            dispatch(addUserNative(nativeId));
           } else {
             toast.warning(
               'This plant has already been added to your list, please select another'
@@ -44,19 +44,19 @@ const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
         <img
           className="searchResultImage"
           src={src}
-          alt={`${botanical_name}, commonly known as ${common_name}`}
+          alt={`${botanicalName}, commonly known as ${commonName}`}
         />
         <h5>(Click to Add)</h5>
         <figcaption>
           <h5>
             <strong>Botanical Name: </strong>
             <br />
-            <em>{botanical_name}</em>
+            <em>{botanicalName}</em>
           </h5>
           <h5>
             <strong>Common Name: </strong>
             <br />
-            {common_name}
+            {commonName}
           </h5>
           <h5>
             <strong>Moisture: </strong>
@@ -72,7 +72,7 @@ const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
           </h5>
           <h5>
             <strong>Bloom Time: </strong>
-            {bloom_time}
+            {bloomTime}
           </h5>
         </figcaption>
       </figure>

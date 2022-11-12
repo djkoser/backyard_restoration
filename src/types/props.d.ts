@@ -7,14 +7,14 @@ export interface AddedNativesProps {
 
 export interface NativeAddedProps {
   key: string;
-  native_id: string;
-  botanical_name: string;
-  common_name: string;
+  nativeId: string;
+  botanicalName: string;
+  commonName: string;
   moisture: string;
   sun: string;
   height: string;
   src: string;
-  project_notes: string;
+  projectNotes: string;
 }
 
 export interface NativeSearchBarProps extends AddedNativesProps {
@@ -23,13 +23,13 @@ export interface NativeSearchBarProps extends AddedNativesProps {
 }
 
 export interface NativeThumbnailProps {
-  native_id: string;
-  common_name: string;
-  botanical_name: string;
+  nativeId: string;
+  commonName: string;
+  botanicalName: string;
   moisture: string;
   sun: string;
   height: string;
-  bloom_time: string;
+  bloomTime: string;
   src: string;
 }
 
@@ -43,8 +43,8 @@ export interface SwitchMakerProps {
 
 export interface Weed {
   weed_id: string;
-  common_name: string;
-  botanical_name: string;
+  commonName: string;
+  botanicalName: string;
   annual_perennial_biennial: string;
   veg_type: string;
   description: string;
@@ -58,8 +58,8 @@ export interface ThumbnailProps {
 export interface TimelineProps {
   width: number;
   height: number;
-  first_gdd35: string;
-  last_gdd35: string;
+  firstGdd45: string;
+  lastGdd45: string;
   margin: { left: number; right: number; top: number; bottom: number };
   userMethods: ManagementMethod[];
 }
