@@ -1,56 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { getUserInfo } from '../redux/userInfoSlice';
-import Nav from './Nav';
-import Footer from './Footer';
-import { ToastContainer, toast } from 'react-toastify';
-import WeatherLoader from './WeatherLoader';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AppStore, AppDispatch } from '../redux/store';
+import { toast, ToastContainer } from 'react-toastify';
+import { AppDispatch, AppStore } from '../redux/store';
+import { getUserInfo } from '../redux/userInfoSlice';
+import Footer from './Footer';
+import Nav from './Nav';
+import WeatherLoader from './WeatherLoader';
 
 const MyAccount: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const emailRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.email
-  );
+  const emailRedux = useSelector<AppStore, string>((state) => state.email);
 
   const firstNameRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.firstName
+    (state) => state.firstName
   );
 
   const lastNameRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.lastName
+    (state) => state.lastName
   );
 
-  const streetRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.street
-  );
+  const streetRedux = useSelector<AppStore, string>((state) => state.street);
 
-  const cityRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.city
-  );
+  const cityRedux = useSelector<AppStore, string>((state) => state.city);
 
-  const stateRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.state
-  );
+  const stateRedux = useSelector<AppStore, string>((state) => state.state);
 
-  const zipcodeRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.zipcode
-  );
+  const zipcodeRedux = useSelector<AppStore, string>((state) => state.zipcode);
 
   const firstGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.firstGdd45
+    (state) => state.firstGdd45
   );
 
   const lastGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.lastGdd45
+    (state) => state.lastGdd45
   );
 
   const hardinessZoneRedux = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.hardinessZone
+    (state) => state.hardinessZone
   );
 
   const [firstName, setFirstName] = useState(firstNameRedux);

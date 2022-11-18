@@ -7,6 +7,7 @@ import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 import NativeSelector from './components/NativeSelector';
 import NOAAHangupPage from './components/NOAAHangupPage';
+import ProtectedRoute from './components/ProtectedRoute';
 import Register from './components/Register';
 import RequestPasswordReset from './components/RequestPasswordReset';
 import ResetPassword from './components/ResetPassword';
@@ -20,23 +21,35 @@ Amplify.configure(awsconfig);
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />
+    element: (
+      <ProtectedRoute forwardingRoute="/dash">
+        <Login />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'requestReset',
     element: <RequestPasswordReset />
   },
   {
-    path: 'resetPassword/:token',
+    path: 'resetPassword',
     element: <ResetPassword />
   },
   {
     path: 'dash',
-    element: <Dashboard />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <Dashboard />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'account',
-    element: <MyAccount />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <MyAccount />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'register',
@@ -44,11 +57,19 @@ const router = createBrowserRouter([
   },
   {
     path: 'weed/:id',
-    element: <WeedPage />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <WeedPage />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'search/:vegType',
-    element: <WeedSearch />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <WeedSearch />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'donation',
@@ -64,7 +85,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'nativesSelector',
-    element: <NativeSelector />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <NativeSelector />
+      </ProtectedRoute>
+    )
   }
 ]);
 

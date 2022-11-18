@@ -1,33 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import { Auth } from 'aws-amplify';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import { getMethods } from '../redux/mgmtMethodSlice';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    axios
-      .get('/api/check')
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === 'logged-in') {
-          navigate('/dash');
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const login = () => {
-    axios
-      .post('/api/login', { email, password })
-      .then((res) => {
-        dispatch(getMethods());
-        dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
+    Auth.signIn(email, password)
+      .then(() => {
         navigate('/dash');
       })
       .catch(() => {

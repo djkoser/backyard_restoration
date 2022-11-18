@@ -5,7 +5,6 @@ import Nav from './Nav';
 import Timeline from './Timeline';
 import DashboardDropdowns from './DashboardDropdowns';
 import { getUserInfo } from '../redux/userInfoSlice';
-import { getMethods } from '../redux/mgmtMethodSlice';
 import { AppStore } from '../redux/store';
 import { ManagementMethod } from '../types';
 
@@ -13,23 +12,19 @@ import { ManagementMethod } from '../types';
 
 const Dashboard: React.FC = () => {
   const hardinessZone = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.hardinessZone
+    (state) => state.hardinessZone
   );
 
   const growingSeasonLength = useSelector<AppStore, number>(
-    (state) => state.userInfoReducer.growingSeasonLength
+    (state) => state.growingSeasonLength
   );
 
-  const firstGdd45 = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.firstGdd45
-  );
+  const firstGdd45 = useSelector<AppStore, string>((state) => state.firstGdd45);
 
-  const lastGdd45 = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.lastGdd45
-  );
+  const lastGdd45 = useSelector<AppStore, string>((state) => state.lastGdd45);
 
   const userMethods = useSelector<AppStore, ManagementMethod[]>(
-    (state) => state.mgmtMethodReducer.userMethods
+    (state) => state.userMethods
   );
 
   const chartMargin = { top: 10, right: 10, bottom: 10, left: 10 };
@@ -37,8 +32,7 @@ const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfo());
-    dispatch(getMethods());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

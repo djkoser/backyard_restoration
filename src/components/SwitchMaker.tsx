@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMethod } from '../redux/mgmtMethodSlice';
+import { toggleUserMethod } from '../redux/userInfoSlice';
 import { AppStore } from '../redux/store';
 import { ManagementMethod, SwitchMakerProps } from '../types';
 import * as CSS from 'csstype';
@@ -10,7 +10,7 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
   // Determine if weed method is in user method list and check inputs accordingly
 
   const userMethods = useSelector<AppStore, ManagementMethod[]>(
-    (state) => state.mgmtMethodReducer.userMethods
+    (state) => state.userMethods
   );
 
   const { weedMethod } = props;
@@ -55,7 +55,7 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
               id={`switch${weedMethod.methodId}`}
               checked={checked}
               onChange={() => {
-                dispatch(toggleMethod(weedMethod.methodId));
+                dispatch(toggleUserMethod(weedMethod.methodId));
               }}
             />
             <label htmlFor={`switch${weedMethod.methodId}`}>

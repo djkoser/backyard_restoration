@@ -11,10 +11,13 @@ export interface UserInfoState {
   firstGdd45: string;
   lastGdd45: string;
   hardinessZone: string;
+  userMethods: ManagementMethod[];
+  natives: UserNative[];
   loading: boolean;
   failed: boolean;
 }
 
+export type UserInfoPayload = Omit<UserInfoState, 'loading' | 'failed'>;
 interface ManagementMethod {
   methodId: string;
   weedCommonName: string;
@@ -33,14 +36,8 @@ interface ManagementMethod {
   november: number;
   december: number;
 }
-
-export interface ManagementMethodState {
-  userMethods: ManagementMethod[];
-  loading: boolean;
-  failed: boolean;
-}
-
 export interface UserNative {
+  id: string;
   nativeId: string;
   commonName: string;
   botanicalName: string;
@@ -50,12 +47,6 @@ export interface UserNative {
   bloomTime: string;
   src: string;
   projectNotes: string;
-}
-
-export interface UserNativesState {
-  userNatives: UserNative[];
-  loading: boolean;
-  failed: boolean;
 }
 
 export interface Observation {

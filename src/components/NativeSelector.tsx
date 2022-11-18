@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Nav from './Nav';
-import NativeThumbnail from './NativeThumbnail';
-import NativesSearchBar from './NativesSearchBar';
 import { ToastContainer } from 'react-toastify';
-import AddedNatives from './AddedNatives';
-import { getUserNatives } from '../redux/userNativesSlice';
-import WeatherLoader from './WeatherLoader';
+import { getUserInfo } from '../redux/userInfoSlice';
 import { UserNative } from '../types';
+import AddedNatives from './AddedNatives';
+import NativesSearchBar from './NativesSearchBar';
+import NativeThumbnail from './NativeThumbnail';
+import Nav from './Nav';
+import WeatherLoader from './WeatherLoader';
 
 const NativeSelector: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const NativeSelector: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserNatives());
+    dispatch(getUserInfo());
   }, []);
 
   useEffect(() => {

@@ -31,8 +31,8 @@ type UserInfo @model @auth(rules: [{ allow: owner }]) {
   firstGdd45: String!
   lastGdd45: String!
   hardinessZone: String!
-  managementMethods: [ManagementMethod] @hasMany
-  nativePlants: [NativePlant] @hasMany
+  managementMethods: [UserManagementMethod] @hasMany
+  nativePlants: [UserNativePlant] @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
@@ -63,13 +63,13 @@ type NativePlant @model @auth(rules: [{ allow: public, operations: [read] }]) {
     @index(
       name: "byBotanicalNameAndGrowingParams"
       queryField: "nativePlantByBotanicalName"
-      sortKeyFields: ["sun", "height", "bloomTime"]
+      sortKeyFields: ["sun", "height", "bloomTime", "moisture"]
     )
   commonName: String!
     @index(
       name: "byCommonNameAndGrowingParams"
       queryField: "nativePlantByCommonName"
-      sortKeyFields: ["sun", "height", "bloomTime"]
+      sortKeyFields: ["sun", "height", "bloomTime", "moisture"]
     )
   moisture: String!
   sun: String!
@@ -80,7 +80,15 @@ type NativePlant @model @auth(rules: [{ allow: public, operations: [read] }]) {
 
 type UserNativePlant @model @auth(rules: [{ allow: owner }]) {
   id: ID!
+  userId: UserInfo @hasOne
   nativeId: NativePlant @hasOne
   projectNotes: String!
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+}
+
+type UserManagementMethod @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  userId: UserInfo @hasOne
+  methodId: ManagementMethod @hasOne
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }

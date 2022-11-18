@@ -7,9 +7,7 @@
         {
           "category": "auth",
           "resourceName": "backyardrestorationfd71a7f7",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         }
       ],
       "output": {
@@ -40,23 +38,15 @@
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
+        "usernameAttributes": ["EMAIL"],
+        "signupAttributes": ["EMAIL"],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+        "mfaTypes": ["SMS"],
+        "verificationMechanisms": ["EMAIL"]
       }
     }
   }

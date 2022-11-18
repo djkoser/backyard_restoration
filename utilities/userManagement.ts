@@ -1,7 +1,7 @@
-import { Auth, graphqlOperation, API } from 'aws-amplify';
-import { GrowingCalculations } from './growingCalculations';
-import { createUserInfo } from '../src/graphql/mutations';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { CreateUserInfoInput } from '../src/API';
+import { createUserInfo } from '../src/graphql/mutations';
+import { GrowingCalculations } from './growingCalculations';
 
 export async function register(userInfo: {
   email: string;

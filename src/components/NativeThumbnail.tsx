@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AppStore } from '../redux/store';
-import { addUserNative } from '../redux/userNativesSlice';
+import { addUserNative } from '../redux/userInfoSlice';
 import type { NativeThumbnailProps, UserNative } from '../types';
 
 const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
@@ -18,7 +18,7 @@ const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
     src
   } = props;
   const userNatives = useSelector<AppStore, UserNative[]>(
-    (state) => state.userNativesReducer.userNatives
+    (state) => state.natives
   );
 
   return (

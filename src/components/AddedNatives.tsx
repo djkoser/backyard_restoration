@@ -11,7 +11,7 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
   const [fall, setFall] = useState<JSX.Element[]>([]);
 
   const userNatives = useSelector<AppStore, UserNative[]>(
-    (state) => state.userNativesReducer.userNatives
+    (state) => state.natives
   );
 
   useEffect(() => {

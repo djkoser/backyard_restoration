@@ -31,7 +31,6 @@ export const getWeed = /* GraphQL */ `
           createdAt
           updatedAt
           weedManagementMethodsId
-          userInfoManagementMethodsId
           managementMethodWeedIdId
         }
         nextToken
@@ -110,7 +109,6 @@ export const getManagementMethod = /* GraphQL */ `
       createdAt
       updatedAt
       weedManagementMethodsId
-      userInfoManagementMethodsId
       managementMethodWeedIdId
     }
   }
@@ -160,7 +158,6 @@ export const listManagementMethods = /* GraphQL */ `
         createdAt
         updatedAt
         weedManagementMethodsId
-        userInfoManagementMethodsId
         managementMethodWeedIdId
       }
       nextToken
@@ -180,7 +177,6 @@ export const getNativePlant = /* GraphQL */ `
       src
       createdAt
       updatedAt
-      userInfoNativePlantsId
     }
   }
 `;
@@ -210,7 +206,6 @@ export const listNativePlants = /* GraphQL */ `
         src
         createdAt
         updatedAt
-        userInfoNativePlantsId
       }
       nextToken
     }
@@ -318,7 +313,7 @@ export const weedByBotanicalName = /* GraphQL */ `
 export const nativePlantByBotanicalName = /* GraphQL */ `
   query NativePlantByBotanicalName(
     $botanicalName: String!
-    $sunHeightBloomTime: ModelNativePlantByBotanicalNameAndGrowingParamsCompositeKeyConditionInput
+    $sunHeightBloomTimeMoisture: ModelNativePlantByBotanicalNameAndGrowingParamsCompositeKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelNativePlantFilterInput
     $limit: Int
@@ -326,7 +321,7 @@ export const nativePlantByBotanicalName = /* GraphQL */ `
   ) {
     nativePlantByBotanicalName(
       botanicalName: $botanicalName
-      sunHeightBloomTime: $sunHeightBloomTime
+      sunHeightBloomTimeMoisture: $sunHeightBloomTimeMoisture
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -343,7 +338,6 @@ export const nativePlantByBotanicalName = /* GraphQL */ `
         src
         createdAt
         updatedAt
-        userInfoNativePlantsId
       }
       nextToken
     }
@@ -352,7 +346,7 @@ export const nativePlantByBotanicalName = /* GraphQL */ `
 export const nativePlantByCommonName = /* GraphQL */ `
   query NativePlantByCommonName(
     $commonName: String!
-    $sunHeightBloomTime: ModelNativePlantByCommonNameAndGrowingParamsCompositeKeyConditionInput
+    $sunHeightBloomTimeMoisture: ModelNativePlantByCommonNameAndGrowingParamsCompositeKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelNativePlantFilterInput
     $limit: Int
@@ -360,7 +354,7 @@ export const nativePlantByCommonName = /* GraphQL */ `
   ) {
     nativePlantByCommonName(
       commonName: $commonName
-      sunHeightBloomTime: $sunHeightBloomTime
+      sunHeightBloomTimeMoisture: $sunHeightBloomTimeMoisture
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -377,7 +371,6 @@ export const nativePlantByCommonName = /* GraphQL */ `
         src
         createdAt
         updatedAt
-        userInfoNativePlantsId
       }
       nextToken
     }
@@ -399,42 +392,26 @@ export const getUserInfo = /* GraphQL */ `
       hardinessZone
       managementMethods {
         items {
-          methodId
-          name
-          description
-          january
-          february
-          march
-          april
-          may
-          june
-          july
-          august
-          september
-          october
-          november
-          december
+          id
+          owner
           createdAt
           updatedAt
-          weedManagementMethodsId
           userInfoManagementMethodsId
-          managementMethodWeedIdId
+          userManagementMethodUserIdId
+          userManagementMethodMethodIdId
         }
         nextToken
       }
       nativePlants {
         items {
-          nativeId
-          botanicalName
-          commonName
-          moisture
-          sun
-          height
-          bloomTime
-          src
+          id
+          projectNotes
+          owner
           createdAt
           updatedAt
           userInfoNativePlantsId
+          userNativePlantUserIdId
+          userNativePlantNativeIdId
         }
         nextToken
       }
@@ -489,6 +466,28 @@ export const getUserNativePlant = /* GraphQL */ `
   query GetUserNativePlant($id: ID!) {
     getUserNativePlant(id: $id) {
       id
+      userId {
+        email
+        firstName
+        lastName
+        street
+        city
+        state
+        zipcode
+        growingSeasonLength
+        firstGdd45
+        lastGdd45
+        hardinessZone
+        managementMethods {
+          nextToken
+        }
+        nativePlants {
+          nextToken
+        }
+        owner
+        createdAt
+        updatedAt
+      }
       nativeId {
         nativeId
         botanicalName
@@ -500,12 +499,13 @@ export const getUserNativePlant = /* GraphQL */ `
         src
         createdAt
         updatedAt
-        userInfoNativePlantsId
       }
       projectNotes
       owner
       createdAt
       updatedAt
+      userInfoNativePlantsId
+      userNativePlantUserIdId
       userNativePlantNativeIdId
     }
   }
@@ -523,6 +523,22 @@ export const listUserNativePlants = /* GraphQL */ `
     ) {
       items {
         id
+        userId {
+          email
+          firstName
+          lastName
+          street
+          city
+          state
+          zipcode
+          growingSeasonLength
+          firstGdd45
+          lastGdd45
+          hardinessZone
+          owner
+          createdAt
+          updatedAt
+        }
         nativeId {
           nativeId
           botanicalName
@@ -534,13 +550,142 @@ export const listUserNativePlants = /* GraphQL */ `
           src
           createdAt
           updatedAt
-          userInfoNativePlantsId
         }
         projectNotes
         owner
         createdAt
         updatedAt
+        userInfoNativePlantsId
+        userNativePlantUserIdId
         userNativePlantNativeIdId
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserManagementMethod = /* GraphQL */ `
+  query GetUserManagementMethod($id: ID!) {
+    getUserManagementMethod(id: $id) {
+      id
+      userId {
+        email
+        firstName
+        lastName
+        street
+        city
+        state
+        zipcode
+        growingSeasonLength
+        firstGdd45
+        lastGdd45
+        hardinessZone
+        managementMethods {
+          nextToken
+        }
+        nativePlants {
+          nextToken
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      methodId {
+        methodId
+        weedId {
+          weedId
+          vegetationType
+          commonName
+          botanicalName
+          annualPerennialBiennial
+          description
+          src
+          createdAt
+          updatedAt
+        }
+        name
+        description
+        january
+        february
+        march
+        april
+        may
+        june
+        july
+        august
+        september
+        october
+        november
+        december
+        createdAt
+        updatedAt
+        weedManagementMethodsId
+        managementMethodWeedIdId
+      }
+      owner
+      createdAt
+      updatedAt
+      userInfoManagementMethodsId
+      userManagementMethodUserIdId
+      userManagementMethodMethodIdId
+    }
+  }
+`;
+export const listUserManagementMethods = /* GraphQL */ `
+  query ListUserManagementMethods(
+    $filter: ModelUserManagementMethodFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserManagementMethods(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId {
+          email
+          firstName
+          lastName
+          street
+          city
+          state
+          zipcode
+          growingSeasonLength
+          firstGdd45
+          lastGdd45
+          hardinessZone
+          owner
+          createdAt
+          updatedAt
+        }
+        methodId {
+          methodId
+          name
+          description
+          january
+          february
+          march
+          april
+          may
+          june
+          july
+          august
+          september
+          october
+          november
+          december
+          createdAt
+          updatedAt
+          weedManagementMethodsId
+          managementMethodWeedIdId
+        }
+        owner
+        createdAt
+        updatedAt
+        userInfoManagementMethodsId
+        userManagementMethodUserIdId
+        userManagementMethodMethodIdId
       }
       nextToken
     }
