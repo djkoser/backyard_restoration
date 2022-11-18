@@ -11,15 +11,9 @@ import {
   createNativePlant
 } from './seedMethods';
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
+import awsMobile from '../src/aws-exports';
 
-Amplify.configure({
-  aws_project_region: 'us-east-1',
-  aws_appsync_graphqlEndpoint:
-    'https://vjfovgdc4zbd5i46vxlmqcy3yq.appsync-api.us-east-1.amazonaws.com/graphql',
-  aws_appsync_region: 'us-east-1',
-  aws_appsync_authenticationType: 'API_KEY',
-  aws_appsync_apiKey: 'da2-che22ox5xjbadi4hkgkvdzobie'
-});
+Amplify.configure(awsMobile);
 
 const nativePlants: CreateNativePlantInput[] = JSON.parse(
   readFileSync(join(__dirname, 'nativePlants.json')).toString()
