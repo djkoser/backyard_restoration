@@ -1,70 +1,11 @@
-# Getting Started with Create React App
+# BackyardRestoration.net
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technologies
+JavaScript | React | React-Router | Redux | Node.js | Express.js | PostgreSQL | Massive.js | D3.js | CSS | Sass/SCSS | git | GitHub | Postman | Figma | Heroku | HTML5 | Bcrypt.js | Axios | Stripe | Nodemailer | PL/pgSQL
 
-## Available Scripts
+## Project Purpose
 
-In the project directory, you can run:
+Given my background in biology, horticulture and ecological restoration, I have long been interested in creating a website that would empower land owners and managers to complete their own ecological restoration projects. Very often, the costs associated with ecological restoration services are extremely high, often preventing the average land owner or manager from undertaking projects that might otherwise make a positive environmental difference. The purpose of BackyardRestoration.net is to provide these individuals with some of the tools necessary to make a positive environmental impact, specifically: a weed identification and management method selection tool, a weed management timeline and a native species selection tool (all native species in my database are currently local to the Upper Midwest, which is my area of expertise). This project was completed by me over the course of approximately four weeks including debugging and functionality add-ons.
+Details
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The frontend is built on a React.js framework utilizing React-Redux for state management and React-Router for navigation/routing. Prior to coding, the website was wireframed using Figma and all styling was completed using Sass/SCSS using mobile-first design principles. Backend infrastructure is built on Node.js in conjunction with Express.js to handle endpoints and Massive.js to interface with a Heroku PostgreSQL database. Upon registration, the user’s address is converted into coordinates using Google’s Geocoding API. This coordinate is then used to calculate four additional coordinates representing progressively larger ellipsoidal WGS84 bounding boxes until a NOAA weather station is identified, via NOAA’s V2 API, that can deliver the required 10 years of minimum and maximum daily temperature data. Received weather data is subsequently used to calculate the user’s USDA hardiness zone and calibrate all weed management actions to the user’s growing season within the D3.js weed management timeline. All API requests are conducted using Axios, and user authentication and password reset functionality is built using Bcrypt.js and Nodemailer. The native plant search API was created using Node.js and PL/pgSQL, enabling users to select native plants from the Heroku database that are most appropriate for their site conditions. The optional donation page uses the Stripe API to securely accept credit card payments.
