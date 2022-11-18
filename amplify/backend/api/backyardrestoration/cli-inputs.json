@@ -10,7 +10,7 @@
     "additionalAuthTypes": [
       {
         "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authbackyardrestorationfd71a7f7"
+        "cognitoUserPoolId": "authbackyardrestoration5d720145"
       }
     ]
   }

@@ -1,13 +1,17 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "backyardrestorationfd71a7f7_identitypool_fd71a7f7",
+    "identityPoolName": "backyardrestoration5d720145_identitypool_5d720145",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "backyafd71a7f7",
-    "userPoolName": "backyardrestorationfd71a7f7_userpool_fd71a7f7",
-    "autoVerifiedAttributes": ["email"],
+    "resourceNameTruncated": "backya5d720145",
+    "userPoolName": "backyardrestoration5d720145_userpool_5d720145",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
     "mfaConfiguration": "OFF",
-    "mfaTypes": ["SMS Text Message"],
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
@@ -15,23 +19,27 @@
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
-    "requiredAttributes": ["email"],
+    "requiredAttributes": [
+      "email"
+    ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientWriteAttributes": ["email"],
-    "userpoolClientReadAttributes": ["email"],
-    "userpoolClientLambdaRole": "backyafd71a7f7_userpoolclient_lambda_role",
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientLambdaRole": "backya5d720145_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "fd71a7f7",
-    "resourceName": "backyardrestorationfd71a7f7",
+    "sharedId": "5d720145",
+    "resourceName": "backyardrestoration5d720145",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
-    "usernameAttributes": ["email"],
-    "triggers": {},
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
   }
-}
+} 

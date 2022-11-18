@@ -57,7 +57,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "review": "eslint ./src --fix --ext .js --ext .ts && prettier --write .",
-    "seedDB": "npx ts-node src/foo.ts"
+    "seedDB": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\"} && npx ts-node dbSeed/seed.ts"
   },
   "eslintConfig": {
     "extends": [

@@ -1,22 +1,22 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-backyardrestoration-dev-163304-authRole",
-      "UnauthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-163304-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-163304-authRole",
+      "AuthRoleName": "amplify-backyardrestoration-dev-04410-authRole",
+      "UnauthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-04410-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-04410-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-backyardrestoration-dev-163304-deployment",
-      "UnauthRoleName": "amplify-backyardrestoration-dev-163304-unauthRole",
-      "StackName": "amplify-backyardrestoration-dev-163304",
-      "StackId": "arn:aws:cloudformation:us-east-1:360544971157:stack/amplify-backyardrestoration-dev-163304/7aace390-607e-11ed-b495-0a283e98afd7",
-      "AmplifyAppId": "d23fpi8cetcct3"
+      "DeploymentBucketName": "amplify-backyardrestoration-dev-04410-deployment",
+      "UnauthRoleName": "amplify-backyardrestoration-dev-04410-unauthRole",
+      "StackName": "amplify-backyardrestoration-dev-04410",
+      "StackId": "arn:aws:cloudformation:us-east-1:360544971157:stack/amplify-backyardrestoration-dev-04410/6870ba00-670c-11ed-a5bb-0e86d659265d",
+      "AmplifyAppId": "d1qr6jsmnqmie4"
     },
     "categories": {
+      "auth": {
+        "backyardrestoration5d720145": {}
+      },
       "api": {
         "backyardrestoration": {}
-      },
-      "auth": {
-        "backyardrestorationfd71a7f7": {}
       }
     }
   }

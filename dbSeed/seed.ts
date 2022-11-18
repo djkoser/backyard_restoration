@@ -9,7 +9,7 @@ import {
   createWeed,
   createManagementMethod,
   createNativePlant
-} from './seedMethods';
+} from '../src/graphql/mutations';
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import awsMobile from '../src/aws-exports';
 
@@ -30,15 +30,28 @@ const weeds: CreateWeedInput[] = JSON.parse(
 async function seedDB() {
   try {
     for (const input of nativePlants) {
-      await API.graphql(graphqlOperation(createNativePlant, { input }));
+      const createNativePlantInput: { input: CreateNativePlantInput } = {
+        input
+      };
+      await API.graphql(
+        graphqlOperation(createNativePlant, createNativePlantInput)
+      );
     }
 
     for (const input of weeds) {
-      await API.graphql(graphqlOperation(createWeed, { input }));
+      const createWeedInput: { input: CreateWeedInput } = { input };
+      await API.graphql(graphqlOperation(createWeed, createWeedInput));
     }
 
     for (const input of weedMgmtStrategies) {
-      await API.graphql(graphqlOperation(createManagementMethod, { input }));
+      const createManagementMethodInput: {
+        input: CreateManagementMethodInput;
+      } = {
+        input
+      };
+      await API.graphql(
+        graphqlOperation(createManagementMethod, createManagementMethodInput)
+      );
     }
   } catch (err) {
     const errParsed =
