@@ -1,6 +1,6 @@
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { CreateUserInfoInput } from '../src/API';
-import { createUserInfo } from '../src/graphql/mutations';
+import { createUserInfo } from '../src/graphql/customMutations';
 import { GrowingCalculations } from './growingCalculations';
 
 export async function register(userInfo: {

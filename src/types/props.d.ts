@@ -1,4 +1,4 @@
-import { ManagementMethod } from './state';
+import { ManagementMethodState } from './';
 
 export interface AddedNativesProps {
   searchAdded: boolean;
@@ -38,16 +38,17 @@ export interface NavProps {
 }
 
 export interface SwitchMakerProps {
-  weedMethod: ManagementMethod;
+  weedMethod: ManagementMethodState;
 }
 
 export interface Weed {
-  weed_id: string;
+  weedId: string;
+  vegetationType: string;
   commonName: string;
   botanicalName: string;
-  annual_perennial_biennial: string;
-  veg_type: string;
+  annualPerennialBiennial: string;
   description: string;
+  managementMethods?: ModelManagementMethodConnection | null;
   src: string;
 }
 
@@ -61,7 +62,7 @@ export interface TimelineProps {
   firstGdd45: string;
   lastGdd45: string;
   margin: { left: number; right: number; top: number; bottom: number };
-  userMethods: ManagementMethod[];
+  userMethods: ManagementMethodState[];
 }
 
 export interface WeatherLoaderProps {

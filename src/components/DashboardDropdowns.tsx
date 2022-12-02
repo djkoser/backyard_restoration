@@ -8,7 +8,7 @@ import {
   WeedByVegetationTypeQuery,
   WeedByVegetationTypeQueryVariables
 } from '../API';
-import { getWeed, weedByVegetationType } from '../graphql/queries';
+import { getWeed, weedByVegetationType } from '../graphql/customQueries';
 import { ManagementMethod } from '../types';
 import SwitchMaker from './SwitchMaker';
 
@@ -55,7 +55,7 @@ const DashboardDropdowns: React.FC = () => {
         ).map((el) => {
           return {
             ...el,
-            weedCommonName: weed?.data?.getWeed?.commonName as string
+            weedCommonName: weed?.data?.getWeed?.commonName || ''
           };
         });
 

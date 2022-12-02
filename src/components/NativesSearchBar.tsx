@@ -5,7 +5,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import {
   nativePlantByBotanicalName,
   nativePlantByCommonName
-} from '../graphql/queries';
+} from '../graphql/customQueries';
 import {
   NativePlantByBotanicalNameQueryVariables,
   NativePlantByCommonNameQueryVariables,

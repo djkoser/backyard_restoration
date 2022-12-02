@@ -1,17 +1,13 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "backyardrestoration5d720145_identitypool_5d720145",
+    "identityPoolName": "backyardrestoration385e5c12_identitypool_385e5c12",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "backya5d720145",
-    "userPoolName": "backyardrestoration5d720145_userpool_5d720145",
-    "autoVerifiedAttributes": [
-      "email"
-    ],
+    "resourceNameTruncated": "backya385e5c12",
+    "userPoolName": "backyardrestoration385e5c12_userpool_385e5c12",
+    "autoVerifiedAttributes": ["email"],
     "mfaConfiguration": "OFF",
-    "mfaTypes": [
-      "SMS Text Message"
-    ],
+    "mfaTypes": ["SMS Text Message"],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
@@ -19,27 +15,22 @@
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
-    "requiredAttributes": [
-      "email"
-    ],
+    "requiredAttributes": ["email"],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientWriteAttributes": [
-      "email"
-    ],
-    "userpoolClientReadAttributes": [
-      "email"
-    ],
-    "userpoolClientLambdaRole": "backya5d720145_userpoolclient_lambda_role",
+    "userpoolClientWriteAttributes": ["email"],
+    "userpoolClientReadAttributes": ["email"],
+    "userpoolClientLambdaRole": "backya385e5c12_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "5d720145",
-    "resourceName": "backyardrestoration5d720145",
+    "sharedId": "385e5c12",
+    "resourceName": "backyardrestoration385e5c12",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
+    "triggers": {},
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
   }
-} 
+}

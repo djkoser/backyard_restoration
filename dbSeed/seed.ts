@@ -1,17 +1,17 @@
+import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import {
+import type {
   CreateManagementMethodInput,
-  CreateWeedInput,
-  CreateNativePlantInput
+  CreateNativePlantInput,
+  CreateWeedInput
 } from '../src/API';
-import {
-  createWeed,
-  createManagementMethod,
-  createNativePlant
-} from '../src/graphql/mutations';
-import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import awsMobile from '../src/aws-exports';
+import {
+  createManagementMethod,
+  createNativePlant,
+  createWeed
+} from '../src/graphql/customMutations';
 
 Amplify.configure(awsMobile);
 
