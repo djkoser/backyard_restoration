@@ -939,3 +939,74 @@ export type NativePlantByCommonNameCQuery = {
     nextToken?: string | null;
   } | null;
 };
+
+export type GetUserManagementMethodsQueryVariables = {
+  email: string;
+};
+
+export type GetUserManagementMethodsQuery = {
+  getUser?: {
+    __typename: 'User';
+    managementMethods?: {
+      __typename: 'ModelUserManagementMethodConnection';
+      items: Array<{
+        __typename: 'UserManagementMethod';
+        id: string;
+        projectNotes: string;
+        managementMethod?: {
+          __typename: 'ManagementMethod';
+          methodId: string;
+          name: string;
+          description: string;
+          january: number;
+          february: number;
+          march: number;
+          april: number;
+          may: number;
+          june: number;
+          july: number;
+          august: number;
+          september: number;
+          october: number;
+          november: number;
+          december: number;
+          weed: {
+            __typename: 'Weed';
+            commonName: string;
+          };
+        } | null;
+      } | null>;
+      nextToken?: string | null;
+    } | null;
+  } | null;
+};
+
+export type GetUserNativePlantsQueryVariables = {
+  email: string;
+};
+
+export type GetUserNativePlantsQuery = {
+  getUser?: {
+    __typename: 'User';
+    nativePlants?: {
+      __typename: 'ModelUserNativePlantConnection';
+      items: Array<{
+        __typename: 'UserNativePlant';
+        id: string;
+        projectNotes: string;
+        nativePlant?: {
+          __typename: 'NativePlant';
+          nativeId: string;
+          botanicalName: string;
+          commonName: string;
+          moisture: string;
+          sun: string;
+          height: string;
+          bloomTime: string;
+          src: string;
+        } | null;
+      } | null>;
+      nextToken?: string | null;
+    } | null;
+  } | null;
+};

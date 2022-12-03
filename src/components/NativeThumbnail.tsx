@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AppStore } from '../redux/store';
-import { addUserNative } from '../redux/userInfoSlice';
+import { addUserNative } from '../redux/userSlice';
 import type { NativeThumbnailProps, UserNative } from '../types';
 
 const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {

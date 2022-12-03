@@ -79,7 +79,7 @@ type NativePlant @model @auth(rules: [{ allow: public, operations: [read] }]) {
 }
 
 type UserNativePlant @model @auth(rules: [{ allow: owner }]) {
-  id: ID!
+  id: ID! @primaryKey
   user: User @belongsTo
   nativePlant: NativePlant @hasOne
   projectNotes: String!
@@ -87,7 +87,7 @@ type UserNativePlant @model @auth(rules: [{ allow: owner }]) {
 }
 
 type UserManagementMethod @model @auth(rules: [{ allow: owner }]) {
-  id: ID!
+  id: ID! @primaryKey
   user: User @belongsTo
   managementMethod: ManagementMethod @hasOne
   projectNotes: String!

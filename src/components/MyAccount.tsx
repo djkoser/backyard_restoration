@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppDispatch, AppStore } from '../redux/store';
-import { getUserInfo } from '../redux/userInfoSlice';
+import { getUserInfo } from '../redux/userSlice';
 import Footer from './Footer';
 import Nav from './Nav';
 import WeatherLoader from './WeatherLoader';

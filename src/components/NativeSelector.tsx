@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { getUserInfo } from '../redux/userInfoSlice';
+import { getUserInfo } from '../redux/userSlice';
 import { UserNative } from '../types';
 import AddedNatives from './AddedNatives';
 import NativesSearchBar from './NativesSearchBar';

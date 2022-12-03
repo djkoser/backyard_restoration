@@ -4,7 +4,7 @@ import Footer from './Footer';
 import Nav from './Nav';
 import Timeline from './Timeline';
 import DashboardDropdowns from './DashboardDropdowns';
-import { getUserInfo } from '../redux/userInfoSlice';
+import { getUserInfo } from '../redux/userSlice';
 import { AppStore } from '../redux/store';
 import { ManagementMethod } from '../types';
 

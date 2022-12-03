@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeUserNative, updateProjectNotes } from '../redux/userInfoSlice';
+import { removeUserNative, updateProjectNotes } from '../redux/userSlice';
 import { NativeAddedProps } from '../types';
 
 const NativeAdded: React.FC<NativeAddedProps> = (props) => {

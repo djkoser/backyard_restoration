@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleUserMethod } from '../redux/userInfoSlice';
+import { toggleUserMethod } from '../redux/userSlice';
 import { AppStore } from '../redux/store';
 import { ManagementMethod, SwitchMakerProps } from '../types';
 import * as CSS from 'csstype';

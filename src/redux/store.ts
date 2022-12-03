@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import promiseMiddleware from 'redux-promise-middleware';
-import userInfoSlice from './userInfoSlice';
+import userSlice from './userSlice';
 import userMethodSlice from './userMethodSlice';
 import userNativePlantSlice from './userNativePlantsSlice';
 
 const store = configureStore({
   reducer: {
-    userInfo: userInfoSlice.reducer,
+    userInfo: userSlice.reducer,
     userNativePlant: userNativePlantSlice.reducer,
     userMethod: userMethodSlice.reducer
   },

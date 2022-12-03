@@ -1,4 +1,4 @@
-export interface UserInfoPayload {
+export interface UserPayload {
   email: string;
   firstName?: string | null;
   lastName?: string | null;
@@ -17,13 +17,14 @@ interface FailedLoading {
   failed: boolean;
 }
 
-export type UserInfoState = UserInfoPayload & FailedLoading;
+export type UserState = UserPayload & FailedLoading;
 
 export interface UserNativePayload {
-  userNatives: UserNativeState[];
+  nativePlants: UserNativeStateVersion[];
 }
 
-export interface UserNativetate {
+export interface UserNativeStateVersion {
+  id: string;
   nativeId: string;
   botanicalName: string;
   commonName: string;
@@ -35,12 +36,13 @@ export interface UserNativetate {
   projectNotes: string;
 }
 
-export type UserNativePlantState = UserNativePlantPayload & FailedLoading;
+export type UserNativeState = UserNativePlantPayload & FailedLoading;
 
 export interface UserMethodPayload {
-  userMethods: ManagementMethodState[];
+  userMethods: UserManagementMethodStateVersion[];
 }
-export interface ManagementMethodState {
+export interface UserManagementMethodStateVersion {
+  id: string;
   methodId: string;
   name: string;
   description: string;

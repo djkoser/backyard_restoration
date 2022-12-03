@@ -69,7 +69,7 @@ export const getNativePlantC = /* GraphQL */ `
   }
 `;
 
-export const weedByVegetationType = /* GraphQL */ `
+export const weedByVegetationTypeC = /* GraphQL */ `
   query WeedByVegetationTypeC(
     $vegetationType: String!
     $sortDirection: ModelSortDirection
@@ -117,7 +117,7 @@ export const weedByVegetationType = /* GraphQL */ `
     }
   }
 `;
-export const weedByCommonName = /* GraphQL */ `
+export const weedByCommonNameC = /* GraphQL */ `
   query WeedByCommonNameC(
     $commonName: String!
     $sortDirection: ModelSortDirection
@@ -165,7 +165,8 @@ export const weedByCommonName = /* GraphQL */ `
     }
   }
 `;
-export const weedByBotanicalName = /* GraphQL */ `
+
+export const weedByBotanicalNameC = /* GraphQL */ `
   query WeedByBotanicalNameC(
     $botanicalName: String!
     $sortDirection: ModelSortDirection
@@ -212,7 +213,7 @@ export const weedByBotanicalName = /* GraphQL */ `
     }
   }
 `;
-export const nativePlantByBotanicalName = /* GraphQL */ `
+export const nativePlantByBotanicalNameC = /* GraphQL */ `
   query NativePlantByBotanicalNameC(
     $botanicalName: String!
     $sunHeightBloomTimeMoisture: ModelNativePlantByBotanicalNameAndGrowingParamsCompositeKeyConditionInput
@@ -243,7 +244,7 @@ export const nativePlantByBotanicalName = /* GraphQL */ `
     }
   }
 `;
-export const nativePlantByCommonName = /* GraphQL */ `
+export const nativePlantByCommonNameC = /* GraphQL */ `
   query NativePlantByCommonNameC(
     $commonName: String!
     $sunHeightBloomTimeMoisture: ModelNativePlantByCommonNameAndGrowingParamsCompositeKeyConditionInput
@@ -271,6 +272,64 @@ export const nativePlantByCommonName = /* GraphQL */ `
         src
       }
       nextToken
+    }
+  }
+`;
+
+export const getUserManagementMethods = /* GraphQL */ `
+  query GetUserManagementMethods($email: ID!) {
+    getUser(email: $email) {
+      managementMethods {
+        items {
+          id
+          projectNotes
+          managementMethod {
+            methodId
+            name
+            description
+            january
+            february
+            march
+            april
+            may
+            june
+            july
+            august
+            september
+            october
+            november
+            december
+            weed {
+              commonName
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+`;
+
+export const getUserNativePlants = /* GraphQL */ `
+  query GetUserNativePlants($email: ID!) {
+    getUser(email: $email) {
+      nativePlants {
+        items {
+          id
+          projectNotes
+          nativePlant {
+            nativeId
+            botanicalName
+            commonName
+            moisture
+            sun
+            height
+            bloomTime
+            src
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
