@@ -3,15 +3,13 @@ import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   DeleteUserCMutation,
-  DeleteUserInput,
   GetUserCQuery,
-  GetUserCQueryVariables,
   UpdateUserCMutation,
   UpdateUserInput
 } from '../API';
-import { updateUserC } from '../graphql/customMutations';
+import { deleteUserC, updateUserC } from '../graphql/customMutations';
 import { getUserC } from '../graphql/customQueries';
-import { UserState, UserPayload } from '../types/state';
+import { UserPayload, UserState } from '../types/state';
 
 const initialUserInfoPayload: UserPayload = {
   email: '',
@@ -51,72 +49,81 @@ const fulfill: CaseReducer<UserState, PayloadAction<UserPayload>> = (
 
 export const getUserInfo = () => {
   return userSlice.actions.GET_USER(
-    new Promise((resolve, reject) => {
+    new Promise((resolve, reject) =>
       Auth.currentAuthenticatedUser({
         bypassCache: true
       })
-        .then(async (res) => {
-          const { attributes } = res;
-          const currentUseremail = attributes.email;
-          const query: GetUserCQueryVariables = {
-            email: currentUseremail
-          };
-          const graphQLResult = (await API.graphql(
-            graphqlOperation(getUserC, query)
-          )) as GraphQLResult<GetUserCQuery>;
-
-          if (graphQLResult.data?.getUser) {
-            const { __typename, ...noTypeName } = graphQLResult.data.getUser;
-
-            resolve(noTypeName);
-          } else {
-            throw new Error('getUserInfo: Unexepcted result from API');
-          }
-        })
-        .catch((err) => reject(err));
-    })
+        .then(({ attributes }) =>
+          (
+            API.graphql(
+              graphqlOperation(getUserC, { input: { email: attributes.email } })
+            ) as Promise<GraphQLResult<GetUserCQuery>>
+          ).then((graphQLResult) => {
+            if (graphQLResult.data?.getUser) {
+              const { __typename, ...noTypeName } = graphQLResult.data.getUser;
+              resolve(noTypeName);
+            } else {
+              reject(new Error('getUserInfo: Unexepcted result from API'));
+            }
+          })
+        )
+        .catch((err) => reject(err))
+    )
   );
 };
-export const updateUser = (userParams: UpdateUserInput) => {
+export const updateUser = (userParams: Omit<UpdateUserInput, 'email'>) => {
   return userSlice.actions.UPDATE_USER(
     new Promise((resolve, reject) =>
-      (
-        API.graphql(
-          graphqlOperation(updateUserC, { input: userParams })
-        ) as Promise<GraphQLResult<UpdateUserCMutation>>
-      )
-        .then((graphQlResult) => {
-          if (graphQlResult.data?.updateUser) {
-            const { __typename, ...noTypeName } = graphQlResult.data.updateUser;
-
-            resolve(noTypeName);
-          } else {
-            reject(new Error('updateUser: Unexepcted result from API'));
-          }
-        })
+      Auth.currentAuthenticatedUser({
+        bypassCache: true
+      })
+        .then(({ attributes }) =>
+          (
+            API.graphql(
+              graphqlOperation(updateUserC, {
+                input: { email: attributes.email, ...userParams }
+              })
+            ) as Promise<GraphQLResult<UpdateUserCMutation>>
+          ).then((graphQlResult) => {
+            if (graphQlResult.data?.updateUser) {
+              const { __typename, ...noTypeName } =
+                graphQlResult.data.updateUser;
+              resolve(noTypeName);
+            } else {
+              reject(new Error('updateUser: Unexepcted result from API'));
+            }
+          })
+        )
         .catch((err) => {
           reject(err);
         })
     )
   );
 };
-export const deleteUser = (userParams: DeleteUserInput) => {
+export const deleteUser = () => {
   return userSlice.actions.DELETE_USER(
     new Promise((resolve, reject) =>
-      (
-        API.graphql(
-          graphqlOperation(updateUserC, { input: userParams })
-        ) as Promise<GraphQLResult<DeleteUserCMutation>>
-      )
-        .then((graphQlResult) => {
-          if (graphQlResult.data?.deleteUser) {
-            const { __typename, ...noTypeName } = graphQlResult.data.deleteUser;
-
-            resolve(noTypeName);
-          } else {
-            reject(new Error('deleteUser: Unexepcted result from API'));
-          }
-        })
+      Auth.currentAuthenticatedUser({
+        bypassCache: true
+      })
+        .then(async (user) =>
+          (
+            API.graphql(
+              graphqlOperation(deleteUserC, {
+                input: { email: user.attributes.email }
+              })
+            ) as Promise<GraphQLResult<DeleteUserCMutation>>
+          ).then((graphQlResult) => {
+            if (graphQlResult.data?.deleteUser) {
+              const { __typename, ...noTypeName } =
+                graphQlResult.data.deleteUser;
+              void Auth.deleteUser();
+              resolve(noTypeName);
+            } else {
+              reject(new Error('deleteUser: Unexepcted result from API'));
+            }
+          })
+        )
         .catch((err) => reject(err))
     )
   );

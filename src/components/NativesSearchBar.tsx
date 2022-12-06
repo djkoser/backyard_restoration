@@ -3,15 +3,14 @@ import { toast } from 'react-toastify';
 import { NativeSearchBarProps } from '../types';
 import { API, graphqlOperation } from 'aws-amplify';
 import {
-  nativePlantByBotanicalName,
-  nativePlantByCommonName
+  nativePlantByBotanicalNameC,
+  nativePlantByCommonNameC
 } from '../graphql/customQueries';
 import {
-  NativePlantByBotanicalNameQueryVariables,
-  NativePlantByCommonNameQueryVariables,
-  NativePlantByBotanicalNameQuery,
-  NativePlantByCommonNameQuery,
-  NativePlant
+  NativePlantByBotanicalNameCQueryVariables,
+  NativePlantByCommonNameCQueryVariables,
+  NativePlantByBotanicalNameCQuery,
+  NativePlantByCommonNameCQuery
 } from '../API';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 
@@ -50,8 +49,21 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
   ) => {
     try {
       setLoadingParent(true);
-      const duplicateMap = new Map<string, NativePlant>();
-      const botanicalNameQueryInput: NativePlantByBotanicalNameQueryVariables =
+      const duplicateMap = new Map<
+        string,
+        {
+          __typename: 'NativePlant';
+          nativeId: string;
+          botanicalName: string;
+          commonName: string;
+          moisture: string;
+          sun: string;
+          height: string;
+          bloomTime: string;
+          src: string;
+        } | null
+      >();
+      const botanicalNameQueryInput: NativePlantByBotanicalNameCQueryVariables =
         {
           botanicalName: botanicalCommonNameInput || '',
           sunHeightBloomTimeMoisture: {
@@ -63,7 +75,7 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
             between: [{ height: minHeightInput }, { height: maxHeightInput }]
           }
         };
-      const commonNameQueryInput: NativePlantByCommonNameQueryVariables = {
+      const commonNameQueryInput: NativePlantByCommonNameCQueryVariables = {
         commonName: botanicalCommonNameInput || '',
         sunHeightBloomTimeMoisture: {
           eq: {
@@ -75,12 +87,12 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
         }
       };
       const botResultsPromise = API.graphql(
-        graphqlOperation(nativePlantByBotanicalName, botanicalNameQueryInput)
-      ) as Promise<GraphQLResult<NativePlantByBotanicalNameQuery>>;
+        graphqlOperation(nativePlantByBotanicalNameC, botanicalNameQueryInput)
+      ) as Promise<GraphQLResult<NativePlantByBotanicalNameCQuery>>;
 
       const comResultsPromise = API.graphql(
-        graphqlOperation(nativePlantByCommonName, commonNameQueryInput)
-      ) as Promise<GraphQLResult<NativePlantByCommonNameQuery>>;
+        graphqlOperation(nativePlantByCommonNameC, commonNameQueryInput)
+      ) as Promise<GraphQLResult<NativePlantByCommonNameCQuery>>;
 
       const [botResults, comResults] = await Promise.all([
         botResultsPromise,

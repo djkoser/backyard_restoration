@@ -1,9 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import React, { useRef, useEffect, useState } from 'react';
-
 import * as d3 from 'd3';
-import { ManagementMethod, TimelineProps } from '../types';
+import { UserManagementMethodStateVersion, TimelineProps } from '../types';
 
 // From store userMethods[], gSeasonLength, firstGDD35
 
@@ -122,7 +121,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   const rectangleMaker = (
     gSelection: d3.Selection<
       SVGGElement,
-      ManagementMethod,
+      UserManagementMethodStateVersion,
       HTMLElement,
       unknown
     >,
@@ -190,7 +189,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
       // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
       // Selection represents existing data and g elements
       const selection = timelineBarContainer
-        .selectAll<SVGElement, ManagementMethod>('g')
+        .selectAll<SVGElement, UserManagementMethodStateVersion>('g')
         .data(userMethods, (d) => d.methodId);
 
       // Remove unnecessary boxes;

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeUserNative, updateProjectNotes } from '../redux/userSlice';
+import {
+  deleteUserNative,
+  updateUserNative
+} from '../redux/userNativePlantsSlice';
 import { NativeAddedProps } from '../types';
 
 const NativeAdded: React.FC<NativeAddedProps> = (props) => {
   const dispatch = useDispatch();
   const {
-    nativeId,
+    id,
     botanicalName,
     commonName,
     moisture,
@@ -21,7 +24,7 @@ const NativeAdded: React.FC<NativeAddedProps> = (props) => {
 
   useEffect(() => {
     if (!editing && projectNotes !== projectNotesInput) {
-      dispatch(updateProjectNotes(nativeId, projectNotesInput));
+      dispatch(updateUserNative({ id, projectNotes: projectNotesInput }));
     }
   }, [editing]);
 
@@ -30,7 +33,7 @@ const NativeAdded: React.FC<NativeAddedProps> = (props) => {
       <div>
         <img
           className="nativeAddedPic"
-          onClick={() => dispatch(removeUserNative(nativeId))}
+          onClick={() => dispatch(deleteUserNative(id))}
           alt={`Added plant ${botanicalName}, commonly known as ${commonName}.`}
           src={src}
           width="50px"

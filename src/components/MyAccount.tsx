@@ -1,55 +1,77 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppDispatch, AppStore } from '../redux/store';
-import { getUserInfo } from '../redux/userSlice';
+import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
 import Footer from './Footer';
 import Nav from './Nav';
 import WeatherLoader from './WeatherLoader';
+import { Auth } from 'aws-amplify';
 
 const MyAccount: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const emailRedux = useSelector<AppStore, string>((state) => state.email);
+  const emailRedux = useSelector<AppStore, string>(
+    (state) => state.userInfo.email
+  );
 
   const firstNameRedux = useSelector<AppStore, string>(
-    (state) => state.firstName
+    (state) => state.userInfo.firstName || ''
   );
 
   const lastNameRedux = useSelector<AppStore, string>(
-    (state) => state.lastName
+    (state) => state.userInfo.lastName || ''
   );
 
-  const streetRedux = useSelector<AppStore, string>((state) => state.street);
+  const streetRedux = useSelector<AppStore, string>(
+    (state) => state.userInfo.street || ''
+  );
 
-  const cityRedux = useSelector<AppStore, string>((state) => state.city);
+  const cityRedux = useSelector<AppStore, string>(
+    (state) => state.userInfo.city || ''
+  );
 
-  const stateRedux = useSelector<AppStore, string>((state) => state.state);
+  const stateRedux = useSelector<AppStore, string>(
+    (state) => state.userInfo.state || ''
+  );
 
-  const zipcodeRedux = useSelector<AppStore, string>((state) => state.zipcode);
+  const zipcodeRedux = useSelector<AppStore, string>(
+    (state) => state.userInfo.zipcode || ''
+  );
 
   const firstGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.firstGdd45
+    (state) => state.userInfo.firstGdd45
   );
 
   const lastGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.lastGdd45
+    (state) => state.userInfo.lastGdd45
   );
 
   const hardinessZoneRedux = useSelector<AppStore, string>(
-    (state) => state.hardinessZone
+    (state) => state.userInfo.hardinessZone
   );
+
+  const failedRedux = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.failed
+  );
+
+  const loadingRedux = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.loading
+  );
+
+  const [lastChanged, setLastChanged] = useState<string | undefined>(undefined);
 
   const [firstName, setFirstName] = useState(firstNameRedux);
 
   const [lastName, setLastName] = useState(lastNameRedux);
 
-  const [email, setEmail] = useState(emailRedux);
+  const [currentPassword, setCurrentPassword] = useState(
+    'This is a fake password'
+  );
 
-  const [password, setPassword] = useState('This is a fake password');
+  const [newPassword, setNewPassword] = useState('This is a fake password');
 
   const [street, setStreet] = useState(streetRedux);
 
@@ -67,20 +89,15 @@ const MyAccount: React.FC = () => {
 
   const [editToggleName, setEditToggleName] = useState(true);
 
-  const [editToggleEmail, setEditToggleEmail] = useState(true);
-
   const [editTogglePassword, setEditTogglePassword] = useState(true);
 
   const [editToggleAddress, setEditToggleAddress] = useState(true);
 
   const [editToggleGrwParams, setEditToggleGrwParams] = useState(true);
 
-  const [loading, setLoading] = useState(false);
-
   const refresh = () => {
     setFirstName(firstNameRedux);
     setLastName(lastNameRedux);
-    setEmail(emailRedux);
     setStreet(streetRedux);
     setCity(cityRedux);
     setState(stateRedux);
@@ -91,7 +108,6 @@ const MyAccount: React.FC = () => {
   };
 
   const onError = () => {
-    dispatch(getUserInfo());
     if (
       emailRedux &&
       firstNameRedux &&
@@ -104,9 +120,52 @@ const MyAccount: React.FC = () => {
       lastGDD35Redux &&
       hardinessZoneRedux
     ) {
-      toast.error(
-        'There was an error while attempting to change your credentials.'
-      );
+      if (lastChanged === 'address') {
+        toast.warning(
+          'NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.'
+        );
+        setTimeout(() => navigate('/manualEntry'), 5000);
+      } else if (lastChanged === 'growing parameters') {
+        toast.error(
+          'There was an error while attempting to change your growing parameters. Please make sure you are using the correct date format -> "MM-DD".'
+        );
+      } else if (lastChanged === 'deleteUser') {
+        toast.error(
+          'An error occured while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.'
+        );
+      } else {
+        toast.error(
+          `There was an error while attempting to change your ${lastChanged}. Please try again.`
+        );
+      }
+    } else {
+      navigate('/');
+    }
+  };
+
+  const onSuccess = () => {
+    if (
+      emailRedux &&
+      firstNameRedux &&
+      lastNameRedux &&
+      streetRedux &&
+      cityRedux &&
+      stateRedux &&
+      zipcodeRedux &&
+      firstGDD35Redux &&
+      lastGDD35Redux &&
+      hardinessZoneRedux
+    ) {
+      if (lastChanged === 'delete user') {
+        toast.success(
+          'Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.'
+        );
+        setTimeout(() => {
+          navigate('/');
+        }, 5000);
+      } else {
+        toast.success(`Your ${lastChanged} was updated successfully.`);
+      }
     } else {
       navigate('/');
     }
@@ -131,59 +190,42 @@ const MyAccount: React.FC = () => {
     hardinessZoneRedux
   ]);
 
+  useEffect(() => {
+    if (failedRedux && !loadingRedux) {
+      onError();
+    } else if (!failedRedux && !loadingRedux) {
+      onSuccess();
+    }
+  }, [failedRedux, loadingRedux]);
+
   const toggleEdit = (type: string) => {
     switch (type) {
       case 'name':
         if (editToggleName) {
           setEditToggleName(false);
         } else {
+          setLastChanged('name');
           setEditToggleName(true);
-          axios
-            .put('/api/user/name', {
-              firstName: firstName,
-              lastName: lastName
-            })
-            .then((res) => {
-              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-              setPassword('This is a fake password');
-              toast.success('Your name has been updated successfully.');
-            })
-            .catch(() => onError());
-        }
-        return;
-      case 'email':
-        if (editToggleEmail) {
-          setEditToggleEmail(false);
-        } else {
-          setEditToggleEmail(true);
-          axios
-            .put('/api/user/email', { email })
-            .then((res) => {
-              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-              setPassword('This is a fake password');
-              toast.success('Your email has been updated successfully.');
-            })
-            .catch(() => {
-              onError();
-              toast.error(
-                "It is possible that you have an account with us under the email you're attempting to switch to."
-              );
-            });
+          dispatch(updateUser({ firstName, lastName }));
+          setCurrentPassword('This is a fake password');
+          setNewPassword('This is a fake password');
         }
         return;
       case 'password':
         if (editTogglePassword) {
           setEditTogglePassword(false);
-          setPassword('');
+          setCurrentPassword('');
+          setNewPassword('');
         } else {
           setEditTogglePassword(true);
-          axios
-            .put('/api/user/password', { password })
-            .then((res) => {
-              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-              setPassword('This is a fake password');
-              toast.success('Your password has been updated successfully.');
-            })
+          Auth.currentAuthenticatedUser({ bypassCache: true })
+            .then((user) =>
+              Auth.changePassword(user, currentPassword, newPassword).then(
+                () => {
+                  toast.success('Your password has been updated successfully.');
+                }
+              )
+            )
             .catch(() => onError());
         }
         return;
@@ -191,31 +233,12 @@ const MyAccount: React.FC = () => {
         if (editToggleAddress) {
           setEditToggleAddress(false);
         } else {
-          setLoading(true);
+          setLastChanged('address');
           setEditToggleAddress(true);
           const digitChecker = zipcode.match(/\D/g);
           if (zipcode.length <= 5 && !digitChecker) {
-            axios
-              .put('/api/user/address', { street, city, state, zipcode })
-              .then((res) => {
-                dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-                setPassword('This is a fake password');
-                toast.success('Your address has been updated successfully.');
-                setTimeout(() => setLoading(false), 5000);
-              })
-              .catch((err) => {
-                if (err.response.data === 'Manual Entry') {
-                  toast.warning(
-                    'NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.'
-                  );
-                  setTimeout(() => navigate('/manualEntry'), 5000);
-                } else {
-                  onError();
-                  setTimeout(() => setLoading(false), 5000);
-                }
-              });
+            dispatch(updateUser({ street, city, state, zipcode }));
           } else {
-            setLoading(false);
             toast.error('Please enter a 5 digit zipcode, thank you');
           }
         }
@@ -224,26 +247,9 @@ const MyAccount: React.FC = () => {
         if (editToggleGrwParams) {
           setEditToggleGrwParams(false);
         } else {
+          setLastChanged('growing parameters');
           setEditToggleGrwParams(true);
-          axios
-            .put('/api/user/growingInfo', {
-              firstGdd45,
-              lastGdd45,
-              hardinessZone
-            })
-            .then((res) => {
-              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-              setPassword('This is a fake password');
-              toast.success(
-                'Your growing parameters have been updated successfully.'
-              );
-            })
-            .catch(() => {
-              onError();
-              toast.error(
-                'You may have used the incorrect date format (MM-DD).'
-              );
-            });
+          dispatch(updateUser({ firstGdd45, lastGdd45, hardinessZone }));
         }
         return;
       default:
@@ -251,25 +257,7 @@ const MyAccount: React.FC = () => {
     }
   };
 
-  const deleteAccount = () => {
-    axios
-      .delete('/api/deleteUser')
-      .then(() => {
-        toast.success(
-          'Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.'
-        );
-        setTimeout(() => {
-          navigate('/');
-        }, 5000);
-      })
-      .catch(() =>
-        toast.error(
-          'An error occured while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.'
-        )
-      );
-  };
-
-  return loading ? (
+  return loadingRedux ? (
     <>
       <WeatherLoader noText={false} />
       <ToastContainer />
@@ -282,7 +270,9 @@ const MyAccount: React.FC = () => {
         <h1 id="myAccountHeader">My Account</h1>
         <main
           className="myAccountForm"
-          style={!loading ? { display: 'inline-flex' } : { display: 'none' }}
+          style={
+            !loadingRedux ? { display: 'inline-flex' } : { display: 'none' }
+          }
         >
           <div id="startHardiness">
             <fieldset className=" editBoxes">
@@ -359,21 +349,6 @@ const MyAccount: React.FC = () => {
           </div>
           <div id="address">
             <fieldset className="editBoxes">
-              <h3 className="accountPageText">Password</h3>
-              <input
-                className="myAccountInput"
-                disabled={editTogglePassword}
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </fieldset>
-            <button onClick={() => toggleEdit('password')}>
-              {editTogglePassword ? 'Edit' : 'Submit'}
-            </button>
-            <fieldset className="editBoxes">
               <h3 className="accountPageText">Address</h3>
               <input
                 className="myAccountInput"
@@ -443,23 +418,39 @@ const MyAccount: React.FC = () => {
             </button>
             <fieldset className="editBoxes">
               <h3 className="accountPageText">Email</h3>
+              <span className="myAccountInput">{emailRedux}</span>
+            </fieldset>
+            <fieldset className="editBoxes">
+              <h3 className="accountPageText">Delete My Account</h3>
+              <button onClick={() => dispatch(deleteUser())}>
+                Delete Account
+              </button>
+            </fieldset>
+            <fieldset className="editBoxes">
+              <h3 className="accountPageText">Current Password</h3>
               <input
                 className="myAccountInput"
-                disabled={editToggleEmail}
-                type="text"
-                value={email}
+                disabled={editTogglePassword}
+                type="password"
+                value={currentPassword}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setCurrentPassword(e.target.value);
+                }}
+              />
+              <h3 className="accountPageText">New Password</h3>
+              <input
+                className="myAccountInput"
+                disabled={editTogglePassword}
+                type="password"
+                value={newPassword}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
                 }}
               />
             </fieldset>
-            <button onClick={() => toggleEdit('email')}>
-              {editToggleEmail ? 'Edit' : 'Submit'}
+            <button onClick={() => toggleEdit('password')}>
+              {editTogglePassword ? 'Edit' : 'Submit'}
             </button>
-            <fieldset className="editBoxes">
-              <h3 className="accountPageText">Delete My Account</h3>
-              <button onClick={() => deleteAccount()}>Delete Account</button>
-            </fieldset>
           </div>
           <br />
         </main>

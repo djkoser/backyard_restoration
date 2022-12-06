@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import NativeAdded from './NativeAdded';
-import { AddedNativesProps, UserNative } from '../types';
+import { AddedNativesProps, UserNativeStateVersion } from '../types';
 import { AppStore } from '../redux/store';
 
 const AddedNatives: React.FC<AddedNativesProps> = (props) => {
@@ -10,16 +10,16 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
   const [summer, setSummer] = useState<JSX.Element[]>([]);
   const [fall, setFall] = useState<JSX.Element[]>([]);
 
-  const userNatives = useSelector<AppStore, UserNative[]>(
-    (state) => state.natives
+  const userNatives = useSelector<AppStore, UserNativeStateVersion[]>(
+    (state) => state.userNativePlant.nativePlants
   );
 
   useEffect(() => {
     if (typeof userNatives === 'object') {
-      const eSpringTempData: UserNative[] = [];
-      const lSpringTempData: UserNative[] = [];
-      const summerTempData: UserNative[] = [];
-      const fallTempData: UserNative[] = [];
+      const eSpringTempData: UserNativeStateVersion[] = [];
+      const lSpringTempData: UserNativeStateVersion[] = [];
+      const summerTempData: UserNativeStateVersion[] = [];
+      const fallTempData: UserNativeStateVersion[] = [];
 
       userNatives.forEach((el) => {
         switch (el.bloomTime) {
@@ -38,8 +38,8 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
 
       const lSpringTempElements = eSpringTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.nativeId}`}
-          nativeId={el.nativeId}
+          key={el.id}
+          id={el.id}
           botanicalName={el.botanicalName}
           commonName={el.commonName}
           moisture={el.moisture}
@@ -52,8 +52,8 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
 
       const eSpringTempElements = lSpringTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.nativeId}`}
-          nativeId={el.nativeId}
+          key={el.id}
+          id={el.id}
           botanicalName={el.botanicalName}
           commonName={el.commonName}
           moisture={el.moisture}
@@ -66,8 +66,8 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
 
       const summerTempElements = summerTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.nativeId}`}
-          nativeId={el.nativeId}
+          key={el.id}
+          id={el.id}
           botanicalName={el.botanicalName}
           commonName={el.commonName}
           moisture={el.moisture}
@@ -80,8 +80,8 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
 
       const fallTempElements = fallTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.nativeId}`}
-          nativeId={el.nativeId}
+          key={el.id}
+          id={el.id}
           botanicalName={el.botanicalName}
           commonName={el.commonName}
           moisture={el.moisture}

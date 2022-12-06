@@ -4,10 +4,10 @@ import { ThumbnailProps } from '../types';
 
 // props commonName, botanicalName from WeedSearch
 const Thumbnail: React.FC<ThumbnailProps> = (props) => {
-  const { weed_id, commonName, botanicalName, src } = props.weedInfo;
+  const { weedId, commonName, botanicalName, src } = props.weedInfo;
   return (
     <figure className="searchFigures">
-      <Link className="searchLinks" to={`/weed/${weed_id}`}>
+      <Link className="searchLinks" to={`/weed/${weedId}`}>
         <img
           className="searchImages"
           alt={`${botanicalName} commonly known as ${commonName}`}

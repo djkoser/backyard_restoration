@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { getUserInfo } from '../redux/userSlice';
-import { UserNative } from '../types';
+import { UserNativeStateVersion } from '../types';
 import AddedNatives from './AddedNatives';
 import NativesSearchBar from './NativesSearchBar';
 import NativeThumbnail from './NativeThumbnail';
@@ -11,7 +11,9 @@ import WeatherLoader from './WeatherLoader';
 
 const NativeSelector: React.FC = () => {
   const dispatch = useDispatch();
-  const [searchResults, setSearchResults] = useState<UserNative[]>([]);
+  const [searchResults, setSearchResults] = useState<UserNativeStateVersion[]>(
+    []
+  );
   const [searchResultsJSX, setSearchResultsJSX] = useState<JSX.Element[]>([]);
   const [searchAdded, setSearchAdded] = useState(true);
   const [loading, setLoading] = useState(false);

@@ -42,7 +42,7 @@ const WeedSearch: React.FC = () => {
   }, [vegType]);
 
   const searchResults = weedList.map((el) => (
-    <Thumbnail key={el.weed_id} weedInfo={el} />
+    <Thumbnail key={el.weedId} weedInfo={el} />
   ));
 
   const output = (

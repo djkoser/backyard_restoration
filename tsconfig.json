@@ -21,6 +21,7 @@
     "utilities/**/*",
     "public/**/*",
     "server/**/*",
-    "dbSeed/**/*"
+    "dbSeed/**/*",
+    "./amplify/backend/function/stripeCheckout/src/**/*.js"
   ]
 }

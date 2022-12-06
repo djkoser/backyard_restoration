@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AppStore } from '../redux/store';
-import { addUserNative } from '../redux/userSlice';
-import type { NativeThumbnailProps, UserNative } from '../types';
+import { addUserNative } from '../redux/userNativePlantsSlice';
+import type { NativeThumbnailProps, UserNativeStateVersion } from '../types';
 
 const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
   const dispatch = useDispatch();
@@ -17,8 +17,8 @@ const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
     bloomTime,
     src
   } = props;
-  const userNatives = useSelector<AppStore, UserNative[]>(
-    (state) => state.natives
+  const userNatives = useSelector<AppStore, UserNativeStateVersion[]>(
+    (state) => state.userNativePlant.nativePlants
   );
 
   return (

@@ -3,14 +3,14 @@ import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  GetWeedQuery,
-  GetWeedQueryVariables,
-  WeedByVegetationTypeQuery,
-  WeedByVegetationTypeQueryVariables
+  GetWeedCQuery,
+  GetWeedCQueryVariables,
+  WeedByVegetationTypeCQuery,
+  WeedByVegetationTypeCQueryVariables
 } from '../API';
-import { getWeed, weedByVegetationType } from '../graphql/customQueries';
-import { ManagementMethod } from '../types';
-import SwitchMaker from './SwitchMaker';
+import { getWeedC, weedByVegetationTypeC } from '../graphql/customQueries';
+import { ManagementMethodStateVersion } from '../types';
+import SwitchMaker from './MethodSwitch';
 
 const DashboardDropdowns: React.FC = () => {
   const navigate = useNavigate();
@@ -19,10 +19,10 @@ const DashboardDropdowns: React.FC = () => {
 
   const getWeedsByVegType = async (vegetationType: string) => {
     try {
-      const query: WeedByVegetationTypeQueryVariables = { vegetationType };
+      const query: WeedByVegetationTypeCQueryVariables = { vegetationType };
       const weeds = (await API.graphql(
-        graphqlOperation(weedByVegetationType, query)
-      )) as GraphQLResult<WeedByVegetationTypeQuery>;
+        graphqlOperation(weedByVegetationTypeC, query)
+      )) as GraphQLResult<WeedByVegetationTypeCQuery>;
 
       const weedOptions: JSX.Element[] = weeds.data?.weedByVegetationType?.items
         ?.map
@@ -41,17 +41,17 @@ const DashboardDropdowns: React.FC = () => {
 
   const getWeedMethodsByID = async (weedId: string) => {
     try {
-      const query: GetWeedQueryVariables = { weedId };
+      const query: GetWeedCQueryVariables = { weedId };
 
       const weed = (await API.graphql(
-        graphqlOperation(getWeed, query)
-      )) as GraphQLResult<GetWeedQuery>;
+        graphqlOperation(getWeedC, query)
+      )) as GraphQLResult<GetWeedCQuery>;
 
       if (weed.data?.getWeed?.managementMethods?.items.map) {
         const methodsCleaned = (
           weed.data.getWeed.managementMethods.items.filter(
             (el) => el
-          ) as unknown as ManagementMethod[]
+          ) as unknown as ManagementMethodStateVersion[]
         ).map((el) => {
           return {
             ...el,

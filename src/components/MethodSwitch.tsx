@@ -1,29 +1,30 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleUserMethod } from '../redux/userSlice';
+import {
+  addUserManagementMethod,
+  deleteUserManagementMethod
+} from '../redux/userMethodSlice';
 import { AppStore } from '../redux/store';
-import { ManagementMethod, SwitchMakerProps } from '../types';
+import { SwitchMakerProps, UserManagementMethodStateVersion } from '../types';
 import * as CSS from 'csstype';
 
-const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
+const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
   const dispatch = useDispatch();
   // Determine if weed method is in user method list and check inputs accordingly
 
-  const userMethods = useSelector<AppStore, ManagementMethod[]>(
-    (state) => state.userMethods
+  const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
+    (state) => state.userMethod.userMethods
   );
 
   const { weedMethod } = props;
 
-  let checked = false;
-  if (
-    userMethods.reduce(
-      (acc: number, el) => (weedMethod.methodId === el.methodId ? ++acc : acc),
-      0
-    )
-  ) {
-    checked = true;
+  let id: undefined | string;
+  for (const method of userMethods) {
+    if (weedMethod.methodId === method.methodId) {
+      ({ id } = method);
+    }
   }
+
   return (
     <div className="switchBody">
       <div className="switchPara">
@@ -34,7 +35,7 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
         <div className="switchFlexBox">
           <div
             style={
-              checked
+              id
                 ? undefined
                 : ({ transform: 'translateY(15px)' } as CSS.Properties)
             }
@@ -42,20 +43,24 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
           >
             <h5
               style={
-                checked
+                id
                   ? undefined
                   : ({ transform: 'translateY(-6px)' } as CSS.Properties)
               }
               className="switchLabel"
             >
-              {checked ? 'Remove from Timeline' : 'Add to Timeline'}
+              {id ? 'Remove from Timeline' : 'Add to Timeline'}
             </h5>
             <input
               type="checkbox"
               id={`switch${weedMethod.methodId}`}
-              checked={checked}
+              checked={id ? true : false}
               onChange={() => {
-                dispatch(toggleUserMethod(weedMethod.methodId));
+                if (id) {
+                  dispatch(deleteUserManagementMethod(id));
+                } else {
+                  dispatch(addUserManagementMethod(weedMethod.methodId));
+                }
               }}
             />
             <label htmlFor={`switch${weedMethod.methodId}`}>
@@ -73,4 +78,4 @@ const SwitchMaker: React.FC<SwitchMakerProps> = (props) => {
   );
 };
 
-export default SwitchMaker;
+export default MethodSwitch;

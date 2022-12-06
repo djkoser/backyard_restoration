@@ -36,13 +36,19 @@ export interface UserNativeStateVersion {
   projectNotes: string;
 }
 
-export type UserNativeState = UserNativePlantPayload & FailedLoading;
+export type UserNativeState = UserNativePayload & FailedLoading;
 
 export interface UserMethodPayload {
   userMethods: UserManagementMethodStateVersion[];
 }
-export interface UserManagementMethodStateVersion {
+export interface UserManagementMethodStateVersion
+  extends ManagementMethodStateVersion {
   id: string;
+  commonName: string;
+  projectNotes: string;
+}
+
+export interface ManagementMethodStateVersion {
   methodId: string;
   name: string;
   description: string;
@@ -58,8 +64,6 @@ export interface UserManagementMethodStateVersion {
   october: number;
   november: number;
   december: number;
-  commonName: string;
-  projectNotes: string;
 }
 
-export type UserMethodState = UserMethodsPayload & FailedLoading;
+export type UserMethodState = UserMethodPayload & FailedLoading;

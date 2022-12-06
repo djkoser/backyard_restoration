@@ -28,6 +28,17 @@
           ]
         }
       }
+    },
+    "stripeEndpoint": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "stripeCheckout",
+          "attributes": ["Name", "Arn"]
+        }
+      ]
     }
   },
   "auth": {
@@ -48,6 +59,14 @@
         "mfaTypes": ["SMS"],
         "verificationMechanisms": ["EMAIL"]
       }
+    }
+  },
+  "function": {
+    "stripeCheckout": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
     }
   }
 }

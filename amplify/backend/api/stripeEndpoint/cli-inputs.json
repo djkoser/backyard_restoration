@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/api/donate": {
+      "name": "/api/donate",
+      "lambdaFunction": "stripeCheckout",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

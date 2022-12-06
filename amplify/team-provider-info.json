@@ -13,10 +13,18 @@
     },
     "categories": {
       "api": {
-        "backyardrestoration": {}
+        "backyardrestoration": {},
+        "stripeEndpoint": {}
       },
       "auth": {
         "backyardrestoration385e5c12": {}
+      },
+      "function": {
+        "stripeCheckout": {
+          "secretsPathAmplifyAppId": "d2irdo5vzkklq2",
+          "deploymentBucketName": "amplify-backyardrestoration-dev-174736-deployment",
+          "s3Key": "amplify-builds/stripeCheckout-644641334f6a6b477477-build.zip"
+        }
       }
     }
   }

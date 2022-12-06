@@ -5,6 +5,11 @@ export type AmplifyDependentResourcesAttributes = {
       GraphQLAPIIdOutput: 'string';
       GraphQLAPIEndpointOutput: 'string';
     };
+    stripeEndpoint: {
+      RootUrl: 'string';
+      ApiName: 'string';
+      ApiId: 'string';
+    };
   };
   auth: {
     backyardrestoration385e5c12: {
@@ -15,6 +20,14 @@ export type AmplifyDependentResourcesAttributes = {
       UserPoolName: 'string';
       AppClientIDWeb: 'string';
       AppClientID: 'string';
+    };
+  };
+  function: {
+    stripeCheckout: {
+      Name: 'string';
+      Arn: 'string';
+      Region: 'string';
+      LambdaExecutionRole: 'string';
     };
   };
 };

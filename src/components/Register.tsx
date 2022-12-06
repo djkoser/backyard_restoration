@@ -1,10 +1,13 @@
-import axios from 'axios';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { GrowingCalculations } from '../../utilities/GrowingCalculations';
+import { CreateUserCMutation } from '../API';
+import { createUserC } from '../graphql/customMutations';
 import WeatherLoader from './WeatherLoader';
-import { useNavigate } from 'react-router-dom';
 
 // props from Login email, password
 
@@ -23,55 +26,91 @@ const Register: React.FC = () => {
   const [zipcode, setZipcode] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const createNewUser = (e: React.FormEvent<HTMLFormElement>) => {
+  const createNewUser = (e: React.FormEvent<HTMLFormElement>) =>
     e.preventDefault();
-    const digitChecker = zipcode.match(/\D/g);
-    if (zipcode.length <= 5 && !digitChecker) {
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPassword('');
-      setStreet('');
-      setCity('');
-      setState('');
-      setZipcode('');
-      setLoading(true);
-      axios
-        .post('/api/register', {
-          email,
-          password,
-          firstName,
-          lastName,
-          street,
-          city,
-          state,
-          zipcode
-        })
-        .then((res) => {
-          dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-          toast.success(
-            'Registration Successful! Logging you in to your new dashboard...'
-          );
-          setTimeout(() => navigate('/dash'), 3000);
-        })
-        .catch((err) => {
-          if (err.response.data === 'Manual Entry') {
-            toast.warning(
-              'NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.'
+  const digitChecker = zipcode.match(/\D/g);
+  if (zipcode.length <= 5 && !digitChecker) {
+    setLoading(true);
+    void Auth.signUp({
+      username: email,
+      password,
+      attributes: { email }
+    })
+      .then(() => {
+        void (
+          API.graphql(
+            graphqlOperation(createUserC, {
+              input: {
+                email,
+                firstName,
+                lastName,
+                street,
+                city,
+                state,
+                zipcode,
+                growingSeasonLength: 0,
+                firstGdd45: '',
+                lastGdd45: '',
+                hardinessZone: ''
+              }
+            })
+          ) as Promise<GraphQLResult<CreateUserCMutation>>
+        ).then((graphQLResult) => {
+          void new GrowingCalculations(zipcode, street, city, state)
+            .calculateGrowingParams()
+            .then(
+              ({
+                hardinessZone,
+                firstGdd45,
+                lastGdd45,
+                growingSeasonLength
+              }) => {
+                const { __typename, ...omitTypename } =
+                  graphQLResult?.data?.createUser || {};
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setPassword('');
+                setStreet('');
+                setCity('');
+                setState('');
+                setZipcode('');
+                dispatch({
+                  type: 'ADD_RETRIEVED_INFO',
+                  payload: {
+                    ...omitTypename,
+                    hardinessZone,
+                    firstGdd45,
+                    lastGdd45,
+                    growingSeasonLength
+                  }
+                });
+                toast.success(
+                  'Registration Successful! Logging you in to your new dashboard...'
+                );
+                setTimeout(() => navigate('/dash'), 3000);
+              }
             );
-            setTimeout(() => navigate('/manualEntry'), 5000);
-          } else {
-            setLoading(false);
-            toast.error(
-              'A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the "Forgot Password" link.'
-            );
-          }
         });
-    } else {
-      setLoading(false);
-      toast.error('Please enter a 5 digit zipcode, thank you');
-    }
-  };
+      })
+      .catch((err) => {
+        if (err.response.data === 'Manual Entry') {
+          toast.warning(
+            'NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.'
+          );
+          setTimeout(() => navigate('/manualEntry'), 5000);
+        } else {
+          setLoading(false);
+          toast.error(
+            'A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the "Forgot Password" link.'
+          );
+        }
+      });
+  } else {
+    setLoading(false);
+    toast.error('Please enter a 5 digit zipcode, thank you');
+  }
+
   return loading ? (
     <>
       <ToastContainer />

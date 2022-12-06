@@ -317,9 +317,9 @@ export class GrowingCalculations {
           { method: 'get', headers: { token: NOAA_TOKEN_BACKUP as string } }
         );
       }
-      const data: {
+      const data = (await response.json()) as {
         results: [{ date: string; value: number; datatype: string }];
-      } = await response.json();
+      };
       const TMAX: Observation[] = [];
       const TMIN: Observation[] = [];
       if (typeof data?.results?.forEach === 'function')
@@ -473,7 +473,9 @@ export class GrowingCalculations {
         )}&key=${GOOGLE_API_KEY}`,
         { method: 'get' }
       )
-    ).json();
+    ).json() as Promise<{
+      results: [{ geometry: { location: { lat: number; lng: number } } }];
+    }>;
   }
 
   /** Get the list of stations within a prescribed bounding box
@@ -493,7 +495,7 @@ export class GrowingCalculations {
         { headers: { token: NOAA_TOKEN_BACKUP as string }, method: 'get' }
       );
     }
-    return response.json();
+    return response.json() as Promise<{ results: [{ id: string }] }>;
   }
 
   /** Calculate the hardiness revealed by the maximum and minimum temperature data

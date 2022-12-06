@@ -1,22 +1,14 @@
-import { ManagementMethodState } from './';
+import type { ManagementMethodStateVersion, UserNativeStateVersion } from './';
 
 export interface AddedNativesProps {
   searchAdded: boolean;
   setSearchAdded: (boolean) => void;
 }
 
-export interface NativeAddedProps {
-  key: string;
-  nativeId: string;
-  botanicalName: string;
-  commonName: string;
-  moisture: string;
-  sun: string;
-  height: string;
-  src: string;
-  projectNotes: string;
-}
-
+export type NativeAddedProps = Omit<
+  UserNativeStateVersion,
+  'nativeId' | 'bloomTime'
+>;
 export interface NativeSearchBarProps extends AddedNativesProps {
   setSearchResults: (data: UserNative[]) => void;
   setLoadingParent: (boolean: boolean) => void;
@@ -38,7 +30,7 @@ export interface NavProps {
 }
 
 export interface SwitchMakerProps {
-  weedMethod: ManagementMethodState;
+  weedMethod: ManagementMethodStateVersion;
 }
 
 export interface Weed {
@@ -62,7 +54,7 @@ export interface TimelineProps {
   firstGdd45: string;
   lastGdd45: string;
   margin: { left: number; right: number; top: number; bottom: number };
-  userMethods: ManagementMethodState[];
+  userMethods: UserManagementMethodStateVersion[];
 }
 
 export interface WeatherLoaderProps {

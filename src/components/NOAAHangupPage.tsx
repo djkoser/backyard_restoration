@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { UserInfoState } from '../types';
+import { AppStore } from '../redux/store';
+import { updateUser } from '../redux/userSlice';
 
 const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,26 +12,27 @@ const NOAAHangupPage: React.FC = () => {
   const [hardinessZone, setHardinessZone] = useState('');
   const dispatch = useDispatch();
 
-  const submitUpdates = () => {
-    axios
-      .put<UserInfoState>('/api/user/growingInfo', {
-        firstGdd45,
-        lastGdd45,
-        hardinessZone
-      })
-      .then(async (res) => {
-        dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-        toast.success(
-          'Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.'
-        );
-        setTimeout(() => navigate('/dash'), 3000);
-      })
-      .catch(() =>
-        toast.error(
-          'An error occured while attempting to add your growing information to your account. Please unsure that you have used the correct formatting within the start and end dates boxes (MM-DD). Thank you.'
-        )
+  const reduxLoading = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.loading
+  );
+
+  const reduxFailed = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.failed
+  );
+
+  useEffect(() => {
+    if (!reduxFailed && !reduxLoading) {
+      toast.success(
+        'Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.'
       );
-  };
+      setTimeout(() => navigate('/dash'), 3000);
+    } else if (reduxFailed && !reduxLoading) {
+      toast.error(
+        'An error occured while attempting to add your growing information to your account. Please unsure that you have used the correct formatting within the start and end dates boxes (MM-DD). Thank you.'
+      );
+    }
+  }, [reduxLoading, reduxFailed]);
+
   return (
     <main id="NOAAHangupBody">
       <ToastContainer />
@@ -115,7 +116,13 @@ const NOAAHangupPage: React.FC = () => {
             <option value="13b">Zone 13b: 65F - 70F </option>
           </select>
         </fieldset>
-        <button onClick={() => submitUpdates()}>Submit</button>
+        <button
+          onClick={() =>
+            dispatch(updateUser({ firstGdd45, lastGdd45, hardinessZone }))
+          }
+        >
+          Submit
+        </button>
       </div>
     </main>
   );

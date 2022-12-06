@@ -6,25 +6,29 @@ import Timeline from './Timeline';
 import DashboardDropdowns from './DashboardDropdowns';
 import { getUserInfo } from '../redux/userSlice';
 import { AppStore } from '../redux/store';
-import { ManagementMethod } from '../types';
+import { UserManagementMethodStateVersion } from '../types';
 
 // props from store hZone, gSeasonLength firstGDD35
 
 const Dashboard: React.FC = () => {
   const hardinessZone = useSelector<AppStore, string>(
-    (state) => state.hardinessZone
+    (state) => state.userInfo.hardinessZone
   );
 
   const growingSeasonLength = useSelector<AppStore, number>(
-    (state) => state.growingSeasonLength
+    (state) => state.userInfo.growingSeasonLength
   );
 
-  const firstGdd45 = useSelector<AppStore, string>((state) => state.firstGdd45);
+  const firstGdd45 = useSelector<AppStore, string>(
+    (state) => state.userInfo.firstGdd45
+  );
 
-  const lastGdd45 = useSelector<AppStore, string>((state) => state.lastGdd45);
+  const lastGdd45 = useSelector<AppStore, string>(
+    (state) => state.userInfo.lastGdd45
+  );
 
-  const userMethods = useSelector<AppStore, ManagementMethod[]>(
-    (state) => state.userMethods
+  const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
+    (state) => state.userMethod.userMethods
   );
 
   const chartMargin = { top: 10, right: 10, bottom: 10, left: 10 };

@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Nav from './Nav';
 import Footer from './Footer';
-import SwitchMaker from './SwitchMaker';
+import SwitchMaker from './MethodSwitch';
 import WeatherLoader from './WeatherLoader';
-import { getMethods } from '../redux/mgmtMethodSlice';
+import { getUserMethods } from '../redux/userMethodSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ManagementMethod } from '../types';
+import { UserManagementMethodStateVersion } from '../types';
 import { AppStore } from '../redux/store';
 
 const WeedPage: React.FC = () => {
@@ -20,17 +20,19 @@ const WeedPage: React.FC = () => {
   const [annualPerennialBiennial, setAnnualPerennialBiennial] = useState('');
   const [vegType, setVegType] = useState('');
   const [description, setDescription] = useState('');
-  const [mgmtOptions, setMgmtOptions] = useState<ManagementMethod[]>([]);
+  const [mgmtOptions, setMgmtOptions] = useState<
+    UserManagementMethodStateVersion[]
+  >([]);
   const [switches, setSwitches] = useState([<></>]);
 
-  const userMethods = useSelector<AppStore, ManagementMethod[]>(
-    (state) => state.mgmtMethodReducer.userMethods
+  const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
+    (state) => state.userMethod.userMethods
   );
   // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMethods());
+    dispatch(getUserMethods());
   }, []);
   useEffect(() => {
     if (id) {

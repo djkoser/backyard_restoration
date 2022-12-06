@@ -1,6 +1,6 @@
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   CreateUserNativePlantCMutation,
   DeleteUserNativePlantCMutation,
@@ -184,42 +184,46 @@ export const deleteUserNative = (userNativeId: string) => {
     )
   );
 };
-export const getUserNatives = (email: string) => {
+export const getUserNatives = () => {
   return userNativePlantSlice.actions.GET_USER_NATIVES(
     new Promise((resolve, reject) =>
-      (
-        API.graphql(
-          graphqlOperation(getUserNativePlants, { email })
-        ) as Promise<GraphQLResult<GetUserNativePlantsQuery>>
-      )
-        .then((graphQlResult) => {
-          if (graphQlResult.data?.getUser?.nativePlants?.items?.map) {
-            const nativePlants =
-              graphQlResult.data.getUser.nativePlants.items.map(
-                (nativePlant) => {
-                  const { id, projectNotes } = nativePlant || {};
+      Auth.currentAuthenticatedUser({
+        bypassCache: true
+      })
+        .then(({ attributes }) =>
+          (
+            API.graphql(
+              graphqlOperation(getUserNativePlants, { email: attributes.email })
+            ) as Promise<GraphQLResult<GetUserNativePlantsQuery>>
+          ).then((graphQlResult) => {
+            if (graphQlResult.data?.getUser?.nativePlants?.items?.map) {
+              const nativePlants =
+                graphQlResult.data.getUser.nativePlants.items.map(
+                  (nativePlant) => {
+                    const { id, projectNotes } = nativePlant || {};
 
-                  if (nativePlant?.nativePlant && id && projectNotes) {
-                    const { __typename, ...noTypeName } =
-                      nativePlant.nativePlant;
-                    return {
-                      id,
-                      projectNotes: nativePlant?.projectNotes || '',
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'getUserNatives: Unexepcted result from API'
-                    );
+                    if (nativePlant?.nativePlant && id && projectNotes) {
+                      const { __typename, ...noTypeName } =
+                        nativePlant.nativePlant;
+                      return {
+                        id,
+                        projectNotes: nativePlant?.projectNotes || '',
+                        ...noTypeName
+                      };
+                    } else {
+                      throw new Error(
+                        'getUserNatives: Unexepcted result from API'
+                      );
+                    }
                   }
-                }
-              );
+                );
 
-            resolve({ nativePlants });
-          } else {
-            reject(new Error('getUserNatives: Unexepcted result from API'));
-          }
-        })
+              resolve({ nativePlants });
+            } else {
+              reject(new Error('getUserNatives: Unexepcted result from API'));
+            }
+          })
+        )
         .catch((err) => reject(err))
     )
   );
