@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
-import Nav from './Nav';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  GetWeedCQuery,
+  GetWeedCQueryVariables,
+  ManagementMethod
+} from '../API';
+import { getWeedC } from '../graphql/customQueries';
+import { AppStore } from '../redux/store';
+import { getUserMethods } from '../redux/userMethodSlice';
+import { UserManagementMethodStateVersion } from '../types';
 import Footer from './Footer';
 import SwitchMaker from './MethodSwitch';
+import Nav from './Nav';
 import WeatherLoader from './WeatherLoader';
-import { getUserMethods } from '../redux/userMethodSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import { UserManagementMethodStateVersion } from '../types';
-import { AppStore } from '../redux/store';
 
 const WeedPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [src, setSrc] = useState('');
   const [commonName, setCommonName] = useState('');
   const [botanicalName, setBotanicalName] = useState('');
@@ -21,7 +27,7 @@ const WeedPage: React.FC = () => {
   const [vegType, setVegType] = useState('');
   const [description, setDescription] = useState('');
   const [mgmtOptions, setMgmtOptions] = useState<
-    UserManagementMethodStateVersion[]
+    Omit<ManagementMethod, '__typename' | 'weed' | 'createdAt' | 'updatedAt'>[]
   >([]);
   const [switches, setSwitches] = useState([<></>]);
 
@@ -49,32 +55,41 @@ const WeedPage: React.FC = () => {
   }, [mgmtOptions, userMethods]);
 
   const getWeedDetails = async () => {
-    await axios
-      .get(`/api/weeds/${id}`)
-      .then((res) => {
-        const {
-          src,
-          commonName,
-          botanicalName,
-          annual_perennial_biennial,
-          veg_type,
-          description
-        } = res.data;
-        setSrc(src);
-        setCommonName(commonName);
-        setBotanicalName(botanicalName);
-        setAnnualPerennialBiennial(annual_perennial_biennial);
-        setVegType(veg_type);
-        setDescription(description);
-      })
-      .catch(() => navigate('/'));
-    await axios
-      .get(`/api/weeds/methods/${id}`)
-      .then((res) => {
-        setMgmtOptions(res.data);
-      })
-      .catch(() => navigate('/'));
-    setLoading(false);
+    try {
+      const input: GetWeedCQueryVariables = { weedId: id || '' };
+      const result = (await API.graphql(
+        graphqlOperation(getWeedC, input)
+      )) as GraphQLResult<GetWeedCQuery>;
+      const {
+        src,
+        commonName,
+        botanicalName,
+        annualPerennialBiennial,
+        vegetationType,
+        description,
+        managementMethods
+      } = result.data?.getWeed || {};
+      setSrc(src || '');
+      setCommonName(commonName || '');
+      setBotanicalName(botanicalName || '');
+      setAnnualPerennialBiennial(annualPerennialBiennial || '');
+      setVegType(vegetationType || '');
+      setDescription(description || '');
+      setLoading(false);
+      setMgmtOptions(
+        managementMethods?.items.reduce((methodsParsed, method) => {
+          if (method) {
+            const { __typename, ...omitTypename } = method;
+            methodsParsed.push(omitTypename);
+          }
+          return methodsParsed;
+        }, [] as Omit<ManagementMethod, '__typename' | 'weed' | 'createdAt' | 'updatedAt'>[]) ||
+          []
+      );
+    } catch {
+      setLoading(false);
+      navigate('/');
+    }
   };
 
   const output = (

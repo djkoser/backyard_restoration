@@ -39,8 +39,6 @@ export interface Weed {
   commonName: string;
   botanicalName: string;
   annualPerennialBiennial: string;
-  description: string;
-  managementMethods?: ModelManagementMethodConnection | null;
   src: string;
 }
 

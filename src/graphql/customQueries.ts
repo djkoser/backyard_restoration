@@ -90,27 +90,6 @@ export const weedByVegetationTypeC = /* GraphQL */ `
         commonName
         botanicalName
         annualPerennialBiennial
-        description
-        managementMethods {
-          items {
-            methodId
-            name
-            description
-            january
-            february
-            march
-            april
-            may
-            june
-            july
-            august
-            september
-            october
-            november
-            december
-          }
-          nextToken
-        }
         src
       }
       nextToken
@@ -138,27 +117,6 @@ export const weedByCommonNameC = /* GraphQL */ `
         commonName
         botanicalName
         annualPerennialBiennial
-        description
-        managementMethods {
-          items {
-            methodId
-            name
-            description
-            january
-            february
-            march
-            april
-            may
-            june
-            july
-            august
-            september
-            october
-            november
-            december
-          }
-          nextToken
-        }
         src
       }
       nextToken
@@ -187,26 +145,6 @@ export const weedByBotanicalNameC = /* GraphQL */ `
         commonName
         botanicalName
         annualPerennialBiennial
-        description
-        managementMethods {
-          items {
-            methodId
-            name
-            description
-            january
-            february
-            march
-            april
-            may
-            june
-            july
-            august
-            september
-            october
-            november
-            december
-          }
-        }
         src
       }
       nextToken

@@ -8,9 +8,17 @@ type Weed @model @auth(rules: [{ allow: public, operations: [read] }]) {
   vegetationType: String!
     @index(name: "byVegetationType", queryField: "weedByVegetationType")
   commonName: String!
-    @index(name: "byCommonName", queryField: "weedByCommonName")
+    @index(
+      name: "byCommonName"
+      queryField: "weedByCommonName"
+      sortKeyFields: ["vegetationType"]
+    )
   botanicalName: String!
-    @index(name: "byBotanicalName", queryField: "weedByBotanicalName")
+    @index(
+      name: "byBotanicalName"
+      queryField: "weedByBotanicalName"
+      sortKeyFields: ["vegetationType"]
+    )
   annualPerennialBiennial: String!
   description: String!
   managementMethods: [ManagementMethod] @hasMany

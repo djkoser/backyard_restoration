@@ -1,11 +1,25 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  WeedByBotanicalNameCQuery,
+  WeedByBotanicalNameCQueryVariables,
+  WeedByCommonNameCQuery,
+  WeedByCommonNameCQueryVariables,
+  WeedByVegetationTypeCQuery,
+  WeedByVegetationTypeCQueryVariables
+} from '../API';
+import {
+  weedByBotanicalNameC,
+  weedByCommonNameC,
+  weedByVegetationTypeC
+} from '../graphql/customQueries';
+import { Weed } from '../types';
 import Footer from './Footer';
 import Nav from './Nav';
 import Thumbnail from './Thumbnail';
 import WeatherLoader from './WeatherLoader';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Weed } from '../types';
 
 // props vegType
 const WeedSearch: React.FC = () => {
@@ -16,29 +30,73 @@ const WeedSearch: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const getWeedsByType = () => {
-    axios
-      .get(`/api/weeds?vegType=${vegType}`)
-      .then((res) => {
-        setWeedList(res.data);
-        setLoading(false);
-      })
-      .catch(() => navigate('/'));
+  const getWeedsByType = async () => {
+    try {
+      setLoading(true);
+      const query: WeedByVegetationTypeCQueryVariables = {
+        vegetationType: vegType || ''
+      };
+      const weeds = (await API.graphql(
+        graphqlOperation(weedByVegetationTypeC, query)
+      )) as WeedByVegetationTypeCQuery;
+      setWeedList(
+        weeds?.weedByVegetationType?.items.reduce((weedsParsed, weed) => {
+          if (weed) {
+            const { __typename, ...omitTypename } = weed;
+            weedsParsed.push(omitTypename);
+          }
+          return weedsParsed;
+        }, [] as Weed[]) || []
+      );
+      setLoading(false);
+    } catch {
+      navigate('/');
+    }
   };
-  const searchWeedsByKeyword = (e: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true);
-    e.preventDefault();
-    axios
-      .get(`/api/weeds?vegType=${vegType}&keyword=${encodeURI(searchText)}`)
-      .then((res) => {
-        setSearchText('');
-        setWeedList(res.data);
-        setLoading(false);
-      })
-      .catch(() => navigate('/'));
+  const searchWeedsByKeyword = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const weedsMap = new Map<string, Weed>();
+      const getWeedsCommonNameInput: WeedByCommonNameCQueryVariables = {
+        commonName: searchText,
+        filter: { vegetationType: { eq: vegType } }
+      };
+      const getWeedsBotanicalNameInput: WeedByBotanicalNameCQueryVariables = {
+        botanicalName: searchText,
+        filter: { vegetationType: { eq: vegType } }
+      };
+
+      const commonNameResults = (await API.graphql(
+        graphqlOperation(weedByCommonNameC, getWeedsCommonNameInput)
+      )) as GraphQLResult<WeedByCommonNameCQuery>;
+      const botanicalNameResults = (await API.graphql(
+        graphqlOperation(weedByBotanicalNameC, getWeedsBotanicalNameInput)
+      )) as GraphQLResult<WeedByBotanicalNameCQuery>;
+
+      commonNameResults.data?.weedByCommonName?.items.forEach((weed) => {
+        if (weed) {
+          const { __typename, ...omitTypename } = weed;
+          weedsMap.set(weed?.weedId || '', omitTypename);
+        }
+      });
+      botanicalNameResults.data?.weedByBotanicalName?.items.forEach((weed) => {
+        if (weed) {
+          const { __typename, ...omitTypename } = weed;
+          weedsMap.set(weed?.weedId || '', omitTypename);
+        }
+      });
+
+      setSearchText('');
+      setWeedList(Array.from(weedsMap.values()));
+      setLoading(false);
+    } catch {
+      setLoading(false);
+      navigate('/');
+    }
   };
   useEffect(() => {
-    getWeedsByType();
+    void getWeedsByType();
   }, [vegType]);
 
   const searchResults = weedList.map((el) => (

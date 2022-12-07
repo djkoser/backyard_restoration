@@ -3,9 +3,13 @@ import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   CreateUserManagementMethodCMutation,
+  CreateUserManagementMethodCMutationVariables,
   DeleteUserManagementMethodCMutation,
+  DeleteUserManagementMethodCMutationVariables,
   GetUserManagementMethodsQuery,
+  GetUserManagementMethodsQueryVariables,
   UpdateUserManagementMethodCMutation,
+  UpdateUserManagementMethodCMutationVariables,
   UpdateUserManagementMethodInput
 } from '../API';
 import {
@@ -50,15 +54,20 @@ export const addUserManagementMethod = (
   userManagementMethodManagementMethodId: string
 ) => {
   return userMethodSlice.actions.ADD_USER_METHOD(
-    new Promise((resolve, reject) =>
-      (
+    new Promise((resolve, reject) => {
+      const createUserManagementMethodInput: CreateUserManagementMethodCMutationVariables =
+        {
+          input: {
+            projectNotes: '',
+            userManagementMethodManagementMethodId
+          }
+        };
+      return (
         API.graphql(
-          graphqlOperation(createUserManagementMethodC, {
-            input: {
-              projectNotes: '',
-              userManagementMethodManagementMethodId
-            }
-          })
+          graphqlOperation(
+            createUserManagementMethodC,
+            createUserManagementMethodInput
+          )
         ) as Promise<GraphQLResult<CreateUserManagementMethodCMutation>>
       )
         .then((graphQlResult) => {
@@ -98,20 +107,25 @@ export const addUserManagementMethod = (
             );
           }
         })
-        .catch((err) => reject(err))
-    )
+        .catch((err) => reject(err));
+    })
   );
 };
 export const updateUserMethod = (
   newUserMethodProperties: UpdateUserManagementMethodInput
 ) => {
   return userMethodSlice.actions.UPDATE_USER_METHOD(
-    new Promise((resolve, reject) =>
-      (
+    new Promise((resolve, reject) => {
+      const updateUserManagementMethodInput: UpdateUserManagementMethodCMutationVariables =
+        {
+          input: newUserMethodProperties
+        };
+      return (
         API.graphql(
-          graphqlOperation(updateUserManagementMethodC, {
-            input: newUserMethodProperties
-          })
+          graphqlOperation(
+            updateUserManagementMethodC,
+            updateUserManagementMethodInput
+          )
         ) as Promise<GraphQLResult<UpdateUserManagementMethodCMutation>>
       )
         .then((graphQlResult) => {
@@ -149,18 +163,23 @@ export const updateUserMethod = (
             reject(new Error('updateUserMethod: Unexepcted result from API'));
           }
         })
-        .catch((err) => reject(err))
-    )
+        .catch((err) => reject(err));
+    })
   );
 };
 export const deleteUserManagementMethod = (userMethodId: string) => {
   return userMethodSlice.actions.REMOVE_USER_METHOD(
-    new Promise((resolve, reject) =>
-      (
+    new Promise((resolve, reject) => {
+      const deleteUserManagementMethodInput: DeleteUserManagementMethodCMutationVariables =
+        {
+          input: { id: userMethodId }
+        };
+      return (
         API.graphql(
-          graphqlOperation(deleteUserManagementMethodC, {
-            input: { id: userMethodId }
-          })
+          graphqlOperation(
+            deleteUserManagementMethodC,
+            deleteUserManagementMethodInput
+          )
         ) as Promise<GraphQLResult<DeleteUserManagementMethodCMutation>>
       )
         .then((graphQlResult) => {
@@ -203,8 +222,8 @@ export const deleteUserManagementMethod = (userMethodId: string) => {
             );
           }
         })
-        .catch((err) => reject(err))
-    )
+        .catch((err) => reject(err));
+    })
   );
 };
 export const getUserMethods = () => {
@@ -213,47 +232,49 @@ export const getUserMethods = () => {
       Auth.currentAuthenticatedUser({
         bypassCache: true
       })
-        .then(({ attributes }) =>
-          (
-            API.graphql(
-              graphqlOperation(getUserManagementMethods, {
-                email: attributes.email
-              })
-            ) as Promise<GraphQLResult<GetUserManagementMethodsQuery>>
-          ).then((graphQlResult) => {
-            if (graphQlResult.data?.getUser?.managementMethods?.items?.map) {
-              const userMethods =
-                graphQlResult.data.getUser.managementMethods.items.map(
-                  (userManagementMethod) => {
-                    const { id, projectNotes } = userManagementMethod || {};
+        .then(async ({ attributes }) => {
+          const getUserManagementMethodsInput: GetUserManagementMethodsQueryVariables =
+            {
+              email: attributes.email
+            };
+          const graphQlResult = await (API.graphql(
+            graphqlOperation(
+              getUserManagementMethods,
+              getUserManagementMethodsInput
+            )
+          ) as Promise<GraphQLResult<GetUserManagementMethodsQuery>>);
+          if (graphQlResult.data?.getUser?.managementMethods?.items?.map) {
+            const userMethods =
+              graphQlResult.data.getUser.managementMethods.items.map(
+                (userManagementMethod) => {
+                  const { id, projectNotes } = userManagementMethod || {};
 
-                    if (
-                      userManagementMethod?.managementMethod &&
-                      id &&
-                      projectNotes
-                    ) {
-                      const { __typename, weed, ...noTypeName } =
-                        userManagementMethod.managementMethod;
-                      return {
-                        id,
-                        commonName: weed.commonName,
-                        projectNotes: userManagementMethod?.projectNotes || '',
-                        ...noTypeName
-                      };
-                    } else {
-                      throw new Error(
-                        'getUserMethods: Unexepcted result from API'
-                      );
-                    }
+                  if (
+                    userManagementMethod?.managementMethod &&
+                    id &&
+                    projectNotes
+                  ) {
+                    const { __typename, weed, ...noTypeName } =
+                      userManagementMethod.managementMethod;
+                    return {
+                      id,
+                      commonName: weed.commonName,
+                      projectNotes: userManagementMethod?.projectNotes || '',
+                      ...noTypeName
+                    };
+                  } else {
+                    throw new Error(
+                      'getUserMethods: Unexepcted result from API'
+                    );
                   }
-                );
+                }
+              );
 
-              resolve({ userMethods });
-            } else {
-              reject(new Error('getUserMethods: Unexepcted result from API'));
-            }
-          })
-        )
+            resolve({ userMethods });
+          } else {
+            reject(new Error('getUserMethods: Unexepcted result from API'));
+          }
+        })
         .catch((err) => reject(err))
     )
   );

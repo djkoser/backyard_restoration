@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { GrowingCalculations } from '../../utilities/GrowingCalculations';
-import { CreateUserCMutation } from '../API';
+import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
 import { createUserC } from '../graphql/customMutations';
 import WeatherLoader from './WeatherLoader';
 
@@ -37,24 +37,25 @@ const Register: React.FC = () => {
       attributes: { email }
     })
       .then(() => {
+        const input: CreateUserCMutationVariables = {
+          input: {
+            email,
+            firstName,
+            lastName,
+            street,
+            city,
+            state,
+            zipcode,
+            growingSeasonLength: 0,
+            firstGdd45: '',
+            lastGdd45: '',
+            hardinessZone: ''
+          }
+        };
         void (
-          API.graphql(
-            graphqlOperation(createUserC, {
-              input: {
-                email,
-                firstName,
-                lastName,
-                street,
-                city,
-                state,
-                zipcode,
-                growingSeasonLength: 0,
-                firstGdd45: '',
-                lastGdd45: '',
-                hardinessZone: ''
-              }
-            })
-          ) as Promise<GraphQLResult<CreateUserCMutation>>
+          API.graphql(graphqlOperation(createUserC, input)) as Promise<
+            GraphQLResult<CreateUserCMutation>
+          >
         ).then((graphQLResult) => {
           void new GrowingCalculations(zipcode, street, city, state)
             .calculateGrowingParams()

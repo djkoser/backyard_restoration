@@ -251,3 +251,68 @@ export const deleteUserManagementMethodC = /* GraphQL */ `
     }
   }
 `;
+
+export const createWeedC = /* GraphQL */ `
+  mutation CreateWeedC(
+    $input: CreateWeedInput!
+    $condition: ModelWeedConditionInput
+  ) {
+    createWeed(input: $input, condition: $condition) {
+      weedId
+    }
+  }
+`;
+
+export const deleteWeedC = /* GraphQL */ `
+  mutation DeleteWeedC(
+    $input: DeleteWeedInput!
+    $condition: ModelWeedConditionInput
+  ) {
+    deleteWeed(input: $input, condition: $condition) {
+      weedId
+    }
+  }
+`;
+
+export const createManagementMethodC = /* GraphQL */ `
+  mutation CreateManagementMethodC(
+    $input: CreateManagementMethodInput!
+    $condition: ModelManagementMethodConditionInput
+  ) {
+    createManagementMethod(input: $input, condition: $condition) {
+      methodId
+    }
+  }
+`;
+
+export const deleteManagementMethodC = /* GraphQL */ `
+  mutation DeleteManagementMethodC(
+    $input: DeleteManagementMethodInput!
+    $condition: ModelManagementMethodConditionInput
+  ) {
+    deleteManagementMethod(input: $input, condition: $condition) {
+      methodId
+    }
+  }
+`;
+export const createNativePlantC = /* GraphQL */ `
+  mutation CreateNativePlantC(
+    $input: CreateNativePlantInput!
+    $condition: ModelNativePlantConditionInput
+  ) {
+    createNativePlant(input: $input, condition: $condition) {
+      nativeId
+    }
+  }
+`;
+
+export const deleteNativePlantC = /* GraphQL */ `
+  mutation DeleteNativePlantC(
+    $input: DeleteNativePlantInput!
+    $condition: ModelNativePlantConditionInput
+  ) {
+    deleteNativePlant(input: $input, condition: $condition) {
+      nativeId
+    }
+  }
+`;

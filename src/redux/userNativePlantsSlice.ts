@@ -3,9 +3,13 @@ import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   CreateUserNativePlantCMutation,
+  CreateUserNativePlantCMutationVariables,
   DeleteUserNativePlantCMutation,
+  DeleteUserNativePlantCMutationVariables,
   GetUserNativePlantsQuery,
+  GetUserNativePlantsQueryVariables,
   UpdateUserNativePlantCMutation,
+  UpdateUserNativePlantCMutationVariables,
   UpdateUserNativePlantInput
 } from '../API';
 import {
@@ -48,15 +52,17 @@ const fulfill: CaseReducer<
 
 export const addUserNative = (userNativePlantNativePlantId: string) => {
   return userNativePlantSlice.actions.ADD_USER_NATIVE(
-    new Promise((resolve, reject) =>
-      (
+    new Promise((resolve, reject) => {
+      const createUserNativePlantInput: CreateUserNativePlantCMutationVariables =
+        {
+          input: {
+            projectNotes: '',
+            userNativePlantNativePlantId
+          }
+        };
+      return (
         API.graphql(
-          graphqlOperation(createUserNativePlantC, {
-            input: {
-              projectNotes: '',
-              userNativePlantNativePlantId
-            }
-          })
+          graphqlOperation(createUserNativePlantC, createUserNativePlantInput)
         ) as Promise<GraphQLResult<CreateUserNativePlantCMutation>>
       )
         .then((graphQlResult) => {
@@ -89,20 +95,22 @@ export const addUserNative = (userNativePlantNativePlantId: string) => {
             reject(new Error('addUserNative: Unexepcted result from API'));
           }
         })
-        .catch((err) => reject(err))
-    )
+        .catch((err) => reject(err));
+    })
   );
 };
 export const updateUserNative = (
   newUserNativeProperties: UpdateUserNativePlantInput
 ) => {
   return userNativePlantSlice.actions.UPDATE_PROJECT_NOTES(
-    new Promise((resolve, reject) =>
-      (
+    new Promise((resolve, reject) => {
+      const updateUserNativePlantInput: UpdateUserNativePlantCMutationVariables =
+        {
+          input: newUserNativeProperties
+        };
+      return (
         API.graphql(
-          graphqlOperation(updateUserNativePlantC, {
-            input: newUserNativeProperties
-          })
+          graphqlOperation(updateUserNativePlantC, updateUserNativePlantInput)
         ) as Promise<GraphQLResult<UpdateUserNativePlantCMutation>>
       )
         .then((graphQlResult) => {
@@ -135,18 +143,20 @@ export const updateUserNative = (
             reject(new Error('updateUserNative: Unexepcted result from API'));
           }
         })
-        .catch((err) => reject(err))
-    )
+        .catch((err) => reject(err));
+    })
   );
 };
 export const deleteUserNative = (userNativeId: string) => {
   return userNativePlantSlice.actions.REMOVE_USER_NATIVE(
-    new Promise((resolve, reject) =>
-      (
+    new Promise((resolve, reject) => {
+      const deleteUserNativePlantInput: DeleteUserNativePlantCMutationVariables =
+        {
+          input: { id: userNativeId }
+        };
+      return (
         API.graphql(
-          graphqlOperation(deleteUserNativePlantC, {
-            input: { id: userNativeId }
-          })
+          graphqlOperation(deleteUserNativePlantC, deleteUserNativePlantInput)
         ) as Promise<GraphQLResult<DeleteUserNativePlantCMutation>>
       )
         .then((graphQlResult) => {
@@ -180,8 +190,8 @@ export const deleteUserNative = (userNativeId: string) => {
             reject(new Error('deleteUserNative: Unexepcted result from API'));
           }
         })
-        .catch((err) => reject(err))
-    )
+        .catch((err) => reject(err));
+    })
   );
 };
 export const getUserNatives = () => {
@@ -190,40 +200,40 @@ export const getUserNatives = () => {
       Auth.currentAuthenticatedUser({
         bypassCache: true
       })
-        .then(({ attributes }) =>
-          (
-            API.graphql(
-              graphqlOperation(getUserNativePlants, { email: attributes.email })
-            ) as Promise<GraphQLResult<GetUserNativePlantsQuery>>
-          ).then((graphQlResult) => {
-            if (graphQlResult.data?.getUser?.nativePlants?.items?.map) {
-              const nativePlants =
-                graphQlResult.data.getUser.nativePlants.items.map(
-                  (nativePlant) => {
-                    const { id, projectNotes } = nativePlant || {};
+        .then(async ({ attributes }) => {
+          const getUserNativePlantsInput: GetUserNativePlantsQueryVariables = {
+            email: attributes.email
+          };
+          const graphQlResult = await (API.graphql(
+            graphqlOperation(getUserNativePlants, getUserNativePlantsInput)
+          ) as Promise<GraphQLResult<GetUserNativePlantsQuery>>);
+          if (graphQlResult.data?.getUser?.nativePlants?.items?.map) {
+            const nativePlants =
+              graphQlResult.data.getUser.nativePlants.items.map(
+                (nativePlant) => {
+                  const { id, projectNotes } = nativePlant || {};
 
-                    if (nativePlant?.nativePlant && id && projectNotes) {
-                      const { __typename, ...noTypeName } =
-                        nativePlant.nativePlant;
-                      return {
-                        id,
-                        projectNotes: nativePlant?.projectNotes || '',
-                        ...noTypeName
-                      };
-                    } else {
-                      throw new Error(
-                        'getUserNatives: Unexepcted result from API'
-                      );
-                    }
+                  if (nativePlant?.nativePlant && id && projectNotes) {
+                    const { __typename, ...noTypeName } =
+                      nativePlant.nativePlant;
+                    return {
+                      id,
+                      projectNotes: nativePlant?.projectNotes || '',
+                      ...noTypeName
+                    };
+                  } else {
+                    throw new Error(
+                      'getUserNatives: Unexepcted result from API'
+                    );
                   }
-                );
+                }
+              );
 
-              resolve({ nativePlants });
-            } else {
-              reject(new Error('getUserNatives: Unexepcted result from API'));
-            }
-          })
-        )
+            resolve({ nativePlants });
+          } else {
+            reject(new Error('getUserNatives: Unexepcted result from API'));
+          }
+        })
         .catch((err) => reject(err))
     )
   );

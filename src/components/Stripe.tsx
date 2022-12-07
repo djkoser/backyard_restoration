@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import fetch from 'node-fetch';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import Nav from './Nav';
 
 // eslint-disable-next-line no-undef
@@ -12,7 +13,7 @@ const { REACT_APP_STRIPE_PUBLISHABLE_KEY } = process.env;
 
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY as string);
 
-const Stripe = () => {
+const Stripe: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState('$0.00');
 
   const toPaymentPage = async () => {
@@ -22,14 +23,18 @@ const Stripe = () => {
       Number.parseFloat(donationAmount) >= 1
     ) {
       const stripe = await stripePromise;
-      axios
-        .post('/api/donate', {
+
+      await fetch('/api/donate', {
+        method: 'post',
+        body: JSON.stringify({
           donationAmount: (Number.parseFloat(donationAmount) * 100).toString()
         })
+      })
         .then(async (res) => {
+          const resParsed = JSON.parse((await res.json()) as string);
           if (stripe) {
             await stripe.redirectToCheckout({
-              sessionId: res.data.id
+              sessionId: resParsed.id
             });
           } else {
             const message = 'Stripe object was undefined';
