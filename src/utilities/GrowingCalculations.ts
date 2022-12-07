@@ -39,38 +39,42 @@ export class GrowingCalculations {
   }
   /** An initializer that makes all necessary API calls and calculates all requisite growing paramters pertaining to the user's location*/
   async calculateGrowingParams() {
-    // Get TMIN and TMAX data from the weather station closest to the user's location
-    let { TMIN, TMAX } = await this.retrieveAPIData();
-    // writeFileSync(join(__dirname, 'TMIN.json'), JSON.stringify(TMIN));
-    // writeFileSync(join(__dirname, 'TMAX.json'), JSON.stringify(TMAX));
-    // let TMIN = JSON.parse(readFileSync(join(__dirname, 'TMIN.json')).toString());
-    // let TMAX = JSON.parse(readFileSync(join(__dirname, 'TMAX.json')).toString());
-    // Clean the data
-    TMAX = this.selectHighestDuplicates(TMAX);
-    TMIN = this.selectLowestDuplicates(TMIN);
-    this.sortTMINTMAX(TMIN, TMAX);
-    // Create an observation_date -> {TMIN, TMAX, GDD } map using filtered for season starts and ends calculation
-    this.mapTMINTMAX(TMIN, TMAX);
-    const TMINAvg = this.getLowestTemperature(TMIN);
+    try {
+      // Get TMIN and TMAX data from the weather station closest to the user's location
+      let { TMIN, TMAX } = await this.retrieveAPIData();
+      // writeFileSync(join(__dirname, 'TMIN.json'), JSON.stringify(TMIN));
+      // writeFileSync(join(__dirname, 'TMAX.json'), JSON.stringify(TMAX));
+      // let TMIN = JSON.parse(readFileSync(join(__dirname, 'TMIN.json')).toString());
+      // let TMAX = JSON.parse(readFileSync(join(__dirname, 'TMAX.json')).toString());
+      // Clean the data
+      TMAX = this.selectHighestDuplicates(TMAX);
+      TMIN = this.selectLowestDuplicates(TMIN);
+      this.sortTMINTMAX(TMIN, TMAX);
+      // Create an observation_date -> {TMIN, TMAX, GDD } map using filtered for season starts and ends calculation
+      this.mapTMINTMAX(TMIN, TMAX);
+      const TMINAvg = this.getLowestTemperature(TMIN);
 
-    const seasonStarts = this.removeOutliersFromDates(
-      this.gdd45SpringTransitions()
-    );
+      const seasonStarts = this.removeOutliersFromDates(
+        this.gdd45SpringTransitions()
+      );
 
-    const seasonEnds = this.removeOutliersFromDates(
-      this.gdd45WinterTransitions()
-    );
+      const seasonEnds = this.removeOutliersFromDates(
+        this.gdd45WinterTransitions()
+      );
 
-    const firstGdd45 = this.avgDateString(seasonStarts);
-    const lastGdd45 = this.avgDateString(seasonEnds);
-    return {
-      hardinessZone: this.hardinessZoneCalculator(TMINAvg),
-      firstGdd45,
-      lastGdd45,
-      growingSeasonLength: Math.round(
-        this.averageSeasonLength(lastGdd45, firstGdd45)
-      )
-    };
+      const firstGdd45 = this.avgDateString(seasonStarts);
+      const lastGdd45 = this.avgDateString(seasonEnds);
+      return {
+        hardinessZone: this.hardinessZoneCalculator(TMINAvg),
+        firstGdd45,
+        lastGdd45,
+        growingSeasonLength: Math.round(
+          this.averageSeasonLength(lastGdd45, firstGdd45)
+        )
+      };
+    } catch {
+      throw new Error('Growing Param Calculation Failed');
+    }
   }
 
   private removeOutliersFromDates(dates: Date[]) {

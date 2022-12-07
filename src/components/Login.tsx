@@ -21,9 +21,6 @@ const Login: React.FC = () => {
         );
       });
   };
-  const register = () => {
-    navigate('/register');
-  };
   return (
     <div id="loginComponent">
       <article id="loginWelcomeTextBox">
@@ -92,7 +89,7 @@ const Login: React.FC = () => {
               id="registerButton"
               onClick={(e) => {
                 e.preventDefault();
-                register();
+                navigate('/register');
               }}
             >
               Register
