@@ -1,6 +1,5 @@
 const { GOOGLE_API_KEY, NOAA_TOKEN, NOAA_TOKEN_BACKUP } = process.env;
-import { Observation, TMINMAXMap, WeatherAPIReturn } from '../src/types';
-import fetch from 'node-fetch';
+import { Observation, TMINMAXMap, WeatherAPIReturn } from '../types';
 // import { readFileSync } from 'fs';
 // import { join } from 'path';
 export class GrowingCalculations {

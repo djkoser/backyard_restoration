@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { GrowingCalculations } from '../../utilities/GrowingCalculations';
+import { GrowingCalculations } from '../utilities/GrowingCalculations';
 import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
 import { createUserC } from '../graphql/customMutations';
 import WeatherLoader from './WeatherLoader';

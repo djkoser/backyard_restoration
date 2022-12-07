@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import fetch from 'node-fetch';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
