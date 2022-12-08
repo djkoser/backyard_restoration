@@ -116,7 +116,11 @@ export const EmailConfirmation: React.FC = () => {
         >
           <section className="registerSections">
             <h3 className="registerSectionText">Confirmation Code</h3>
-            <h4> Please enter the confirmation we sent you here</h4>
+            <br />
+            <h4 style={{ color: 'black' }}>
+              Please enter the confirmation we sent you here
+            </h4>
+            <br />
             <input
               placeholder="Confirmation Code"
               type="text"
@@ -161,7 +165,7 @@ export const EmailConfirmation: React.FC = () => {
               }}
             ></input>
           </section>
-          <button>Register</button>
+          <button>Complete Registration</button>
         </form>
         <article className="registerWelcomeText">
           <h1>Welcome to Our Community!</h1>
@@ -171,10 +175,10 @@ export const EmailConfirmation: React.FC = () => {
           </h4>
           <h4>
             BackyardRestoration.net was built with modern security protocols,
-            but if you have any privacy concerns with this, please leave this
-            information blank and you will be prompted to manually enter your:
-            season start date, season end date and hardiness zone on the next
-            page.
+            but if you have any privacy concerns with providing your address,
+            please leave this information blank and you will be prompted to
+            manually enter your: season start-date, season end-date and
+            hardiness zone on the next page.
           </h4>
         </article>
       </section>

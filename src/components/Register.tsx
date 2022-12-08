@@ -117,11 +117,15 @@ export const Register: React.FC = () => {
           </section>
           <section className="registerSections">
             <h3 className="registerSectionText">Password</h3>
-            <h4>
-              Please enter a password that is a minimum of 8 characters and
-              contains: at least one uppercase and lowercase letter, one number
-              and one special character \(@,$,!,%,*,? or &\){' '}
+            <br />
+            <h4 style={{ color: 'black' }}>
+              Your password must be a minimum of 8 characters and contain at
+              least one: uppercase letter, lowercase letter, number and special
+              character
+              <br />
+              (@ $ ! % * ? &)
             </h4>
+            <br />
             <input
               placeholder="Password"
               type="password"
@@ -131,6 +135,7 @@ export const Register: React.FC = () => {
               }}
             ></input>
           </section>
+          <button>Confirm Email</button>
         </form>
         <article className="registerWelcomeText">
           <h1>Welcome to Our Community!</h1>
