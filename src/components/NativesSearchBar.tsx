@@ -1,21 +1,21 @@
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { NativeSearchBarProps } from '../types';
-import { API, graphqlOperation } from 'aws-amplify';
+import {
+  NativePlantByBotanicalNameCQuery,
+  NativePlantByBotanicalNameCQueryVariables,
+  NativePlantByCommonNameCQuery,
+  NativePlantByCommonNameCQueryVariables
+} from '../API';
 import {
   nativePlantByBotanicalNameC,
   nativePlantByCommonNameC
 } from '../graphql/customQueries';
-import {
-  NativePlantByBotanicalNameCQueryVariables,
-  NativePlantByCommonNameCQueryVariables,
-  NativePlantByBotanicalNameCQuery,
-  NativePlantByCommonNameCQuery
-} from '../API';
-import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { NativeSearchBarProps } from '../types';
 
 //Props from app.js -myPlantsList addToMyPlants
-const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
+export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
   const [botanicalCommonNameInput, setBotanicalCommonNameInput] = useState('');
   const [sunInput, setSunInput] = useState('');
   const [bloomTimeInput, setBloomTimeInput] = useState('');
@@ -262,5 +262,3 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
     </div>
   );
 };
-
-export default NativeSearchBar;

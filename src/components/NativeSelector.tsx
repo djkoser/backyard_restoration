@@ -3,13 +3,15 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { getUserInfo } from '../redux/userSlice';
 import { UserNativeStateVersion } from '../types';
-import AddedNatives from './AddedNatives';
-import NativesSearchBar from './NativesSearchBar';
-import NativeThumbnail from './NativeThumbnail';
-import Nav from './Nav';
-import WeatherLoader from './WeatherLoader';
+import {
+  AddedNatives,
+  NativeSearchBar,
+  NativeThumbnail,
+  Nav,
+  WeatherLoader
+} from './';
 
-const NativeSelector: React.FC = () => {
+export const NativeSelector: React.FC = () => {
   const dispatch = useDispatch();
   const [searchResults, setSearchResults] = useState<UserNativeStateVersion[]>(
     []
@@ -46,7 +48,7 @@ const NativeSelector: React.FC = () => {
     <>
       <ToastContainer />
       <Nav invertColors={false} />
-      <NativesSearchBar
+      <NativeSearchBar
         setLoadingParent={setLoading}
         setSearchResults={setSearchResults}
         setSearchAdded={setSearchAdded}
@@ -69,5 +71,3 @@ const NativeSelector: React.FC = () => {
     </>
   );
 };
-
-export default NativeSelector;

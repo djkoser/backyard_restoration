@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -103,4 +103,3 @@ const Login: React.FC = () => {
     </div>
   );
 };
-export default Login;

@@ -1,14 +1,14 @@
+import * as CSS from 'csstype';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AppStore } from '../redux/store';
 import {
   addUserManagementMethod,
   deleteUserManagementMethod
 } from '../redux/userMethodSlice';
-import { AppStore } from '../redux/store';
 import { SwitchMakerProps, UserManagementMethodStateVersion } from '../types';
-import * as CSS from 'csstype';
 
-const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
+export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
   const dispatch = useDispatch();
   // Determine if weed method is in user method list and check inputs accordingly
 
@@ -77,5 +77,3 @@ const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
     </div>
   );
 };
-
-export default MethodSwitch;

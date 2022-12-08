@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppStore } from '../redux/store';
 import { updateUser } from '../redux/userSlice';
 
-const NOAAHangupPage: React.FC = () => {
+export const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
   const [firstGdd45, setFirstGDD35] = useState('MM-DD');
   const [lastGdd45, setLastGDD35] = useState('MM-DD');
@@ -127,5 +127,3 @@ const NOAAHangupPage: React.FC = () => {
     </main>
   );
 };
-
-export default NOAAHangupPage;

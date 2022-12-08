@@ -1,36 +1,30 @@
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { GrowingCalculations } from '../utilities/GrowingCalculations';
 import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
 import { createUserC } from '../graphql/customMutations';
-import WeatherLoader from './WeatherLoader';
+import { WeatherLoader } from './';
 
 // props from Login email, password
 
-const Register: React.FC = () => {
+export const Register: React.FC = () => {
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipcode, setZipcode] = useState('');
   const [loading, setLoading] = useState(false);
 
   const createNewUser = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const digitChecker = zipcode.match(/\D/g);
-      if (zipcode.length <= 5 && !digitChecker) {
+      // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:
+      const passwordChecker =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g;
+      if (passwordChecker.test(password)) {
         setLoading(true);
         await Auth.signUp({
           username: email,
@@ -42,10 +36,6 @@ const Register: React.FC = () => {
             email,
             firstName,
             lastName,
-            street,
-            city,
-            state,
-            zipcode,
             growingSeasonLength: 0,
             firstGdd45: '',
             lastGdd45: '',
@@ -56,57 +46,24 @@ const Register: React.FC = () => {
           graphqlOperation(createUserC, input)
         )) as GraphQLResult<CreateUserCMutation>;
 
-        const { hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
-          await new GrowingCalculations(
-            zipcode,
-            street,
-            city,
-            state
-          ).calculateGrowingParams();
-
-        const { __typename, ...omitTypename } =
-          graphQLResult?.data?.createUser || {};
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-        setStreet('');
-        setCity('');
-        setState('');
-        setZipcode('');
-        dispatch({
-          type: 'ADD_RETRIEVED_INFO',
-          payload: {
-            ...omitTypename,
-            hardinessZone,
-            firstGdd45,
-            lastGdd45,
-            growingSeasonLength
-          }
-        });
         toast.success(
-          'Registration Successful! Logging you in to your new dashboard...'
+          `Account Creation Successful! Please confirm your email address by entering the code we sent to ${graphQLResult.data?.createUser?.email} on the next page...`
         );
-        setTimeout(() => navigate('/dash'), 3000);
+        setTimeout(
+          () => navigate('/emailConfirmation', { state: { email, password } }),
+          3000
+        );
       } else {
         setLoading(false);
-        toast.error('Please enter a 5 digit zipcode, thank you');
+        toast.warning(
+          'The password you created does not meet our requirements: minimum of 8 characters, at least one uppercase and lowercase letter, one number and one special character: @,$,!,%,*,? or &. Please create a new password and try again.'
+        );
       }
     } catch (err) {
-      if (
-        err instanceof Error &&
-        err.message === 'Growing Param Calculation Failed'
-      ) {
-        toast.warning(
-          'NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.'
-        );
-        setTimeout(() => navigate('/manualEntry'), 5000);
-      } else {
-        setLoading(false);
-        toast.error(
-          'A user with the email you provided is already present within our database. Please log in using your email and password or reset your password using the "Forgot Password" link.'
-        );
-      }
+      setLoading(false);
+      toast.error(
+        'There was an error while attempting to create your user user account and validate your email address, if you already have an account with us, please log in using your email and password, or reset your password using the "Forgot Password" link..'
+      );
     }
   };
 
@@ -160,6 +117,11 @@ const Register: React.FC = () => {
           </section>
           <section className="registerSections">
             <h3 className="registerSectionText">Password</h3>
+            <h4>
+              Please enter a password that is a minimum of 8 characters and
+              contains: at least one uppercase and lowercase letter, one number
+              and one special character \(@,$,!,%,*,? or &\){' '}
+            </h4>
             <input
               placeholder="Password"
               type="password"
@@ -169,42 +131,6 @@ const Register: React.FC = () => {
               }}
             ></input>
           </section>
-          <section className="registerSections">
-            <h3 className="registerSectionText">Address</h3>
-            <input
-              placeholder="Street"
-              type="text"
-              value={street}
-              onChange={(e) => {
-                setStreet(e.target.value);
-              }}
-            ></input>
-            <input
-              placeholder="City"
-              type="text"
-              value={city}
-              onChange={(e) => {
-                setCity(e.target.value);
-              }}
-            ></input>
-            <input
-              placeholder="State"
-              type="text"
-              value={state}
-              onChange={(e) => {
-                setState(e.target.value);
-              }}
-            ></input>
-            <input
-              placeholder="Zipcode"
-              type="text"
-              value={zipcode}
-              onChange={(e) => {
-                setZipcode(e.target.value);
-              }}
-            ></input>
-          </section>
-          <button>Register</button>
         </form>
         <article className="registerWelcomeText">
           <h1>Welcome to Our Community!</h1>
@@ -212,15 +138,7 @@ const Register: React.FC = () => {
             {' '}
             Registering for an account with BackyardRestoration.net will provide
             you with access to a series of free tools designed to help you plan
-            and complete your own backyard ecological restorations.{' '}
-          </h4>
-          <h4>
-            Your address will be used to calculate growing parameters for your
-            local area using historical weather data.
-          </h4>
-          <h4>
-            If you have any privacy concerns or questions regarding the site,
-            please contact us at BackyardRestorationNet@gmail.com.
+            and complete your own backyard ecological restoration projects.{' '}
           </h4>
         </article>
       </section>
@@ -230,4 +148,3 @@ const Register: React.FC = () => {
     </>
   );
 };
-export default Register;

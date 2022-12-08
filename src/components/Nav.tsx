@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { NavProps } from '../types';
 
-const Nav: React.FC<NavProps> = (props) => {
+export const Nav: React.FC<NavProps> = (props) => {
   const navigate = useNavigate();
   const { invertColors } = props;
   const [mobileOpenClose, setMobileOpenClose] = useState(false);
@@ -112,4 +112,3 @@ const Nav: React.FC<NavProps> = (props) => {
     </nav>
   );
 };
-export default Nav;

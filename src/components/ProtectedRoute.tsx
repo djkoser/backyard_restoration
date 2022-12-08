@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
 import { Auth } from 'aws-amplify';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ProtectedRoute: React.FC<{
+export const ProtectedRoute: React.FC<{
   children: React.ReactElement;
   redirectRoute?: string;
   forwardingRoute?: string;
@@ -19,5 +19,3 @@ const ProtectedRoute: React.FC<{
   }, []);
   return children;
 };
-
-export default ProtectedRoute;

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
-const RequestPasswordReset: React.FC = () => {
+export const RequestPasswordReset: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [email, setEmail] = useState(state.email);
@@ -61,5 +61,3 @@ const RequestPasswordReset: React.FC = () => {
     </div>
   );
 };
-
-export default RequestPasswordReset;

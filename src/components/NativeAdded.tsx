@@ -6,7 +6,7 @@ import {
 } from '../redux/userNativePlantsSlice';
 import { NativeAddedProps } from '../types';
 
-const NativeAdded: React.FC<NativeAddedProps> = (props) => {
+export const NativeAdded: React.FC<NativeAddedProps> = (props) => {
   const dispatch = useDispatch();
   const {
     id,
@@ -71,5 +71,3 @@ const NativeAdded: React.FC<NativeAddedProps> = (props) => {
     </div>
   );
 };
-
-export default NativeAdded;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ThumbnailProps } from '../types';
 
 // props commonName, botanicalName from WeedSearch
-const Thumbnail: React.FC<ThumbnailProps> = (props) => {
+export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
   const { weedId, commonName, botanicalName, src } = props.weedInfo;
   return (
     <figure className="searchFigures">
@@ -28,4 +28,3 @@ const Thumbnail: React.FC<ThumbnailProps> = (props) => {
     </figure>
   );
 };
-export default Thumbnail;

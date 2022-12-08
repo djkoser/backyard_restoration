@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
-import { UserManagementMethodStateVersion, TimelineProps } from '../types';
+import React, { useEffect, useRef, useState } from 'react';
+import { TimelineProps, UserManagementMethodStateVersion } from '../types';
 
 // From store userMethods[], gSeasonLength, firstGDD35
 
-const Timeline: React.FC<TimelineProps> = (props) => {
+export const Timeline: React.FC<TimelineProps> = (props) => {
   // Calculates a year as January 1st through December 31st, this will the be axis display range
   const currentDate = new Date();
   const yrEndDate = new Date(currentDate.getFullYear(), 11, 31);
@@ -279,5 +279,3 @@ const Timeline: React.FC<TimelineProps> = (props) => {
     </>
   );
 };
-
-export default Timeline;

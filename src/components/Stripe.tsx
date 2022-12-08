@@ -1,18 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import Nav from './Nav';
+import { Nav } from './';
 
 // eslint-disable-next-line no-undef
 const { REACT_APP_STRIPE_PUBLISHABLE_KEY } = process.env;
 
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY as string);
 
-const Stripe: React.FC = () => {
+export const Stripe: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState('$0.00');
 
   const toPaymentPage = async () => {
@@ -84,5 +83,3 @@ const Stripe: React.FC = () => {
     </>
   );
 };
-
-export default Stripe;

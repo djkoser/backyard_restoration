@@ -10,9 +10,9 @@ import {
 } from '../API';
 import { getWeedC, weedByVegetationTypeC } from '../graphql/customQueries';
 import { ManagementMethodStateVersion } from '../types';
-import SwitchMaker from './MethodSwitch';
+import { MethodSwitch } from './';
 
-const DashboardDropdowns: React.FC = () => {
+export const DashboardDropdowns: React.FC = () => {
   const navigate = useNavigate();
   const [weedOptions, setWeedOptions] = useState<JSX.Element[]>([]);
   const [switches, setSwitches] = useState<JSX.Element[]>([]);
@@ -61,7 +61,7 @@ const DashboardDropdowns: React.FC = () => {
 
         setSwitches(
           methodsCleaned.map((el) => (
-            <SwitchMaker key={`method${el.methodId}`} weedMethod={el} />
+            <MethodSwitch key={`method${el.methodId}`} weedMethod={el} />
           ))
         );
       }
@@ -94,5 +94,3 @@ const DashboardDropdowns: React.FC = () => {
     </>
   );
 };
-
-export default DashboardDropdowns;

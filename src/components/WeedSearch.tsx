@@ -16,13 +16,10 @@ import {
   weedByVegetationTypeC
 } from '../graphql/customQueries';
 import { Weed } from '../types';
-import Footer from './Footer';
-import Nav from './Nav';
-import Thumbnail from './Thumbnail';
-import WeatherLoader from './WeatherLoader';
+import { Footer, Nav, Thumbnail, WeatherLoader } from './';
 
 // props vegType
-const WeedSearch: React.FC = () => {
+export const WeedSearch: React.FC = () => {
   const navigate = useNavigate();
   const { vegType } = useParams<{ vegType: string }>();
   const [searchText, setSearchText] = useState('');
@@ -136,4 +133,3 @@ const WeedSearch: React.FC = () => {
     output
   );
 };
-export default WeedSearch;

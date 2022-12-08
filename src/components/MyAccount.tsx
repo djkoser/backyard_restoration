@@ -1,15 +1,13 @@
+import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppDispatch, AppStore } from '../redux/store';
 import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
-import Footer from './Footer';
-import Nav from './Nav';
-import WeatherLoader from './WeatherLoader';
-import { Auth } from 'aws-amplify';
+import { Footer, Nav, WeatherLoader } from './';
 
-const MyAccount: React.FC = () => {
+export const MyAccount: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -459,4 +457,3 @@ const MyAccount: React.FC = () => {
     </>
   );
 };
-export default MyAccount;

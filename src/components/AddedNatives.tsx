@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import NativeAdded from './NativeAdded';
-import { AddedNativesProps, UserNativeStateVersion } from '../types';
 import { AppStore } from '../redux/store';
+import { AddedNativesProps, UserNativeStateVersion } from '../types';
+import { NativeAdded } from './';
 
-const AddedNatives: React.FC<AddedNativesProps> = (props) => {
+export const AddedNatives: React.FC<AddedNativesProps> = (props) => {
   const [eSpring, setESpring] = useState<JSX.Element[]>([]);
   const [lSpring, setLSpring] = useState<JSX.Element[]>([]);
   const [summer, setSummer] = useState<JSX.Element[]>([]);
@@ -168,5 +168,3 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
     </aside>
   );
 };
-
-export default AddedNatives;

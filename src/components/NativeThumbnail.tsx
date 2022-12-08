@@ -5,7 +5,7 @@ import { AppStore } from '../redux/store';
 import { addUserNative } from '../redux/userNativePlantsSlice';
 import type { NativeThumbnailProps, UserNativeStateVersion } from '../types';
 
-const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
+export const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
   const dispatch = useDispatch();
   const {
     nativeId,
@@ -79,5 +79,3 @@ const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
     </>
   );
 };
-
-export default NativeThumbnail;

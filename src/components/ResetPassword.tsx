@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React, { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import type * as CSS from 'csstype';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
+import type * as CSS from 'csstype';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
-const ResetPassword: React.FC = () => {
+export const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
   const [failureMessage, setFailureMessage] = useState<CSS.Properties>({
     visibility: 'hidden'
@@ -45,14 +45,16 @@ const ResetPassword: React.FC = () => {
         <h4>
           {' '}
           Your password reset request has been submitted successfully! Please
-          check your email for a link to reset your password. (These often end
-          up in SPAM, so please check there if you're having trouble finding
-          it).
+          check your email for a verification code to reset your password.
+          (These often end up in SPAM, so please check there if you're having
+          trouble finding it).
         </h4>
       </article>
       <br />
       <br />
-      <h4>Please Enter a New Password for Your Account Below</h4>
+      <h4>
+        Please Enter the Validation Code you Received and New Password Below
+      </h4>
       <form id="submitResetForm" onSubmit={(e) => submitChange(e)}>
         <input
           type="text"
@@ -78,5 +80,3 @@ const ResetPassword: React.FC = () => {
     </main>
   );
 };
-
-export default ResetPassword;

@@ -1,20 +1,23 @@
-import { Amplify } from 'aws-amplify';
 import React from 'react';
+import { Amplify } from 'aws-amplify';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import awsconfig from './aws-exports';
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import MyAccount from './components/MyAccount';
-import NativeSelector from './components/NativeSelector';
-import NOAAHangupPage from './components/NOAAHangupPage';
-import ProtectedRoute from './components/ProtectedRoute';
-import Register from './components/Register';
-import RequestPasswordReset from './components/RequestPasswordReset';
-import ResetPassword from './components/ResetPassword';
-import Stripe from './components/Stripe';
-import StripeThankYou from './components/StripeThankYou';
-import WeedPage from './components/WeedPage';
-import WeedSearch from './components/WeedSearch';
+import {
+  Dashboard,
+  EmailConfirmation,
+  Login,
+  MyAccount,
+  NativeSelector,
+  NOAAHangupPage,
+  ProtectedRoute,
+  Register,
+  RequestPasswordReset,
+  ResetPassword,
+  Stripe,
+  StripeThankYou,
+  WeedPage,
+  WeedSearch
+} from './components';
 
 Amplify.configure(awsconfig);
 
@@ -56,6 +59,10 @@ const router = createBrowserRouter([
     element: <Register />
   },
   {
+    path: 'emailConfirmation/:email',
+    element: <EmailConfirmation />
+  },
+  {
     path: 'weed/:id',
     element: (
       <ProtectedRoute redirectRoute="/">
@@ -93,7 +100,7 @@ const router = createBrowserRouter([
   }
 ]);
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="App">
       <RouterProvider router={router} />

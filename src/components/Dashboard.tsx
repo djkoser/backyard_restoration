@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Footer from './Footer';
-import Nav from './Nav';
-import Timeline from './Timeline';
-import DashboardDropdowns from './DashboardDropdowns';
-import { getUserInfo } from '../redux/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStore } from '../redux/store';
+import { getUserInfo } from '../redux/userSlice';
 import { UserManagementMethodStateVersion } from '../types';
+import { DashboardDropdowns, Footer, Nav, Timeline } from './';
 
 // props from store hZone, gSeasonLength firstGDD35
 
-const Dashboard: React.FC = () => {
+export const Dashboard: React.FC = () => {
   const hardinessZone = useSelector<AppStore, string>(
     (state) => state.userInfo.hardinessZone
   );
@@ -81,4 +78,3 @@ const Dashboard: React.FC = () => {
     </>
   );
 };
-export default Dashboard;

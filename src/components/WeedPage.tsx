@@ -12,12 +12,9 @@ import { getWeedC } from '../graphql/customQueries';
 import { AppStore } from '../redux/store';
 import { getUserMethods } from '../redux/userMethodSlice';
 import { UserManagementMethodStateVersion } from '../types';
-import Footer from './Footer';
-import SwitchMaker from './MethodSwitch';
-import Nav from './Nav';
-import WeatherLoader from './WeatherLoader';
+import { Footer, MethodSwitch, Nav, WeatherLoader } from './';
 
-const WeedPage: React.FC = () => {
+export const WeedPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [src, setSrc] = useState('');
@@ -49,7 +46,7 @@ const WeedPage: React.FC = () => {
   useEffect(() => {
     setSwitches(
       mgmtOptions.map((el) => (
-        <SwitchMaker key={`method${el.methodId}`} weedMethod={el} />
+        <MethodSwitch key={`method${el.methodId}`} weedMethod={el} />
       ))
     );
   }, [mgmtOptions, userMethods]);
@@ -138,5 +135,3 @@ const WeedPage: React.FC = () => {
     output
   );
 };
-
-export default WeedPage;
