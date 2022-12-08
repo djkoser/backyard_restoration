@@ -30,7 +30,11 @@ export const Register: React.FC = () => {
           username: email,
           password,
           attributes: { email }
-        });
+        }).catch(() =>
+          toast.success(
+            `A verification code has been sent to the email provided.`
+          )
+        );
         const input: CreateUserCMutationVariables = {
           input: {
             email,
