@@ -9,6 +9,16 @@ export const createUserC = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       email
+      firstName
+      lastName
+      street
+      city
+      state
+      zipcode
+      growingSeasonLength
+      firstGdd45
+      lastGdd45
+      hardinessZone
     }
   }
 `;

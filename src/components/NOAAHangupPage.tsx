@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppStore } from '../redux/store';
 import { updateUser } from '../redux/userSlice';
+import { daysBetween, isValidDate } from '../utilities/dateUtils';
 
 export const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,26 +13,51 @@ export const NOAAHangupPage: React.FC = () => {
   const [hardinessZone, setHardinessZone] = useState('');
   const dispatch = useDispatch();
 
-  const reduxLoading = useSelector<AppStore, boolean>(
-    (state) => state.userInfo.loading
-  );
-
   const reduxFailed = useSelector<AppStore, boolean>(
     (state) => state.userInfo.failed
   );
 
-  useEffect(() => {
-    if (!reduxFailed && !reduxLoading) {
-      toast.success(
-        'Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.'
-      );
-      setTimeout(() => navigate('/dash'), 3000);
-    } else if (reduxFailed && !reduxLoading) {
+  const addGrowingInfoHandler = () => {
+    const startEndFormatChecker = /^[0-1][0-9]-[0-3][0-9]$/;
+    const [startMonth, startDay] = firstGdd45.split('-');
+    const [endMonth, endDay] = lastGdd45.split('-');
+    if (
+      !startEndFormatChecker.test(firstGdd45) ||
+      !startEndFormatChecker.test(lastGdd45) ||
+      (!isValidDate('2019', startMonth, startDay) &&
+        !isValidDate('2020', startMonth, startDay)) ||
+      (!isValidDate('2019', endMonth, endDay) &&
+        !isValidDate('2020', endMonth, endDay))
+    ) {
       toast.error(
-        'An error occured while attempting to add your growing information to your account. Please unsure that you have used the correct formatting within the start and end dates boxes (MM-DD). Thank you.'
+        'Please use the correct format for start and end dates (MM-DD), thank you'
+      );
+    } else {
+      const growingSeasonLength = daysBetween(firstGdd45, lastGdd45);
+      dispatch(
+        updateUser({
+          firstGdd45,
+          lastGdd45,
+          hardinessZone,
+          growingSeasonLength
+        })
+      );
+      toast.success(
+        'Just a few seconds while we add this information to your profile and navigate to your new dashboard...'
+      );
+      setTimeout(() => {
+        if (!reduxFailed) navigate('/dash');
+      }, 3000);
+    }
+  };
+
+  useEffect(() => {
+    if (reduxFailed) {
+      toast.error(
+        'An error occurred while attempting to add your growing information to your account. Please email us at BackyardRestorationNet@gmail.com and we will fix your account manually.'
       );
     }
-  }, [reduxLoading, reduxFailed]);
+  }, [reduxFailed]);
 
   return (
     <main id="NOAAHangupBody">
@@ -116,13 +142,7 @@ export const NOAAHangupPage: React.FC = () => {
             <option value="13b">Zone 13b: 65F - 70F </option>
           </select>
         </fieldset>
-        <button
-          onClick={() =>
-            dispatch(updateUser({ firstGdd45, lastGdd45, hardinessZone }))
-          }
-        >
-          Submit
-        </button>
+        <button onClick={() => addGrowingInfoHandler()}>Submit</button>
       </div>
     </main>
   );

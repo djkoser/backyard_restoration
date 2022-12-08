@@ -1,10 +1,7 @@
-import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
-import { createUserC } from '../graphql/customMutations';
 import { WeatherLoader } from './';
 
 // props from Login email, password
@@ -30,32 +27,16 @@ export const Register: React.FC = () => {
           username: email,
           password,
           attributes: { email }
-        }).catch(() =>
-          toast.success(
-            `A verification code has been sent to the email provided.`
-          )
-        );
-        const input: CreateUserCMutationVariables = {
-          input: {
-            email,
-            firstName,
-            lastName,
-            growingSeasonLength: 0,
-            firstGdd45: '',
-            lastGdd45: '',
-            hardinessZone: ''
-          }
-        };
-        const graphQLResult = (await API.graphql(
-          graphqlOperation(createUserC, input)
-        )) as GraphQLResult<CreateUserCMutation>;
-
+        });
         toast.success(
-          `Account Creation Successful! Please confirm your email address by entering the code we sent to ${graphQLResult.data?.createUser?.email} on the next page...`
+          `Account Creation Successful! Please confirm your email address by entering the code we sent to ${email} on the next page...`
         );
         setTimeout(
-          () => navigate('/emailConfirmation', { state: { email, password } }),
-          3000
+          () =>
+            navigate('/emailConfirmation', {
+              state: { firstName, lastName, email, password }
+            }),
+          5000
         );
       } else {
         setLoading(false);
@@ -66,7 +47,7 @@ export const Register: React.FC = () => {
     } catch (err) {
       setLoading(false);
       toast.error(
-        'There was an error while attempting to create your user user account and validate your email address, if you already have an account with us, please log in using your email and password, or reset your password using the "Forgot Password" link..'
+        'There was an error while attempting to create your use account and validate your email address, if you already have an account with us, please log in using your email and password, or reset your password using the "Forgot Password" link..'
       );
     }
   };

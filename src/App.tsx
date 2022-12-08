@@ -59,7 +59,7 @@ const router = createBrowserRouter([
     element: <Register />
   },
   {
-    path: 'emailConfirmation/:email',
+    path: 'emailConfirmation',
     element: <EmailConfirmation />
   },
   {

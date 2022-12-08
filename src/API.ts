@@ -482,6 +482,16 @@ export type CreateUserCMutation = {
   createUser?:  {
     __typename: "User",
     email: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    street?: string | null,
+    city?: string | null,
+    state?: string | null,
+    zipcode?: string | null,
+    growingSeasonLength: number,
+    firstGdd45: string,
+    lastGdd45: string,
+    hardinessZone: string,
   } | null,
 };
 

@@ -2,17 +2,17 @@ import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { UpdateUserCMutation, UpdateUserCMutationVariables } from '../API';
-import { updateUserC } from '../graphql/customMutations';
+import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
+import { createUserC } from '../graphql/customMutations';
 import { GrowingCalculations } from '../utilities/GrowingCalculations';
 import { WeatherLoader } from './';
 
 export const EmailConfirmation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { email, password } = location.state;
+  const { email, password, firstName, lastName } = location.state;
   const dispatch = useDispatch();
 
   const [street, setStreet] = useState('');
@@ -29,70 +29,86 @@ export const EmailConfirmation: React.FC = () => {
     setTimeout(() => navigate('/manualEntry'), 5000);
   };
 
-  const createNewUser = async (e: React.FormEvent<HTMLFormElement>) => {
+  const confirmUser = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await Auth.confirmSignUp(email, confirmationCode);
       await Auth.signIn(email, password);
       location.state.password = '';
-      const digitChecker = zipcode.match(/\D/g);
-      if (zipcode.length <= 5 && !digitChecker) {
-        setLoading(true);
-        if (zipcode && street && city && state) {
-          const { hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
-            await new GrowingCalculations(
-              zipcode,
-              street,
-              city,
-              state
-            ).calculateGrowingParams();
-
-          const input: UpdateUserCMutationVariables = {
-            input: {
-              email,
-              street,
-              city,
-              state,
-              zipcode,
-              growingSeasonLength,
-              firstGdd45,
-              lastGdd45,
-              hardinessZone
-            }
-          };
-          location.state.email = '';
-          const graphQLResult = (await API.graphql(
-            graphqlOperation(updateUserC, input)
-          )) as GraphQLResult<UpdateUserCMutation>;
-          const { __typename, ...omitTypename } =
-            graphQLResult?.data?.updateUser || {};
-          dispatch({
-            type: 'ADD_RETRIEVED_INFO',
-            payload: omitTypename
-          });
-          toast.success(
-            'Registration Successful! Logging you into your new dashboard!'
-          );
-          setTimeout(() => navigate('/dash'), 3000);
+      setLoading(true);
+      let hardinessZone = '';
+      let firstGdd45 = '';
+      let lastGdd45 = '';
+      let growingSeasonLength = 0;
+      if (zipcode && street && city && state) {
+        const digitChecker = zipcode.match(/\d\d\d\d\d/g);
+        if (digitChecker) {
+          try {
+            ({ hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
+              await new GrowingCalculations(
+                zipcode,
+                street,
+                city,
+                state
+              ).calculateGrowingParams());
+          } catch (err) {
+            const errParsed =
+              err instanceof Error ? err : new Error(JSON.stringify(err));
+            console.log(errParsed.message);
+          }
         } else {
-          handleManualEntry();
+          setLoading(false);
+          toast.error('Please enter a 5 digit zipcode, thank you');
         }
-      } else {
-        setLoading(false);
-        toast.error('Please enter a 5 digit zipcode, thank you');
       }
-    } catch (err) {
-      setLoading(false);
+
+      const input: CreateUserCMutationVariables = {
+        input: {
+          firstName: firstName || '',
+          lastName: lastName || '',
+          email,
+          street,
+          city,
+          state,
+          zipcode,
+          growingSeasonLength,
+          firstGdd45,
+          lastGdd45,
+          hardinessZone
+        }
+      };
+      location.state.email = '';
+      const graphQLResult = (await API.graphql(
+        graphqlOperation(createUserC, input)
+      )) as GraphQLResult<CreateUserCMutation>;
+      const { __typename, ...omitTypename } =
+        graphQLResult?.data?.createUser || {};
+      dispatch({
+        type: 'ADD_RETRIEVED_INFO',
+        payload: omitTypename
+      });
+
       if (
-        err instanceof Error &&
-        err.message === 'Growing Param Calculation Failed'
+        hardinessZone === '' ||
+        firstGdd45 === '' ||
+        lastGdd45 === '' ||
+        growingSeasonLength === 0
       ) {
         handleManualEntry();
       } else {
-        toast.error(
-          'User registration failed, please check your confirmation code and try again, or email us at BackyardRestorationNet@gmail.com'
+        toast.success(
+          'Registration Successful! Logging you into your new dashboard!'
         );
+        setTimeout(() => navigate('/dash'), 3000);
       }
+    } catch (err) {
+      const errParsed =
+        err instanceof Error ? err : new Error(JSON.stringify(err));
+      console.log(errParsed.message);
+      setLoading(false);
+      toast.error(
+        'User registration failed, please check your confirmation code and try again, or email us at BackyardRestorationNet@gmail.com'
+      );
     }
   };
 
@@ -111,7 +127,7 @@ export const EmailConfirmation: React.FC = () => {
         <form
           id="registerForm"
           onSubmit={(e) => {
-            void createNewUser(e);
+            void confirmUser(e);
           }}
         >
           <section className="registerSections">

@@ -26,9 +26,7 @@ type Weed @model @auth(rules: [{ allow: public, operations: [read] }]) {
 }
 
 type User @model @auth(rules: [{ allow: owner }]) {
-  email: ID!
-    @primaryKey
-    @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  email: ID! @primaryKey
   firstName: String @default(value: "")
   lastName: String @default(value: "")
   street: String @default(value: "")

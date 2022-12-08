@@ -9,7 +9,7 @@ export const ProtectedRoute: React.FC<{
 }> = ({ children, redirectRoute, forwardingRoute }) => {
   const navigate = useNavigate();
   useEffect(() => {
-    Auth.currentAuthenticatedUser()
+    Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(() => {
         if (forwardingRoute) navigate(forwardingRoute);
       })
