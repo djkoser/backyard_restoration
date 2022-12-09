@@ -3,29 +3,21 @@
 # input AMPLIFY {
 #   globalAuthRule: AuthRule = { allow: public }
 # } # FOR TESTING ONLY!
-type Weed @model @auth(rules: [{ allow: public, operations: [read] }]) {
+type Weed
+  @model
+  @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
   weedId: ID! @primaryKey
   vegetationType: String!
     @index(name: "byVegetationType", queryField: "weedByVegetationType")
   commonName: String!
-    @index(
-      name: "byCommonName"
-      queryField: "weedByCommonName"
-      sortKeyFields: ["vegetationType"]
-    )
   botanicalName: String!
-    @index(
-      name: "byBotanicalName"
-      queryField: "weedByBotanicalName"
-      sortKeyFields: ["vegetationType"]
-    )
   annualPerennialBiennial: String!
   description: String!
   managementMethods: [ManagementMethod] @hasMany
   src: String!
 }
 
-type User @model @auth(rules: [{ allow: owner }]) {
+type User @model @auth(rules: [{ allow: owner, provider: userPools }]) {
   email: ID! @primaryKey
   firstName: String @default(value: "")
   lastName: String @default(value: "")
@@ -39,12 +31,15 @@ type User @model @auth(rules: [{ allow: owner }]) {
   hardinessZone: String!
   managementMethods: [UserManagementMethod] @hasMany
   nativePlants: [UserNativePlant] @hasMany
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String
+    @auth(
+      rules: [{ allow: owner, operations: [read, delete], provider: userPools }]
+    )
 }
 
 type ManagementMethod
   @model
-  @auth(rules: [{ allow: public, operations: [read] }]) {
+  @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
   methodId: ID! @primaryKey
   weed: Weed! @belongsTo
   name: String!
@@ -63,20 +58,12 @@ type ManagementMethod
   december: Int!
 }
 
-type NativePlant @model @auth(rules: [{ allow: public, operations: [read] }]) {
+type NativePlant
+  @model
+  @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
   nativeId: ID! @primaryKey
   botanicalName: String!
-    @index(
-      name: "byBotanicalNameAndGrowingParams"
-      queryField: "nativePlantByBotanicalName"
-      sortKeyFields: ["sun", "height", "bloomTime", "moisture"]
-    )
   commonName: String!
-    @index(
-      name: "byCommonNameAndGrowingParams"
-      queryField: "nativePlantByCommonName"
-      sortKeyFields: ["sun", "height", "bloomTime", "moisture"]
-    )
   moisture: String!
   sun: String!
   height: String!
@@ -84,12 +71,17 @@ type NativePlant @model @auth(rules: [{ allow: public, operations: [read] }]) {
   src: String!
 }
 
-type UserNativePlant @model @auth(rules: [{ allow: owner }]) {
+type UserNativePlant
+  @model
+  @auth(rules: [{ allow: owner, provider: userPools }]) {
   id: ID! @primaryKey
   user: User @belongsTo
   nativePlant: NativePlant @hasOne
   projectNotes: String!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String
+    @auth(
+      rules: [{ allow: owner, operations: [read, delete], provider: userPools }]
+    )
 }
 
 type UserManagementMethod @model @auth(rules: [{ allow: owner }]) {
@@ -97,5 +89,8 @@ type UserManagementMethod @model @auth(rules: [{ allow: owner }]) {
   user: User @belongsTo
   managementMethod: ManagementMethod @hasOne
   projectNotes: String!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String
+    @auth(
+      rules: [{ allow: owner, operations: [read, delete], provider: userPools }]
+    )
 }

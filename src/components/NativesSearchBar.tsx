@@ -3,15 +3,11 @@ import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
-  NativePlantByBotanicalNameCQuery,
-  NativePlantByBotanicalNameCQueryVariables,
-  NativePlantByCommonNameCQuery,
-  NativePlantByCommonNameCQueryVariables
+  ListNativePlantsCQuery,
+  ListNativePlantsCQueryVariables,
+  NativePlant
 } from '../API';
-import {
-  nativePlantByBotanicalNameC,
-  nativePlantByCommonNameC
-} from '../graphql/customQueries';
+import { listNativePlantsC } from '../graphql/customQueries';
 import { NativeSearchBarProps } from '../types';
 
 //Props from app.js -myPlantsList addToMyPlants
@@ -49,66 +45,56 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
   ) => {
     try {
       setLoadingParent(true);
-      const duplicateMap = new Map<
-        string,
-        {
-          __typename: 'NativePlant';
-          nativeId: string;
-          botanicalName: string;
-          commonName: string;
-          moisture: string;
-          sun: string;
-          height: string;
-          bloomTime: string;
-          src: string;
-        } | null
-      >();
-      const botanicalNameQueryInput: NativePlantByBotanicalNameCQueryVariables =
-        {
-          botanicalName: botanicalCommonNameInput || '',
-          sunHeightBloomTimeMoisture: {
-            eq: {
-              sun: sunInput,
-              bloomTime: bloomTimeInput,
-              moisture: moistureInput
-            },
-            between: [{ height: minHeightInput }, { height: maxHeightInput }]
-          }
-        };
-      const commonNameQueryInput: NativePlantByCommonNameCQueryVariables = {
-        commonName: botanicalCommonNameInput || '',
-        sunHeightBloomTimeMoisture: {
-          eq: {
-            sun: sunInput,
-            bloomTime: bloomTimeInput,
-            moisture: moistureInput
-          },
-          between: [{ height: minHeightInput }, { height: maxHeightInput }]
-        }
+
+      const listNativePlantsInput: ListNativePlantsCQueryVariables = {
+        filter: { and: [] }
       };
-      const botResultsPromise = API.graphql(
-        graphqlOperation(nativePlantByBotanicalNameC, botanicalNameQueryInput)
-      ) as Promise<GraphQLResult<NativePlantByBotanicalNameCQuery>>;
 
-      const comResultsPromise = API.graphql(
-        graphqlOperation(nativePlantByCommonNameC, commonNameQueryInput)
-      ) as Promise<GraphQLResult<NativePlantByCommonNameCQuery>>;
+      const { and } = listNativePlantsInput.filter!;
+      if (moistureInput)
+        and!.push({
+          moisture: { contains: moistureInput }
+        });
+      if (maxHeightInput)
+        and!.push({
+          height: { le: maxHeightInput }
+        });
+      if (minHeightInput) {
+        and!.push({
+          height: { ge: minHeightInput }
+        });
+      }
+      if (bloomTimeInput) and!.push({ bloomTime: { eq: bloomTimeInput } });
+      if (sunInput)
+        and!.push({
+          sun: { contains: sunInput === 'Full' ? `${sunInput}, ` : sunInput }
+        });
+      if (botanicalCommonNameInput)
+        and!.push({
+          or: [
+            { botanicalName: { contains: botanicalCommonNameInput } },
+            { commonName: { contains: botanicalCommonNameInput } }
+          ]
+        });
+      const nativePlants = (await API.graphql(
+        graphqlOperation(listNativePlantsC, listNativePlantsInput)
+      )) as GraphQLResult<ListNativePlantsCQuery>;
 
-      const [botResults, comResults] = await Promise.all([
-        botResultsPromise,
-        comResultsPromise
-      ]);
-
-      botResults.data?.nativePlantByBotanicalName?.items.forEach((native) => {
-        if (native) duplicateMap.set(native.nativeId, native);
-      });
-      comResults.data?.nativePlantByCommonName?.items.forEach((native) => {
-        if (native) duplicateMap.set(native.nativeId, native);
-      });
-
-      setSearchResults(Array.from(duplicateMap.values()));
+      setSearchResults(
+        nativePlants.data?.listNativePlants?.items.reduce(
+          (weedsParsed, weed) => {
+            if (weed) {
+              const { __typename, ...omitTypename } = weed;
+              if (omitTypename) weedsParsed.push(omitTypename);
+            }
+            return weedsParsed;
+          },
+          [] as Omit<NativePlant, '__typename' | 'createdAt' | 'updatedAt'>[]
+        ) || []
+      );
       setLoadingParent(false);
-    } catch {
+    } catch (err) {
+      console.log(JSON.stringify(err));
       setLoadingParent(false);
       toast.error('Search failed, please try again');
     }

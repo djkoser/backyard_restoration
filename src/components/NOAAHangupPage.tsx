@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppStore } from '../redux/store';
 import { updateUser } from '../redux/userSlice';
-import { daysBetween, isValidDate } from '../utilities/dateUtils';
+import { daysBetween, isValidDate } from '../utilities';
 
 export const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +15,10 @@ export const NOAAHangupPage: React.FC = () => {
 
   const reduxFailed = useSelector<AppStore, boolean>(
     (state) => state.userInfo.failed
+  );
+
+  const reduxLoading = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.loading
   );
 
   const addGrowingInfoHandler = () => {
@@ -42,22 +46,25 @@ export const NOAAHangupPage: React.FC = () => {
           growingSeasonLength
         })
       );
+    }
+  };
+
+  const previouslyLoading = useRef(false);
+  useEffect(() => {
+    if (previouslyLoading.current && reduxFailed) {
+      toast.error(
+        'An error occurred while attempting to add your growing information to your account. Please email us at BackyardRestorationNet@gmail.com and we will fix your account manually.'
+      );
+    } else if (previouslyLoading.current && !reduxFailed) {
       toast.success(
         'Just a few seconds while we add this information to your profile and navigate to your new dashboard...'
       );
       setTimeout(() => {
-        if (!reduxFailed) navigate('/dash');
+        navigate('/dash');
       }, 3000);
     }
-  };
-
-  useEffect(() => {
-    if (reduxFailed) {
-      toast.error(
-        'An error occurred while attempting to add your growing information to your account. Please email us at BackyardRestorationNet@gmail.com and we will fix your account manually.'
-      );
-    }
-  }, [reduxFailed]);
+    previouslyLoading.current = reduxLoading;
+  }, [reduxFailed, reduxLoading]);
 
   return (
     <main id="NOAAHangupBody">

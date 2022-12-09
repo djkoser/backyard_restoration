@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { WeatherLoader } from './';
+import { passwordChecker } from '../utilities';
 
 // props from Login email, password
 
@@ -18,9 +19,6 @@ export const Register: React.FC = () => {
   const createNewUser = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:
-      const passwordChecker =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g;
       if (passwordChecker.test(password)) {
         setLoading(true);
         await Auth.signUp({

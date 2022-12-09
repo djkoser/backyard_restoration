@@ -46,7 +46,7 @@ export const WeedPage: React.FC = () => {
   useEffect(() => {
     setSwitches(
       mgmtOptions.map((el) => (
-        <MethodSwitch key={`method${el.methodId}`} weedMethod={el} />
+        <MethodSwitch key={`methodSwitch${el.methodId}`} weedMethod={el} />
       ))
     );
   }, [mgmtOptions, userMethods]);

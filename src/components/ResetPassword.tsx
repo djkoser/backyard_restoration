@@ -61,11 +61,13 @@ export const ResetPassword: React.FC = () => {
           placeholder="Password Reset Code"
           onChange={(e) => setResetCode(e.target.value)}
           id="resetPasswordCodeInput"
+          value={resetCode}
         ></input>
         <input
           type="password"
           placeholder="New Password"
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
           id="resetPwdPasswordInput"
         ></input>
         <button>Change Password</button>

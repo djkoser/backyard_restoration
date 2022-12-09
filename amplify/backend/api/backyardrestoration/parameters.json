@@ -3,10 +3,7 @@
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
-    "Fn::GetAtt": [
-      "authbackyardrestoration385e5c12",
-      "Outputs.UserPoolId"
-    ]
+    "Fn::GetAtt": ["authbackyardrestoration385e5c12", "Outputs.UserPoolId"]
   },
-  "AuthModeLastUpdated": "2022-12-08T08:25:44.181Z"
+  "AuthModeLastUpdated": "2022-12-08T17:46:11.022Z"
 }

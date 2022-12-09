@@ -27,7 +27,7 @@ export const DashboardDropdowns: React.FC = () => {
       const weedOptions: JSX.Element[] = weeds.data?.weedByVegetationType?.items
         ?.map
         ? weeds.data.weedByVegetationType.items.map((el) => (
-            <option key={`weed${el?.weedId}`} value={el?.weedId}>
+            <option key={`weedOption${el?.weedId}`} value={el?.weedId}>
               {el?.commonName}
             </option>
           ))

@@ -19,6 +19,7 @@ import {
 } from '../graphql/customMutations';
 import { getUserManagementMethods } from '../graphql/customQueries';
 import { UserMethodPayload, UserMethodState } from '../types/state';
+import { isFulfilled, isPending, isRejected } from '../utilities';
 
 const initialUserMethodsPayload: UserMethodPayload = {
   userMethods: []
@@ -47,30 +48,34 @@ const fulfill: CaseReducer<
   UserMethodState,
   PayloadAction<UserMethodPayload>
 > = (state, action) => {
-  state = { ...action.payload, ...{ loading: false, failed: false } };
+  console.log(state);
+  console.log({ ...action.payload, ...{ loading: false, failed: false } });
+  return { ...action.payload, ...{ loading: false, failed: false } };
 };
 
 export const addUserManagementMethod = (
   userManagementMethodManagementMethodId: string
 ) => {
   return userMethodSlice.actions.ADD_USER_METHOD(
-    new Promise((resolve, reject) => {
-      const createUserManagementMethodInput: CreateUserManagementMethodCMutationVariables =
-        {
-          input: {
-            projectNotes: '',
-            userManagementMethodManagementMethodId
-          }
-        };
-      return (
-        API.graphql(
-          graphqlOperation(
-            createUserManagementMethodC,
-            createUserManagementMethodInput
-          )
-        ) as Promise<GraphQLResult<CreateUserManagementMethodCMutation>>
-      )
-        .then((graphQlResult) => {
+    new Promise((resolve, reject) =>
+      Auth.currentAuthenticatedUser({
+        bypassCache: true
+      })
+        .then(async ({ attributes }) => {
+          const createUserManagementMethodInput: CreateUserManagementMethodCMutationVariables =
+            {
+              input: {
+                projectNotes: '',
+                userManagementMethodsId: attributes.email,
+                userManagementMethodManagementMethodId
+              }
+            };
+          const graphQlResult = await (API.graphql(
+            graphqlOperation(
+              createUserManagementMethodC,
+              createUserManagementMethodInput
+            )
+          ) as Promise<GraphQLResult<CreateUserManagementMethodCMutation>>);
           if (
             graphQlResult.data?.createUserManagementMethod?.user
               ?.managementMethods?.items?.map
@@ -81,7 +86,7 @@ export const addUserManagementMethod = (
                   const { projectNotes, id } = userManagementMethod || {};
                   if (
                     userManagementMethod?.managementMethod &&
-                    projectNotes &&
+                    typeof projectNotes === 'string' &&
                     id
                   ) {
                     const { __typename, weed, ...noTypeName } =
@@ -94,21 +99,20 @@ export const addUserManagementMethod = (
                     };
                   } else {
                     throw new Error(
-                      'addUserManagementMethod: Unexepcted result from API'
+                      'addUserManagementMethod: Unexpected result from API'
                     );
                   }
                 }
               );
-
             resolve({ userMethods });
           } else {
-            reject(
-              new Error('addUserManagementMethod: Unexepcted result from API')
+            throw new Error(
+              'addUserManagementMethod: Unexpected result from API'
             );
           }
         })
-        .catch((err) => reject(err));
-    })
+        .catch((err) => reject(err))
+    )
   );
 };
 export const updateUserMethod = (
@@ -140,7 +144,7 @@ export const updateUserMethod = (
                   if (
                     userManagementMethod?.managementMethod &&
                     id &&
-                    projectNotes
+                    typeof projectNotes === 'string'
                   ) {
                     const { __typename, weed, ...noTypeName } =
                       userManagementMethod.managementMethod;
@@ -152,7 +156,7 @@ export const updateUserMethod = (
                     };
                   } else {
                     throw new Error(
-                      'updateUserMethod: Unexepcted result from API'
+                      'updateUserMethod: Unexpected result from API'
                     );
                   }
                 }
@@ -160,7 +164,7 @@ export const updateUserMethod = (
 
             resolve({ userMethods });
           } else {
-            reject(new Error('updateUserMethod: Unexepcted result from API'));
+            reject(new Error('updateUserMethod: Unexpected result from API'));
           }
         })
         .catch((err) => reject(err));
@@ -195,7 +199,7 @@ export const deleteUserManagementMethod = (userMethodId: string) => {
                   if (
                     userManagementMethod?.managementMethod &&
                     id &&
-                    projectNotes
+                    typeof projectNotes === 'string'
                   ) {
                     const { __typename, weed, ...noTypeName } =
                       userManagementMethod.managementMethod;
@@ -207,7 +211,7 @@ export const deleteUserManagementMethod = (userMethodId: string) => {
                     };
                   } else {
                     throw new Error(
-                      'deleteUserManagementMethod: Unexepcted result from API'
+                      'deleteUserManagementMethod: Unexpected result from API'
                     );
                   }
                 }
@@ -217,7 +221,7 @@ export const deleteUserManagementMethod = (userMethodId: string) => {
           } else {
             reject(
               new Error(
-                'deleteUserManagementMethod: Unexepcted result from API'
+                'deleteUserManagementMethod: Unexpected result from API'
               )
             );
           }
@@ -252,7 +256,7 @@ export const getUserMethods = () => {
                   if (
                     userManagementMethod?.managementMethod &&
                     id &&
-                    projectNotes
+                    typeof projectNotes === 'string'
                   ) {
                     const { __typename, weed, ...noTypeName } =
                       userManagementMethod.managementMethod;
@@ -264,7 +268,7 @@ export const getUserMethods = () => {
                     };
                   } else {
                     throw new Error(
-                      'getUserMethods: Unexepcted result from API'
+                      'getUserMethods: Unexpected result from API'
                     );
                   }
                 }
@@ -272,7 +276,7 @@ export const getUserMethods = () => {
 
             resolve({ userMethods });
           } else {
-            reject(new Error('getUserMethods: Unexepcted result from API'));
+            reject(new Error('getUserMethods: Unexpected result from API'));
           }
         })
         .catch((err) => reject(err))
@@ -325,55 +329,14 @@ const userMethodSlice = createSlice({
       return state;
     }
   },
-  extraReducers: {
-    ADD_USER_METHOD_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    ADD_USER_METHOD_FULFILLED: (
-      state,
-      action: PayloadAction<UserMethodPayload>
-    ) => {
-      fulfill(state, action);
-    },
-    ADD_USER_METHOD_REJECTED: (state, action) => {
-      reject(state, action);
-    },
-    REMOVE_USER_METHOD_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    REMOVE_USER_METHOD_FULFILLED: (
-      state,
-      action: PayloadAction<UserMethodPayload>
-    ) => {
-      fulfill(state, action);
-    },
-    REMOVE_USER_METHOD_REJECTED: (state, action) => {
-      reject(state, action);
-    },
-    GET_USER_METHODS_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    GET_USER_METHODS_FULFILLED: (
-      state,
-      action: PayloadAction<UserMethodPayload>
-    ) => {
-      fulfill(state, action);
-    },
-    GET_USER_METHODS_REJECTED: (state, action) => {
-      reject(state, action);
-    },
-    UPDATE_USER_METHODS_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    UPDATE_USER_METHODS_FULFILLED: (
-      state,
-      action: PayloadAction<UserMethodPayload>
-    ) => {
-      fulfill(state, action);
-    },
-    UPDATE_USER_METHODS_REJECTED: (state, action) => {
-      reject(state, action);
-    }
+  extraReducers: (builder) => {
+    builder
+      .addMatcher((action) => isPending(action, userMethodSlice.name), pending)
+      .addMatcher(
+        (action) => isFulfilled(action, userMethodSlice.name),
+        fulfill
+      )
+      .addMatcher((action) => isRejected(action, userMethodSlice.name), reject);
   }
 });
 

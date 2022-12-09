@@ -4,15 +4,23 @@ import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   DeleteUserCMutation,
   DeleteUserCMutationVariables,
+  DeleteUserManagementMethodCMutationVariables,
+  DeleteUserNativePlantCMutationVariables,
   GetUserCQuery,
   GetUserCQueryVariables,
   UpdateUserCMutation,
   UpdateUserCMutationVariables,
   UpdateUserInput
 } from '../API';
-import { deleteUserC, updateUserC } from '../graphql/customMutations';
+import {
+  deleteUserC,
+  deleteUserManagementMethodC,
+  deleteUserNativePlantC,
+  updateUserC
+} from '../graphql/customMutations';
 import { getUserC } from '../graphql/customQueries';
 import { UserPayload, UserState } from '../types/state';
+import { isFulfilled, isPending, isRejected } from '../utilities';
 
 const initialUserInfoPayload: UserPayload = {
   email: '',
@@ -47,7 +55,7 @@ const fulfill: CaseReducer<UserState, PayloadAction<UserPayload>> = (
   state,
   action
 ) => {
-  state = { ...action.payload, ...{ loading: false, failed: false } };
+  return { ...action.payload, ...{ loading: false, failed: false } };
 };
 
 export const getUserInfo = () => {
@@ -67,7 +75,7 @@ export const getUserInfo = () => {
             const { __typename, ...noTypeName } = graphQLResult.data.getUser;
             resolve(noTypeName);
           } else {
-            reject(new Error('getUserInfo: Unexepcted result from API'));
+            reject(new Error('getUserInfo: Unexpected result from API'));
           }
         })
         .catch((err) => reject(err))
@@ -94,7 +102,7 @@ export const updateUser = (userParams: Omit<UpdateUserInput, 'email'>) => {
             const { __typename, ...noTypeName } = graphQlResult.data.updateUser;
             resolve(noTypeName);
           } else {
-            reject(new Error('updateUser: Unexepcted result from API'));
+            reject(new Error('updateUser: Unexpected result from API'));
           }
         })
         .catch((err) => {
@@ -109,19 +117,55 @@ export const deleteUser = () => {
       Auth.currentAuthenticatedUser({
         bypassCache: true
       })
-        .then(async (user) => {
+        .then(async ({ attributes }) => {
           const deleteUserInput: DeleteUserCMutationVariables = {
-            input: { email: user.attributes.email }
+            input: { email: attributes.email }
           };
           const graphQlResult = await (API.graphql(
             graphqlOperation(deleteUserC, deleteUserInput)
           ) as Promise<GraphQLResult<DeleteUserCMutation>>);
           if (graphQlResult.data?.deleteUser) {
             const { __typename, ...noTypeName } = graphQlResult.data.deleteUser;
-            void Auth.deleteUser();
+
+            if (noTypeName?.managementMethods?.items instanceof Array) {
+              console.log(noTypeName.managementMethods.items);
+              for (const item of noTypeName.managementMethods.items) {
+                if (item) {
+                  const deleteUserManagementMethodsInput: DeleteUserManagementMethodCMutationVariables =
+                    {
+                      input: { id: item.id }
+                    };
+                  await API.graphql(
+                    graphqlOperation(
+                      deleteUserManagementMethodC,
+                      deleteUserManagementMethodsInput
+                    )
+                  );
+                }
+              }
+            }
+
+            if (noTypeName?.nativePlants?.items instanceof Array) {
+              console.log(noTypeName.nativePlants.items);
+              for (const item of noTypeName.nativePlants.items) {
+                if (item) {
+                  const deleteUserNativePlantsInput: DeleteUserNativePlantCMutationVariables =
+                    {
+                      input: { id: item.id }
+                    };
+                  await API.graphql(
+                    graphqlOperation(
+                      deleteUserNativePlantC,
+                      deleteUserNativePlantsInput
+                    )
+                  );
+                }
+              }
+            }
+            await Auth.deleteUser();
             resolve(noTypeName);
           } else {
-            reject(new Error('deleteUser: Unexepcted result from API'));
+            reject(new Error('deleteUser: Unexpected result from API'));
           }
         })
         .catch((err) => reject(err))
@@ -130,7 +174,7 @@ export const deleteUser = () => {
 };
 
 const userSlice = createSlice({
-  name: 'userInfo',
+  name: 'userSlice',
   initialState,
   reducers: {
     GET_USER: (state, action: PayloadAction<Promise<UserPayload>>) => {
@@ -161,36 +205,11 @@ const userSlice = createSlice({
       return { ...action.payload, loading: false, failed: false };
     }
   },
-  extraReducers: {
-    GET_USER_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    GET_USER_FULFILLED: (state, action) => {
-      fulfill(state, action);
-    },
-    GET_USER_REJECTED: (state, action) => {
-      reject(state, action);
-    },
-    UPDATE_USER_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    UPDATE_USER_FULFILLED: (state, action) => {
-      fulfill(state, action);
-    },
-    UPDATE_USER_REJECTED: (state, action) => {
-      reject(state, action);
-    },
-    DELETE_USER_PENDING: (state, action) => {
-      pending(state, action);
-    },
-    DELETE_USER_FULFILLED: (state) => {
-      state = { ...initialState };
-      state.loading = false;
-      state.failed = false;
-    },
-    DELETE_USER_REJECTED: (state, action) => {
-      reject(state, action);
-    }
+  extraReducers: (builder) => {
+    builder
+      .addMatcher((action) => isPending(action, userSlice.name), pending)
+      .addMatcher((action) => isFulfilled(action, userSlice.name), fulfill)
+      .addMatcher((action) => isRejected(action, userSlice.name), reject);
   }
 });
 export default userSlice;

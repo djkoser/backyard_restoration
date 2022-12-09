@@ -16,6 +16,10 @@ export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
     (state) => state.userMethod.userMethods
   );
 
+  const loading = useSelector<AppStore, boolean>(
+    (state) => state.userMethod.loading
+  );
+
   const { weedMethod } = props;
 
   let id: undefined | string;
@@ -26,7 +30,7 @@ export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
   }
 
   return (
-    <div className="switchBody">
+    <div className="switchBody" key={`switchBody${weedMethod.methodId}`}>
       <div className="switchPara">
         <span>
           <strong>Name: </strong>
@@ -56,10 +60,12 @@ export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
               id={`switch${weedMethod.methodId}`}
               checked={id ? true : false}
               onChange={() => {
-                if (id) {
-                  dispatch(deleteUserManagementMethod(id));
-                } else {
-                  dispatch(addUserManagementMethod(weedMethod.methodId));
+                if (!loading) {
+                  if (id) {
+                    dispatch(deleteUserManagementMethod(id));
+                  } else {
+                    dispatch(addUserManagementMethod(weedMethod.methodId));
+                  }
                 }
               }}
             />

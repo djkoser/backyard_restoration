@@ -1,10 +1,11 @@
 import { Auth } from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppDispatch, AppStore } from '../redux/store';
 import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
+import { passwordChecker } from '../utilities';
 import { Footer, Nav, WeatherLoader } from './';
 
 export const MyAccount: React.FC = () => {
@@ -61,9 +62,9 @@ export const MyAccount: React.FC = () => {
 
   const [lastChanged, setLastChanged] = useState<string | undefined>(undefined);
 
-  const [firstName, setFirstName] = useState(firstNameRedux);
+  const [firstName, setFirstName] = useState(firstNameRedux || '');
 
-  const [lastName, setLastName] = useState(lastNameRedux);
+  const [lastName, setLastName] = useState(lastNameRedux || '');
 
   const [currentPassword, setCurrentPassword] = useState(
     'This is a fake password'
@@ -71,19 +72,19 @@ export const MyAccount: React.FC = () => {
 
   const [newPassword, setNewPassword] = useState('This is a fake password');
 
-  const [street, setStreet] = useState(streetRedux);
+  const [street, setStreet] = useState(streetRedux || '');
 
-  const [city, setCity] = useState(cityRedux);
+  const [city, setCity] = useState(cityRedux || '');
 
-  const [state, setState] = useState(stateRedux);
+  const [state, setState] = useState(stateRedux || '');
 
-  const [zipcode, setZipcode] = useState(zipcodeRedux);
+  const [zipcode, setZipcode] = useState(zipcodeRedux || '');
 
-  const [firstGdd45, setFirstGDD35] = useState(firstGDD35Redux);
+  const [firstGdd45, setFirstGDD35] = useState(firstGDD35Redux || '');
 
-  const [lastGdd45, setLastGDD35] = useState(lastGDD35Redux);
+  const [lastGdd45, setLastGDD35] = useState(lastGDD35Redux || '');
 
-  const [hardinessZone, setHardinessZone] = useState(hardinessZoneRedux);
+  const [hardinessZone, setHardinessZone] = useState(hardinessZoneRedux || '');
 
   const [editToggleName, setEditToggleName] = useState(true);
 
@@ -94,15 +95,15 @@ export const MyAccount: React.FC = () => {
   const [editToggleGrwParams, setEditToggleGrwParams] = useState(true);
 
   const refresh = () => {
-    setFirstName(firstNameRedux);
-    setLastName(lastNameRedux);
-    setStreet(streetRedux);
-    setCity(cityRedux);
-    setState(stateRedux);
-    setZipcode(zipcodeRedux);
-    setFirstGDD35(firstGDD35Redux);
-    setLastGDD35(lastGDD35Redux);
-    setHardinessZone(hardinessZoneRedux);
+    setFirstName(firstNameRedux || '');
+    setLastName(lastNameRedux || '');
+    setStreet(streetRedux || '');
+    setCity(cityRedux || '');
+    setState(stateRedux || '');
+    setZipcode(zipcodeRedux || '');
+    setFirstGDD35(firstGDD35Redux || '');
+    setLastGDD35(lastGDD35Redux || '');
+    setHardinessZone(hardinessZoneRedux || '');
   };
 
   const onError = () => {
@@ -129,40 +130,12 @@ export const MyAccount: React.FC = () => {
         );
       } else if (lastChanged === 'deleteUser') {
         toast.error(
-          'An error occured while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.'
+          'An error occurred while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.'
         );
       } else {
         toast.error(
           `There was an error while attempting to change your ${lastChanged}. Please try again.`
         );
-      }
-    } else {
-      navigate('/');
-    }
-  };
-
-  const onSuccess = () => {
-    if (
-      emailRedux &&
-      firstNameRedux &&
-      lastNameRedux &&
-      streetRedux &&
-      cityRedux &&
-      stateRedux &&
-      zipcodeRedux &&
-      firstGDD35Redux &&
-      lastGDD35Redux &&
-      hardinessZoneRedux
-    ) {
-      if (lastChanged === 'delete user') {
-        toast.success(
-          'Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.'
-        );
-        setTimeout(() => {
-          navigate('/');
-        }, 5000);
-      } else {
-        toast.success(`Your ${lastChanged} was updated successfully.`);
       }
     } else {
       navigate('/');
@@ -188,13 +161,23 @@ export const MyAccount: React.FC = () => {
     hardinessZoneRedux
   ]);
 
+  const loadingPreviously = useRef(false);
   useEffect(() => {
-    if (failedRedux && !loadingRedux) {
+    if (loadingPreviously.current && failedRedux) {
       onError();
-    } else if (!failedRedux && !loadingRedux) {
-      onSuccess();
+    } else if (loadingPreviously.current && lastChanged === 'deleteAccount') {
+      toast.success(
+        'Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.'
+      ),
+        setTimeout(() => navigate('/'), 2000);
+    } else if (loadingPreviously.current && lastChanged) {
+      setTimeout(
+        () => toast.success(`Your ${lastChanged} was updated successfully.`),
+        250
+      );
     }
-  }, [failedRedux, loadingRedux]);
+    loadingPreviously.current = loadingRedux;
+  }, [failedRedux, lastChanged, loadingRedux]);
 
   const toggleEdit = (type: string) => {
     switch (type) {
@@ -215,16 +198,24 @@ export const MyAccount: React.FC = () => {
           setCurrentPassword('');
           setNewPassword('');
         } else {
-          setEditTogglePassword(true);
-          Auth.currentAuthenticatedUser({ bypassCache: true })
-            .then((user) =>
-              Auth.changePassword(user, currentPassword, newPassword).then(
-                () => {
-                  toast.success('Your password has been updated successfully.');
-                }
+          if (passwordChecker.test(newPassword)) {
+            setEditTogglePassword(true);
+            Auth.currentAuthenticatedUser({ bypassCache: true })
+              .then((user) =>
+                Auth.changePassword(user, currentPassword, newPassword).then(
+                  () => {
+                    toast.success(
+                      'Your password has been updated successfully.'
+                    );
+                  }
+                )
               )
-            )
-            .catch(() => onError());
+              .catch(() => onError());
+          } else {
+            toast.warning(
+              'The password you created does not meet our requirements: minimum of 8 characters, at least one uppercase and lowercase letter, one number and one special character: @,$,!,%,*,? or &. Please create a new password and try again.'
+            );
+          }
         }
         return;
       case 'address':
@@ -257,7 +248,7 @@ export const MyAccount: React.FC = () => {
 
   return loadingRedux ? (
     <>
-      <WeatherLoader noText={false} />
+      <WeatherLoader noText={true} />
       <ToastContainer />
     </>
   ) : (
@@ -345,51 +336,7 @@ export const MyAccount: React.FC = () => {
               {editToggleGrwParams ? 'Edit' : 'Submit'}
             </button>
           </div>
-          <div id="address">
-            <fieldset className="editBoxes">
-              <h3 className="accountPageText">Address</h3>
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={street}
-                onChange={(e) => {
-                  setStreet(e.target.value);
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={city}
-                onChange={(e) => {
-                  setCity(e.target.value);
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={state}
-                onChange={(e) => {
-                  setState(e.target.value);
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={zipcode}
-                onChange={(e) => {
-                  setZipcode(e.target.value);
-                }}
-              />
-            </fieldset>
-            <button onClick={() => toggleEdit('address')}>
-              {editToggleAddress ? 'Edit' : 'Submit'}
-            </button>
-          </div>
-          <div id="nameEmailPassword">
+          <div id="nameAddress">
             <fieldset className=" editBoxes">
               <h3 className="accountPageText">Name</h3>
               <input
@@ -415,15 +362,62 @@ export const MyAccount: React.FC = () => {
               {editToggleName ? 'Edit' : 'Submit'}
             </button>
             <fieldset className="editBoxes">
-              <h3 className="accountPageText">Email</h3>
-              <span className="myAccountInput">{emailRedux}</span>
+              <h3 className="accountPageText">Address</h3>
+              <input
+                className="myAccountInput"
+                disabled={editToggleAddress}
+                type="text"
+                value={street}
+                placeholder="Street"
+                onChange={(e) => {
+                  setStreet(e.target.value);
+                }}
+              />
+              <input
+                className="myAccountInput"
+                disabled={editToggleAddress}
+                type="text"
+                value={city}
+                placeholder="City"
+                onChange={(e) => {
+                  setCity(e.target.value);
+                }}
+              />
+              <input
+                className="myAccountInput"
+                disabled={editToggleAddress}
+                type="text"
+                value={state}
+                placeholder="State"
+                onChange={(e) => {
+                  setState(e.target.value);
+                }}
+              />
+              <input
+                className="myAccountInput"
+                disabled={editToggleAddress}
+                type="text"
+                value={zipcode}
+                placeholder="Zipcode"
+                onChange={(e) => {
+                  setZipcode(e.target.value);
+                }}
+              />
             </fieldset>
+            <button onClick={() => toggleEdit('address')}>
+              {editToggleAddress ? 'Edit' : 'Submit'}
+            </button>
+          </div>
+          <div id="emailPassword">
             <fieldset className="editBoxes">
-              <h3 className="accountPageText">Delete My Account</h3>
-              <button onClick={() => dispatch(deleteUser())}>
-                Delete Account
-              </button>
+              <h3 className="accountPageText">Email</h3>
+              <br />
+              <h3 style={{ fontWeight: 'bold' }} className="myAccountInput">
+                {emailRedux}
+              </h3>
             </fieldset>
+            <br />
+            <br />
             <fieldset className="editBoxes">
               <h3 className="accountPageText">Current Password</h3>
               <input
@@ -449,6 +443,19 @@ export const MyAccount: React.FC = () => {
             <button onClick={() => toggleEdit('password')}>
               {editTogglePassword ? 'Edit' : 'Submit'}
             </button>
+            <fieldset className="editBoxes">
+              <h3 className="accountPageText">Delete My Account</h3>
+              <button
+                onClick={() => {
+                  setLastChanged('deleteAccount');
+                  dispatch(deleteUser());
+                }}
+              >
+                Delete Account
+              </button>
+            </fieldset>
+            <br />
+            <br />
           </div>
           <br />
         </main>

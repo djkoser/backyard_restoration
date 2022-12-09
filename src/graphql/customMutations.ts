@@ -49,6 +49,18 @@ export const deleteUserC = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       email
+      nativePlants {
+        items {
+          id
+        }
+        nextToken
+      }
+      managementMethods {
+        items {
+          id
+        }
+        nextToken
+      }
     }
   }
 `;

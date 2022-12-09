@@ -3,18 +3,10 @@ import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  WeedByBotanicalNameCQuery,
-  WeedByBotanicalNameCQueryVariables,
-  WeedByCommonNameCQuery,
-  WeedByCommonNameCQueryVariables,
   WeedByVegetationTypeCQuery,
   WeedByVegetationTypeCQueryVariables
 } from '../API';
-import {
-  weedByBotanicalNameC,
-  weedByCommonNameC,
-  weedByVegetationTypeC
-} from '../graphql/customQueries';
+import { weedByVegetationTypeC } from '../graphql/customQueries';
 import { Weed } from '../types';
 import { Footer, Nav, Thumbnail, WeatherLoader } from './';
 
@@ -27,67 +19,72 @@ export const WeedSearch: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const getWeedsByType = async () => {
+  const getWeedsByType = async (e?: React.FormEvent<HTMLButtonElement>) => {
+    if (e) e.preventDefault();
     try {
       setLoading(true);
-      const query: WeedByVegetationTypeCQueryVariables = {
+      const getWeedsByTypeInput: WeedByVegetationTypeCQueryVariables = {
         vegetationType: vegType || ''
       };
-      const weeds = (await API.graphql(
-        graphqlOperation(weedByVegetationTypeC, query)
-      )) as WeedByVegetationTypeCQuery;
-      setWeedList(
-        weeds?.weedByVegetationType?.items.reduce((weedsParsed, weed) => {
-          if (weed) {
-            const { __typename, ...omitTypename } = weed;
-            weedsParsed.push(omitTypename);
-          }
-          return weedsParsed;
-        }, [] as Weed[]) || []
-      );
+      const weedResults = (await API.graphql(
+        graphqlOperation(weedByVegetationTypeC, getWeedsByTypeInput)
+      )) as GraphQLResult<WeedByVegetationTypeCQuery>;
+      console.dir(weedResults);
+      const weedsParsed =
+        weedResults.data?.weedByVegetationType?.items.reduce(
+          (weedsParsed, weed) => {
+            if (weed) {
+              const { __typename, ...omitTypename } = weed;
+              if (omitTypename) weedsParsed.push(omitTypename);
+            }
+            return weedsParsed;
+          },
+          [] as Weed[]
+        ) || [];
+      setWeedList(weedsParsed);
       setLoading(false);
     } catch {
       navigate('/');
     }
   };
-  const searchWeedsByKeyword = async (e: React.FormEvent<HTMLFormElement>) => {
+  const searchWeedsByKeyword = async (
+    e: React.FormEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
     try {
       setLoading(true);
-      e.preventDefault();
-      const weedsMap = new Map<string, Weed>();
-      const getWeedsCommonNameInput: WeedByCommonNameCQueryVariables = {
-        commonName: searchText,
-        filter: { vegetationType: { eq: vegType } }
-      };
-      const getWeedsBotanicalNameInput: WeedByBotanicalNameCQueryVariables = {
-        botanicalName: searchText,
-        filter: { vegetationType: { eq: vegType } }
-      };
-
-      const commonNameResults = (await API.graphql(
-        graphqlOperation(weedByCommonNameC, getWeedsCommonNameInput)
-      )) as GraphQLResult<WeedByCommonNameCQuery>;
-      const botanicalNameResults = (await API.graphql(
-        graphqlOperation(weedByBotanicalNameC, getWeedsBotanicalNameInput)
-      )) as GraphQLResult<WeedByBotanicalNameCQuery>;
-
-      commonNameResults.data?.weedByCommonName?.items.forEach((weed) => {
-        if (weed) {
-          const { __typename, ...omitTypename } = weed;
-          weedsMap.set(weed?.weedId || '', omitTypename);
-        }
-      });
-      botanicalNameResults.data?.weedByBotanicalName?.items.forEach((weed) => {
-        if (weed) {
-          const { __typename, ...omitTypename } = weed;
-          weedsMap.set(weed?.weedId || '', omitTypename);
-        }
-      });
-
-      setSearchText('');
-      setWeedList(Array.from(weedsMap.values()));
-      setLoading(false);
-    } catch {
+      if (searchText !== '') {
+        const getWeedsByKeyword: WeedByVegetationTypeCQueryVariables = {
+          vegetationType: vegType || '',
+          filter: {
+            or: [
+              { commonName: { contains: searchText } },
+              { botanicalName: { contains: searchText } }
+            ]
+          }
+        };
+        const botanicalNameResults = (await API.graphql(
+          graphqlOperation(weedByVegetationTypeC, getWeedsByKeyword)
+        )) as GraphQLResult<WeedByVegetationTypeCQuery>;
+        setWeedList(
+          botanicalNameResults.data?.weedByVegetationType?.items.reduce(
+            (weedsParsed, weed) => {
+              if (weed) {
+                const { __typename, ...omitTypename } = weed;
+                if (omitTypename) weedsParsed.push(omitTypename);
+              }
+              return weedsParsed;
+            },
+            [] as Weed[]
+          ) || []
+        );
+        setLoading(false);
+        setSearchText('');
+        setLoading(false);
+      } else {
+        await getWeedsByType();
+      }
+    } catch (err) {
       setLoading(false);
       navigate('/');
     }
@@ -104,15 +101,15 @@ export const WeedSearch: React.FC = () => {
     <>
       <Nav invertColors={true} />
       <main id="weedSearchBody">
-        <form id="weedSearchForm" onSubmit={(e) => searchWeedsByKeyword(e)}>
+        <form id="weedSearchForm">
           <input
             type="text"
             placeholder="Weed Name"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           ></input>
-          <button>Search</button>
-          <button>
+          <button onClick={(e) => searchWeedsByKeyword(e)}>Search</button>
+          <button onClick={(e) => getWeedsByType(e)}>
             Show All{' '}
             {vegType === 'f' ? 'Forb' : vegType === 'g' ? 'Graminoid' : 'Woody'}{' '}
             Species

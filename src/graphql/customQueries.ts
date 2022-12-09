@@ -96,123 +96,6 @@ export const weedByVegetationTypeC = /* GraphQL */ `
     }
   }
 `;
-export const weedByCommonNameC = /* GraphQL */ `
-  query WeedByCommonNameC(
-    $commonName: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelWeedFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    weedByCommonName(
-      commonName: $commonName
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        weedId
-        vegetationType
-        commonName
-        botanicalName
-        annualPerennialBiennial
-        src
-      }
-      nextToken
-    }
-  }
-`;
-
-export const weedByBotanicalNameC = /* GraphQL */ `
-  query WeedByBotanicalNameC(
-    $botanicalName: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelWeedFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    weedByBotanicalName(
-      botanicalName: $botanicalName
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        weedId
-        vegetationType
-        commonName
-        botanicalName
-        annualPerennialBiennial
-        src
-      }
-      nextToken
-    }
-  }
-`;
-export const nativePlantByBotanicalNameC = /* GraphQL */ `
-  query NativePlantByBotanicalNameC(
-    $botanicalName: String!
-    $sunHeightBloomTimeMoisture: ModelNativePlantByBotanicalNameAndGrowingParamsCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelNativePlantFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    nativePlantByBotanicalName(
-      botanicalName: $botanicalName
-      sunHeightBloomTimeMoisture: $sunHeightBloomTimeMoisture
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        nativeId
-        botanicalName
-        commonName
-        moisture
-        sun
-        height
-        bloomTime
-        src
-      }
-      nextToken
-    }
-  }
-`;
-export const nativePlantByCommonNameC = /* GraphQL */ `
-  query NativePlantByCommonNameC(
-    $commonName: String!
-    $sunHeightBloomTimeMoisture: ModelNativePlantByCommonNameAndGrowingParamsCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelNativePlantFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    nativePlantByCommonName(
-      commonName: $commonName
-      sunHeightBloomTimeMoisture: $sunHeightBloomTimeMoisture
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        nativeId
-        botanicalName
-        commonName
-        moisture
-        sun
-        height
-        bloomTime
-        src
-      }
-      nextToken
-    }
-  }
-`;
 
 export const getUserManagementMethods = /* GraphQL */ `
   query GetUserManagementMethods($email: ID!) {
@@ -268,6 +151,36 @@ export const getUserNativePlants = /* GraphQL */ `
         }
         nextToken
       }
+    }
+  }
+`;
+
+export const listNativePlantsC = /* GraphQL */ `
+  query ListNativePlantsC(
+    $nativeId: ID
+    $filter: ModelNativePlantFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listNativePlants(
+      nativeId: $nativeId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        nativeId
+        botanicalName
+        commonName
+        moisture
+        sun
+        height
+        bloomTime
+        src
+      }
+      nextToken
     }
   }
 `;

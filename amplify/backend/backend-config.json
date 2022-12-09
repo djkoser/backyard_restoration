@@ -7,9 +7,7 @@
         {
           "category": "auth",
           "resourceName": "backyardrestoration385e5c12",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         }
       ],
       "output": {
@@ -20,16 +18,7 @@
               "userPoolId": "authbackyardrestoration385e5c12"
             }
           },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "API_KEY",
-              "apiKeyConfig": {
-                "apiKeyExpirationDays": 7,
-                "apiKeyExpirationDate": "2022-12-15T08:15:23.406Z",
-                "description": "BackyardRestoration GraphQL API Key"
-              }
-            }
-          ]
+          "additionalAuthenticationProviders": []
         }
       }
     },
@@ -40,10 +29,7 @@
         {
           "category": "function",
           "resourceName": "stripeCheckout",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
+          "attributes": ["Name", "Arn"]
         }
       ]
     }
@@ -57,9 +43,7 @@
       "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL"
-        ],
+        "signupAttributes": ["EMAIL"],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": "8",
           "passwordPolicyCharacters": [
@@ -70,12 +54,8 @@
           ]
         },
         "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+        "mfaTypes": ["SMS"],
+        "verificationMechanisms": ["EMAIL"]
       }
     }
   },

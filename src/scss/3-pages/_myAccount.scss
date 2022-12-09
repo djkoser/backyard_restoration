@@ -10,8 +10,8 @@
   min-height: calc(100vh - (2 * #{$hFHeight}));
 }
 
-#nameEmailPassword,
-#address,
+#emailPassword,
+#nameAddress,
 #startHardiness {
   @extend %columnFlex;
   margin: 30px;
@@ -76,8 +76,8 @@
     flex-direction: column;
   }
 
-  #nameEmailPassword,
-  #address {
+  #emailPassword,
+  #nameAddress {
     margin: 0px;
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { getUserInfo } from '../redux/userSlice';
+import { getUserNatives } from '../redux/userNativePlantsSlice';
 import { UserNativeStateVersion } from '../types';
 import {
   AddedNatives,
@@ -21,7 +21,7 @@ export const NativeSelector: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(getUserNatives());
   }, []);
 
   useEffect(() => {

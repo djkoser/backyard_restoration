@@ -53,7 +53,7 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
 
   // function to store management method text as legend descriptions
   const extractText = () =>
-    userMethods.map((el) => `Weed: ${el.weedCommonName} - ${el.name}`);
+    userMethods.map(({ commonName, name }) => `Weed: ${commonName} - ${name}`);
 
   const createLegend = (colors: string[]) => {
     const legendText = extractText();

@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
 import { createUserC } from '../graphql/customMutations';
-import { GrowingCalculations } from '../utilities/GrowingCalculations';
+import { GrowingCalculations } from '../utilities';
 import { WeatherLoader } from './';
 
 export const EmailConfirmation: React.FC = () => {
