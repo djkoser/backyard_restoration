@@ -128,7 +128,6 @@ export const deleteUser = () => {
             const { __typename, ...noTypeName } = graphQlResult.data.deleteUser;
 
             if (noTypeName?.managementMethods?.items instanceof Array) {
-              console.log(noTypeName.managementMethods.items);
               for (const item of noTypeName.managementMethods.items) {
                 if (item) {
                   const deleteUserManagementMethodsInput: DeleteUserManagementMethodCMutationVariables =
@@ -146,7 +145,6 @@ export const deleteUser = () => {
             }
 
             if (noTypeName?.nativePlants?.items instanceof Array) {
-              console.log(noTypeName.nativePlants.items);
               for (const item of noTypeName.nativePlants.items) {
                 if (item) {
                   const deleteUserNativePlantsInput: DeleteUserNativePlantCMutationVariables =

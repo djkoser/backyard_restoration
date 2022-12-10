@@ -48,8 +48,6 @@ const fulfill: CaseReducer<
   UserMethodState,
   PayloadAction<UserMethodPayload>
 > = (state, action) => {
-  console.log(state);
-  console.log({ ...action.payload, ...{ loading: false, failed: false } });
   return { ...action.payload, ...{ loading: false, failed: false } };
 };
 

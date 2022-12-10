@@ -93,8 +93,7 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
         ) || []
       );
       setLoadingParent(false);
-    } catch (err) {
-      console.log(JSON.stringify(err));
+    } catch {
       setLoadingParent(false);
       toast.error('Search failed, please try again');
     }

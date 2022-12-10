@@ -16,6 +16,7 @@ export const WeedSearch: React.FC = () => {
   const { vegType } = useParams<{ vegType: string }>();
   const [searchText, setSearchText] = useState('');
   const [weedList, setWeedList] = useState<Weed[]>([]);
+  const [apbInput, setAPBInput] = useState<string>('');
 
   const [loading, setLoading] = useState(true);
 
@@ -53,18 +54,26 @@ export const WeedSearch: React.FC = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      if (searchText !== '') {
-        const getWeedsByKeyword: WeedByVegetationTypeCQueryVariables = {
+      if (searchText || apbInput) {
+        const getWeedsByKeywordInputs: WeedByVegetationTypeCQueryVariables = {
           vegetationType: vegType || '',
           filter: {
+            and: []
+          }
+        };
+
+        const { and } = getWeedsByKeywordInputs.filter!;
+        if (and && searchText)
+          and.push({
             or: [
               { commonName: { contains: searchText } },
               { botanicalName: { contains: searchText } }
             ]
-          }
-        };
+          });
+        if (and && apbInput)
+          and.push({ annualPerennialBiennial: { eq: apbInput } });
         const botanicalNameResults = (await API.graphql(
-          graphqlOperation(weedByVegetationTypeC, getWeedsByKeyword)
+          graphqlOperation(weedByVegetationTypeC, getWeedsByKeywordInputs)
         )) as GraphQLResult<WeedByVegetationTypeCQuery>;
         setWeedList(
           botanicalNameResults.data?.weedByVegetationType?.items.reduce(
@@ -108,8 +117,23 @@ export const WeedSearch: React.FC = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           ></input>
+          <label id="apbLabel" htmlFor="apbDropdown">
+            Annual/Perennial/Biennial:
+          </label>
+          <select
+            id="apbDropdown"
+            onChange={(e) => {
+              setAPBInput(e.target.value);
+            }}
+            value={apbInput}
+          >
+            <option value=""></option>
+            <option value="a">Annual</option>
+            <option value="p">Perennial</option>
+            <option value="b">Biennial</option>
+          </select>
           <button onClick={(e) => searchWeedsByKeyword(e)}>Search</button>
-          <button onClick={(e) => getWeedsByType(e)}>
+          <button id="showAllSpeciesButton" onClick={(e) => getWeedsByType(e)}>
             Show All{' '}
             {vegType === 'f' ? 'Forb' : vegType === 'g' ? 'Graminoid' : 'Woody'}{' '}
             Species
