@@ -23,7 +23,7 @@ export const Stripe: React.FC = () => {
       const stripe = await stripePromise;
 
       await fetch('/api/donate', {
-        method: 'post',
+        method: 'PUT',
         body: JSON.stringify({
           donationAmount: (Number.parseFloat(donationAmount) * 100).toString()
         })

@@ -9,10 +9,31 @@
   @extend %wrapFlex;
 }
 
+#apbLabel {
+  margin: 0px 5px 0px 20px;
+  color: $greenBlue;
+}
+
 #searchResultsBox {
   min-height: calc(100vh - (2 * #{$hFHeight}));
   margin-top: 80px;
   @extend %wrapFlex;
+}
+
+@media (min-width: 441px) and (max-width: 492px),
+  (max-width: 870px) and (min-width: 768px) {
+  #showAllSpeciesButton {
+    margin-top: -10px;
+  }
+}
+
+@media (max-width: 361px) {
+  #showAllSpeciesButton {
+    margin-top: -4px;
+  }
+  #weedSearchForm {
+    min-height: 75px;
+  }
 }
 
 @media (min-width: $iPadWidth) {
