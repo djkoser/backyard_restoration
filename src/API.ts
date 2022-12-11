@@ -234,24 +234,8 @@ export type ModelUserNativePlantConditionInput = {
   and?: Array< ModelUserNativePlantConditionInput | null > | null,
   or?: Array< ModelUserNativePlantConditionInput | null > | null,
   not?: ModelUserNativePlantConditionInput | null,
-  userNativePlantsEmail?: ModelIDInput | null,
-  userNativePlantNativePlantNativeId?: ModelIDInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
+  userNativePlantsEmail?: ModelStringInput | null,
+  userNativePlantNativePlantNativeId?: ModelStringInput | null,
 };
 
 export type UpdateUserNativePlantInput = {
@@ -280,8 +264,8 @@ export type ModelUserManagementMethodConditionInput = {
   and?: Array< ModelUserManagementMethodConditionInput | null > | null,
   or?: Array< ModelUserManagementMethodConditionInput | null > | null,
   not?: ModelUserManagementMethodConditionInput | null,
-  userManagementMethodsEmail?: ModelIDInput | null,
-  userManagementMethodManagementMethodMethodId?: ModelIDInput | null,
+  userManagementMethodsEmail?: ModelStringInput | null,
+  userManagementMethodManagementMethodMethodId?: ModelStringInput | null,
 };
 
 export type UpdateUserManagementMethodInput = {
@@ -359,7 +343,7 @@ export type ModelManagementMethodConditionInput = {
   and?: Array< ModelManagementMethodConditionInput | null > | null,
   or?: Array< ModelManagementMethodConditionInput | null > | null,
   not?: ModelManagementMethodConditionInput | null,
-  weedManagementMethodsWeedId?: ModelIDInput | null,
+  weedManagementMethodsWeedId?: ModelStringInput | null,
 };
 
 export type DeleteManagementMethodInput = {
@@ -401,7 +385,7 @@ export enum ModelSortDirection {
 
 
 export type ModelWeedFilterInput = {
-  weedId?: ModelIDInput | null,
+  weedId?: ModelStringInput | null,
   vegetationType?: ModelStringInput | null,
   commonName?: ModelStringInput | null,
   botanicalName?: ModelStringInput | null,
@@ -420,7 +404,7 @@ export type ModelWeedConnection = {
 };
 
 export type ModelNativePlantFilterInput = {
-  nativeId?: ModelIDInput | null,
+  nativeId?: ModelStringInput | null,
   botanicalName?: ModelStringInput | null,
   commonName?: ModelStringInput | null,
   moisture?: ModelStringInput | null,
