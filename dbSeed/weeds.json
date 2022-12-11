@@ -1,6 +1,6 @@
 [
   {
-    "weedId": 1,
+    "weedId": "1",
     "commonName": "Birdsfoot trefoil",
     "botanicalName": "Lotus corniculatus",
     "annualPerennialBiennial": "p",
@@ -9,7 +9,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/birdsfoot-trefoil/birdsfoot-trefoil-l-van-riper.jpg"
   },
   {
-    "weedId": 2,
+    "weedId": "2",
     "commonName": "Bull thistle",
     "botanicalName": "Cirsium vulgare",
     "annualPerennialBiennial": "b",
@@ -18,7 +18,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/bull-thistle/bull-thistle-Forest-Kim-Starr-bugwood.jpg"
   },
   {
-    "weedId": 3,
+    "weedId": "3",
     "commonName": "Butter and eggs",
     "botanicalName": "Linaria vulgaris",
     "annualPerennialBiennial": "p",
@@ -27,7 +27,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/butter-eggs/butter-eggs-flower-banner.jpg"
   },
   {
-    "weedId": 4,
+    "weedId": "4",
     "commonName": "Canada thistle",
     "botanicalName": "Cirsium arvense",
     "annualPerennialBiennial": "p",
@@ -36,7 +36,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/canada-thistle/canada-thistle-plants-banner.jpg"
   },
   {
-    "weedId": 5,
+    "weedId": "5",
     "commonName": "Common tansy",
     "botanicalName": "Tanacetum vulgare",
     "annualPerennialBiennial": "p",
@@ -45,7 +45,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/common-tansy/tansy-flower-head-l-van-riper-banner.jpg"
   },
   {
-    "weedId": 6,
+    "weedId": "6",
     "commonName": "Cow vetch & hairy vetch",
     "botanicalName": "Vicia cracca, Vicia villosa",
     "annualPerennialBiennial": "a",
@@ -54,7 +54,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/cow-hairy-vetch/cow-vetch-Caleb-Slemmons-bugwood.jpg"
   },
   {
-    "weedId": 7,
+    "weedId": "7",
     "commonName": "Creeping Charlie",
     "botanicalName": "Glechoma hederacea",
     "annualPerennialBiennial": "a",
@@ -63,7 +63,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/creeping-charlie/creeping-charlie-leslie-j-mehrhoff-bugwood.jpg"
   },
   {
-    "weedId": 8,
+    "weedId": "8",
     "commonName": "Crown vetch or axseed",
     "botanicalName": "Securigera varia",
     "annualPerennialBiennial": "p",
@@ -72,7 +72,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/crown-vetch/crown-vetch-leaf-L-Van-Riper-MNDNR-banner.jpg"
   },
   {
-    "weedId": 9,
+    "weedId": "9",
     "commonName": "Erect hedgeparlsey",
     "botanicalName": "Torilis japonica",
     "annualPerennialBiennial": "b",
@@ -81,7 +81,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/erect-hedgeparsley/erect-hedgeparsley-flower-L-Van-Riper-MNDNR-banner.jpg"
   },
   {
-    "weedId": 10,
+    "weedId": "10",
     "commonName": "Garlic mustard",
     "botanicalName": "Alliaria petiolata",
     "annualPerennialBiennial": "b",
@@ -90,7 +90,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/garlic-mustard/garlic-mustard-form-d-hanson-banner.jpg"
   },
   {
-    "weedId": 11,
+    "weedId": "11",
     "commonName": "Hoary alyssum",
     "botanicalName": "Berteroa incana",
     "annualPerennialBiennial": "a",
@@ -99,7 +99,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/hoary-alyssum/hoary-alyssum-L-Van-Riper-MNDNR-banner.jpg"
   },
   {
-    "weedId": 12,
+    "weedId": "12",
     "commonName": "Leafy spurge",
     "botanicalName": "Euphorbia esula",
     "annualPerennialBiennial": "p",
@@ -108,7 +108,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/leafy-spurge/leafy-spurge-flower-Dave-Hason-MNDOT-banner.jpg"
   },
   {
-    "weedId": 13,
+    "weedId": "13",
     "commonName": "Musk or nodding thistle",
     "botanicalName": "Carduus nutans",
     "annualPerennialBiennial": "b",
@@ -117,7 +117,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/musk-thistle/musk-thistle-flower-Mary-Ellen-Harte-bugwood-banner.jpg"
   },
   {
-    "weedId": 14,
+    "weedId": "14",
     "commonName": "Orange hawkweed",
     "botanicalName": "Hieracium aurantiacum",
     "annualPerennialBiennial": "p",
@@ -126,7 +126,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/orange-hawkweed/orange-hawkweed-Michael-Shephard-bugwood-banner.jpg"
   },
   {
-    "weedId": 15,
+    "weedId": "15",
     "commonName": "Oxeye daisy",
     "botanicalName": "Leucanthemum vulgare",
     "annualPerennialBiennial": "p",
@@ -135,7 +135,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/oxeye-daisy/oxeye-daisy-banner.jpg"
   },
   {
-    "weedId": 16,
+    "weedId": "16",
     "commonName": "Poison hemlock",
     "botanicalName": "Conium maculatum L",
     "annualPerennialBiennial": "b",
@@ -144,7 +144,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/poison-hemlock/poison-hemlock-robert-dana-banner.jpg"
   },
   {
-    "weedId": 17,
+    "weedId": "17",
     "commonName": "Queen Anne's Lace",
     "botanicalName": "Daucus carota",
     "annualPerennialBiennial": "b",
@@ -153,7 +153,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/queen-anne-lace/queen-anne-lace-white-flower-heads-mda-banner.jpg"
   },
   {
-    "weedId": 18,
+    "weedId": "18",
     "commonName": "Spotted knapweed",
     "botanicalName": "Centaurea stoebe spp. micranthos",
     "annualPerennialBiennial": "b",
@@ -162,7 +162,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/spotted-knapweed/spotted-knapweed-in-field-MDA.jpg"
   },
   {
-    "weedId": 19,
+    "weedId": "19",
     "commonName": "White & yellow sweet clover",
     "botanicalName": "Melitotus alba, M. officinalis",
     "annualPerennialBiennial": "b",
@@ -171,7 +171,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/white-yellow-sweetclover/white-yellow-sweetclover-L-Van-Riper-MNDNR-banner.jpg"
   },
   {
-    "weedId": 20,
+    "weedId": "20",
     "commonName": "Wild parsnip",
     "botanicalName": "Pastinaca sativa",
     "annualPerennialBiennial": "p",
@@ -180,7 +180,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/wildparsnip/wild-parsnip-flower-Laura-Van-Riper-MN-DNR.jpg"
   },
   {
-    "weedId": 21,
+    "weedId": "21",
     "commonName": "Amur silver grass",
     "botanicalName": "Miscanthus sacchariflorus",
     "annualPerennialBiennial": "p",
@@ -189,7 +189,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/amur-silvergrass/amur-silvergrass-David-Dragon-banner.jpg"
   },
   {
-    "weedId": 22,
+    "weedId": "22",
     "commonName": "Reed canary grass",
     "botanicalName": "Phalaris arundinacea",
     "annualPerennialBiennial": "p",
@@ -198,7 +198,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/reed-canary-grass/reed-canary-grass-laura-van-riper.jpg"
   },
   {
-    "weedId": 23,
+    "weedId": "23",
     "commonName": "Smooth brome grass",
     "botanicalName": "Bromus inermis",
     "annualPerennialBiennial": "p",
@@ -207,7 +207,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/smooth-brome/smooth-brome-seed-head-John-M-Randall-bugwood-banner.jpg"
   },
   {
-    "weedId": 24,
+    "weedId": "24",
     "commonName": "Amur cork tree",
     "botanicalName": "Phellodendron amurense",
     "annualPerennialBiennial": "p",
@@ -216,7 +216,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/amur-cork-tree/amur-cork-tree-berries-leaves-Ansel-Oommen-bugwood.jpg"
   },
   {
-    "weedId": 25,
+    "weedId": "25",
     "commonName": "Amur maple",
     "botanicalName": "Acer ginnala",
     "annualPerennialBiennial": "p",
@@ -225,7 +225,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/amur-maple/amur-maple-leaf-seed-d-hanson.jpg"
   },
   {
-    "weedId": 26,
+    "weedId": "26",
     "commonName": "Autumn olive",
     "botanicalName": "Elaeagnus umbellata",
     "annualPerennialBiennial": "p",
@@ -234,7 +234,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/autumn-olive/autumn-olive-Russ-Smith-banner.jpg"
   },
   {
-    "weedId": 27,
+    "weedId": "27",
     "commonName": "Black locust",
     "botanicalName": "Robinia pseudoacacia",
     "annualPerennialBiennial": "p",
@@ -243,7 +243,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/black-locust/black-locust-john-cardina-bugwood.jpg"
   },
   {
-    "weedId": 28,
+    "weedId": "28",
     "commonName": "Buckthorn",
     "botanicalName": "Rhamnus cathartica",
     "annualPerennialBiennial": "p",
@@ -252,7 +252,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/buckthorn/common-buckthorn.jpg"
   },
   {
-    "weedId": 29,
+    "weedId": "29",
     "commonName": "Japanese barberry",
     "botanicalName": "Berberis thunbergii",
     "annualPerennialBiennial": "p",
@@ -261,7 +261,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/japanese-barberry/japanese-barberry-laura-van-riper-banner.jpg"
   },
   {
-    "weedId": 30,
+    "weedId": "30",
     "commonName": "Multiflora rose",
     "botanicalName": "Rosa multiflora",
     "annualPerennialBiennial": "p",
@@ -270,7 +270,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/multiflora-rose/multiflora-rose-MNDOT-banner.jpg"
   },
   {
-    "weedId": 31,
+    "weedId": "31",
     "commonName": "Non-native bush honeysuckles",
     "botanicalName": "Lonicera tatarica",
     "annualPerennialBiennial": "p",
@@ -279,7 +279,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/honeysuckles/bush-honeysucke-laura-van-riper-banner.jpg"
   },
   {
-    "weedId": 32,
+    "weedId": "32",
     "commonName": "Non-native knotweeds",
     "botanicalName": "Polygonum cuspidatum",
     "annualPerennialBiennial": "p",
@@ -288,7 +288,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/knotweed/bohemian-knotweed-Laura-Van-Riper-banner.jpg"
   },
   {
-    "weedId": 33,
+    "weedId": "33",
     "commonName": "Norway maple",
     "botanicalName": "Acer platanoides",
     "annualPerennialBiennial": "p",
@@ -297,7 +297,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/norway-maple/norway-maple-jan-samanek-bugwood.jpg"
   },
   {
-    "weedId": 34,
+    "weedId": "34",
     "commonName": "Russian olive",
     "botanicalName": "Elaeagnus angustifolia",
     "annualPerennialBiennial": "p",
@@ -306,7 +306,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/russian-olive/russian-olive-branch-bugwood-banner.jpg"
   },
   {
-    "weedId": 35,
+    "weedId": "35",
     "commonName": "Siberian elm",
     "botanicalName": "Ulmus pumila",
     "annualPerennialBiennial": "p",
@@ -315,7 +315,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/siberian-elm/siberian-elm-tree-Patrick-Breen-bugwood.jpg"
   },
   {
-    "weedId": 36,
+    "weedId": "36",
     "commonName": "Siberian peashrub",
     "botanicalName": "Caragana arborescens",
     "annualPerennialBiennial": "p",
@@ -324,7 +324,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/siberian-peashrub/siberian-peashrub-flowers-crop-MNDOT-banner.jpg"
   },
   {
-    "weedId": 37,
+    "weedId": "37",
     "commonName": "Winged burning bush",
     "botanicalName": "Euonymus alatus",
     "annualPerennialBiennial": "p",
@@ -333,7 +333,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/winged-burning-bush/winged-burning-bush-banner.jpg"
   },
   {
-    "weedId": 38,
+    "weedId": "38",
     "commonName": "Common teasel",
     "botanicalName": "Dipsacus fullonum",
     "annualPerennialBiennial": "p",
@@ -342,7 +342,7 @@
     "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/common-teasel/common-teasel-Steve-Dewey-bugwood-banner.jpg"
   },
   {
-    "weedId": 39,
+    "weedId": "39",
     "commonName": "Giant hogweed",
     "botanicalName": "Heracleum mantegazzianum",
     "annualPerennialBiennial": "b",

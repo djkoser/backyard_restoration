@@ -114,12 +114,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "backyardrestorationLambdaRole09d23e6c",
+            "backyardrestorationLambdaRole53aa355e",
             {
               "Fn::Join": [
                 "",
                 [
-                  "backyardrestorationLambdaRole09d23e6c",
+                  "backyardrestorationLambdaRole53aa355e",
                   "-",
                   {
                     "Ref": "env"

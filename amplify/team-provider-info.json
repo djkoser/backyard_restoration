@@ -1,30 +1,30 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-backyardrestoration-dev-174736-authRole",
-      "UnauthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-174736-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-174736-authRole",
+      "AuthRoleName": "amplify-backyardrestoration-dev-222608-authRole",
+      "UnauthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-222608-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-222608-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-backyardrestoration-dev-174736-deployment",
-      "UnauthRoleName": "amplify-backyardrestoration-dev-174736-unauthRole",
-      "StackName": "amplify-backyardrestoration-dev-174736",
-      "StackId": "arn:aws:cloudformation:us-east-1:360544971157:stack/amplify-backyardrestoration-dev-174736/899e30b0-71d2-11ed-8dde-1226ba888c4b",
-      "AmplifyAppId": "d2irdo5vzkklq2"
+      "DeploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
+      "UnauthRoleName": "amplify-backyardrestoration-dev-222608-unauthRole",
+      "StackName": "amplify-backyardrestoration-dev-222608",
+      "StackId": "arn:aws:cloudformation:us-east-1:360544971157:stack/amplify-backyardrestoration-dev-222608/f0de6020-790b-11ed-8334-0a7361ba5763",
+      "AmplifyAppId": "d23rfc87jgo2gb"
     },
     "categories": {
-      "api": {
-        "backyardrestoration": {},
-        "stripeEndpoint": {}
-      },
       "auth": {
-        "backyardrestoration385e5c12": {}
+        "BackyardRestorationAuth": {}
       },
       "function": {
         "stripeCheckout": {
-          "secretsPathAmplifyAppId": "d2irdo5vzkklq2",
-          "deploymentBucketName": "amplify-backyardrestoration-dev-174736-deployment",
-          "s3Key": "amplify-builds/stripeCheckout-644641334f6a6b477477-build.zip"
+          "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
+          "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
+          "s3Key": "amplify-builds/stripeCheckout-3178686d755941592b6f-build.zip"
         }
+      },
+      "api": {
+        "backyardrestoration": {},
+        "StripeCheckoutAPI": {}
       }
     }
   }

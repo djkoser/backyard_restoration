@@ -13,7 +13,7 @@ import {
   createWeedC
 } from '../src/graphql/customMutations';
 
-Amplify.configure(awsMobile);
+Amplify.configure({ ...awsMobile, aws_appsync_authenticationType: 'API_KEY' });
 
 const nativePlants: CreateNativePlantInput[] = JSON.parse(
   readFileSync(join(__dirname, 'nativePlants.json')).toString()
@@ -57,7 +57,7 @@ async function seedDB() {
     const errParsed =
       err instanceof Error ? err : new Error(JSON.stringify(err));
     console.error(
-      `The following error occured while seeding database: ${errParsed.message}`
+      `The following error occurred while seeding database: ${errParsed.message}`
     );
     throw errParsed;
   }

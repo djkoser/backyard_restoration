@@ -1,17 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
-    "api": {
-        "backyardrestoration": {
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        },
-        "stripeEndpoint": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        }
-    },
     "auth": {
-        "backyardrestoration385e5c12": {
+        "BackyardRestorationAuth": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
@@ -19,6 +8,18 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
             "AppClientID": "string"
+        }
+    },
+    "api": {
+        "backyardrestoration": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        },
+        "StripeCheckoutAPI": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     },
     "function": {

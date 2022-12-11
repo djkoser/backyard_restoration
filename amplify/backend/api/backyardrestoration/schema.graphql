@@ -6,7 +6,7 @@
 type Weed
   @model
   @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
-  weedId: ID! @primaryKey
+  weedId: String! @primaryKey
   vegetationType: String!
     @index(name: "byVegetationType", queryField: "weedByVegetationType")
   commonName: String!
@@ -18,7 +18,7 @@ type Weed
 }
 
 type User @model @auth(rules: [{ allow: owner, provider: userPools }]) {
-  email: ID! @primaryKey
+  email: String! @primaryKey
   firstName: String @default(value: "")
   lastName: String @default(value: "")
   street: String @default(value: "")
@@ -40,7 +40,7 @@ type User @model @auth(rules: [{ allow: owner, provider: userPools }]) {
 type ManagementMethod
   @model
   @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
-  methodId: ID! @primaryKey
+  methodId: String! @primaryKey
   weed: Weed! @belongsTo
   name: String!
   description: String!
@@ -61,7 +61,7 @@ type ManagementMethod
 type NativePlant
   @model
   @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
-  nativeId: ID! @primaryKey
+  nativeId: String! @primaryKey
   botanicalName: String!
   commonName: String!
   moisture: String!
