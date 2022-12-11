@@ -3,7 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const getWeedC = /* GraphQL */ `
-  query GetWeedC($weedId: ID!) {
+  query GetWeedC($weedId: String!) {
     getWeed(weedId: $weedId) {
       weedId
       vegetationType
@@ -37,7 +37,7 @@ export const getWeedC = /* GraphQL */ `
 `;
 
 export const getUserC = /* GraphQL */ `
-  query GetUserC($email: ID!) {
+  query GetUserC($email: String!) {
     getUser(email: $email) {
       email
       firstName
@@ -55,7 +55,7 @@ export const getUserC = /* GraphQL */ `
 `;
 
 export const getNativePlantC = /* GraphQL */ `
-  query GetNativePlantC($nativeId: ID!) {
+  query GetNativePlantC($nativeId: String!) {
     getNativePlant(nativeId: $nativeId) {
       nativeId
       botanicalName
@@ -98,7 +98,7 @@ export const weedByVegetationTypeC = /* GraphQL */ `
 `;
 
 export const getUserManagementMethods = /* GraphQL */ `
-  query GetUserManagementMethods($email: ID!) {
+  query GetUserManagementMethods($email: String!) {
     getUser(email: $email) {
       managementMethods {
         items {
@@ -132,7 +132,7 @@ export const getUserManagementMethods = /* GraphQL */ `
 `;
 
 export const getUserNativePlants = /* GraphQL */ `
-  query GetUserNativePlants($email: ID!) {
+  query GetUserNativePlants($email: String!) {
     getUser(email: $email) {
       nativePlants {
         items {
@@ -157,7 +157,7 @@ export const getUserNativePlants = /* GraphQL */ `
 
 export const listNativePlantsC = /* GraphQL */ `
   query ListNativePlantsC(
-    $nativeId: ID
+    $nativeId: String
     $filter: ModelNativePlantFilterInput
     $limit: Int
     $nextToken: String
