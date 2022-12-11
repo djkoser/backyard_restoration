@@ -52,7 +52,7 @@ const fulfill: CaseReducer<
 };
 
 export const addUserManagementMethod = (
-  userManagementMethodManagementMethodId: string
+  userManagementMethodManagementMethodMethodId: string
 ) => {
   return userMethodSlice.actions.ADD_USER_METHOD(
     new Promise((resolve, reject) =>
@@ -64,8 +64,8 @@ export const addUserManagementMethod = (
             {
               input: {
                 projectNotes: '',
-                userManagementMethodsId: attributes.email,
-                userManagementMethodManagementMethodId
+                userManagementMethodsEmail: attributes.email,
+                userManagementMethodManagementMethodMethodId
               }
             };
           const graphQlResult = await (API.graphql(

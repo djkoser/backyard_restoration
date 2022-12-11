@@ -51,7 +51,7 @@ const fulfill: CaseReducer<
   return { ...action.payload, ...{ loading: false, failed: false } };
 };
 
-export const addUserNative = (userNativePlantNativePlantId: string) => {
+export const addUserNative = (userNativePlantNativePlantNativeId: string) => {
   return userNativePlantSlice.actions.ADD_USER_NATIVE(
     new Promise((resolve, reject) =>
       Auth.currentAuthenticatedUser()
@@ -60,8 +60,8 @@ export const addUserNative = (userNativePlantNativePlantId: string) => {
             {
               input: {
                 projectNotes: '',
-                userNativePlantsId: attributes.email,
-                userNativePlantNativePlantId
+                userNativePlantsEmail: attributes.email,
+                userNativePlantNativePlantNativeId
               }
             };
           const graphQlResult = await (API.graphql(

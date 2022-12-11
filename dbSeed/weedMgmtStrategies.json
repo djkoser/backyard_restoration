@@ -38,7 +38,7 @@
   {
     "weedManagementMethodsWeedId": "38",
     "name": "Prescribed Fire",
-    "description": "Fire can be used to increase competion from native warm season grasses, if present. Fire can be used in combination with follow-up herbicide treatment. ",
+    "description": "Fire can be used to increase competition from native warm season grasses, if present. Fire can be used in combination with follow-up herbicide treatment. ",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -146,7 +146,7 @@
   {
     "weedManagementMethodsWeedId": "31",
     "name": "Prescribed Fire",
-    "description": "Prescribed fire, where applicable, to reduce dense ground mats. However, rhizomes will likely resprout following fire so follow-up with herbicide. Goal with fire is to remove excess vegetation to allow more effective herbicide application.",
+    "description": "Prescribed fire, where applicable, to reduce dense ground mats. However, rhizomes will likely re-sprout following fire so follow-up with herbicide. Goal with fire is to remove excess vegetation to allow more effective herbicide application.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -272,7 +272,7 @@
   {
     "weedManagementMethodsWeedId": "16",
     "name": "Mowing/Cutting",
-    "description": "If performed frequently cutting or mowing are effective control methods to prevent seed production. Same is true for hand pulling, however roots and root fragments remaining in soil may resprout. Monitor and plan additional treatments.",
+    "description": "If performed frequently cutting or mowing are effective control methods to prevent seed production. Same is true for hand pulling, however roots and root fragments remaining in soil may re-sprout. Monitor and plan additional treatments.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -290,7 +290,7 @@
   {
     "weedManagementMethodsWeedId": "16",
     "name": "Prescribed Fire",
-    "description": "Prescribed fire as a tool should be used to improve the health of surrounding native vegetation. Fire will kill seedlings and top kill other plants; however, after the fire healthy root systems will likely resprout.",
+    "description": "Prescribed fire as a tool should be used to improve the health of surrounding native vegetation. Fire will kill seedlings and top kill other plants; however, after the fire healthy root systems will likely re-sprout.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -344,7 +344,7 @@
   {
     "weedManagementMethodsWeedId": "29",
     "name": "Prescribed Fire",
-    "description": "Repeated prescribed fire can damage above ground parts and drain energy from shrubs; however, resprouting will likely occur. Monitor after fire and follow up as necessary with additional treatments",
+    "description": "Repeated prescribed fire can damage above ground parts and drain energy from shrubs; however, re-sprouting will likely occur. Monitor after fire and follow up as necessary with additional treatments",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -434,7 +434,7 @@
   {
     "weedManagementMethodsWeedId": "4",
     "name": "Prescribed Fire",
-    "description": "Repeated prescribed fire can be used to encourage stands of native grasses that will outcompete thistle. However, monitoring is needed to check for thistle that germinates in bare soil soon after burns are completed.",
+    "description": "Repeated prescribed fire can be used to encourage stands of native grasses that will out-compete thistle. However, monitoring is needed to check for thistle that germinates in bare soil soon after burns are completed.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -596,7 +596,7 @@
   {
     "weedManagementMethodsWeedId": "12",
     "name": "Herbicides",
-    "description": "Herbicide controls are applied as foliar applications and usually involve formulations of aminocyclopyrachlor, picloram, 2,4-D, glyphosate, dicamba, or imazapic. Re-peated applications are likely necessary.",
+    "description": "Herbicide controls are applied as foliar applications and usually involve formulations of aminocyclopyrachlor, picloram, 2,4-D, glyphosate, dicamba, or imazapic. Repeated applications are likely necessary.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -650,7 +650,7 @@
   {
     "weedManagementMethodsWeedId": "20",
     "name": "Herbicides",
-    "description": "Herbicide controls include foliar applications of 2,4-D or metsulfuron-methyl to the rosette stage during May and June and again in September or October. If glyphosate is to be applied to rosettes, it is recom-mended to hold off until late fall to prevent damage to desirable plants that should then be dormant.",
+    "description": "Herbicide controls include foliar applications of 2,4-D or metsulfuron-methyl to the rosette stage during May and June and again in September or October. If glyphosate is to be applied to rosettes, it is recommended to hold off until late fall to prevent damage to desirable plants that should then be dormant.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -686,7 +686,7 @@
   {
     "weedManagementMethodsWeedId": "27",
     "name": "Herbicides",
-    "description": "Growing season foliar applications can be made with the same active ingredi-ents; aminopyralid and clopyralid. Additionally, metsulfuron, picloram + 2,4-D, glypho-sate and imazapyr are labeled for use.",
+    "description": "Growing season foliar applications can be made with the same active ingredients; aminopyralid and clopyralid. Additionally, metsulfuron, picloram + 2,4-D, glypho-sate and imazapyr are labeled for use.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -722,7 +722,7 @@
   {
     "weedManagementMethodsWeedId": "28",
     "name": "Cutting",
-    "description": "Cutting of stems must be accompanied by herbicide treatments or resprouting will occur. Any time except May-June during heavy sap flow",
+    "description": "Cutting of stems must be accompanied by herbicide treatments or re-sprouting will occur. Any time except May-June during heavy sap flow",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -740,7 +740,7 @@
   {
     "weedManagementMethodsWeedId": "28",
     "name": "Mowing",
-    "description": "Mowing is typically not an option in sen-sitive wetland areas, but on upland sites may be a useful tool in seedling and small diameter stem control. Must be mowed frequently to control seedlings",
+    "description": "Mowing is typically not an option in sensitive wetland areas, but on upland sites may be a useful tool in seedling and small diameter stem control. Must be mowed frequently to control seedlings",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -758,7 +758,7 @@
   {
     "weedManagementMethodsWeedId": "28",
     "name": "Prescribed Fire",
-    "description": "Prescribed fire is used to control seedlings and small diameter stems and if used consistently can drain larger plants of reserves and provide control. However, sprouting will occur and a follow-up herbicide application should be consid-ered.",
+    "description": "Prescribed fire is used to control seedlings and small diameter stems and if used consistently can drain larger plants of reserves and provide control. However, sprouting will occur and a follow-up herbicide application should be considered.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -794,7 +794,7 @@
   {
     "weedManagementMethodsWeedId": "8",
     "name": "Mowing/Cutting",
-    "description": "Cutting or mowing will reduce vigor but not eliminate an infestation. Plan to mow several times a season and moni-tor to time operations with a goal to prevent seed set. Mow cautiously as large infestations often conceal erosion.",
+    "description": "Cutting or mowing will reduce vigor but not eliminate an infestation. Plan to mow several times a season and monitor to time operations with a goal to prevent seed set. Mow cautiously as large infestations often conceal erosion.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -812,7 +812,7 @@
   {
     "weedManagementMethodsWeedId": "8",
     "name": "Prescribed Fire",
-    "description": "Prescribed fire can be used with other management tactics to encourage stands of native grasses that will compete for resources. However, monitoring is necessary as crown vetch will resprout after burns.",
+    "description": "Prescribed fire can be used with other management tactics to encourage stands of native grasses that will compete for resources. However, monitoring is necessary as crown vetch will re-sprout after burns.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -848,7 +848,7 @@
   {
     "weedManagementMethodsWeedId": "10",
     "name": "Hand pulling",
-    "description": "Manual methods include pulling plants in early spring prior to flowering (seed set is almost coincidental with flower-ing) and cutting plants back to the ground as they bolt for flowering, prior to flower opening. Monitor the site as cutting may need to be repeated. If mature flowers (or seed pods) are present, plants should be disposed of onsite or con-tained (e.g., bagged) and removed to an approved facility.",
+    "description": "Manual methods include pulling plants in early spring prior to flowering (seed set is almost coincidental with flower-ing) and cutting plants back to the ground as they bolt for flowering, prior to flower opening. Monitor the site as cutting may need to be repeated. If mature flowers (or seed pods) are present, plants should be disposed of onsite or contained (e.g., bagged) and removed to an approved facility.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -938,7 +938,7 @@
   {
     "weedManagementMethodsWeedId": "30",
     "name": "Herbicides",
-    "description": "Herbicide applications to cut stems and to resprout stems with systemic herbi-cides such as glyphosate have proven successful. As with most species, late season applications of herbicides are effective as plants are moving photosynthates to storage in root systems.",
+    "description": "Herbicide applications to cut stems and to re-sprout stems with systemic herbicides such as glyphosate have proven successful. As with most species, late season applications of herbicides are effective as plants are moving photosynthates to storage in root systems.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -956,7 +956,7 @@
   {
     "weedManagementMethodsWeedId": "36",
     "name": "Mowing/Cutting",
-    "description": "Manual methods include hand pulling when soils are moist. Or repeated cutting of stems can be effective. But the site must be monitored for potential resprouts and for seed germination in disturbed soils. These resprouts and seedlings require addi-tional treatments or subsequent follow-up with an applicable herbicide.",
+    "description": "Manual methods include hand pulling when soils are moist. Or repeated cutting of stems can be effective. But the site must be monitored for potential re-sprouts and for seed germination in disturbed soils. These re-sprouts and seedlings require additional treatments or subsequent follow-up with an applicable herbicide.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1010,7 +1010,7 @@
   {
     "weedManagementMethodsWeedId": "17",
     "name": "Mowing/Cutting",
-    "description": "If performed frequently cutting or mowing are effective control methods. Same is true for hand pulling, roots and root fragments remaining in the soil may resprout. Monitor infestations and plan on additional treatments. Do not mow when seed is present",
+    "description": "If performed frequently cutting or mowing are effective control methods. Same is true for hand pulling, roots and root fragments remaining in the soil may re-sprout. Monitor infestations and plan on additional treatments. Do not mow when seed is present",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1028,7 +1028,7 @@
   {
     "weedManagementMethodsWeedId": "17",
     "name": "Prescribed Fire",
-    "description": "Prescribed fire as a tool should be used to improve the health of surrounding native vegetation. Wild carrot will likely not outcompete healthy vegetation and will decline on its own.",
+    "description": "Prescribed fire as a tool should be used to improve the health of surrounding native vegetation. Wild carrot will likely not out-compete healthy vegetation and will decline on its own.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -1064,7 +1064,7 @@
   {
     "weedManagementMethodsWeedId": "25",
     "name": "Prescribed Fire",
-    "description": "Prescribed fire will set back plants and may top kill seedlings but plants will likely resprout.",
+    "description": "Prescribed fire will set back plants and may top kill seedlings but plants will likely re-sprout.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1100,7 +1100,7 @@
   {
     "weedManagementMethodsWeedId": "25",
     "name": "Herbicides",
-    "description": "Small plants or resprouting stumps can be treated with foliar applications of triclopyr formulations or glyphosate.",
+    "description": "Small plants or re-sprouting stumps can be treated with foliar applications of triclopyr formulations or glyphosate.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1190,7 +1190,7 @@
   {
     "weedManagementMethodsWeedId": "37",
     "name": "Hand pulling",
-    "description": "Manual methods include hand pulling when soils are moist. Or repeated cutting of stems can be effective. But the site must be monitored for potential resprouts and for seed germination in disturbed soils. These resprouts and seed-lings require additional treatments or subsequent follow-up with an applicable herbicide.",
+    "description": "Manual methods include hand pulling when soils are moist. Or repeated cutting of stems can be effective. But the site must be monitored for potential re-sprouts and for seed germination in disturbed soils. These re-sprouts and seed-lings require additional treatments or subsequent follow-up with an applicable herbicide.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -1280,7 +1280,7 @@
   {
     "weedManagementMethodsWeedId": "13",
     "name": "prescribed Fire",
-    "description": "Prescribed fire can be used to encourage stands of native grasses that will outcompete thistle. However, monitoring is needed to check for thistle that germinates in bare soil soon after burns are completed.",
+    "description": "Prescribed fire can be used to encourage stands of native grasses that will out-compete thistle. However, monitoring is needed to check for thistle that germinates in bare soil soon after burns are completed.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1496,7 +1496,7 @@
   {
     "weedManagementMethodsWeedId": "7",
     "name": "Cultural Control",
-    "description": "Cultural control can be done by planting shade tolerant grass, which can outcompete the shade tolerant creeping Charlie. It is also beneficial to increase light and air circulation to the ground by trimming trees and shrubs. When maintaining turf, less fertilizer and mowing to a height of three inches is recommended.",
+    "description": "Cultural control can be done by planting shade tolerant grass, which can out-compete the shade tolerant creeping Charlie. It is also beneficial to increase light and air circulation to the ground by trimming trees and shrubs. When maintaining turf, less fertilizer and mowing to a height of three inches is recommended.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -1568,7 +1568,7 @@
   {
     "weedManagementMethodsWeedId": "9",
     "name": "Herbicides",
-    "description": "Herbicide control can be done using systemic herbicides which are taken up by plants and move within the plant, which can kill leaves, stems, and roots. Use herbicides with the active ingredient glyphosate or triclopyr. Apply herbicide to the leaves in the spring or to plants that are resprouting after cutting.",
+    "description": "Herbicide control can be done using systemic herbicides which are taken up by plants and move within the plant, which can kill leaves, stems, and roots. Use herbicides with the active ingredient glyphosate or triclopyr. Apply herbicide to the leaves in the spring or to plants that are re-sprouting after cutting.",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1748,7 +1748,7 @@
   {
     "weedManagementMethodsWeedId": "21",
     "name": "Total removal",
-    "description": "Mechanical control can be done by digging out the plant. All pieces of the root and rhizomes (underground stems) must be removed to prevent resprouting. ",
+    "description": "Mechanical control can be done by digging out the plant. All pieces of the root and rhizomes (underground stems) must be removed to prevent re-sprouting. ",
     "january": 0,
     "february": 0,
     "march": 0,
@@ -1964,7 +1964,7 @@
   {
     "weedManagementMethodsWeedId": "24",
     "name": "Mowing/cutting",
-    "description": "Mowing or cutting can be used to prevent trees from reaching maturity and producing seeds, but the stumps will continue to resprout.",
+    "description": "Mowing or cutting can be used to prevent trees from reaching maturity and producing seeds, but the stumps will continue to re-sprout.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -1982,7 +1982,7 @@
   {
     "weedManagementMethodsWeedId": "24",
     "name": "Herbicides",
-    "description": "Herbicide control can be done using systemic herbicides, which are taken up by plants and move within the plant, killing leaves, stems, and roots. Cut plants will resprout if the stump is not treated with herbicide after cutting. Immediately after cutting (within 2 hours), apply an herbicide containing triclopyr (Garlon 3A/Vastlan, Garlon 4, or other brush killers with triclopyr) or glyphosate (Roundup) to the cut stump to prevent re-sprouting. Always follow label instructions for herbicides. Herbicides can be applied to cut stumps with a paintbrush, wick applicator such as a dauber or \"buckthorn blaster\", or a low volume sprayer. In cases where more than a few plants are treated, add an indicator dye (available where pesticides are sold), such as Mark-It Blue, to the herbicide to mark which cut stumps you have sprayed. For basal stem treatment, a method that applies chemical through the bark, low volume spray applications can be made with Garlon 4, Pathfinder II and similar oil-based products. This application method uses triclopyr ester mixed with an oil diluent (i.e. Bark Oil Blue, kerosene) applied directly to the bark of Amur cork tree from the root collar up about 12-18 inches. An ultra-low volume spray wand should be used to minimize herbicide use and reduce the potential for non-target injury. Herbicide treatments are less effective in early spring. Summer and fall are better times for herbicide treatment with water-based herbicides such as glyphosate or triclopyr ester. Oil based herbicide such as triclopyr ester are effective during summer and fall as well as during the winter when temperatures are below freezing.",
+    "description": "Herbicide control can be done using systemic herbicides, which are taken up by plants and move within the plant, killing leaves, stems, and roots. Cut plants will re-sprout if the stump is not treated with herbicide after cutting. Immediately after cutting (within 2 hours), apply an herbicide containing triclopyr (Garlon 3A/Vastlan, Garlon 4, or other brush killers with triclopyr) or glyphosate (Roundup) to the cut stump to prevent re-sprouting. Always follow label instructions for herbicides. Herbicides can be applied to cut stumps with a paintbrush, wick applicator such as a dauber or \"buckthorn blaster\", or a low volume sprayer. In cases where more than a few plants are treated, add an indicator dye (available where pesticides are sold), such as Mark-It Blue, to the herbicide to mark which cut stumps you have sprayed. For basal stem treatment, a method that applies chemical through the bark, low volume spray applications can be made with Garlon 4, Pathfinder II and similar oil-based products. This application method uses triclopyr ester mixed with an oil diluent (i.e. Bark Oil Blue, kerosene) applied directly to the bark of Amur cork tree from the root collar up about 12-18 inches. An ultra-low volume spray wand should be used to minimize herbicide use and reduce the potential for non-target injury. Herbicide treatments are less effective in early spring. Summer and fall are better times for herbicide treatment with water-based herbicides such as glyphosate or triclopyr ester. Oil based herbicide such as triclopyr ester are effective during summer and fall as well as during the winter when temperatures are below freezing.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -2000,7 +2000,7 @@
   {
     "weedManagementMethodsWeedId": "26",
     "name": "Hand pulling",
-    "description": "Mechanical control can be done by digging or pulling the plant by hand. Cutting or mowing following up with herbicide application is not recommended because it can stimulate resprouting in mature autumn olive plants.",
+    "description": "Mechanical control can be done by digging or pulling the plant by hand. Cutting or mowing following up with herbicide application is not recommended because it can stimulate re-sprouting in mature autumn olive plants.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -2018,7 +2018,7 @@
   {
     "weedManagementMethodsWeedId": "26",
     "name": "Herbicides",
-    "description": "Herbicide control can be done using systemic herbicides, which are taken up by plants and move within the plant, killing leaves, stems, and roots. Cut plants will resprout if the stump is not treated with herbicide after cutting. Immediately after cutting (within 2 hours), apply an herbicide containing triclopyr (Garlon 3A/Vastlan, Garlon 4, or other brush killers with triclopyr) or glyphosate (Roundup) to the cut stump to prevent re-sprouting. Always follow label instructions for herbicides. Herbicides can be applied to cut stumps with a paintbrush, wick applicator such as a dauber or \"buckthorn blaster\", or a low volume sprayer. In cases where more than a few plants are treated, add an indicator dye (available where pesticides are sold), such as Mark-It Blue, to the herbicide to mark which cut stumps you have sprayed. For basal stem treatment, a method that applies chemical through the bark, low volume spray applications can be made with Garlon 4, Pathfinder II and similar oil-based products. This application method uses triclopyr ester mixed with an oil diluent (i.e. Bark Oil Blue, kerosene) applied directly to the bark of autumn olive from the root collar up about 12-18 inches. An ultra-low volume spray wand should be used to minimize herbicide use and reduce the potential for non-target injury.",
+    "description": "Herbicide control can be done using systemic herbicides, which are taken up by plants and move within the plant, killing leaves, stems, and roots. Cut plants will re-sprout if the stump is not treated with herbicide after cutting. Immediately after cutting (within 2 hours), apply an herbicide containing triclopyr (Garlon 3A/Vastlan, Garlon 4, or other brush killers with triclopyr) or glyphosate (Roundup) to the cut stump to prevent re-sprouting. Always follow label instructions for herbicides. Herbicides can be applied to cut stumps with a paintbrush, wick applicator such as a dauber or \"buckthorn blaster\", or a low volume sprayer. In cases where more than a few plants are treated, add an indicator dye (available where pesticides are sold), such as Mark-It Blue, to the herbicide to mark which cut stumps you have sprayed. For basal stem treatment, a method that applies chemical through the bark, low volume spray applications can be made with Garlon 4, Pathfinder II and similar oil-based products. This application method uses triclopyr ester mixed with an oil diluent (i.e. Bark Oil Blue, kerosene) applied directly to the bark of autumn olive from the root collar up about 12-18 inches. An ultra-low volume spray wand should be used to minimize herbicide use and reduce the potential for non-target injury.",
     "january": 1,
     "february": 1,
     "march": 1,
@@ -2036,7 +2036,7 @@
   {
     "weedManagementMethodsWeedId": "32",
     "name": "Hand pulling",
-    "description": "Mechanical control can be done by digging or pulling the plant by hand or with equipment such as shovels. This can be effective for small infestations in sensitive areas. Plants can resprout from stem fragments as small as ½ inch long. Mowing may spread plants to new areas and is not recommended. Do not allow plant parts to enter waterways during control efforts. Have a plan for what you will do with the pieces of plants you remove so that you do not spread knotweeds to new locations. Plants can be kept on site for burning or piled and covered with a tarp for decay. Be sure to monitor the site and remove any plants that sprout from the burn or decay site. If plants must be moved off site, contact your local yard waste or compost site to see if they are equipped to compost at high enough temperatures to accept noxious weeds at their site",
+    "description": "Mechanical control can be done by digging or pulling the plant by hand or with equipment such as shovels. This can be effective for small infestations in sensitive areas. Plants can re-sprout from stem fragments as small as ½ inch long. Mowing may spread plants to new areas and is not recommended. Do not allow plant parts to enter waterways during control efforts. Have a plan for what you will do with the pieces of plants you remove so that you do not spread knotweeds to new locations. Plants can be kept on site for burning or piled and covered with a tarp for decay. Be sure to monitor the site and remove any plants that sprout from the burn or decay site. If plants must be moved off site, contact your local yard waste or compost site to see if they are equipped to compost at high enough temperatures to accept noxious weeds at their site",
     "january": 1,
     "february": 1,
     "march": 1,

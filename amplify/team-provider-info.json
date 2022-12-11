@@ -19,7 +19,7 @@
         "stripeCheckout": {
           "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
           "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
-          "s3Key": "amplify-builds/stripeCheckout-3178686d755941592b6f-build.zip"
+          "s3Key": "amplify-builds/stripeCheckout-656b70417a4c4850692b-build.zip"
         }
       },
       "api": {
