@@ -15,15 +15,17 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.put('/api/donate', async (req, res) => {
-  const { Parameters } = await new aws.SSM()
-    .getParameters({
-      Names: ['STRIPE_SECRET_KEY'].map((secretName) => process.env[secretName]),
-      WithDecryption: true
-    })
-    .promise();
-  const stripe = require('stripe')(Parameters[0].secretValue);
+app.put('/api/donate', async (req, res, next) => {
   try {
+    const { Parameters } = await new aws.SSM({ region: 'us-east-1' })
+      .getParameters({
+        Names: ['STRIPE_SECRET_KEY'].map(
+          (secretName) => process.env[secretName]
+        ),
+        WithDecryption: true
+      })
+      .promise();
+    const stripe = require('stripe')(Parameters[0].Value);
     const session = await stripe.checkout.sessions.create({
       submit_type: 'donate',
       payment_method_types: ['card'],
@@ -45,7 +47,7 @@ app.put('/api/donate', async (req, res) => {
     });
     res.status(200).send({ id: session.id });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 });
 

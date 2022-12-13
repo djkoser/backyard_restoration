@@ -24,6 +24,9 @@ export const Stripe: React.FC = () => {
 
       await fetch('/api/donate', {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           donationAmount: (Number.parseFloat(donationAmount) * 100).toString()
         })
