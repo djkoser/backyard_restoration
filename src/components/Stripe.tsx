@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { Nav } from './';
+import { WeatherLoader } from './';
 
 // eslint-disable-next-line no-undef
 const { REACT_APP_STRIPE_PUBLISHABLE_KEY, REACT_APP_REST_ENDPOINT } =
@@ -14,6 +15,7 @@ const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY as string);
 
 export const Stripe: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState('$0.00');
+  const [loading, setLoading] = useState(false);
 
   const toPaymentPage = async () => {
     if (
@@ -21,6 +23,7 @@ export const Stripe: React.FC = () => {
       donationAmount.match(/\d*.\d{2}/)?.[0] === donationAmount &&
       Number.parseFloat(donationAmount) >= 1
     ) {
+      setLoading(true);
       const stripe = await stripePromise;
 
       fetch(encodeURI(`${REACT_APP_REST_ENDPOINT}/donate`), {
@@ -35,6 +38,8 @@ export const Stripe: React.FC = () => {
         .then(async (res) => {
           const resParsed = await res.json();
           if (stripe) {
+            setLoading(false);
+            toast.success('Redirecting you to a secure payment portal...');
             await stripe.redirectToCheckout({
               sessionId: resParsed.id
             });
@@ -44,11 +49,12 @@ export const Stripe: React.FC = () => {
             throw new Error(message);
           }
         })
-        .catch(() =>
+        .catch(() => {
+          setLoading(false);
           toast.error(
-            'Unfortunately, your donation did not process successfully. Please inform us of this issue by contacting us at BackyardRestorationNet@gmail.com, and we will work to resolve it as quickly as possible. Thank you for your attempted donation!'
-          )
-        );
+            'Unfortunately, we were not able to process your donation request. Please inform us of this issue by contacting us at BackyardRestorationNet@gmail.com, and we will work to resolve it as quickly as possible. Thank you for your attempted donation!'
+          );
+        });
     } else {
       toast.warn(
         'Please enter a value greater than 1 dollar in the format "0.00". Thank you!'
@@ -56,7 +62,9 @@ export const Stripe: React.FC = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <WeatherLoader noText={true} />
+  ) : (
     <>
       <Nav invertColors={false} />
       <ToastContainer />

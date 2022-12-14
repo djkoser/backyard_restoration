@@ -9,6 +9,15 @@ import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
 import { getGrowingParams, passwordChecker } from '../utilities';
 import { Footer, Nav, WeatherLoader } from './';
 
+enum ChangeCases {
+  growingParams = 'growingParams',
+  deleteUser = 'deleteUser',
+  name = 'name',
+  password = 'password',
+  address = 'address',
+  none = 'none'
+}
+
 export const MyAccount: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -61,7 +70,7 @@ export const MyAccount: React.FC = () => {
     (state) => state.userInfo.loading
   );
 
-  const [lastChanged, setLastChanged] = useState<string | undefined>(undefined);
+  const [lastChanged, setLastChanged] = useState<ChangeCases>(ChangeCases.none);
 
   const [firstName, setFirstName] = useState(firstNameRedux || '');
 
@@ -122,23 +131,21 @@ export const MyAccount: React.FC = () => {
       lastGDD35Redux &&
       hardinessZoneRedux
     ) {
-      if (lastChanged === 'address') {
-        toast.warning(
-          'NOAA failed to return weather data for your location. In order to complete your address change, you will now be redirected to a page where you will be able to manually enter growing parameters for your area.'
-        );
-        setTimeout(() => navigate('/manualEntry'), 5000);
-      } else if (lastChanged === 'growing parameters') {
-        toast.error(
-          'There was an error while attempting to change your growing parameters. Please make sure you are using the correct date format -> "MM-DD".'
-        );
-      } else if (lastChanged === 'deleteUser') {
-        toast.error(
-          'An error occurred while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.'
-        );
-      } else {
-        toast.error(
-          `There was an error while attempting to change your ${lastChanged}. Please try again.`
-        );
+      switch (lastChanged) {
+        case ChangeCases.growingParams:
+          toast.error(
+            'There was an error while attempting to change your growing parameters. Please make sure you are using the correct date format -> "MM-DD".'
+          );
+          break;
+        case ChangeCases.deleteUser:
+          toast.error(
+            'An error occurred while attempting to delete your account. Please contact us at BackyardResotrationNet@gmail.com and wel will remove your information from our system manually. Thank you for using Backyard Restoration.net and we apologize for this inconvenience.'
+          );
+          break;
+        default:
+          toast.error(
+            `There was an error while attempting to change your ${lastChanged}. Please try again.`
+          );
       }
     } else {
       navigate('/');
@@ -168,7 +175,10 @@ export const MyAccount: React.FC = () => {
   useEffect(() => {
     if (loadingPreviously.current && failedRedux) {
       onError();
-    } else if (loadingPreviously.current && lastChanged === 'deleteAccount') {
+    } else if (
+      loadingPreviously.current &&
+      lastChanged === ChangeCases.deleteUser
+    ) {
       toast.success(
         'Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.'
       ),
@@ -184,18 +194,18 @@ export const MyAccount: React.FC = () => {
 
   const toggleEdit = async (type: string) => {
     switch (type) {
-      case 'name':
+      case ChangeCases.name:
         if (editToggleName) {
           setEditToggleName(false);
         } else {
-          setLastChanged('name');
+          setLastChanged(ChangeCases.name);
           setEditToggleName(true);
           dispatch(updateUser({ firstName, lastName }));
           setCurrentPassword('This is a fake password');
           setNewPassword('This is a fake password');
         }
         return;
-      case 'password':
+      case ChangeCases.password:
         if (editTogglePassword) {
           setEditTogglePassword(false);
           setCurrentPassword('');
@@ -221,11 +231,11 @@ export const MyAccount: React.FC = () => {
           }
         }
         return;
-      case 'address':
+      case ChangeCases.address:
         if (editToggleAddress) {
           setEditToggleAddress(false);
         } else {
-          setLastChanged('address');
+          setLastChanged(ChangeCases.address);
           setEditToggleAddress(true);
           const paramsToUpdate: Omit<UpdateUserInput, 'email'> = {};
           if (street) paramsToUpdate.street = street;
@@ -245,6 +255,7 @@ export const MyAccount: React.FC = () => {
                   growingSeasonLength
                 } = await getGrowingParams(zipcode, street, city, state);
                 setLoadingGrowingParams(false);
+                setLastChanged(ChangeCases.growingParams);
                 dispatch(
                   updateUser({
                     hardinessZone,
@@ -265,11 +276,11 @@ export const MyAccount: React.FC = () => {
           }
         }
         return;
-      case 'growingParams':
+      case ChangeCases.growingParams:
         if (editToggleGrwParams) {
           setEditToggleGrwParams(false);
         } else {
-          setLastChanged('growing parameters');
+          setLastChanged(ChangeCases.growingParams);
           setEditToggleGrwParams(true);
           dispatch(updateUser({ firstGdd45, lastGdd45, hardinessZone }));
         }
@@ -480,7 +491,7 @@ export const MyAccount: React.FC = () => {
               <h3 className="accountPageText">Delete My Account</h3>
               <button
                 onClick={() => {
-                  setLastChanged('deleteAccount');
+                  setLastChanged(ChangeCases.deleteUser);
                   dispatch(deleteUser());
                 }}
               >
