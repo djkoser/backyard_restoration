@@ -1,26 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": [
-    "src/**/*.ts",
-    "dbSeed/**/*.ts",
-    "amplify/backend/function/stripeDonationFunction/lib/**/*.ts",
-    "amplify/backend/function/getGrowingParamsFunction/lib/**/*.ts",
-    "amplify/backend/function/getGrowingParamsFunction/lib/utilities/**/*.ts"
-  ]
+  "extends": "./tsconfig.json",
+  "include": ["src", "dbSeed", "amplify", ".eslintrc.js"]
 }

@@ -1,6 +1,4 @@
-// eslint-disable-next-line
 import Symbol_observable from 'symbol-observable';
-// eslint-disable-next-line
 import React from 'react';
 import { Amplify } from 'aws-amplify';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -21,6 +19,9 @@ import {
   WeedPage,
   WeedSearch
 } from './components';
+
+console.log(typeof Symbol_observable);
+console.log(typeof React);
 
 Amplify.configure(awsconfig);
 
