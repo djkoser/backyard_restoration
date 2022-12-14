@@ -31,7 +31,7 @@ export const WeedPage: React.FC = () => {
   const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
     (state) => state.userMethod.userMethods
   );
-  // Creates local state to avoid lagginess and render errors caused by adding/removing methods on switch toggle
+  // Creates local state to avoid lagging and render errors caused by adding/removing methods on switch toggle
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {

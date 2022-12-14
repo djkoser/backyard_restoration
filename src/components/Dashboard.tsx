@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStore } from '../redux/store';
+import { getUserMethods } from '../redux/userMethodSlice';
 import { getUserInfo } from '../redux/userSlice';
 import { UserManagementMethodStateVersion } from '../types';
 import { DashboardDropdowns, Footer, Nav, Timeline } from './';
@@ -33,6 +34,7 @@ export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfo());
+    dispatch(getUserMethods());
   }, []);
 
   return (

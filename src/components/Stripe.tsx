@@ -7,9 +7,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import { Nav } from './';
 
 // eslint-disable-next-line no-undef
-const { REACT_APP_STRIPE_PUBLISHABLE_KEY } = process.env;
+const { STRIPE_PUBLISHABLE_KEY, REST_ENDPOINT } = process.env;
 
-const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY as string);
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY as string);
 
 export const Stripe: React.FC = () => {
   const [donationAmount, setDonationAmount] = useState('$0.00');
@@ -22,7 +22,7 @@ export const Stripe: React.FC = () => {
     ) {
       const stripe = await stripePromise;
 
-      await fetch('/api/donate', {
+      await fetch(encodeURI(`${REST_ENDPOINT}/donate`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

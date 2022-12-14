@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
 import { createUserC } from '../graphql/customMutations';
-import { GrowingCalculations } from '../utilities';
+import { getGrowingParams } from '../utilities';
 import { WeatherLoader } from './';
 
 export const EmailConfirmation: React.FC = () => {
@@ -45,12 +45,7 @@ export const EmailConfirmation: React.FC = () => {
         if (digitChecker) {
           try {
             ({ hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
-              await new GrowingCalculations(
-                zipcode,
-                street,
-                city,
-                state
-              ).calculateGrowingParams());
+              await getGrowingParams(zipcode, street, city, state));
           } catch (err) {
             const errParsed =
               err instanceof Error ? err : new Error(JSON.stringify(err));

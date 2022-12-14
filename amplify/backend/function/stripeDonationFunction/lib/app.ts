@@ -1,10 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
-const aws = require('aws-sdk');
+import express from 'express';
+import bodyParser from 'body-parser';
+import awsServerlessExpressMiddleware from 'aws-serverless-express/middleware';
+import * as AWS from 'aws-sdk';
+
+// Export the app object. When executing the application local this does nothing. However,
+// to port it to AWS Lambda we will create a wrapper around that will load the app from
+// this file
 
 // declare a new express app
-const app = express();
+export const app = express();
 app.use(bodyParser.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
 
@@ -15,17 +19,15 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.put('/api/donate', async (req, res, next) => {
+app.put('/donate', async (req, res, next) => {
   try {
-    const { Parameters } = await new aws.SSM({ region: 'us-east-1' })
+    const { Parameters } = await new AWS.SSM({ region: 'us-east-1' })
       .getParameters({
-        Names: ['STRIPE_SECRET_KEY'].map(
-          (secretName) => process.env[secretName]
-        ),
+        Names: [process.env['STRIPE_SECRET_KEY']!],
         WithDecryption: true
       })
       .promise();
-    const stripe = require('stripe')(Parameters[0].Value);
+    const stripe = require('stripe')(Parameters![0].Value);
     const session = await stripe.checkout.sessions.create({
       submit_type: 'donate',
       payment_method_types: ['card'],
@@ -54,8 +56,3 @@ app.put('/api/donate', async (req, res, next) => {
 app.listen(3000, function () {
   console.log('App started');
 });
-
-// Export the app object. When executing the application local this does nothing. However,
-// to port it to AWS Lambda we will create a wrapper around that will load the app from
-// this file
-module.exports = app;

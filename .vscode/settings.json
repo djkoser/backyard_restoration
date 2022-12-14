@@ -9,10 +9,26 @@
     "amplify/backend/awscloudformation": true
   },
   "cSpell.words": [
+    "awsconfig",
     "backyardrestoration",
+    "Bkgd",
+    "csstype",
+    "GDDP",
+    "getgrowingparamsfunction",
+    "googlemaps",
     "lambdaexecutionpolicy",
     "Mgmt",
+    "NOAA",
+    "pradius",
+    "Rampnoni",
     "reduxjs",
-    "toastify"
+    "semiaxis",
+    "stripedonationfunction",
+    "TMAX",
+    "TMIN",
+    "TMINMAX",
+    "TMINTMAX",
+    "toastify",
+    "TTFB"
   ]
 }

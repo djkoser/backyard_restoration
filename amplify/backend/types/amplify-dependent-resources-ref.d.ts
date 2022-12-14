@@ -16,14 +16,20 @@ export type AmplifyDependentResourcesAttributes = {
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         },
-        "StripeCheckoutAPI": {
+        "backyardRestorationREST": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"
         }
     },
     "function": {
-        "stripeCheckout": {
+        "stripeDonationFunction": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getGrowingParamsFunction": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

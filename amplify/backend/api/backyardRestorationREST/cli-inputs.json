@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/donate": {
+      "name": "/donate",
+      "lambdaFunction": "stripeDonationFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/growingParams": {
+      "name": "/growingParams",
+      "lambdaFunction": "getGrowingParamsFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

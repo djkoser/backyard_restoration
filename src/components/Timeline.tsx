@@ -30,7 +30,7 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
     'december'
   ] as const;
 
-  // Create chart viewbox width and height variables
+  // Create chart view box width and height variables
   const { width, height, firstGdd45, lastGdd45, margin, userMethods } = props;
 
   const colorGenerator = () => {
@@ -92,7 +92,7 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
 
       .tickFormat((d) => tickFormat(d as Date));
 
-    // Associate reference object with SVG varable to be manipulated by D3
+    // Associate reference object with SVG variable to be manipulated by D3
     const svg = d3.select(d3Container.current).attr('class', 'timelineSVG');
     // Add Axis to SVG
     svg
@@ -101,7 +101,7 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
       .attr('transform', `translate(0,${height - 30})`)
       .attr('class', 'timelineAxis')
       .call(xAxis);
-    // Select the xAxis Text and rotate labels for readibility.
+    // Select the xAxis Text and rotate labels for readability.
 
     svg.append('g').attr('class', 'timelineBarContainer');
 
@@ -144,10 +144,10 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
       const yr2ms = yrEndDate.getTime() - yrStartDate.getTime();
       const msBetweenGDD35 = avgSDateToMs(lastGdd45) - avgSDateToMs(firstGdd45);
       const notGDD35ms = yr2ms - msBetweenGDD35;
-      // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the viewbox width minus chart margins
+      // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the view box width minus chart margins
       const GDD35Prop =
         (msBetweenGDD35 / yr2ms / 6) * (width - margin.left - margin.right);
-      // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multipleid by the viewbox width minus chart margins
+      // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multiplied by the view box width minus chart margins
       const notGDD35Prop =
         (notGDD35ms / yr2ms / 6) * (width - margin.left - margin.right);
 
@@ -220,7 +220,7 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
         )
         .attr('fill', (_d, i) => colors[i]);
 
-      // Create 12 new rectangle elements within each g element, one for each management timeframe/month
+      // Create 12 new rectangle elements within each g element, one for each management time-frame/month
 
       yearlyGDDPattern.forEach((el, ind) => {
         rectangleMaker(gSelection, el, xPosVal, ind);
@@ -245,7 +245,7 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
             : '25'
         );
 
-      // create legned to reflect each created method box.
+      // create legend to reflect each created method box.
       createLegend(colors);
     }
   };

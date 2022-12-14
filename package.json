@@ -3,8 +3,6 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.222.0",
-    "@googlemaps/js-api-loader": "^1.15.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@stripe/stripe-js": "^1.46.0",
     "aws-amplify": "^5.0.4",
@@ -22,14 +20,13 @@
     "web-vitals": "^3.0.4"
   },
   "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.222.0",
     "@redux-devtools/extension": "^3.2.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/babel__core": "^7.1.19",
     "@types/d3": "^7.4.0",
-    "@types/jest": "^29.2.0",
-    "@types/node": "^18.11.5",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
@@ -40,7 +37,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-sql": "^2.2.2",
     "jest": "^29.2.1",
     "sass": "^1.55.0",
     "typescript": "^4.9.4"
@@ -51,7 +47,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "review": "eslint ./src --fix --ext .js --ext .ts && prettier --write .",
-    "seedDB": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\"} && npx ts-node dbSeed/seed.ts"
+    "seedDB": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\"} && npx ts-node dbSeed/seed.ts",
+    "amplify:getGrowingParamsFunction": "cd ./amplify/backend/function/getGrowingParamsFunction && tsc -p ./tsconfig.json",
+    "amplify:stripedonationFunction": "cd ./amplify/backend/function/stripedonationFunction && tsc -p ./tsconfig.json"
   },
   "eslintConfig": {
     "extends": [

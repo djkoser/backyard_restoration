@@ -16,5 +16,11 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts", "dbSeed/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "dbSeed/**/*.ts",
+    "amplify/backend/function/stripeDonationFunction/lib/**/*.ts",
+    "amplify/backend/function/getGrowingParamsFunction/lib/**/*.ts",
+    "amplify/backend/function/getGrowingParamsFunction/lib/utilities/**/*.ts"
+  ]
 }

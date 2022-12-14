@@ -1,5 +1,10 @@
-const { GOOGLE_API_KEY, NOAA_TOKEN, NOAA_TOKEN_BACKUP } = process.env;
-import { Observation, TMINMAXMap, WeatherAPIReturn } from '../types';
+import type {
+  Observation,
+  TMINMAXMap,
+  WeatherAPIReturn
+} from '../growingCalculations';
+import fetch from 'node-fetch';
+
 // import { readFileSync } from 'fs';
 // import { join } from 'path';
 export class GrowingCalculations {
@@ -23,6 +28,9 @@ export class GrowingCalculations {
   private minimumSeasonEndQualifierPercentage = 0.9;
   // The maximum percentage of lagging days with zero (season start) or non-zero (season end) growing degree days in order to qualify it as a season start/end.
   private maximumLagQualifierPercentage = 0.2;
+  private GOOGLE_API_KEY: string;
+  private NOAA_TOKEN: string;
+  private NOAA_TOKEN_BACKUP: string;
   /**
    *
    * @param zipcode The User's zipcode
@@ -30,30 +38,30 @@ export class GrowingCalculations {
    * @param city The user's city
    * @param state The user's state
    */
-  constructor(zipcode: string, street: string, city: string, state: string) {
+  constructor(
+    zipcode: string,
+    street: string,
+    city: string,
+    state: string,
+    GOOGLE_API_KEY: string,
+    NOAA_TOKEN: string,
+    NOAA_TOKEN_BACKUP: string
+  ) {
     this.zipcode = zipcode;
     this.street = street;
     this.city = city;
     this.state = state;
     this.currentDate = new Date();
+    this.GOOGLE_API_KEY = GOOGLE_API_KEY;
+    this.NOAA_TOKEN = NOAA_TOKEN;
+    this.NOAA_TOKEN_BACKUP = NOAA_TOKEN_BACKUP;
   }
-  /** An initializer that makes all necessary API calls and calculates all requisite growing paramters pertaining to the user's location*/
+  /** An initializer that makes all necessary API calls and calculates all requisite growing parameters pertaining to the user's location*/
   async calculateGrowingParams() {
     console.log(
-      typeof GOOGLE_API_KEY === 'string',
-      typeof NOAA_TOKEN === 'string',
-      typeof NOAA_TOKEN_BACKUP === 'string'
-    );
-
-    console.log(
-      ' zipcode ',
-      this.zipcode,
-      ' street ',
-      this.street,
-      ' city ',
-      this.city,
-      ' state ',
-      this.state
+      typeof this.GOOGLE_API_KEY === 'string',
+      typeof this.NOAA_TOKEN === 'string',
+      typeof this.NOAA_TOKEN_BACKUP === 'string'
     );
 
     // Get TMIN and TMAX data from the weather station closest to the user's location
@@ -310,9 +318,9 @@ export class GrowingCalculations {
       { TMIN: [], TMAX: [] }
     ) as WeatherAPIReturn;
   }
-  /** Get weather data for the user's location over the prescribed timefrom from NOAA
-   * @param endDate string in YYYY-MM-DD format representing the end timeframe of the weather inquiry
-   * @param startDate string in YYYY-MM-DD format representing the start timeframe of the weather data query
+  /** Get weather data for the user's location over the prescribed time from from NOAA
+   * @param endDate string in YYYY-MM-DD format representing the end time-frame of the weather inquiry
+   * @param startDate string in YYYY-MM-DD format representing the start time-frame of the weather data query
    * @param stationID ID of the station to retrieve data from
    */
   private async getTMINandTMAXFromNOAA(
@@ -323,14 +331,17 @@ export class GrowingCalculations {
     try {
       let response = await fetch(
         `https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&datatypeid=TMAX&units=standard&limit=1000&startdate=${startDate}&enddate=${endDate}&stationid=${stationID}&includemetadata=false`,
-        { method: 'get', headers: { token: NOAA_TOKEN as string } }
+        { method: 'get', headers: { token: this.NOAA_TOKEN as string } }
       );
 
       if (response.status === 429) {
         console.warn('Exceeded query limit, using backup token');
         response = await fetch(
           `https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TMIN&datatypeid=TMAX&units=standard&limit=1000&startdate=${startDate}&enddate=${endDate}&stationid=${stationID}&includemetadata=false`,
-          { method: 'get', headers: { token: NOAA_TOKEN_BACKUP as string } }
+          {
+            method: 'get',
+            headers: { token: this.NOAA_TOKEN_BACKUP as string }
+          }
         );
       }
       const data = (await response.json()) as {
@@ -396,7 +407,7 @@ export class GrowingCalculations {
         if (tempData.TMAX.length && tempData.TMIN.length) {
           await this.delay(300);
           // Run the query, reducing the year value each time to obtain each year of historical data,
-          // Must run seperate queries in a delayed fashion in order to get around NOAA 1-year Data limitation and rate limitations
+          // Must run separate queries in a delayed fashion in order to get around NOAA 1-year Data limitation and rate limitations
           const promises: Promise<WeatherAPIReturn>[] = [];
           for (
             let yearIndex = 0;
@@ -486,7 +497,7 @@ export class GrowingCalculations {
       await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(
           this.street + '+' + this.city + '+' + this.state + '+' + this.zipcode
-        )}&key=${GOOGLE_API_KEY}`,
+        )}&key=${this.GOOGLE_API_KEY}`,
         { method: 'get' }
       )
     ).json() as Promise<{
@@ -502,13 +513,13 @@ export class GrowingCalculations {
   ): Promise<{ results: [{ id: string }] }> {
     let response = await fetch(
       `https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=${boundingBox}&dataset=GHCND&datatypeid=TMIN&datatypeid=TMAX&limit=1000`,
-      { headers: { token: NOAA_TOKEN as string }, method: 'get' }
+      { headers: { token: this.NOAA_TOKEN as string }, method: 'get' }
     );
     if (response.status === 429) {
       console.warn('exceeded query limit, using backup token');
       response = await fetch(
         `https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=${boundingBox}&dataset=GHCND&datatypeid=TMIN&datatypeid=TMAX&limit=1000`,
-        { headers: { token: NOAA_TOKEN_BACKUP as string }, method: 'get' }
+        { headers: { token: this.NOAA_TOKEN_BACKUP as string }, method: 'get' }
       );
     }
     return response.json() as Promise<{ results: [{ id: string }] }>;
@@ -567,7 +578,7 @@ export class GrowingCalculations {
 
   /** Determines the Earth's Radius at a given latitude according to WGS84 ellipsoid (what Google Maps uses)
    *
-   * @param lat input latitude at which to determin the radius of the earth
+   * @param lat input latitude at which to determine the radius of the earth
    */
   private WGS84EarthRadius(lat: number) {
     // Semi - axes of WGS - 84 geoidal reference # Major semiaxis[m]
@@ -633,21 +644,21 @@ export class GrowingCalculations {
     return new Date(dateObject.setFullYear(dateObject.getFullYear() - 1));
   }
 
-  /** Computes the average date from a list of dates and resturns it as YYYY-MM-DD
+  /** Computes the average date from a list of dates and returns it as YYYY-MM-DD
    * @param seasonStartsEnds an array of Date objects normalized to the current year
    */
   private avgDateString(seasonStartsEnds: Date[]): string {
     if (seasonStartsEnds.length) {
-      // convert to milleseconds
+      // convert to milliseconds
       const datesAsMs = seasonStartsEnds.map((el) => el.getTime());
-      // Sum and divide by normalized Dates' lengh creating a new date
+      // Sum and divide by normalized Dates' length creating a new date
       const averageDate = new Date(
         datesAsMs.reduce((prev, next) => prev + next) / seasonStartsEnds.length
       );
       return this.date2String(averageDate);
     } else {
       throw new Error(
-        'avgDateString: seasonStartsEnds must contian at least one Date'
+        'avgDateString: seasonStartsEnds must contain at least one Date'
       );
     }
   }
