@@ -1,11 +1,12 @@
-import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { CreateUserCMutation, CreateUserCMutationVariables } from '../API';
-import { createUserC } from '../graphql/customMutations';
+import {
+  CreateUserCMutationVariables,
+  UpdateUserCMutationVariables
+} from '../API';
+import { createUserC, updateUserC } from '../graphql/customMutations';
 import { getGrowingParams } from '../utilities';
 import { WeatherLoader } from './';
 
@@ -13,7 +14,6 @@ export const EmailConfirmation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email, password, firstName, lastName } = location.state;
-  const dispatch = useDispatch();
 
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -24,77 +24,62 @@ export const EmailConfirmation: React.FC = () => {
 
   const handleManualEntry = () => {
     toast.warning(
-      'NOAA failed to return weather data for your location. In order to complete your registration, you will now be redirected to a page where you will be able to  manually enter your: season start date, season end date and hardiness zone.'
+      'We are unable to acquire weather data for your location! In order to complete your registration, you will now be redirected to a page where you will be able to  manually enter your: season start date, season end date and hardiness zone.'
     );
     setTimeout(() => navigate('/manualEntry'), 5000);
   };
 
-  const confirmUser = async (e: React.FormEvent<HTMLFormElement>) => {
+  const confirmUser = async () => {
     try {
-      e.preventDefault();
       await Auth.confirmSignUp(email, confirmationCode);
       await Auth.signIn(email, password);
       location.state.password = '';
       setLoading(true);
-      let hardinessZone = '';
-      let firstGdd45 = '';
-      let lastGdd45 = '';
-      let growingSeasonLength = 0;
+      const paramsToAdd: CreateUserCMutationVariables = {
+        input: {
+          email,
+          growingSeasonLength: 0,
+          firstGdd45: '',
+          lastGdd45: '',
+          hardinessZone: ''
+        }
+      };
+      if (firstName) paramsToAdd.input.firstName = firstName;
+      if (lastName) paramsToAdd.input.lastName = lastName;
+      if (street) paramsToAdd.input.street = street;
+      if (city) paramsToAdd.input.city = city;
+      if (state) paramsToAdd.input.state = state;
+      if (zipcode) paramsToAdd.input.zipcode = zipcode;
+      await API.graphql(graphqlOperation(createUserC, paramsToAdd));
+
       if (zipcode && street && city && state) {
         const digitChecker = zipcode.match(/\d\d\d\d\d/g);
         if (digitChecker) {
           try {
-            ({ hardinessZone, firstGdd45, lastGdd45, growingSeasonLength } =
-              await getGrowingParams(zipcode, street, city, state));
+            const updateParams = await getGrowingParams(
+              zipcode,
+              street,
+              city,
+              state
+            );
+            const input: UpdateUserCMutationVariables = {
+              input: { email, ...updateParams }
+            };
+            location.state.email = '';
+            await API.graphql(graphqlOperation(updateUserC, input));
+            toast.success(
+              'Registration Successful! Logging you into your new dashboard!'
+            );
+            setTimeout(() => navigate('/dash'), 3000);
           } catch (err) {
-            const errParsed =
-              err instanceof Error ? err : new Error(JSON.stringify(err));
-            console.log(errParsed.message);
+            handleManualEntry();
           }
         } else {
           setLoading(false);
           toast.error('Please enter a 5 digit zipcode, thank you');
         }
-      }
-
-      const input: CreateUserCMutationVariables = {
-        input: {
-          firstName: firstName || '',
-          lastName: lastName || '',
-          email,
-          street,
-          city,
-          state,
-          zipcode,
-          growingSeasonLength,
-          firstGdd45,
-          lastGdd45,
-          hardinessZone
-        }
-      };
-      location.state.email = '';
-      const graphQLResult = (await API.graphql(
-        graphqlOperation(createUserC, input)
-      )) as GraphQLResult<CreateUserCMutation>;
-      const { __typename, ...omitTypename } =
-        graphQLResult?.data?.createUser || {};
-      dispatch({
-        type: 'ADD_RETRIEVED_INFO',
-        payload: omitTypename
-      });
-
-      if (
-        hardinessZone === '' ||
-        firstGdd45 === '' ||
-        lastGdd45 === '' ||
-        growingSeasonLength === 0
-      ) {
-        handleManualEntry();
       } else {
-        toast.success(
-          'Registration Successful! Logging you into your new dashboard!'
-        );
-        setTimeout(() => navigate('/dash'), 3000);
+        handleManualEntry();
       }
     } catch (err) {
       const errParsed =
@@ -104,7 +89,13 @@ export const EmailConfirmation: React.FC = () => {
       toast.error(
         'User registration failed, please check your confirmation code and try again, or email us at BackyardRestorationNet@gmail.com'
       );
+      setTimeout(() => navigate('/'), 5000);
     }
+  };
+
+  const cancelRegistration = () => {
+    toast.success('Canceling your registration...');
+    setTimeout(() => navigate('/'), 5000);
   };
 
   return loading ? (
@@ -119,12 +110,7 @@ export const EmailConfirmation: React.FC = () => {
         id="registerBody"
         style={loading ? { visibility: 'hidden' } : { visibility: 'visible' }}
       >
-        <form
-          id="registerForm"
-          onSubmit={(e) => {
-            void confirmUser(e);
-          }}
-        >
+        <form id="registerForm">
           <section className="registerSections">
             <h3 className="registerSectionText">Confirmation Code</h3>
             <br />
@@ -176,7 +162,20 @@ export const EmailConfirmation: React.FC = () => {
               }}
             ></input>
           </section>
-          <button>Complete Registration</button>
+          <button
+            onClick={() => {
+              void confirmUser();
+            }}
+          >
+            Complete Registration
+          </button>
+          <button
+            onClick={() => {
+              void cancelRegistration();
+            }}
+          >
+            Cancel Registration
+          </button>
         </form>
         <article className="registerWelcomeText">
           <h1>Welcome to Our Community!</h1>

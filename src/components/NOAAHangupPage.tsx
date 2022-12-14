@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppStore } from '../redux/store';
-import { updateUser } from '../redux/userSlice';
+import { deleteUser, updateUser } from '../redux/userSlice';
 import { daysBetween, isValidDate } from '../utilities';
 
 export const NOAAHangupPage: React.FC = () => {
@@ -47,6 +47,14 @@ export const NOAAHangupPage: React.FC = () => {
         })
       );
     }
+  };
+
+  const cancelRegistration = () => {
+    toast.success(
+      'Canceling your registration and deleting any acquired user information...'
+    );
+    dispatch(deleteUser());
+    setTimeout(() => navigate('/'), 5000);
   };
 
   const previouslyLoading = useRef(false);
@@ -150,6 +158,9 @@ export const NOAAHangupPage: React.FC = () => {
           </select>
         </fieldset>
         <button onClick={() => addGrowingInfoHandler()}>Submit</button>
+        <button onClick={() => cancelRegistration()}>
+          Cancel Registration
+        </button>
       </div>
     </main>
   );

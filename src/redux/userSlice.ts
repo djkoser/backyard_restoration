@@ -198,9 +198,6 @@ const userSlice = createSlice({
     },
     RESET_STORE: () => {
       return initialState;
-    },
-    ADD_RETRIEVED: (state, action: PayloadAction<UserPayload>) => {
-      return { ...action.payload, loading: false, failed: false };
     }
   },
   extraReducers: (builder) => {
