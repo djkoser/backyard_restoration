@@ -3,9 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { UpdateUserInput } from '../API';
 import { AppDispatch, AppStore } from '../redux/store';
 import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
-import { passwordChecker } from '../utilities';
+import { getGrowingParams, passwordChecker } from '../utilities';
 import { Footer, Nav, WeatherLoader } from './';
 
 export const MyAccount: React.FC = () => {
@@ -94,6 +95,8 @@ export const MyAccount: React.FC = () => {
 
   const [editToggleGrwParams, setEditToggleGrwParams] = useState(true);
 
+  const [loadingGrowingParams, setLoadingGrowingParams] = useState(false);
+
   const refresh = () => {
     setFirstName(firstNameRedux || '');
     setLastName(lastNameRedux || '');
@@ -179,7 +182,7 @@ export const MyAccount: React.FC = () => {
     loadingPreviously.current = loadingRedux;
   }, [failedRedux, lastChanged, loadingRedux]);
 
-  const toggleEdit = (type: string) => {
+  const toggleEdit = async (type: string) => {
     switch (type) {
       case 'name':
         if (editToggleName) {
@@ -224,11 +227,41 @@ export const MyAccount: React.FC = () => {
         } else {
           setLastChanged('address');
           setEditToggleAddress(true);
-          const digitChecker = zipcode.match(/\D/g);
-          if (zipcode.length <= 5 && !digitChecker) {
-            dispatch(updateUser({ street, city, state, zipcode }));
-          } else {
-            toast.error('Please enter a 5 digit zipcode, thank you');
+          const paramsToUpdate: Omit<UpdateUserInput, 'email'> = {};
+          if (street) paramsToUpdate.street = street;
+          if (city) paramsToUpdate.city = city;
+          if (state) paramsToUpdate.state = state;
+          if (zipcode) paramsToUpdate.zipcode = zipcode;
+          dispatch(updateUser(paramsToUpdate));
+          if (zipcode && street && city && state) {
+            const digitChecker = zipcode.match(/\d\d\d\d\d/g);
+            if (digitChecker) {
+              try {
+                setLoadingGrowingParams(true);
+                const {
+                  hardinessZone,
+                  firstGdd45,
+                  lastGdd45,
+                  growingSeasonLength
+                } = await getGrowingParams(zipcode, street, city, state);
+                setLoadingGrowingParams(false);
+                dispatch(
+                  updateUser({
+                    hardinessZone,
+                    firstGdd45,
+                    lastGdd45,
+                    growingSeasonLength
+                  })
+                );
+              } catch (err) {
+                setLoadingGrowingParams(false);
+                toast.warn(
+                  'We were unable to compute growing parameters for your new address, please update them within the appropriate "My Account" section. Thank you'
+                );
+              }
+            } else {
+              toast.error('Please enter a 5 digit zipcode, thank you');
+            }
           }
         }
         return;
@@ -246,9 +279,9 @@ export const MyAccount: React.FC = () => {
     }
   };
 
-  return loadingRedux ? (
+  return loadingRedux || loadingGrowingParams ? (
     <>
-      <WeatherLoader noText={true} />
+      <WeatherLoader noText={loadingGrowingParams ? false : true} />
       <ToastContainer />
     </>
   ) : (

@@ -53,7 +53,7 @@ export const Register: React.FC = () => {
   return loading ? (
     <>
       <ToastContainer />
-      <WeatherLoader noText={false} />
+      <WeatherLoader noText={true} />
     </>
   ) : (
     <>
