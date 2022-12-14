@@ -87,7 +87,7 @@ var GrowingCalculations = /** @class */ (function () {
     /** An initializer that makes all necessary API calls and calculates all requisite growing parameters pertaining to the user's location*/
     GrowingCalculations.prototype.calculateGrowingParams = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, TMIN, TMAX, TMINAvg, seasonStarts, seasonEnds, firstGdd45, lastGdd45;
+            var _a, TMIN, TMAX, TMINAvg, seasonStarts, seasonEnds, dateParser, firstGdd45, lastGdd45;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -108,8 +108,9 @@ var GrowingCalculations = /** @class */ (function () {
                         TMINAvg = this.getLowestTemperature(TMIN);
                         seasonStarts = this.removeOutliersFromDates(this.gdd45SpringTransitions());
                         seasonEnds = this.removeOutliersFromDates(this.gdd45WinterTransitions());
-                        firstGdd45 = this.avgDateString(seasonStarts);
-                        lastGdd45 = this.avgDateString(seasonEnds);
+                        dateParser = /\d\d-\d\d$/;
+                        firstGdd45 = this.avgDateString(seasonStarts).match(dateParser)[0];
+                        lastGdd45 = this.avgDateString(seasonEnds).match(dateParser)[0];
                         return [2 /*return*/, {
                                 hardinessZone: this.hardinessZoneCalculator(TMINAvg),
                                 firstGdd45: firstGdd45,

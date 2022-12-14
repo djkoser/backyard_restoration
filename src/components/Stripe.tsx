@@ -23,7 +23,7 @@ export const Stripe: React.FC = () => {
     ) {
       const stripe = await stripePromise;
 
-      await fetch(encodeURI(`${REACT_APP_REST_ENDPOINT}/donate`), {
+      fetch(encodeURI(`${REACT_APP_REST_ENDPOINT}/donate`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export const Stripe: React.FC = () => {
         })
       })
         .then(async (res) => {
-          const resParsed = JSON.parse((await res.json()) as string);
+          const resParsed = await res.json();
           if (stripe) {
             await stripe.redirectToCheckout({
               sessionId: resParsed.id

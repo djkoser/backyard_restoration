@@ -86,8 +86,10 @@ export class GrowingCalculations {
       this.gdd45WinterTransitions()
     );
 
-    const firstGdd45 = this.avgDateString(seasonStarts);
-    const lastGdd45 = this.avgDateString(seasonEnds);
+    const dateParser = /\d\d-\d\d$/;
+
+    const [firstGdd45] = this.avgDateString(seasonStarts).match(dateParser);
+    const [lastGdd45] = this.avgDateString(seasonEnds).match(dateParser);
     return {
       hardinessZone: this.hardinessZoneCalculator(TMINAvg),
       firstGdd45,
