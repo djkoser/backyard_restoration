@@ -55,12 +55,12 @@
         "stripeDonationFunction": {
           "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
           "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
-          "s3Key": "amplify-builds/stripeDonationFunction-4b48676f38544b397975-build.zip"
+          "s3Key": "amplify-builds/stripeDonationFunction-5746784c2b63434d574c-build.zip"
         },
         "getGrowingParamsFunction": {
           "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
           "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
-          "s3Key": "amplify-builds/getGrowingParamsFunction-6849714e4e4e4f4b6b7a-build.zip"
+          "s3Key": "amplify-builds/getGrowingParamsFunction-35504d70684d55486359-build.zip"
         }
       },
       "api": {
