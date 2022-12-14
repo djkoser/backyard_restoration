@@ -1,11 +1,11 @@
-const { REST_ENDPOINT } = process.env;
+const { REACT_APP_REST_ENDPOINT } = process.env;
 export async function getGrowingParams(
   zipcode: string,
   street: string,
   city: string,
   state: string
 ) {
-  return fetch(encodeURI(`${REST_ENDPOINT}/growingParams`), {
+  return fetch(encodeURI(`${REACT_APP_REST_ENDPOINT}/growingParams`), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
