@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -11,7 +14,9 @@
     "baseUrl": "./",
     "rootDir": "./lib",
     "paths": {
-      "src": ["./lib"]
+      "src": [
+        "./lib"
+      ]
     }
   }
 }

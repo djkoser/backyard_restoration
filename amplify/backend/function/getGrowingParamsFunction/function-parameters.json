@@ -1,4 +1,8 @@
 {
   "lambdaLayers": [],
-  "secretNames": ["GOOGLE_API_KEY", "NOAA_TOKEN", "NOAA_TOKEN_BACKUP"]
+  "secretNames": [
+    "GOOGLE_API_KEY",
+    "NOAA_TOKEN",
+    "NOAA_TOKEN_BACKUP"
+  ]
 }
