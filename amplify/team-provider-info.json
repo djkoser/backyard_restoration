@@ -18,12 +18,12 @@
       "function": {
         "stripeDonationFunction": {
           "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
-          "s3Key": "amplify-builds/stripeDonationFunction-5746784c2b63434d574c-build.zip",
+          "s3Key": "amplify-builds/stripeDonationFunction-425275696e626c594149-build.zip",
           "secretsPathAmplifyAppId": "d23rfc87jgo2gb"
         },
         "getGrowingParamsFunction": {
           "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
-          "s3Key": "amplify-builds/getGrowingParamsFunction-682b595a764f64394661-build.zip",
+          "s3Key": "amplify-builds/getGrowingParamsFunction-46416a4778796a715473-build.zip",
           "secretsPathAmplifyAppId": "d23rfc87jgo2gb"
         },
         "AdminQueriesae8f1082": {
