@@ -31,15 +31,21 @@ import { GrowingCalculations } from './utilities/GrowingCalculations';
 // this file
 
 // declare a new express app
-export const app = express();
+const app = express();
 app.use(bodyParser.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
 
 // Enable CORS for all methods
-app.use(function (req, res, next) {
+app.use(function (request, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', '*');
-  next();
+  //intercept the OPTIONS call so we don't double up on calls to the integration
+  if ('OPTIONS' === request.method) {
+    res.send(200);
+  } else {
+    next();
+  }
 });
 
 app.post('/growingParams', async function (req, res, next) {
@@ -76,6 +82,15 @@ app.post('/growingParams', async function (req, res, next) {
   }
 });
 
+// Error middleware must be defined last
+app.use((err, _req, res, _next) => {
+  console.error(err.message);
+  if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+  res.status(err.statusCode).json({ message: err.message }).end();
+});
+
 app.listen(3000, function () {
   console.log('App started');
 });
+
+export default app;

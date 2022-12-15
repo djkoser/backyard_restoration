@@ -7,8 +7,12 @@
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": ["EMAIL"],
-        "signupAttributes": ["EMAIL"],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": [
@@ -19,8 +23,12 @@
           ]
         },
         "mfaConfiguration": "OFF",
-        "mfaTypes": ["SMS"],
-        "verificationMechanisms": ["EMAIL"]
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
       }
     }
   },
@@ -32,7 +40,9 @@
         {
           "category": "auth",
           "resourceName": "BackyardRestorationAuth",
-          "attributes": ["UserPoolId"]
+          "attributes": [
+            "UserPoolId"
+          ]
         }
       ],
       "output": {
@@ -59,16 +69,27 @@
     "backyardRestorationREST": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    },
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "stripeDonationFunction",
-          "attributes": ["Name", "Arn"]
+          "category": "auth",
+          "resourceName": "BackyardRestorationAuth",
+          "attributes": [
+            "UserPoolId"
+          ]
         },
         {
           "category": "function",
-          "resourceName": "getGrowingParamsFunction",
-          "attributes": ["Name", "Arn"]
+          "resourceName": "AdminQueries03152289",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
         }
       ]
     }
@@ -85,6 +106,20 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": []
+    },
+    "AdminQueries03152289": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "BackyardRestorationAuth",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     }
   }
 }

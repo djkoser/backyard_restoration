@@ -1,11 +1,11 @@
-const { REACT_APP_REST_ENDPOINT } = process.env;
+import { API } from 'aws-amplify';
 export async function getGrowingParams(
   zipcode: string,
   street: string,
   city: string,
   state: string
 ) {
-  return fetch(encodeURI(`${REACT_APP_REST_ENDPOINT}/growingParams`), {
+  return API.post('backyardRestorationREST', '/growingParams', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -16,13 +16,10 @@ export async function getGrowingParams(
       city,
       state
     })
-  }).then(async (res) => {
-    const params = await res.json();
-    return params as {
-      hardinessZone: string;
-      firstGdd45: string;
-      lastGdd45: string;
-      growingSeasonLength: number;
-    };
-  });
+  }) as Promise<{
+    hardinessZone: string;
+    firstGdd45: string;
+    lastGdd45: string;
+    growingSeasonLength: number;
+  }>;
 }

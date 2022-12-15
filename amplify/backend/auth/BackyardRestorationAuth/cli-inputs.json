@@ -5,9 +5,13 @@
     "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "backyaa8cd0825",
     "userPoolName": "BackyardRestorationUserPool",
-    "autoVerifiedAttributes": ["email"],
+    "autoVerifiedAttributes": [
+      "email"
+    ],
     "mfaConfiguration": "OFF",
-    "mfaTypes": ["SMS Text Message"],
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "BackyardRestoration Email Verification",
@@ -20,12 +24,18 @@
       "Requires Numbers",
       "Requires Symbols"
     ],
-    "requiredAttributes": ["email"],
+    "requiredAttributes": [
+      "email"
+    ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientWriteAttributes": ["email"],
-    "userpoolClientReadAttributes": ["email"],
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
     "userpoolClientLambdaRole": "Backyaa8cd0825_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
     "sharedId": "a8cd0825",
@@ -33,7 +43,9 @@
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "thirdPartyAuth": false,
-    "usernameAttributes": ["email"],
+    "usernameAttributes": [
+      "email"
+    ],
     "userPoolGroups": false,
     "adminQueries": false,
     "triggers": {},
@@ -43,10 +55,16 @@
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
     "authRoleArn": {
-      "Fn::GetAtt": ["AuthRole", "Arn"]
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
     },
     "unauthRoleArn": {
-      "Fn::GetAtt": ["UnauthRole", "Arn"]
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
     },
     "breakCircularDependency": true,
     "dependsOn": [],
@@ -54,7 +72,7 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "permissions": []
+    "permissions": [],
+    "adminQueryGroup": "Administrators"
   }
 }
- 

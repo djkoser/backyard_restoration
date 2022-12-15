@@ -83,7 +83,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.app = void 0;
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var middleware_1 = __importDefault(require("aws-serverless-express/middleware"));
@@ -93,16 +92,23 @@ var GrowingCalculations_1 = require("./utilities/GrowingCalculations");
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
 // declare a new express app
-exports.app = (0, express_1["default"])();
-exports.app.use(body_parser_1["default"].json());
-exports.app.use(middleware_1["default"].eventContext());
+var app = (0, express_1["default"])();
+app.use(body_parser_1["default"].json());
+app.use(middleware_1["default"].eventContext());
 // Enable CORS for all methods
-exports.app.use(function (req, res, next) {
+app.use(function (request, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.header('Access-Control-Allow-Headers', '*');
-    next();
+    //intercept the OPTIONS call so we don't double up on calls to the integration
+    if ('OPTIONS' === request.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
 });
-exports.app.post('/growingParams', function (req, res, next) {
+app.post('/growingParams', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var Parameters, GOOGLE_API_KEY, NOAA_TOKEN, NOAA_TOKEN_BACKUP, _a, zipcode, street, city, state, _b, hardinessZone, firstGdd45, lastGdd45, growingSeasonLength, err_1;
         return __generator(this, function (_c) {
@@ -139,6 +145,14 @@ exports.app.post('/growingParams', function (req, res, next) {
         });
     });
 });
-exports.app.listen(3000, function () {
+// Error middleware must be defined last
+app.use(function (err, _req, res, _next) {
+    console.error(err.message);
+    if (!err.statusCode)
+        err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+    res.status(err.statusCode).json({ message: err.message }).end();
+});
+app.listen(3000, function () {
     console.log('App started');
 });
+exports["default"] = app;
