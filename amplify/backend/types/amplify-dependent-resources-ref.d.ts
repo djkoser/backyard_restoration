@@ -40,7 +40,7 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "AdminQueries03152289": {
+        "AdminQueriesae8f1082": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

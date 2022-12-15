@@ -1,45 +1,4 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-backyardrestoration-dev-222608-authRole",
-      "UnauthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-222608-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-dev-222608-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
-      "UnauthRoleName": "amplify-backyardrestoration-dev-222608-unauthRole",
-      "StackName": "amplify-backyardrestoration-dev-222608",
-      "StackId": "arn:aws:cloudformation:us-east-1:360544971157:stack/amplify-backyardrestoration-dev-222608/f0de6020-790b-11ed-8334-0a7361ba5763",
-      "AmplifyAppId": "d23rfc87jgo2gb",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-backyardrestoration-dev-222608-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
-    },
-    "categories": {
-      "auth": {
-        "BackyardRestorationAuth": {}
-      },
-      "function": {
-        "stripeDonationFunction": {
-          "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
-          "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
-          "s3Key": "amplify-builds/stripeDonationFunction-556b2b5454696d564277-build.zip"
-        },
-        "stripeCheckout": {},
-        "getGrowingParamsFunction": {
-          "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
-          "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
-          "s3Key": "amplify-builds/getGrowingParamsFunction-4f7866615276744e5042-build.zip"
-        },
-        "AdminQueries03152289": {
-          "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
-          "s3Key": "amplify-builds/AdminQueries03152289-6a4e5a5378776a6d6265-build.zip"
-        }
-      },
-      "api": {
-        "backyardrestoration": {},
-        "backyardRestorationREST": {},
-        "AdminQueries": {}
-      }
-    }
-  },
   "prd": {
     "awscloudformation": {
       "AuthRoleName": "amplify-backyardrestoration-prd-192940-authRole",
@@ -58,19 +17,24 @@
       },
       "function": {
         "stripeDonationFunction": {
-          "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
           "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
-          "s3Key": "amplify-builds/stripeDonationFunction-5746784c2b63434d574c-build.zip"
+          "s3Key": "amplify-builds/stripeDonationFunction-5746784c2b63434d574c-build.zip",
+          "secretsPathAmplifyAppId": "d23rfc87jgo2gb"
         },
         "getGrowingParamsFunction": {
-          "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
           "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
-          "s3Key": "amplify-builds/getGrowingParamsFunction-35504d70684d55486359-build.zip"
+          "s3Key": "amplify-builds/getGrowingParamsFunction-682b595a764f64394661-build.zip",
+          "secretsPathAmplifyAppId": "d23rfc87jgo2gb"
+        },
+        "AdminQueriesae8f1082": {
+          "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
+          "s3Key": "amplify-builds/AdminQueriesae8f1082-41356778624f706c4244-build.zip"
         }
       },
       "api": {
         "backyardrestoration": {},
-        "backyardRestorationREST": {}
+        "backyardRestorationREST": {},
+        "AdminQueries": {}
       }
     }
   }

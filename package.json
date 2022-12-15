@@ -52,7 +52,7 @@
     "seedDB": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\"} && npx ts-node dbSeed/seed.ts",
     "amplify:getGrowingParamsFunction": "cd ./amplify/backend/function/getGrowingParamsFunction && rimraf package-lock.json node_modules && npm install && copyfiles package.json src && tsc -p ./tsconfig.json",
     "amplify:stripedonationFunction": "cd ./amplify/backend/function/stripedonationFunction && rimraf package-lock.json node_modules && npm install && copyfiles package.json src && tsc -p ./tsconfig.json",
-    "amplify:AdminQueries03152289": "cd ./amplify/backend/function/AdminQueries03152289 && rimraf package-lock.json node_modules && npm install && copyfiles package.json src && tsc -p ./tsconfig.json"
+    "amplify:AdminQueriesae8f1082": "cd ./amplify/backend/function/AdminQueriesae8f1082 && rimraf package-lock.json node_modules && npm install && copyfiles package.json src && tsc -p ./tsconfig.json"
   },
   "browserslist": {
     "production": [

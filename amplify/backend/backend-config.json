@@ -69,7 +69,24 @@
     "backyardRestorationREST": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "stripeDonationFunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "getGrowingParamsFunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     },
     "AdminQueries": {
       "service": "API Gateway",
@@ -85,7 +102,7 @@
         },
         {
           "category": "function",
-          "resourceName": "AdminQueries03152289",
+          "resourceName": "AdminQueriesae8f1082",
           "attributes": [
             "Arn",
             "Name"
@@ -107,7 +124,7 @@
       "service": "Lambda",
       "dependsOn": []
     },
-    "AdminQueries03152289": {
+    "AdminQueriesae8f1082": {
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
       "build": true,

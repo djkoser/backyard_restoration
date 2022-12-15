@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda resource stack creation using Amplify CLI",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "env": {
       "Type": "String"
@@ -38,12 +38,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries03152289",
+            "AdminQueriesae8f1082",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries03152289",
+                  "AdminQueriesae8f1082",
                   "-",
                   {
                     "Ref": "env"
@@ -88,12 +88,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries03152289LambdaRole",
+            "AdminQueriesae8f1082LambdaRole",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries03152289LambdaRole",
+                  "AdminQueriesae8f1082LambdaRole",
                   "-",
                   {
                     "Ref": "env"
