@@ -183,7 +183,7 @@ export const MyAccount: React.FC = () => {
         'Your account and all associated records have been successfully deleted. Thank you for using Backyard Restoration.net, we are sad to see you go.'
       ),
         setTimeout(() => navigate('/'), 2000);
-    } else if (loadingPreviously.current && lastChanged) {
+    } else if (loadingPreviously.current && lastChanged !== ChangeCases.none) {
       setTimeout(
         () => toast.success(`Your ${lastChanged} was updated successfully.`),
         250

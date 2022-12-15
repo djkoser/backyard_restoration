@@ -8,7 +8,7 @@ import * as AWS from 'aws-sdk';
 // this file
 
 // declare a new express app
-export const app = express();
+const app = express();
 app.use(bodyParser.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
 
@@ -53,6 +53,15 @@ app.put('/donate', async (req, res, next) => {
   }
 });
 
+// Error middleware must be defined last
+app.use((err, _req, res, _next) => {
+  console.error(err.message);
+  if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+  res.status(err.statusCode).json({ message: err.message }).end();
+});
+
 app.listen(3000, function () {
   console.log('App started');
 });
+
+export default app;

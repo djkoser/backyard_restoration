@@ -29,8 +29,11 @@ export const EmailConfirmation: React.FC = () => {
     setTimeout(() => navigate('/manualEntry'), 5000);
   };
 
-  const confirmUser = async () => {
+  const confirmUser = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     try {
+      e.preventDefault();
       await Auth.confirmSignUp(email, confirmationCode);
       await Auth.signIn(email, password);
       location.state.password = '';
@@ -93,9 +96,36 @@ export const EmailConfirmation: React.FC = () => {
     }
   };
 
-  const cancelRegistration = () => {
-    toast.success('Canceling your registration...');
-    setTimeout(() => navigate('/'), 5000);
+  const cancelRegistration = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    try {
+      e.preventDefault();
+      const { REACT_APP_ADMIN_USERNAME, REACT_APP_ADMIN_PASSWORD } =
+        process.env;
+      await Auth.signIn(REACT_APP_ADMIN_USERNAME!, REACT_APP_ADMIN_PASSWORD);
+      toast.warn('Canceling your registration...');
+      const response = await fetch(
+        encodeURI(
+          `${process.env.REACT_APP_ADMIN_ENDPOINT}/deleteUserIfUnconfirmed`
+        ),
+        {
+          method: 'DELETE',
+          body: JSON.stringify({ username: email })
+        }
+      );
+      const responseParsed = await response.json();
+      await Auth.signOut();
+      toast.success(
+        `Successfully removed user ${responseParsed.Username} and associated data from our records`
+      );
+      setTimeout(() => navigate('/'), 5000);
+    } catch {
+      toast.error(
+        'Unable to cancel your registration, please contact us at BackyardRestorationNet@gmail.com so that we can manually remove your email from our user list, Thank you'
+      );
+      setTimeout(() => navigate('/'), 10000);
+    }
   };
 
   return loading ? (
@@ -163,15 +193,15 @@ export const EmailConfirmation: React.FC = () => {
             ></input>
           </section>
           <button
-            onClick={() => {
-              void confirmUser();
+            onClick={(e) => {
+              void confirmUser(e);
             }}
           >
             Complete Registration
           </button>
           <button
-            onClick={() => {
-              void cancelRegistration();
+            onClick={(e) => {
+              void cancelRegistration(e);
             }}
           >
             Cancel Registration
