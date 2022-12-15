@@ -1,13 +1,9 @@
 #myAccountBkgd {
-  min-height: 100vh;
+  min-height: calc(100vh - ($hFHeight * 2));
   min-width: 100vw;
   position: relative;
   @extend %columnFlex;
   background-color: $greenYellow;
-}
-
-.myAccountForm {
-  min-height: calc(100vh - (2 * #{$hFHeight}));
 }
 
 #emailPassword,
@@ -20,7 +16,6 @@
 .editBoxes {
   @extend %columnFlex;
   @extend %blue-greenBox;
-  padding: $boxPadding;
   margin: 0px 0px 0px 0px;
 }
 

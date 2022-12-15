@@ -31,9 +31,9 @@ export const Stripe: React.FC = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
+          body: {
             donationAmount: (Number.parseFloat(donationAmount) * 100).toString()
-          })
+          }
         };
 
         const response = await API.put(

@@ -9,7 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 export const RequestPasswordReset: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [email, setEmail] = useState(state.email);
+  const [email, setEmail] = useState(state?.email || '');
   const [failureMessage, setFailureMessage] = useState<CSS.Properties>({
     visibility: 'hidden'
   });

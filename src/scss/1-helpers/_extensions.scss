@@ -22,6 +22,11 @@
   background-color: $greenBlue;
 }
 
+%yellowBox {
+  @extend %box;
+  background-color: $yellow;
+}
+
 %columnFlex {
   display: inline-flex;
   justify-content: center;
@@ -40,6 +45,10 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+}
+
+%center {
+  display: inline-flex;
 }
 
 %headerDefaults {

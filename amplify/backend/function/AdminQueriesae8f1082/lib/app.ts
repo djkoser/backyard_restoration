@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import awsServerlessExpressMiddleware from 'aws-serverless-express/middleware';
-
 import { deleteUserIfUnconfirmed } from './cognitoActions';
 
 const app = express();

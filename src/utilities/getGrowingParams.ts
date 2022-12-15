@@ -10,12 +10,12 @@ export async function getGrowingParams(
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
+    body: {
       zipcode,
       street,
       city,
       state
-    })
+    }
   }) as Promise<{
     hardinessZone: string;
     firstGdd45: string;

@@ -77,8 +77,8 @@ export const ResetPassword: React.FC = () => {
           'Your password reset request has expired. Please try again using the
           "Forgot Password" link on our login page.'
         </h4>
-        <Link to={'/'}>Back to Login</Link>
       </article>
+      <Link to={'/'}>Back to Login</Link>
     </main>
   );
 };

@@ -111,14 +111,14 @@ export const EmailConfirmation: React.FC = () => {
 
       const apiInput = {
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: email,
-          Authorization: `Bearer ${(await Auth.currentSession())
+          'Content-Type': 'application/json',
+          Authorization: `${(await Auth.currentSession())
             .getAccessToken()
             .getJwtToken()}`
-        })
+        },
+        body: {
+          username: email
+        }
       };
       const response = await API.del(
         'AdminQueries',
