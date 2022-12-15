@@ -26,12 +26,17 @@
         "getGrowingParamsFunction": {
           "secretsPathAmplifyAppId": "d23rfc87jgo2gb",
           "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
-          "s3Key": "amplify-builds/getGrowingParamsFunction-75326c427a6948385a4d-build.zip"
+          "s3Key": "amplify-builds/getGrowingParamsFunction-347a5348706536634158-build.zip"
+        },
+        "AdminQueries03152289": {
+          "deploymentBucketName": "amplify-backyardrestoration-dev-222608-deployment",
+          "s3Key": "amplify-builds/AdminQueries03152289-766d5054744d7155434e-build.zip"
         }
       },
       "api": {
         "backyardrestoration": {},
-        "backyardRestorationREST": {}
+        "backyardRestorationREST": {},
+        "AdminQueries": {}
       }
     }
   },

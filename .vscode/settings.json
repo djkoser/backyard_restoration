@@ -9,6 +9,7 @@
     "amplify/backend/awscloudformation": true
   },
   "cSpell.words": [
+    "adminqueries",
     "awsconfig",
     "backyardrestoration",
     "Bkgd",
@@ -30,6 +31,7 @@
     "TMINMAX",
     "TMINTMAX",
     "toastify",
-    "TTFB"
+    "TTFB",
+    "USERPOOL"
   ]
 }
