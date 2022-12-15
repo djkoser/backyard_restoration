@@ -24,11 +24,11 @@ export const AddedNatives: React.FC<AddedNativesProps> = (props) => {
       userNatives.forEach((el) => {
         switch (el.bloomTime) {
           case 'Late Spring':
-            return eSpringTempData.push(el);
-          case 'Summer':
             return lSpringTempData.push(el);
-          case 'Early Spring':
+          case 'Summer':
             return summerTempData.push(el);
+          case 'Early Spring':
+            return eSpringTempData.push(el);
           case 'Fall':
             return fallTempData.push(el);
           default:
