@@ -1,35 +1,32 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Footer from './Footer';
-import Nav from './Nav';
-import Timeline from './Timeline';
-import DashboardDropdowns from './DashboardDropdowns';
-import { getUserInfo } from '../redux/userInfoSlice';
-import { getMethods } from '../redux/mgmtMethodSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStore } from '../redux/store';
-import { ManagementMethod } from '../types';
+import { getUserMethods } from '../redux/userMethodSlice';
+import { getUserInfo } from '../redux/userSlice';
+import { UserManagementMethodStateVersion } from '../types';
+import { DashboardDropdowns, Footer, Nav, Timeline } from './';
 
 // props from store hZone, gSeasonLength firstGDD35
 
-const Dashboard: React.FC = () => {
-  const hardiness_zone = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.hardiness_zone
+export const Dashboard: React.FC = () => {
+  const hardinessZone = useSelector<AppStore, string>(
+    (state) => state.userInfo.hardinessZone
   );
 
-  const growing_season_length = useSelector<AppStore, number>(
-    (state) => state.userInfoReducer.growing_season_length
+  const growingSeasonLength = useSelector<AppStore, number>(
+    (state) => state.userInfo.growingSeasonLength
   );
 
-  const first_gdd35 = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.first_gdd35
+  const firstGdd45 = useSelector<AppStore, string>(
+    (state) => state.userInfo.firstGdd45
   );
 
-  const last_gdd35 = useSelector<AppStore, string>(
-    (state) => state.userInfoReducer.last_gdd35
+  const lastGdd45 = useSelector<AppStore, string>(
+    (state) => state.userInfo.lastGdd45
   );
 
-  const userMethods = useSelector<AppStore, ManagementMethod[]>(
-    (state) => state.mgmtMethodReducer.userMethods
+  const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
+    (state) => state.userMethod.userMethods
   );
 
   const chartMargin = { top: 10, right: 10, bottom: 10, left: 10 };
@@ -37,8 +34,8 @@ const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfo());
-    dispatch(getMethods());
-  }, [dispatch]);
+    dispatch(getUserMethods());
+  }, []);
 
   return (
     <>
@@ -48,19 +45,19 @@ const Dashboard: React.FC = () => {
           <section id="growingInfoBox">
             <h5>
               <strong>Zone: </strong>
-              {hardiness_zone}
+              {hardinessZone}
             </h5>
             <h5>
               <strong>Average Growing Days (GDD35): </strong>
-              {growing_season_length}
+              {growingSeasonLength}
             </h5>
             <h5>
               <strong>Average Season Start Date: </strong>
-              {first_gdd35}
+              {firstGdd45}
             </h5>
             <h5>
               <strong>Average Season End Date: </strong>
-              {last_gdd35}
+              {lastGdd45}
             </h5>
           </section>
           <h2 className="hidden" id="timelineHeader">
@@ -71,8 +68,8 @@ const Dashboard: React.FC = () => {
           <Timeline
             height={300}
             width={400}
-            first_gdd35={first_gdd35}
-            last_gdd35={last_gdd35}
+            firstGdd45={firstGdd45}
+            lastGdd45={lastGdd45}
             userMethods={userMethods}
             margin={chartMargin}
           />
@@ -83,4 +80,3 @@ const Dashboard: React.FC = () => {
     </>
   );
 };
-export default Dashboard;

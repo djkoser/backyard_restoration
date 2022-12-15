@@ -1,0 +1,353 @@
+[
+  {
+    "weedId": "1",
+    "commonName": "Birdsfoot trefoil",
+    "botanicalName": "Lotus corniculatus",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Birdsfoot trefoil is an herbaceous plant that grows 12-24 inches tall. It is a low-growing clover-like plant with a sprawling growth pattern.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/birdsfoot-trefoil/birdsfoot-trefoil-l-van-riper.jpg"
+  },
+  {
+    "weedId": "2",
+    "commonName": "Bull thistle",
+    "botanicalName": "Cirsium vulgare",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Bull thistle is a biennial herbaceous plant. In its first year, it grows as a small round clump of leaves close to the ground (a rosette). Plants overwinter in the rosette stage, then the next spring the plants send up a flowering stalk, set seed, and then die. In its second year, bull thistle can grow up to three to six feet high with a single erect stem with multiple branches.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/bull-thistle/bull-thistle-Forest-Kim-Starr-bugwood.jpg"
+  },
+  {
+    "weedId": "3",
+    "commonName": "Butter and eggs",
+    "botanicalName": "Linaria vulgaris",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Butter and eggs is a perennial herbaceous plant that grows 1-3 feet tall. It has multiple erect stems growing from rootstalks.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/butter-eggs/butter-eggs-flower-banner.jpg"
+  },
+  {
+    "weedId": "4",
+    "commonName": "Canada thistle",
+    "botanicalName": "Cirsium arvense",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Canada thistle is a widely distributed perennial plant that can grow up to five feet tall. Its leaves have sharp spines along the edges. Canada thistle grows in a variety of habitats with full or partial sun and is often found in disturbed areas such as roadsides, trails, pastures, and recently flooded areas.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/canada-thistle/canada-thistle-plants-banner.jpg"
+  },
+  {
+    "weedId": "5",
+    "commonName": "Common tansy",
+    "botanicalName": "Tanacetum vulgare",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Common tansy is a perennial herbaceous plant that can grow 3 - 5 feet tall. A single stem branches extensively toward the top into short stems forming a flat-topped cluster of numerous yellow, button-like flower heads.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/common-tansy/tansy-flower-head-l-van-riper-banner.jpg"
+  },
+  {
+    "weedId": "6",
+    "commonName": "Cow vetch & hairy vetch",
+    "botanicalName": "Vicia cracca, Vicia villosa",
+    "annualPerennialBiennial": "a",
+    "vegetationType": "f",
+    "description": "Cow vetch and hairy vetch are annual or short-lived perennial herbaceous plants in the legume (pea) family. Their weak stems grow 2 – 3 feet high and grow over other plants, smothering them. The stem of hairy vetch has spreading hairs.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/cow-hairy-vetch/cow-vetch-Caleb-Slemmons-bugwood.jpg"
+  },
+  {
+    "weedId": "7",
+    "commonName": "Creeping Charlie",
+    "botanicalName": "Glechoma hederacea",
+    "annualPerennialBiennial": "a",
+    "vegetationType": "f",
+    "description": "A short, horizontally growing plant with square stems, round toothed leaves and small purple flowers. When crushed has a faint mint smell.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/creeping-charlie/creeping-charlie-leslie-j-mehrhoff-bugwood.jpg"
+  },
+  {
+    "weedId": "8",
+    "commonName": "Crown vetch or axseed",
+    "botanicalName": "Securigera varia",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Crown vetch is a perennial herbaceous plan. Its stems trail over other plants and can grow 2-6 feet long. Crown vetch plants are brown in winter and early spring and can be visible as brown patches on the landscape.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/crown-vetch/crown-vetch-leaf-L-Van-Riper-MNDNR-banner.jpg"
+  },
+  {
+    "weedId": "9",
+    "commonName": "Erect hedgeparlsey",
+    "botanicalName": "Torilis japonica",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Erect hedgeparsley can grow up to six feet tall and has clusters of small white flowers.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/erect-hedgeparsley/erect-hedgeparsley-flower-L-Van-Riper-MNDNR-banner.jpg"
+  },
+  {
+    "weedId": "10",
+    "commonName": "Garlic mustard",
+    "botanicalName": "Alliaria petiolata",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Garlic mustard has two different appearances depending on whether it is one or two years old. First year plants are a low-growing circular arrangement of kidney-shaped leaves with scalloped edges, called rosettes. In its second year, plants shoot up a 12-36 inch stem that will develop small white flowers at the top. If crushed, the plant smells like garlic.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/garlic-mustard/garlic-mustard-form-d-hanson-banner.jpg"
+  },
+  {
+    "weedId": "11",
+    "commonName": "Hoary alyssum",
+    "botanicalName": "Berteroa incana",
+    "annualPerennialBiennial": "a",
+    "vegetationType": "f",
+    "description": "Hoary alyssum is an annual plant, but can occasionally be a biennial. Plants grow to two feet tall and have white flowers with deeply notched petals and round seedpods.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/hoary-alyssum/hoary-alyssum-L-Van-Riper-MNDNR-banner.jpg"
+  },
+  {
+    "weedId": "12",
+    "commonName": "Leafy spurge",
+    "botanicalName": "Euphorbia esula",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Leafy spurge is an herbaceous plant that grows two to four feet tall and has flowers that are a distinct yellow/green color. The plant's stems, flowers, and leaves emit a white milky sap when broken.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/leafy-spurge/leafy-spurge-flower-Dave-Hason-MNDOT-banner.jpg"
+  },
+  {
+    "weedId": "13",
+    "commonName": "Musk or nodding thistle",
+    "botanicalName": "Carduus nutans",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Musk thistle is a biennial herbaceous plant. In its first year, it grows as a group of leaves (rosette) near the ground. Plants overwinter in the rosette stage, then the next spring the plants send up a flowering stalk, set seed, and die. Flowering stalks can grow up to seven feet tall.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/musk-thistle/musk-thistle-flower-Mary-Ellen-Harte-bugwood-banner.jpg"
+  },
+  {
+    "weedId": "14",
+    "commonName": "Orange hawkweed",
+    "botanicalName": "Hieracium aurantiacum",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Herbaceous plant that can grow 10-24 inches tall. Leaves are arranged in a basal rosette, from which a leafless flower stalk emerges. Flowers are orange to yellow.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/orange-hawkweed/orange-hawkweed-Michael-Shephard-bugwood-banner.jpg"
+  },
+  {
+    "weedId": "15",
+    "commonName": "Oxeye daisy",
+    "botanicalName": "Leucanthemum vulgare",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Oxeye daisy is a perennial herbaceous plant. Its thin, 1-2 feet tall stems typically branch to produce two or more flower heads. The plant smells like sage. It frequently escapes garden plantings.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/oxeye-daisy/oxeye-daisy-banner.jpg"
+  },
+  {
+    "weedId": "16",
+    "commonName": "Poison hemlock",
+    "botanicalName": "Conium maculatum L",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "This herbaceous plant has clusters of white flowers and fern-like leaves. It can grow three to eight feet tall and has purple spots or splotches along the stem.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/poison-hemlock/poison-hemlock-robert-dana-banner.jpg"
+  },
+  {
+    "weedId": "17",
+    "commonName": "Queen Anne's Lace",
+    "botanicalName": "Daucus carota",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Queen Anne's lace is an herbaceous plant that can grow 3-4 feet tall. In its first year, it has only low-lying leaves coming from the base of the plant (basal rosette). The second year the plant will grow a tall stalk, then flower, set seed, and die. Each plant has one or several hairy hollow stems, growing from one central stem, each with an umbrella-shaped flower cluster at the top. The plant smells like a carrot as it is the ancestor of the garden carrot.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/queen-anne-lace/queen-anne-lace-white-flower-heads-mda-banner.jpg"
+  },
+  {
+    "weedId": "18",
+    "commonName": "Spotted knapweed",
+    "botanicalName": "Centaurea stoebe spp. micranthos",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Spotted knapweed is a biennial or short-lived perennial herbaceous plant that can grow 2-3 feet tall. Basal leaves form a rosette the first year from which grow one to twenty wiry, branched stems during the second year.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/spotted-knapweed/spotted-knapweed-in-field-MDA.jpg"
+  },
+  {
+    "weedId": "19",
+    "commonName": "White & yellow sweet clover",
+    "botanicalName": "Melitotus alba, M. officinalis",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "White and yellow sweetclover are biennial herbaceous plants that look very similar. First year plants do not bloom. Second year plants grow 3 – 6 feet high and are bush-like. Yellow sweetclover has yellow flowers, is usually shorter and blooms earlier than white sweetclover. White sweetclover has white flowers. Sweetclovers are very fragrant.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/white-yellow-sweetclover/white-yellow-sweetclover-L-Van-Riper-MNDNR-banner.jpg"
+  },
+  {
+    "weedId": "20",
+    "commonName": "Wild parsnip",
+    "botanicalName": "Pastinaca sativa",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Wild parsnip spends one or more years as a clump of low-lying leaves with no vertical stem. The next year, it grows up a flowering stalk, blooms, and then dies. It is 6 inches tall in the rosette stage and 4 feet tall in the flowering stage, with yellow flowers.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/wildparsnip/wild-parsnip-flower-Laura-Van-Riper-MN-DNR.jpg"
+  },
+  {
+    "weedId": "21",
+    "commonName": "Amur silver grass",
+    "botanicalName": "Miscanthus sacchariflorus",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "g",
+    "description": "Amur silvergrass is a perennial warm season grass that grows 6 – 8 feet tall. It is very showy and vigorous and forms dense mats.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/amur-silvergrass/amur-silvergrass-David-Dragon-banner.jpg"
+  },
+  {
+    "weedId": "22",
+    "commonName": "Reed canary grass",
+    "botanicalName": "Phalaris arundinacea",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "g",
+    "description": "Reed canary grass is a coarse, cool season grass that grows 2 - 6 feet tall. Reed canary grass is one of the first grasses to sprout in the spring.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/reed-canary-grass/reed-canary-grass-laura-van-riper.jpg"
+  },
+  {
+    "weedId": "23",
+    "commonName": "Smooth brome grass",
+    "botanicalName": "Bromus inermis",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "g",
+    "description": "Smooth brome is a perennial cool season grass. It grows 2-4 feet high, with a hairless stem.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/smooth-brome/smooth-brome-seed-head-John-M-Randall-bugwood-banner.jpg"
+  },
+  {
+    "weedId": "24",
+    "commonName": "Amur cork tree",
+    "botanicalName": "Phellodendron amurense",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Amur cork tree is a 35-50 foot tall tree with spongy bark.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/amur-cork-tree/amur-cork-tree-berries-leaves-Ansel-Oommen-bugwood.jpg"
+  },
+  {
+    "weedId": "25",
+    "commonName": "Amur maple",
+    "botanicalName": "Acer ginnala",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Amur maple is a small tree that can grow up to 20 feet tall with a broad crown. However, it sometimes is seen as a pruned hedge.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/amur-maple/amur-maple-leaf-seed-d-hanson.jpg"
+  },
+  {
+    "weedId": "26",
+    "commonName": "Autumn olive",
+    "botanicalName": "Elaeagnus umbellata",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Autumn olive is a shrub that can grow up to 20 feet tall and 30 feet wide. It has distinctively silvery leaves and large red berries.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/autumn-olive/autumn-olive-Russ-Smith-banner.jpg"
+  },
+  {
+    "weedId": "27",
+    "commonName": "Black locust",
+    "botanicalName": "Robinia pseudoacacia",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Black locust is a fast growing tree that can reach up to 75 feet in height. It has with deeply furrowed bark with flat-topped ridges. Seedlings and root sprouts have long thorns and grow rapidly.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/black-locust/black-locust-john-cardina-bugwood.jpg"
+  },
+  {
+    "weedId": "28",
+    "commonName": "Buckthorn",
+    "botanicalName": "Rhamnus cathartica",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Tall understory shrub or small tree up to 20' high with a spreading loosely branched crown, often multiple stems at the base. Brown bark with elongate silvery corky projections (Caution: native plums or cherries have a similar bark). Female and male plants.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/buckthorn/common-buckthorn.jpg"
+  },
+  {
+    "weedId": "29",
+    "commonName": "Japanese barberry",
+    "botanicalName": "Berberis thunbergii",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Japanese Barberry is a small, compact, spiny shrub. It can grow 3-6 feet tall with slightly curving branches.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/japanese-barberry/japanese-barberry-laura-van-riper-banner.jpg"
+  },
+  {
+    "weedId": "30",
+    "commonName": "Multiflora rose",
+    "botanicalName": "Rosa multiflora",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Multiflora rose is a dense multi-stemmed shrub that can reach 8-13 feet tall and 9-13 feet wide. Plants have white flowers and the stems often have an arching or drooping appearance.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/multiflora-rose/multiflora-rose-MNDOT-banner.jpg"
+  },
+  {
+    "weedId": "31",
+    "commonName": "Non-native bush honeysuckles",
+    "botanicalName": "Lonicera tatarica",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "There are four different species of non-native bush honeysuckle that are similar in appearance. They all are upright deciduous shrubs with long arching branches, and are commonly 5 to 20 feet tall. They produce an abundance of red to orange-yellow berries.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/honeysuckles/bush-honeysucke-laura-van-riper-banner.jpg"
+  },
+  {
+    "weedId": "32",
+    "commonName": "Non-native knotweeds",
+    "botanicalName": "Polygonum cuspidatum",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "There are three species of non-native knotweed that are similar in appearance. They are all herbaceous shrubs that die back to the ground each winter, leaving bamboo-like stalks. Bohemian knotweed is a hybrid between giant and Japanese knotweed",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/knotweed/bohemian-knotweed-Laura-Van-Riper-banner.jpg"
+  },
+  {
+    "weedId": "33",
+    "commonName": "Norway maple",
+    "botanicalName": "Acer platanoides",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Norway maple is a large deciduous tree with a dense canopy. Trees can reach 40-60 feet tall, with a dense, rounded and symmetrical crown. Leaves typically turn yellow in the fall season, although there is a popular landscaping cultivar known as \"Crimson King\" that has a deep reddish purple fall foliage.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/norway-maple/norway-maple-jan-samanek-bugwood.jpg"
+  },
+  {
+    "weedId": "34",
+    "commonName": "Russian olive",
+    "botanicalName": "Elaeagnus angustifolia",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Russian olive is a large deciduous shrub or small tree that grows up to 25 feet tall. It has spreading branches that form a dense and rounded crown. It has distinctive silvery scaling on the undersides of leaves, making it easy to spot from a distance.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/russian-olive/russian-olive-branch-bugwood-banner.jpg"
+  },
+  {
+    "weedId": "35",
+    "commonName": "Siberian elm",
+    "botanicalName": "Ulmus pumila",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Siberian elm is a deciduous tree, 30 – 60 feet tall, with an open rounded crown and slender, spreading branches.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/siberian-elm/siberian-elm-tree-Patrick-Breen-bugwood.jpg"
+  },
+  {
+    "weedId": "36",
+    "commonName": "Siberian peashrub",
+    "botanicalName": "Caragana arborescens",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Siberian peashrub is an upright shrub or small tree that grows up to 18 feet tall. It has a narrow branching structure. Mature bark and branches are gray while young twigs are yellowish-green.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/siberian-peashrub/siberian-peashrub-flowers-crop-MNDOT-banner.jpg"
+  },
+  {
+    "weedId": "37",
+    "commonName": "Winged burning bush",
+    "botanicalName": "Euonymus alatus",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "w",
+    "description": "Winged burning bush a shrub that is typically 5-10 feet tall, but can grow up to 20 feet. It has distinctive corky wings on its twigs and turns bright red in the fall.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/winged-burning-bush/winged-burning-bush-banner.jpg"
+  },
+  {
+    "weedId": "38",
+    "commonName": "Common teasel",
+    "botanicalName": "Dipsacus fullonum",
+    "annualPerennialBiennial": "p",
+    "vegetationType": "f",
+    "description": "Common teasel grows as round grouping of leaves (rosette) near the ground for one or more years and then sends up a flowering stalk up to seven feet tall. Common teasel has cylinder shaped flower heads with many small, light purple flowers. The plant dies after setting seed. The stalks and seed heads remain upright and visible over the winter.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/common-teasel/common-teasel-Steve-Dewey-bugwood-banner.jpg"
+  },
+  {
+    "weedId": "39",
+    "commonName": "Giant hogweed",
+    "botanicalName": "Heracleum mantegazzianum",
+    "annualPerennialBiennial": "b",
+    "vegetationType": "f",
+    "description": "Herbaceous, often stated to be biennial but is a monocarpic perennial (plant dies after bearing fruit), giant at 10-15 feet tall (potentially to 20 feet). When enough energy is stored, flowering will take place on a 2-4 inch diameter hollow stalk that is mottled reddish-purple and is covered with sturdy bristles.",
+    "src": "https://images.dnr.state.mn.us/natural_resources/invasives/terrestrialplants/giant-hogweed/slides/giant-hogweed-Terry-English-bugwood.jpg"
+  }
+]

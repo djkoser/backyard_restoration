@@ -1,50 +1,86 @@
+import Symbol_observable from 'symbol-observable';
 import React from 'react';
+import { Amplify } from 'aws-amplify';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Stripe from './components/Stripe';
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import MyAccount from './components/MyAccount';
-import NativeSelector from './components/NativeSelector';
-import NOAAHangupPage from './components/NOAAHangupPage';
-import Register from './components/Register';
-import RequestPasswordReset from './components/RequestPasswordReset';
-import ResetPassword from './components/ResetPassword';
-import StripeThankYou from './components/StripeThankYou';
-import WeedPage from './components/WeedPage';
-import WeedSearch from './components/WeedSearch';
+import awsconfig from './aws-exports';
+import {
+  Dashboard,
+  EmailConfirmation,
+  Login,
+  MyAccount,
+  NativeSelector,
+  NOAAHangupPage,
+  ProtectedRoute,
+  Register,
+  RequestPasswordReset,
+  ResetPassword,
+  Stripe,
+  StripeThankYou,
+  WeedPage,
+  WeedSearch
+} from './components';
+
+console.log(typeof Symbol_observable);
+console.log(typeof React);
+
+Amplify.configure(awsconfig);
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />
+    element: (
+      <ProtectedRoute forwardingRoute="/dash">
+        <Login />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'requestReset',
     element: <RequestPasswordReset />
   },
   {
-    path: 'resetPassword/:token',
+    path: 'resetPassword',
     element: <ResetPassword />
   },
   {
     path: 'dash',
-    element: <Dashboard />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <Dashboard />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'account',
-    element: <MyAccount />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <MyAccount />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'register',
     element: <Register />
   },
   {
+    path: 'emailConfirmation',
+    element: <EmailConfirmation />
+  },
+  {
     path: 'weed/:id',
-    element: <WeedPage />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <WeedPage />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'search/:vegType',
-    element: <WeedSearch />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <WeedSearch />
+      </ProtectedRoute>
+    )
   },
   {
     path: 'donation',
@@ -60,11 +96,15 @@ const router = createBrowserRouter([
   },
   {
     path: 'nativesSelector',
-    element: <NativeSelector />
+    element: (
+      <ProtectedRoute redirectRoute="/">
+        <NativeSelector />
+      </ProtectedRoute>
+    )
   }
 ]);
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="App">
       <RouterProvider router={router} />

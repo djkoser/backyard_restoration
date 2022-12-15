@@ -1,13 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React, { useRef, useEffect, useState } from 'react';
-
 import * as d3 from 'd3';
-import { ManagementMethod, TimelineProps } from '../types';
+import React, { useEffect, useRef, useState } from 'react';
+import { TimelineProps, UserManagementMethodStateVersion } from '../types';
 
 // From store userMethods[], gSeasonLength, firstGDD35
 
-const Timeline: React.FC<TimelineProps> = (props) => {
+export const Timeline: React.FC<TimelineProps> = (props) => {
   // Calculates a year as January 1st through December 31st, this will the be axis display range
   const currentDate = new Date();
   const yrEndDate = new Date(currentDate.getFullYear(), 11, 31);
@@ -31,8 +30,8 @@ const Timeline: React.FC<TimelineProps> = (props) => {
     'december'
   ] as const;
 
-  // Create chart viewbox width and height variables
-  const { width, height, first_gdd35, last_gdd35, margin, userMethods } = props;
+  // Create chart view box width and height variables
+  const { width, height, firstGdd45, lastGdd45, margin, userMethods } = props;
 
   const colorGenerator = () => {
     const output = [];
@@ -54,7 +53,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
 
   // function to store management method text as legend descriptions
   const extractText = () =>
-    userMethods.map((el) => `Weed: ${el.common_name} - ${el.name}`);
+    userMethods.map(({ commonName, name }) => `Weed: ${commonName} - ${name}`);
 
   const createLegend = (colors: string[]) => {
     const legendText = extractText();
@@ -93,7 +92,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
 
       .tickFormat((d) => tickFormat(d as Date));
 
-    // Associate reference object with SVG varable to be manipulated by D3
+    // Associate reference object with SVG variable to be manipulated by D3
     const svg = d3.select(d3Container.current).attr('class', 'timelineSVG');
     // Add Axis to SVG
     svg
@@ -102,7 +101,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
       .attr('transform', `translate(0,${height - 30})`)
       .attr('class', 'timelineAxis')
       .call(xAxis);
-    // Select the xAxis Text and rotate labels for readibility.
+    // Select the xAxis Text and rotate labels for readability.
 
     svg.append('g').attr('class', 'timelineBarContainer');
 
@@ -122,7 +121,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   const rectangleMaker = (
     gSelection: d3.Selection<
       SVGGElement,
-      ManagementMethod,
+      UserManagementMethodStateVersion,
       HTMLElement,
       unknown
     >,
@@ -132,9 +131,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   ) => {
     return gSelection
       .append('rect')
-      .attr('visibility', (d) =>
-        Number.parseInt(d[months[ind]]) ? 'visible' : 'hidden'
-      )
+      .attr('visibility', (d) => (d[months[ind]] ? 'visible' : 'hidden'))
       .attr('width', GDD35Prop + 0.5)
       .attr('x', xPosVal(ind))
       .attr('class', 'monthBoxes');
@@ -142,16 +139,15 @@ const Timeline: React.FC<TimelineProps> = (props) => {
   // Prep variable for use at end of function -> legend color key and text
 
   const timelineUpdater = () => {
-    if (first_gdd35 && last_gdd35) {
+    if (firstGdd45 && lastGdd45) {
       // Needed  to calculate the bar width for certain months which is the  proportion of the year that is within the user's GDD35 growing window
       const yr2ms = yrEndDate.getTime() - yrStartDate.getTime();
-      const msBetweenGDD35 =
-        avgSDateToMs(last_gdd35) - avgSDateToMs(first_gdd35);
+      const msBetweenGDD35 = avgSDateToMs(lastGdd45) - avgSDateToMs(firstGdd45);
       const notGDD35ms = yr2ms - msBetweenGDD35;
-      // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the viewbox width minus chart margins
+      // The proportion of the year in which GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical May through October multiplied by the view box width minus chart margins
       const GDD35Prop =
         (msBetweenGDD35 / yr2ms / 6) * (width - margin.left - margin.right);
-      // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multipleid by the viewbox width minus chart margins
+      // The proportion of the year in which not GDD35, divided by 6 to yield the fraction of this fraction that one month spans between hypothetical November through April multiplied by the view box width minus chart margins
       const notGDD35Prop =
         (notGDD35ms / yr2ms / 6) * (width - margin.left - margin.right);
 
@@ -193,8 +189,8 @@ const Timeline: React.FC<TimelineProps> = (props) => {
       // Create new g elements within the SVG element,  one for each piece of data given by userMethods from store
       // Selection represents existing data and g elements
       const selection = timelineBarContainer
-        .selectAll<SVGElement, ManagementMethod>('g')
-        .data(userMethods, (d) => d.method_id);
+        .selectAll<SVGElement, UserManagementMethodStateVersion>('g')
+        .data(userMethods, (d) => d.methodId);
 
       // Remove unnecessary boxes;
       selection.exit().remove();
@@ -206,7 +202,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
         .enter()
         .append('g')
         .attr('class', 'methodBoxes')
-        .attr('id', (d) => d.method_id);
+        .attr('id', (d) => d.methodId);
 
       // merge existing methodBoxes to updated method boxes in order to update existing boxes and new boxes at same time
       gSelection
@@ -224,7 +220,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
         )
         .attr('fill', (_d, i) => colors[i]);
 
-      // Create 12 new rectangle elements within each g element, one for each management timeframe/month
+      // Create 12 new rectangle elements within each g element, one for each management time-frame/month
 
       yearlyGDDPattern.forEach((el, ind) => {
         rectangleMaker(gSelection, el, xPosVal, ind);
@@ -249,7 +245,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
             : '25'
         );
 
-      // create legned to reflect each created method box.
+      // create legend to reflect each created method box.
       createLegend(colors);
     }
   };
@@ -283,5 +279,3 @@ const Timeline: React.FC<TimelineProps> = (props) => {
     </>
   );
 };
-
-export default Timeline;

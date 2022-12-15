@@ -1,59 +1,69 @@
-export interface UserInfoState {
-  user_id: number;
+export interface UserPayload {
   email: string;
-  first_name: string;
-  last_name: string;
-  street: string;
-  city: string;
-  state: string;
-  zipcode: string;
-  growing_season_length: number;
-  first_gdd35: string;
-  last_gdd35: string;
-  hardiness_zone: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  street?: string | null;
+  city?: string | null;
+  state?: string | null;
+  zipcode?: string | null;
+  growingSeasonLength: number;
+  firstGdd45: string;
+  lastGdd45: string;
+  hardinessZone: string;
+}
+
+interface FailedLoading {
   loading: boolean;
   failed: boolean;
 }
 
-interface ManagementMethod {
-  method_id: string;
-  common_name: string;
-  name: string;
-  description: string;
-  january: '0' | '1';
-  february: '0' | '1';
-  march: '0' | '1';
-  april: '0' | '1';
-  may: '0' | '1';
-  june: '0' | '1';
-  july: '0' | '1';
-  august: '0' | '1';
-  september: '0' | '1';
-  october: '0' | '1';
-  november: '0' | '1';
-  december: '0' | '1';
+export type UserState = UserPayload & FailedLoading;
+
+export interface UserNativePayload {
+  nativePlants: UserNativeStateVersion[];
 }
 
-export interface ManagementMethodState {
-  userMethods: ManagementMethod[];
-  loading: boolean;
-  failed: boolean;
-}
-
-export interface UserNative {
-  native_id: string;
-  common_name: string;
-  botanical_name: string;
+export interface UserNativeStateVersion {
+  id: string;
+  nativeId: string;
+  botanicalName: string;
+  commonName: string;
   moisture: string;
   sun: string;
   height: string;
-  bloom_time: string;
+  bloomTime: string;
   src: string;
-  project_notes: string;
+  projectNotes: string;
 }
 
-export interface UserNativesState {
-  userNatives: UserNative[];
-  loading: boolean;
-  failed: boolean;
+export type UserNativeState = UserNativePayload & FailedLoading;
+
+export interface UserMethodPayload {
+  userMethods: UserManagementMethodStateVersion[];
 }
+export interface UserManagementMethodStateVersion
+  extends ManagementMethodStateVersion {
+  id: string;
+  commonName: string;
+  projectNotes: string;
+}
+
+export interface ManagementMethodStateVersion {
+  methodId: string;
+  name: string;
+  description: string;
+  january: number;
+  february: number;
+  march: number;
+  april: number;
+  may: number;
+  june: number;
+  july: number;
+  august: number;
+  september: number;
+  october: number;
+  november: number;
+  december: number;
+}
+
+export type UserMethodState = UserMethodPayload & FailedLoading;

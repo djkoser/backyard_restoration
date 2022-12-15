@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { NativeSearchBarProps, UserNative } from '../types';
+import {
+  ListNativePlantsCQuery,
+  ListNativePlantsCQueryVariables,
+  NativePlant
+} from '../API';
+import { listNativePlantsC } from '../graphql/customQueries';
+import { NativeSearchBarProps } from '../types';
 
 //Props from app.js -myPlantsList addToMyPlants
-const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
+export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
   const [botanicalCommonNameInput, setBotanicalCommonNameInput] = useState('');
   const [sunInput, setSunInput] = useState('');
   const [bloomTimeInput, setBloomTimeInput] = useState('');
@@ -15,7 +22,7 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
   const { setSearchResults, setLoadingParent } = props;
 
   useEffect(() => {
-    searchPlants();
+    void searchPlants();
   }, []);
 
   const clearSearch = () => {
@@ -25,10 +32,10 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
     setMinHeightInput('');
     setMaxHeightInput('');
     setMoistureInput('');
-    searchPlants();
+    void searchPlants();
   };
 
-  const searchPlants = (
+  const searchPlants = async (
     botanicalCommonNameInput?: string,
     sunInput?: string,
     bloomTimeInput?: string,
@@ -36,30 +43,60 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
     maxHeightInput?: string,
     moistureInput?: string
   ) => {
-    setLoadingParent(true);
+    try {
+      setLoadingParent(true);
 
-    axios
-      .get<UserNative[]>(
-        `/api/native?${
-          botanicalCommonNameInput ? `name=${botanicalCommonNameInput}` : ''
-        }${sunInput ? '&' : ''}${sunInput ? `sun=${sunInput}` : ''}${
-          bloomTimeInput ? '&' : ''
-        }${bloomTimeInput ? `bloomTime=${bloomTimeInput}` : ''}${
-          minHeightInput ? '&' : ''
-        }${minHeightInput ? `minHeight=${minHeightInput}` : ''}${
-          maxHeightInput ? '&' : ''
-        }${maxHeightInput ? `maxHeight=${maxHeightInput}` : ''}${
-          moistureInput ? '&' : ''
-        }${moistureInput ? `moisture=${moistureInput}` : ''}`
-      )
-      .then((res) => {
-        setSearchResults(res.data);
-        setLoadingParent(false);
-      })
-      .catch(() => {
-        setLoadingParent(false);
-        toast.error('Search failed, please try again');
-      });
+      const listNativePlantsInput: ListNativePlantsCQueryVariables = {
+        filter: { and: [] }
+      };
+
+      const { and } = listNativePlantsInput.filter!;
+      if (moistureInput)
+        and!.push({
+          moisture: { contains: moistureInput }
+        });
+      if (maxHeightInput)
+        and!.push({
+          height: { le: maxHeightInput }
+        });
+      if (minHeightInput) {
+        and!.push({
+          height: { ge: minHeightInput }
+        });
+      }
+      if (bloomTimeInput) and!.push({ bloomTime: { eq: bloomTimeInput } });
+      if (sunInput)
+        and!.push({
+          sun: { contains: sunInput === 'Full' ? `${sunInput}, ` : sunInput }
+        });
+      if (botanicalCommonNameInput)
+        and!.push({
+          or: [
+            { botanicalName: { contains: botanicalCommonNameInput } },
+            { commonName: { contains: botanicalCommonNameInput } }
+          ]
+        });
+      const nativePlants = (await API.graphql(
+        graphqlOperation(listNativePlantsC, listNativePlantsInput)
+      )) as GraphQLResult<ListNativePlantsCQuery>;
+
+      setSearchResults(
+        nativePlants.data?.listNativePlants?.items.reduce(
+          (weedsParsed, weed) => {
+            if (weed) {
+              const { __typename, ...omitTypename } = weed;
+              if (omitTypename) weedsParsed.push(omitTypename);
+            }
+            return weedsParsed;
+          },
+          [] as Omit<NativePlant, '__typename' | 'createdAt' | 'updatedAt'>[]
+        ) || []
+      );
+      setLoadingParent(false);
+    } catch {
+      setLoadingParent(false);
+      toast.error('Search failed, please try again');
+    }
   };
 
   return (
@@ -176,7 +213,7 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
           className={'searchButton'}
           onClick={(e) => {
             e.preventDefault();
-            searchPlants(
+            void searchPlants(
               botanicalCommonNameInput,
               sunInput,
               bloomTimeInput,
@@ -210,5 +247,3 @@ const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
     </div>
   );
 };
-
-export default NativeSearchBar;

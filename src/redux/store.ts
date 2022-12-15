@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import promiseMiddleware from 'redux-promise-middleware';
-import managementMethodSlice from './mgmtMethodSlice';
-import userInfoSlice from './userInfoSlice';
-import userNativesSlice from './userNativesSlice';
+import userSlice from './userSlice';
+import userMethodSlice from './userMethodSlice';
+import userNativePlantSlice from './userNativePlantsSlice';
 
 const store = configureStore({
   reducer: {
-    mgmtMethodReducer: managementMethodSlice.reducer,
-    userInfoReducer: userInfoSlice.reducer,
-    userNativesReducer: userNativesSlice.reducer
+    userInfo: userSlice.reducer,
+    userNativePlant: userNativePlantSlice.reducer,
+    userMethod: userMethodSlice.reducer
   },
   middleware: [promiseMiddleware] as const,
   devTools: true

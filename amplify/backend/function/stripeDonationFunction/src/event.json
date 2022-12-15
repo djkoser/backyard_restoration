@@ -1,0 +1,11 @@
+{
+  "httpMethod": "PUT",
+  "path": "/donate",
+  "queryStringParameters": {
+    "limit": "10"
+  },
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"donationAmount\":300}"
+}

@@ -1,0 +1,99 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# input AMPLIFY {
+#   globalAuthRule: AuthRule = { allow: public }
+# } # FOR TESTING ONLY!
+
+# @auth(rules: [{ allow: public, provider: apiKey }])
+type Weed
+  @model
+  @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
+  weedId: String! @primaryKey
+  vegetationType: String!
+    @index(name: "byVegetationType", queryField: "weedByVegetationType")
+  commonName: String!
+  botanicalName: String!
+  annualPerennialBiennial: String!
+  description: String!
+  managementMethods: [ManagementMethod] @hasMany
+  src: String!
+}
+
+type User @model @auth(rules: [{ allow: owner, provider: userPools }]) {
+  email: String! @primaryKey
+  firstName: String @default(value: "")
+  lastName: String @default(value: "")
+  street: String @default(value: "")
+  city: String @default(value: "")
+  state: String @default(value: "")
+  zipcode: String @default(value: "")
+  growingSeasonLength: Int!
+  firstGdd45: String!
+  lastGdd45: String!
+  hardinessZone: String!
+  managementMethods: [UserManagementMethod] @hasMany
+  nativePlants: [UserNativePlant] @hasMany
+  owner: String
+    @auth(
+      rules: [{ allow: owner, operations: [read, delete], provider: userPools }]
+    )
+}
+
+# @auth(rules: [{ allow: public, provider: apiKey }])
+type ManagementMethod
+  @model
+  @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
+  methodId: String! @primaryKey
+  weed: Weed! @belongsTo
+  name: String!
+  description: String!
+  january: Int!
+  february: Int!
+  march: Int!
+  april: Int!
+  may: Int!
+  june: Int!
+  july: Int!
+  august: Int!
+  september: Int!
+  october: Int!
+  november: Int!
+  december: Int!
+}
+# @auth(rules: [{ allow: public, provider: apiKey }])
+type NativePlant
+  @model
+  @auth(rules: [{ allow: private, operations: [read], provider: userPools }]) {
+  nativeId: String! @primaryKey
+  botanicalName: String!
+  commonName: String!
+  moisture: String!
+  sun: String!
+  height: String!
+  bloomTime: String!
+  src: String!
+}
+
+type UserNativePlant
+  @model
+  @auth(rules: [{ allow: owner, provider: userPools }]) {
+  id: ID! @primaryKey
+  user: User @belongsTo
+  nativePlant: NativePlant @hasOne
+  projectNotes: String!
+  owner: String
+    @auth(
+      rules: [{ allow: owner, operations: [read, delete], provider: userPools }]
+    )
+}
+
+type UserManagementMethod @model @auth(rules: [{ allow: owner }]) {
+  id: ID! @primaryKey
+  user: User @belongsTo
+  managementMethod: ManagementMethod @hasOne
+  projectNotes: String!
+  owner: String
+    @auth(
+      rules: [{ allow: owner, operations: [read, delete], provider: userPools }]
+    )
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "backyardrestoration",
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authBackyardRestorationAuth"
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 7,
+        "apiKeyExpirationDate": "2022-12-18T05:56:19.627Z",
+        "keyDescription": "BackyardRestorationGraphQLSeedKey"
+      }
+    ],
+    "conflictResolution": {}
+  }
+}

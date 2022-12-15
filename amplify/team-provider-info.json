@@ -1,0 +1,41 @@
+{
+  "prd": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-backyardrestoration-prd-192940-authRole",
+      "UnauthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-prd-192940-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::360544971157:role/amplify-backyardrestoration-prd-192940-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
+      "UnauthRoleName": "amplify-backyardrestoration-prd-192940-unauthRole",
+      "StackName": "amplify-backyardrestoration-prd-192940",
+      "StackId": "arn:aws:cloudformation:us-east-1:360544971157:stack/amplify-backyardrestoration-prd-192940/c86d3860-7b4e-11ed-ac16-0e4d91e8e221",
+      "AmplifyAppId": "d23rfc87jgo2gb"
+    },
+    "categories": {
+      "auth": {
+        "BackyardRestorationAuth": {}
+      },
+      "function": {
+        "stripeDonationFunction": {
+          "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
+          "s3Key": "amplify-builds/stripeDonationFunction-5746784c2b63434d574c-build.zip",
+          "secretsPathAmplifyAppId": "d23rfc87jgo2gb"
+        },
+        "getGrowingParamsFunction": {
+          "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
+          "s3Key": "amplify-builds/getGrowingParamsFunction-682b595a764f64394661-build.zip",
+          "secretsPathAmplifyAppId": "d23rfc87jgo2gb"
+        },
+        "AdminQueriesae8f1082": {
+          "deploymentBucketName": "amplify-backyardrestoration-prd-192940-deployment",
+          "s3Key": "amplify-builds/AdminQueriesae8f1082-4d6f4734775657427578-build.zip"
+        }
+      },
+      "api": {
+        "backyardrestoration": {},
+        "backyardRestorationREST": {},
+        "AdminQueries": {}
+      }
+    }
+  }
+}

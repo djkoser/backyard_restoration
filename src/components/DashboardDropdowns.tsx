@@ -1,43 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import SwitchMaker from './SwitchMaker';
-import axios from 'axios';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ManagementMethod, Weed } from '../types';
+import {
+  GetWeedCQuery,
+  GetWeedCQueryVariables,
+  WeedByVegetationTypeCQuery,
+  WeedByVegetationTypeCQueryVariables
+} from '../API';
+import { getWeedC, weedByVegetationTypeC } from '../graphql/customQueries';
+import { ManagementMethodStateVersion } from '../types';
+import { MethodSwitch } from './';
 
-const DashboardDropdowns: React.FC = () => {
+export const DashboardDropdowns: React.FC = () => {
   const navigate = useNavigate();
   const [weedOptions, setWeedOptions] = useState<JSX.Element[]>([]);
   const [switches, setSwitches] = useState<JSX.Element[]>([]);
 
-  const getWeedsByVegType = (vegType: string) => {
-    axios
-      .get<Weed[]>(`/api/weeds?vegType=${vegType}`)
-      .then((res) => {
-        setWeedOptions(
-          res.data.map((el) => (
-            <option key={`weed${el.weed_id}`} value={el.weed_id}>
-              {el.common_name}
+  const getWeedsByVegType = async (vegetationType: string) => {
+    try {
+      const query: WeedByVegetationTypeCQueryVariables = { vegetationType };
+      const weeds = (await API.graphql(
+        graphqlOperation(weedByVegetationTypeC, query)
+      )) as GraphQLResult<WeedByVegetationTypeCQuery>;
+
+      const weedOptions: JSX.Element[] = weeds.data?.weedByVegetationType?.items
+        ?.map
+        ? weeds.data.weedByVegetationType.items.map((el) => (
+            <option key={`weedOption${el?.weedId}`} value={el?.weedId}>
+              {el?.commonName}
             </option>
           ))
-        );
-      })
-      .catch(() => navigate('/'));
+        : [];
+
+      setWeedOptions(weedOptions);
+    } catch {
+      navigate('/');
+    }
   };
 
-  const getWeedMethodsByID = (weedID: string) => {
-    axios
-      .get<ManagementMethod[]>(`/api/weeds/methods/${weedID}`)
-      .then((res) => {
+  const getWeedMethodsByID = async (weedId: string) => {
+    try {
+      const query: GetWeedCQueryVariables = { weedId };
+
+      const weed = (await API.graphql(
+        graphqlOperation(getWeedC, query)
+      )) as GraphQLResult<GetWeedCQuery>;
+
+      if (weed.data?.getWeed?.managementMethods?.items.map) {
+        const methodsCleaned = (
+          weed.data.getWeed.managementMethods.items.filter(
+            (el) => el
+          ) as unknown as ManagementMethodStateVersion[]
+        ).map((el) => {
+          return {
+            ...el,
+            weedCommonName: weed?.data?.getWeed?.commonName || ''
+          };
+        });
+
         setSwitches(
-          res.data.map((el) => (
-            <SwitchMaker key={`method${el.method_id}`} weedMethod={el} />
+          methodsCleaned.map((el) => (
+            <MethodSwitch key={`method${el.methodId}`} weedMethod={el} />
           ))
         );
-      })
-      .catch(() => navigate('/'));
+      }
+    } catch {
+      navigate('/');
+    }
   };
   useEffect(() => {
-    getWeedsByVegType('f');
+    void getWeedsByVegType('f');
   }, []);
 
   return (
@@ -61,5 +94,3 @@ const DashboardDropdowns: React.FC = () => {
     </>
   );
 };
-
-export default DashboardDropdowns;

@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import NativeAdded from './NativeAdded';
-import { AddedNativesProps, UserNative } from '../types';
 import { AppStore } from '../redux/store';
+import { AddedNativesProps, UserNativeStateVersion } from '../types';
+import { NativeAdded } from './';
 
-const AddedNatives: React.FC<AddedNativesProps> = (props) => {
+export const AddedNatives: React.FC<AddedNativesProps> = (props) => {
   const [eSpring, setESpring] = useState<JSX.Element[]>([]);
   const [lSpring, setLSpring] = useState<JSX.Element[]>([]);
   const [summer, setSummer] = useState<JSX.Element[]>([]);
   const [fall, setFall] = useState<JSX.Element[]>([]);
 
-  const userNatives = useSelector<AppStore, UserNative[]>(
-    (state) => state.userNativesReducer.userNatives
+  const userNatives = useSelector<AppStore, UserNativeStateVersion[]>(
+    (state) => state.userNativePlant.nativePlants
   );
 
   useEffect(() => {
     if (typeof userNatives === 'object') {
-      const eSpringTempData: UserNative[] = [];
-      const lSpringTempData: UserNative[] = [];
-      const summerTempData: UserNative[] = [];
-      const fallTempData: UserNative[] = [];
+      const eSpringTempData: UserNativeStateVersion[] = [];
+      const lSpringTempData: UserNativeStateVersion[] = [];
+      const summerTempData: UserNativeStateVersion[] = [];
+      const fallTempData: UserNativeStateVersion[] = [];
 
       userNatives.forEach((el) => {
-        switch (el.bloom_time) {
+        switch (el.bloomTime) {
           case 'Late Spring':
             return lSpringTempData.push(el);
           case 'Summer':
@@ -38,57 +38,57 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
 
       const lSpringTempElements = eSpringTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={el.id}
+          id={el.id}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
       const eSpringTempElements = lSpringTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={el.id}
+          id={el.id}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
       const summerTempElements = summerTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={el.id}
+          id={el.id}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
       const fallTempElements = fallTempData.map((el) => (
         <NativeAdded
-          key={`addedNative${el.native_id}`}
-          native_id={el.native_id}
-          botanical_name={el.botanical_name}
-          common_name={el.common_name}
+          key={el.id}
+          id={el.id}
+          botanicalName={el.botanicalName}
+          commonName={el.commonName}
           moisture={el.moisture}
           sun={el.sun}
           height={el.height}
           src={el.src}
-          project_notes={el.project_notes}
+          projectNotes={el.projectNotes}
         />
       ));
 
@@ -168,5 +168,3 @@ const AddedNatives: React.FC<AddedNativesProps> = (props) => {
     </aside>
   );
 };
-
-export default AddedNatives;

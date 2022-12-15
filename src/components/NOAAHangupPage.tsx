@@ -1,37 +1,81 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { UserInfoState } from '../types';
+import { AppStore } from '../redux/store';
+import { deleteUser, updateUser } from '../redux/userSlice';
+import { daysBetween, isValidDate } from '../utilities';
 
-const NOAAHangupPage: React.FC = () => {
+export const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
-  const [first_gdd35, setFirstGDD35] = useState('MM-DD');
-  const [last_gdd35, setLastGDD35] = useState('MM-DD');
-  const [hardiness_zone, setHardinessZone] = useState('');
+  const [firstGdd45, setFirstGDD35] = useState('MM-DD');
+  const [lastGdd45, setLastGDD35] = useState('MM-DD');
+  const [hardinessZone, setHardinessZone] = useState('');
+  const [canceling, setCanceling] = useState(false);
   const dispatch = useDispatch();
 
-  const submitUpdates = () => {
-    axios
-      .put<UserInfoState>('/api/user/growingInfo', {
-        first_gdd35,
-        last_gdd35,
-        hardiness_zone
-      })
-      .then(async (res) => {
-        dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
-        toast.success(
-          'Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.'
-        );
-        setTimeout(() => navigate('/dash'), 3000);
-      })
-      .catch(() =>
-        toast.error(
-          'An error occured while attempting to add your growing information to your account. Please unsure that you have used the correct formatting within the start and end dates boxes (MM-DD). Thank you.'
-        )
+  const reduxFailed = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.failed
+  );
+
+  const reduxLoading = useSelector<AppStore, boolean>(
+    (state) => state.userInfo.loading
+  );
+
+  const addGrowingInfoHandler = () => {
+    const startEndFormatChecker = /^[0-1][0-9]-[0-3][0-9]$/;
+    const [startMonth, startDay] = firstGdd45.split('-');
+    const [endMonth, endDay] = lastGdd45.split('-');
+    if (
+      !startEndFormatChecker.test(firstGdd45) ||
+      !startEndFormatChecker.test(lastGdd45) ||
+      (!isValidDate('2019', startMonth, startDay) &&
+        !isValidDate('2020', startMonth, startDay)) ||
+      (!isValidDate('2019', endMonth, endDay) &&
+        !isValidDate('2020', endMonth, endDay))
+    ) {
+      toast.error(
+        'Please use the correct format for start and end dates (MM-DD), thank you'
       );
+    } else {
+      const growingSeasonLength = daysBetween(firstGdd45, lastGdd45);
+      dispatch(
+        updateUser({
+          firstGdd45,
+          lastGdd45,
+          hardinessZone,
+          growingSeasonLength
+        })
+      );
+    }
   };
+
+  const cancelRegistration = () => {
+    setCanceling(true);
+    toast.success(
+      'Canceling your registration and deleting any acquired user information...'
+    );
+    dispatch(deleteUser());
+    setTimeout(() => navigate('/'), 5000);
+  };
+
+  const previouslyLoading = useRef(false);
+  useEffect(() => {
+    if (previouslyLoading.current && reduxFailed) {
+      toast.error(
+        'An error occurred while attempting to add your growing information to your account. Please email us at BackyardRestorationNet@gmail.com and we will fix your account manually.'
+      );
+    } else if (previouslyLoading.current && !reduxFailed && !canceling) {
+      toast.success(
+        'Just a few seconds while we add this information to your profile and navigate to your new dashboard...'
+      );
+      setTimeout(() => {
+        navigate('/dash');
+      }, 3000);
+    }
+    previouslyLoading.current = reduxLoading;
+  }, [reduxFailed, reduxLoading]);
+
   return (
     <main id="NOAAHangupBody">
       <ToastContainer />
@@ -52,7 +96,7 @@ const NOAAHangupPage: React.FC = () => {
           <input
             onFocus={() => setFirstGDD35('')}
             type="text"
-            value={first_gdd35}
+            value={firstGdd45}
             onChange={(e) => {
               setFirstGDD35(e.target.value);
             }}
@@ -60,7 +104,7 @@ const NOAAHangupPage: React.FC = () => {
           <input
             onFocus={() => setLastGDD35('')}
             type="text"
-            value={last_gdd35}
+            value={lastGdd45}
             onChange={(e) => {
               setLastGDD35(e.target.value);
             }}
@@ -81,7 +125,7 @@ const NOAAHangupPage: React.FC = () => {
             </a>
           </h4>
           <select
-            value={hardiness_zone}
+            value={hardinessZone}
             onChange={(e) => {
               setHardinessZone(e.target.value);
             }}
@@ -115,10 +159,11 @@ const NOAAHangupPage: React.FC = () => {
             <option value="13b">Zone 13b: 65F - 70F </option>
           </select>
         </fieldset>
-        <button onClick={() => submitUpdates()}>Submit</button>
+        <button onClick={() => addGrowingInfoHandler()}>Submit</button>
+        <button onClick={() => cancelRegistration()}>
+          Cancel Registration
+        </button>
       </div>
     </main>
   );
 };
-
-export default NOAAHangupPage;

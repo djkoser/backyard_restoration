@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  removeUserNative,
-  updateProjectNotes
-} from '../redux/userNativesSlice';
+  deleteUserNative,
+  updateUserNative
+} from '../redux/userNativePlantsSlice';
 import { NativeAddedProps } from '../types';
 
-const NativeAdded: React.FC<NativeAddedProps> = (props) => {
+export const NativeAdded: React.FC<NativeAddedProps> = (props) => {
   const dispatch = useDispatch();
   const {
-    native_id,
-    botanical_name,
-    common_name,
+    id,
+    botanicalName,
+    commonName,
     moisture,
     sun,
     height,
     src,
-    project_notes
+    projectNotes
   } = props;
 
   const [editing, setEditing] = useState(false);
-  const [projectNotesInput, setProjectNotesInput] = useState(project_notes);
+  const [projectNotesInput, setProjectNotesInput] = useState(projectNotes);
 
   useEffect(() => {
-    if (!editing && project_notes !== projectNotesInput) {
-      dispatch(updateProjectNotes(native_id, projectNotesInput));
+    if (!editing && projectNotes !== projectNotesInput) {
+      dispatch(updateUserNative({ id, projectNotes: projectNotesInput }));
     }
   }, [editing]);
 
@@ -33,14 +33,14 @@ const NativeAdded: React.FC<NativeAddedProps> = (props) => {
       <div>
         <img
           className="nativeAddedPic"
-          onClick={() => dispatch(removeUserNative(native_id))}
-          alt={`Added plant ${botanical_name}, commonly known as ${common_name}.`}
+          onClick={() => dispatch(deleteUserNative(id))}
+          alt={`Added plant ${botanicalName}, commonly known as ${commonName}.`}
           src={src}
           width="50px"
         />
         <strong>Common Name: </strong>
-        {common_name}, <strong>Botanical Name: </strong>
-        <em>{botanical_name}</em>, <strong>Moisture: </strong>
+        {commonName}, <strong>Botanical Name: </strong>
+        <em>{botanicalName}</em>, <strong>Moisture: </strong>
         {moisture}, <strong>Sun: </strong>
         {sun}, <strong>Height: </strong>
         {height} in
@@ -50,16 +50,16 @@ const NativeAdded: React.FC<NativeAddedProps> = (props) => {
           className="editProjectNotesButton"
           onClick={() => setEditing(!editing)}
         >
-          {!project_notes && !editing
+          {!projectNotes && !editing
             ? 'Add Notes'
-            : project_notes && !editing
+            : projectNotes && !editing
             ? 'Edit Notes'
             : 'Submit'}
         </button>
-        <span className={`toPrint ${project_notes ? '' : 'hideInPrint'}`}>
+        <span className={`toPrint ${projectNotes ? '' : 'hideInPrint'}`}>
           Notes:{' '}
         </span>
-        <span className="toPrint">{project_notes}</span>
+        <span className="toPrint">{projectNotes}</span>
         <textarea
           rows={2}
           className="nativeAddedText"
@@ -71,5 +71,3 @@ const NativeAdded: React.FC<NativeAddedProps> = (props) => {
     </div>
   );
 };
-
-export default NativeAdded;

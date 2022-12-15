@@ -1,18 +1,17 @@
+import { Auth } from 'aws-amplify';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { NavProps } from '../types';
 
-const Nav: React.FC<NavProps> = (props) => {
+export const Nav: React.FC<NavProps> = (props) => {
   const navigate = useNavigate();
   const { invertColors } = props;
   const [mobileOpenClose, setMobileOpenClose] = useState(false);
   const [weedOpenClose, setWeedOpenClose] = useState(false);
   const dispatch = useDispatch();
   const logout = () => {
-    axios
-      .delete('/api/logout')
+    Auth.signOut()
       .then(() => {
         dispatch({ type: 'RESET_STORE' });
         navigate('/');
@@ -113,4 +112,3 @@ const Nav: React.FC<NavProps> = (props) => {
     </nav>
   );
 };
-export default Nav;
