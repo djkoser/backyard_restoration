@@ -9,13 +9,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
 
-// Enable CORS for all methods
+// Enable CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
+  res.header('Access-Control-Allow-Methods', 'DELETE');
+  res.header('Access-Control-Allow-Headers', [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept'
+  ]);
   next();
 });
 
@@ -60,7 +63,7 @@ app.all('*', checkGroup);
 app.delete('/deleteUserIfUnconfirmed', async (req, res, next) => {
   if (!req.body.username) {
     const err = {
-      ...new Error('username is required in within request body'),
+      ...new Error('username is required within request body'),
       statusCode: 400
     };
     return next(err);

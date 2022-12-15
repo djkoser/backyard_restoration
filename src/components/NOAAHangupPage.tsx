@@ -11,6 +11,7 @@ export const NOAAHangupPage: React.FC = () => {
   const [firstGdd45, setFirstGDD35] = useState('MM-DD');
   const [lastGdd45, setLastGDD35] = useState('MM-DD');
   const [hardinessZone, setHardinessZone] = useState('');
+  const [canceling, setCanceling] = useState(false);
   const dispatch = useDispatch();
 
   const reduxFailed = useSelector<AppStore, boolean>(
@@ -50,6 +51,7 @@ export const NOAAHangupPage: React.FC = () => {
   };
 
   const cancelRegistration = () => {
+    setCanceling(true);
     toast.success(
       'Canceling your registration and deleting any acquired user information...'
     );
@@ -63,7 +65,7 @@ export const NOAAHangupPage: React.FC = () => {
       toast.error(
         'An error occurred while attempting to add your growing information to your account. Please email us at BackyardRestorationNet@gmail.com and we will fix your account manually.'
       );
-    } else if (previouslyLoading.current && !reduxFailed) {
+    } else if (previouslyLoading.current && !reduxFailed && !canceling) {
       toast.success(
         'Just a few seconds while we add this information to your profile and navigate to your new dashboard...'
       );

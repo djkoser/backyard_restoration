@@ -103,24 +103,36 @@ export const EmailConfirmation: React.FC = () => {
       e.preventDefault();
       const { REACT_APP_ADMIN_USERNAME, REACT_APP_ADMIN_PASSWORD } =
         process.env;
-      await Auth.signIn(REACT_APP_ADMIN_USERNAME!, REACT_APP_ADMIN_PASSWORD);
-      toast.warn('Canceling your registration...');
-      const response = await fetch(
-        encodeURI(
-          `${process.env.REACT_APP_ADMIN_ENDPOINT}/deleteUserIfUnconfirmed`
-        ),
-        {
-          method: 'DELETE',
-          body: JSON.stringify({ username: email })
-        }
+      await Auth.signIn(
+        REACT_APP_ADMIN_USERNAME || '',
+        REACT_APP_ADMIN_PASSWORD
       );
-      const responseParsed = await response.json();
+      toast.warn('Canceling your registration...');
+
+      const apiInput = {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: email,
+          Authorization: `${(await Auth.currentSession())
+            .getAccessToken()
+            .getJwtToken()}`
+        })
+      };
+      const response = await API.del(
+        'AdminQueries',
+        '/deleteUserIfUnconfirmed',
+        apiInput
+      );
+
       await Auth.signOut();
       toast.success(
-        `Successfully removed user ${responseParsed.Username} and associated data from our records`
+        `Successfully removed user ${response.Username} and associated data from our records`
       );
       setTimeout(() => navigate('/'), 5000);
     } catch {
+      await Auth.signOut();
       toast.error(
         'Unable to cancel your registration, please contact us at BackyardRestorationNet@gmail.com so that we can manually remove your email from our user list, Thank you'
       );

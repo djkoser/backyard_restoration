@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { Nav } from './';
 import { WeatherLoader } from './';
+import { API } from 'aws-amplify';
 
 // eslint-disable-next-line no-undef
-const { REACT_APP_STRIPE_PUBLISHABLE_KEY, REACT_APP_REST_ENDPOINT } =
-  process.env;
+const { REACT_APP_STRIPE_PUBLISHABLE_KEY } = process.env;
 
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -23,38 +23,42 @@ export const Stripe: React.FC = () => {
       donationAmount.match(/\d*.\d{2}/)?.[0] === donationAmount &&
       Number.parseFloat(donationAmount) >= 1
     ) {
-      setLoading(true);
-      const stripe = await stripePromise;
+      try {
+        setLoading(true);
+        const stripe = await stripePromise;
 
-      fetch(encodeURI(`${REACT_APP_REST_ENDPOINT}/donate`), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          donationAmount: (Number.parseFloat(donationAmount) * 100).toString()
-        })
-      })
-        .then(async (res) => {
-          const resParsed = await res.json();
-          if (stripe) {
-            setLoading(false);
-            toast.success('Redirecting you to a secure payment portal...');
-            await stripe.redirectToCheckout({
-              sessionId: resParsed.id
-            });
-          } else {
-            const message = 'Stripe object was undefined';
-            console.error(message);
-            throw new Error(message);
-          }
-        })
-        .catch(() => {
+        const apiInput = {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            donationAmount: (Number.parseFloat(donationAmount) * 100).toString()
+          })
+        };
+
+        const response = await API.put(
+          'backyardRestorationREST',
+          '/donate',
+          apiInput
+        );
+
+        if (stripe) {
           setLoading(false);
-          toast.error(
-            'Unfortunately, we were not able to process your donation request. Please inform us of this issue by contacting us at BackyardRestorationNet@gmail.com, and we will work to resolve it as quickly as possible. Thank you for your attempted donation!'
-          );
-        });
+          toast.success('Redirecting you to a secure payment portal...');
+          await stripe.redirectToCheckout({
+            sessionId: response.id
+          });
+        } else {
+          const message = 'Stripe object was undefined';
+          console.error(message);
+          throw new Error(message);
+        }
+      } catch {
+        setLoading(false);
+        toast.error(
+          'Unfortunately, we were not able to process your donation request. Please inform us of this issue by contacting us at BackyardRestorationNet@gmail.com, and we will work to resolve it as quickly as possible. Thank you for your attempted donation!'
+        );
+      }
     } else {
       toast.warn(
         'Please enter a value greater than 1 dollar in the format "0.00". Thank you!'

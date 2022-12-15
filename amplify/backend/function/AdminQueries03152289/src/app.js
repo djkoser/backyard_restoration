@@ -58,10 +58,16 @@ var app = (0, express_1["default"])();
 app.use(body_parser_1["default"].json());
 app.use(body_parser_1["default"].urlencoded({ extended: true }));
 app.use(middleware_1["default"].eventContext());
-// Enable CORS for all methods
+// Enable CORS
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'DELETE');
+    res.header('Access-Control-Allow-Headers', [
+        'Origin',
+        'X-Requested-With',
+        'Content-Type',
+        'Accept'
+    ]);
     next();
 });
 // Only perform tasks if the user is in a specific group
@@ -94,7 +100,7 @@ app["delete"]('/deleteUserIfUnconfirmed', function (req, res, next) { return __a
         switch (_a.label) {
             case 0:
                 if (!req.body.username) {
-                    err = __assign(__assign({}, new Error('username is required in within request body')), { statusCode: 400 });
+                    err = __assign(__assign({}, new Error('username is required within request body')), { statusCode: 400 });
                     return [2 /*return*/, next(err)];
                 }
                 _a.label = 1;
