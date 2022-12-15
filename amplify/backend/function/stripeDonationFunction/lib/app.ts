@@ -13,16 +13,16 @@ app.use(bodyParser.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
 
 // Enable CORS for all methods
-app.use((req, res, next) => {
+app.use(function (request, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'PUT');
-  res.header('Access-Control-Allow-Headers', [
-    'Origin',
-    'X-Requested-With',
-    'Content-Type',
-    'Accept'
-  ]);
-  next();
+  res.header('Access-Control-Allow-Methods', 'PUT, OPTIONS');
+  res.header('Access-Control-Allow-Headers', '*');
+  //intercept the OPTIONS call so we don't double up on calls to the integration
+  if ('OPTIONS' === request.method) {
+    res.send(200);
+  } else {
+    next();
+  }
 });
 
 app.put('/donate', async (req, res, next) => {

@@ -96,16 +96,17 @@ var app = (0, express_1["default"])();
 app.use(body_parser_1["default"].json());
 app.use(middleware_1["default"].eventContext());
 // Enable CORS for all methods
-app.use(function (req, res, next) {
+app.use(function (request, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.header('Access-Control-Allow-Headers', [
-        'Origin',
-        'X-Requested-With',
-        'Content-Type',
-        'Accept'
-    ]);
-    next();
+    res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', '*');
+    //intercept the OPTIONS call so we don't double up on calls to the integration
+    if ('OPTIONS' === request.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
 });
 app.post('/growingParams', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {

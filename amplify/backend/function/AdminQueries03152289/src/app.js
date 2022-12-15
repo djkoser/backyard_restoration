@@ -58,24 +58,22 @@ var app = (0, express_1["default"])();
 app.use(body_parser_1["default"].json());
 app.use(body_parser_1["default"].urlencoded({ extended: true }));
 app.use(middleware_1["default"].eventContext());
-// Enable CORS
-app.use(function (req, res, next) {
+// Enable CORS for all methods
+app.use(function (request, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'DELETE');
-    res.header('Access-Control-Allow-Headers', [
-        'Origin',
-        'X-Requested-With',
-        'Content-Type',
-        'Accept'
-    ]);
-    next();
+    res.header('Access-Control-Allow-Methods', 'DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', '*');
+    //intercept the OPTIONS call so we don't double up on calls to the integration
+    if ('OPTIONS' === request.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
 });
 // Only perform tasks if the user is in a specific group
 var allowedGroup = process.env.GROUP;
 var checkGroup = function (req, _res, next) {
-    if (req.path == '/signUserOut') {
-        return next();
-    }
     if (typeof allowedGroup === 'undefined' || allowedGroup === 'NONE') {
         return next();
     }

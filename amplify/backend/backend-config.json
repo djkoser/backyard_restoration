@@ -69,24 +69,7 @@
     "backyardRestorationREST": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "stripeDonationFunction",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "getGrowingParamsFunction",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
+      "dependsOn": []
     },
     "AdminQueries": {
       "service": "API Gateway",

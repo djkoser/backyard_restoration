@@ -115,7 +115,7 @@ export const EmailConfirmation: React.FC = () => {
         },
         body: JSON.stringify({
           username: email,
-          Authorization: `${(await Auth.currentSession())
+          Authorization: `Bearer ${(await Auth.currentSession())
             .getAccessToken()
             .getJwtToken()}`
         })
