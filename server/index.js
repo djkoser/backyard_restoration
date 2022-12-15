@@ -1,4 +1,4 @@
-require('dotenv').config(); 
+require('dotenv').config();
 const massive = require('massive');
 const express = require('express');
 const app = express();
@@ -12,7 +12,14 @@ const passwordReset = require('./controllers/passwordReset');
 const stripeController = require('./controllers/stripeController');
 const nativeController = require('./controllers/nativePlantsController');
 
-const { SESSION_SECRET, PORT, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_USER, POSTGRES_DATABASE } = process.env;
+const {
+  SESSION_SECRET,
+  PORT,
+  POSTGRES_PASSWORD,
+  POSTGRES_HOST,
+  POSTGRES_USER,
+  POSTGRES_DATABASE
+} = process.env;
 
 app.use(express.static(`${__dirname}/../build`));
 
@@ -36,7 +43,9 @@ massive({
   poolSize: 10
 }).then((dbInstance) => {
   app.set('db', dbInstance);
-  app.listen(PORT, () => console.log(`DB Mounted and Server Connected on Port ${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`DB Mounted and Server Connected on Port ${PORT}`)
+  );
 });
 
 // User Endpoints
@@ -64,8 +73,16 @@ app.get('/api/weeds/methods/:weedID', authorize, weedCtl.weedMethods);
 // Native Plants Endpoints
 app.get('/api/native', authorize, nativeController.searchPlants);
 app.get('/api/native/user', authorize, nativeController.getUserNatives);
-app.put('/api/native/notes/:nativeID', authorize, nativeController.updateProjectNotes);
+app.put(
+  '/api/native/notes/:nativeID',
+  authorize,
+  nativeController.updateProjectNotes
+);
 app.post('/api/native/add/:nativeID', authorize, nativeController.addToList);
-app.delete('/api/native/delete/:nativeID', authorize, nativeController.removeFromList);
+app.delete(
+  '/api/native/delete/:nativeID',
+  authorize,
+  nativeController.removeFromList
+);
 // Stripe EndPoint
 app.post('/api/donate', authorize, stripeController.checkout);

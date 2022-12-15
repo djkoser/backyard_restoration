@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -15,9 +14,13 @@ const NOAAHangupPage: React.FC = () => {
 
   const submitUpdates = () => {
     axios
-      .put<UserInfoState>('/api/user/growingInfo', { first_gdd35, last_gdd35, hardiness_zone })
+      .put<UserInfoState>('/api/user/growingInfo', {
+        first_gdd35,
+        last_gdd35,
+        hardiness_zone
+      })
       .then(async (res) => {
-        dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+        dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
         toast.success(
           'Your growing parameters have been updated succcessfully. You will now be navigated to your dashboard.'
         );

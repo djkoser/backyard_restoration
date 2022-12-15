@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -11,34 +10,46 @@ import { useNavigate } from 'react-router-dom';
 import { AppStore, AppDispatch } from '../redux/store';
 
 const MyAccount: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const emailRedux = useSelector<AppStore,string>((state) => state.userInfoReducer.email);
+  const emailRedux = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.email
+  );
 
-  const firstNameRedux = useSelector<AppStore,string>(
+  const firstNameRedux = useSelector<AppStore, string>(
     (state) => state.userInfoReducer.first_name
   );
 
-  const lastNameRedux = useSelector<AppStore,string>((state) => state.userInfoReducer.last_name);
+  const lastNameRedux = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.last_name
+  );
 
-  const streetRedux = useSelector<AppStore,string>((state) => state.userInfoReducer.street);
+  const streetRedux = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.street
+  );
 
-  const cityRedux = useSelector<AppStore,string>((state) => state.userInfoReducer.city);
+  const cityRedux = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.city
+  );
 
-  const stateRedux = useSelector<AppStore,string>((state) => state.userInfoReducer.state);
+  const stateRedux = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.state
+  );
 
-  const zipcodeRedux = useSelector<AppStore,string>((state) => state.userInfoReducer.zipcode);
+  const zipcodeRedux = useSelector<AppStore, string>(
+    (state) => state.userInfoReducer.zipcode
+  );
 
-  const firstGDD35Redux = useSelector<AppStore,string>(
+  const firstGDD35Redux = useSelector<AppStore, string>(
     (state) => state.userInfoReducer.first_gdd35
   );
 
-  const lastGDD35Redux = useSelector<AppStore,string>(
+  const lastGDD35Redux = useSelector<AppStore, string>(
     (state) => state.userInfoReducer.last_gdd35
   );
 
-  const hardinessZoneRedux = useSelector<AppStore,string>(
+  const hardinessZoneRedux = useSelector<AppStore, string>(
     (state) => state.userInfoReducer.hardiness_zone
   );
 
@@ -143,7 +154,7 @@ const MyAccount: React.FC = () => {
               last_name: lastName
             })
             .then((res) => {
-              dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
               setPassword('This is a fake password');
               toast.success('Your name has been updated successfully.');
             })
@@ -158,14 +169,14 @@ const MyAccount: React.FC = () => {
           axios
             .put('/api/user/email', { email })
             .then((res) => {
-              dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
               setPassword('This is a fake password');
               toast.success('Your email has been updated successfully.');
             })
             .catch(() => {
               onError();
               toast.error(
-                'It is possible that you have an account with us under the email you\'re attempting to switch to.'
+                "It is possible that you have an account with us under the email you're attempting to switch to."
               );
             });
         }
@@ -179,7 +190,7 @@ const MyAccount: React.FC = () => {
           axios
             .put('/api/user/password', { password })
             .then((res) => {
-              dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
               setPassword('This is a fake password');
               toast.success('Your password has been updated successfully.');
             })
@@ -197,7 +208,7 @@ const MyAccount: React.FC = () => {
             axios
               .put('/api/user/address', { street, city, state, zipcode })
               .then((res) => {
-                dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+                dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
                 setPassword('This is a fake password');
                 toast.success('Your address has been updated successfully.');
                 setTimeout(() => setLoading(false), 5000);
@@ -231,7 +242,7 @@ const MyAccount: React.FC = () => {
               hardiness_zone
             })
             .then((res) => {
-              dispatch({type: 'ADD_RETRIEVED_INFO', payload: res.data});
+              dispatch({ type: 'ADD_RETRIEVED_INFO', payload: res.data });
               setPassword('This is a fake password');
               toast.success(
                 'Your growing parameters have been updated successfully.'

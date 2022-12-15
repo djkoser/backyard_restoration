@@ -25,6 +25,8 @@ module.exports = {
         cancel_url: 'https://backyardrestoration.net/'
       });
       res.status(200).send({ id: session.id });
-    } catch (err) { console.log(err); }
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

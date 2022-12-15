@@ -1,6 +1,7 @@
 # BackyardRestoration.net
 
 ## Technologies
+
 JavaScript | React | React-Router | Redux | Node.js | Express.js | PostgreSQL | Massive.js | D3.js | CSS | Sass/SCSS | git | GitHub | Postman | Figma | Heroku | HTML5 | Bcrypt.js | Axios | Stripe | Nodemailer | PL/pgSQL
 
 ## Project Purpose

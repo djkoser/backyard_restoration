@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line no-undef
 const { GOOGLE_API_KEY, NOAA_TOKEN } = process.env;
 // eslint-disable-next-line no-undef
@@ -44,7 +43,11 @@ module.exports = {
       // # assuming local approximation of Earth surface as a sphere
       // # of radius given by WGS84
       // Default is set high on purpose due to many stations not making data available on API
-      const boundingBox = (latitudeInDegrees, longitudeInDegrees, halfSideInKm) => {
+      const boundingBox = (
+        latitudeInDegrees,
+        longitudeInDegrees,
+        halfSideInKm
+      ) => {
         const lat = deg2rad(latitudeInDegrees);
         const lon = deg2rad(longitudeInDegrees);
         const halfSide = 1000 * halfSideInKm;
@@ -58,11 +61,17 @@ module.exports = {
         const lonMin = lon - halfSide / pradius;
         const lonMax = lon + halfSide / pradius;
 
-        return [rad2deg(latMin), rad2deg(lonMin), rad2deg(latMax), rad2deg(lonMax)];
+        return [
+          rad2deg(latMin),
+          rad2deg(lonMin),
+          rad2deg(latMax),
+          rad2deg(lonMax)
+        ];
       };
 
       // function for delaying calls to NOAA
-      const delay = (interval) => new Promise((resolve) => setTimeout(resolve, interval));
+      const delay = (interval) =>
+        new Promise((resolve) => setTimeout(resolve, interval));
       // Function designed to convert date into ISO formatted date without time data.
       const date2String = (dateParam = new Date()) => {
         return dateParam.toISOString().match(/\d\d\d\d-\d\d-\d\d/)[0];
@@ -153,19 +162,28 @@ module.exports = {
       const avgDateString = (seasonStartsEnds) => {
         // normalize to current year
         let currentYear = new Date().getFullYear();
-        const normalizedDates = seasonStartsEnds.map((el) => new Date(el.obs_date.setFullYear(currentYear)));
+        const normalizedDates = seasonStartsEnds.map(
+          (el) => new Date(el.obs_date.setFullYear(currentYear))
+        );
         // convert to milleseconds
         normalizedDates.forEach((el, ind, arr) => (arr[ind] = el.getTime()));
         // Sum and divide by normalized Dates' lengh creating a new date
-        const averageDate = new Date(normalizedDates.reduce((prev, next) => prev + next) / normalizedDates.length);
+        const averageDate = new Date(
+          normalizedDates.reduce((prev, next) => prev + next) /
+            normalizedDates.length
+        );
         return averageDate.toISOString().substring(5, 10);
       };
 
       const averageSeasonLength = (seasonEnds, seasonStarts) => {
         // normalize to current year
         let currentYear = new Date().getFullYear();
-        const normalizedStarts = seasonStarts.map((el) => new Date(el.obs_date.setFullYear(currentYear)));
-        const normalizedEnds = seasonEnds.map((el) => new Date(el.obs_date.setFullYear(currentYear)));
+        const normalizedStarts = seasonStarts.map(
+          (el) => new Date(el.obs_date.setFullYear(currentYear))
+        );
+        const normalizedEnds = seasonEnds.map(
+          (el) => new Date(el.obs_date.setFullYear(currentYear))
+        );
 
         // convert to milleseconds
         normalizedStarts.forEach((el, ind, arr) => (arr[ind] = el.getTime()));
@@ -177,9 +195,14 @@ module.exports = {
           seasonLengthsDays[i] = normalizedEnds[i] - normalizedStarts[i];
         }
         // Convert each difference into days
-        seasonLengthsDays.forEach((el, ind, arr) => (arr[ind] = el / 1000 / 60 / 60 / 24));
+        seasonLengthsDays.forEach(
+          (el, ind, arr) => (arr[ind] = el / 1000 / 60 / 60 / 24)
+        );
         // Calculate average season length
-        return seasonLengthsDays.reduce((prev, next) => prev + next) / seasonLengthsDays.length;
+        return (
+          seasonLengthsDays.reduce((prev, next) => prev + next) /
+          seasonLengthsDays.length
+        );
       };
 
       const apiLogic = async (coordinateString) => {
@@ -208,25 +231,65 @@ module.exports = {
                       foundData = true;
                       // Run the query 10 times getting any available data from the towers collected during the second request reducing the year value each time to get 10 years of data
                       // Must run seperate queries to get around NOAA 1-year Data limitation
-                      const output1 = getDataFromNOAA(edString, sdString, stationString);
+                      const output1 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output2 = getDataFromNOAA(edString, sdString, stationString);
+                      const output2 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output3 = getDataFromNOAA(edString, sdString, stationString);
+                      const output3 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output4 = getDataFromNOAA(edString, sdString, stationString);
+                      const output4 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output5 = getDataFromNOAA(edString, sdString, stationString);
+                      const output5 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output6 = getDataFromNOAA(edString, sdString, stationString);
+                      const output6 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output7 = getDataFromNOAA(edString, sdString, stationString);
+                      const output7 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output8 = getDataFromNOAA(edString, sdString, stationString);
+                      const output8 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output9 = getDataFromNOAA(edString, sdString, stationString);
+                      const output9 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
                       await forBlock();
-                      const output10 = getDataFromNOAA(edString, sdString, stationString);
+                      const output10 = getDataFromNOAA(
+                        edString,
+                        sdString,
+                        stationString
+                      );
 
                       APIOutputs = await Promise.all([
                         output1,
@@ -257,8 +320,12 @@ module.exports = {
         // insert values into TMIN and TMAX tables
         await db.growingCalcs.truncateTMAX();
         await db.growingCalcs.truncateTMIN();
-        await TMIN.forEach(async (el) => db.growingCalcs.insertIntoTMIN(el.value, el.date));
-        await TMAX.forEach(async (el) => db.growingCalcs.insertIntoTMAX(el.value, el.date));
+        await TMIN.forEach(async (el) =>
+          db.growingCalcs.insertIntoTMIN(el.value, el.date)
+        );
+        await TMAX.forEach(async (el) =>
+          db.growingCalcs.insertIntoTMAX(el.value, el.date)
+        );
         await db.growingCalcs.selectHighestDuplicates();
         await db.growingCalcs.selectLowestDuplicates();
         const TMINAvg = await db.growingCalcs.tminAvg();
@@ -270,7 +337,9 @@ module.exports = {
           hardiness_zone: hardinessZoneCalculator(TMINAvg[0].round),
           first_gdd35: avgDateString(seasonStarts),
           last_gdd35: avgDateString(seasonEnds),
-          growing_season_length: Math.round(averageSeasonLength(seasonEnds, seasonStarts))
+          growing_season_length: Math.round(
+            averageSeasonLength(seasonEnds, seasonStarts)
+          )
         };
       };
       // export executables -> final output below
@@ -288,7 +357,11 @@ module.exports = {
         .then(async (res) => {
           const location = res.data.results[0].geometry.location;
           searchHalfSide += 0.5;
-          let coordinateArray = boundingBox(location.lat, location.lng, searchHalfSide);
+          let coordinateArray = boundingBox(
+            location.lat,
+            location.lng,
+            searchHalfSide
+          );
           let coordinateString = coordinateArray.join(',');
           // Expand the half side of the bounding box by 0.5 km and whole side by 1km until data is found.
           let APIOutputs = await apiLogic(coordinateString);
@@ -321,7 +394,11 @@ module.exports = {
               ];
             } else if (!APIOutputs && foundTowers === false) {
               searchHalfSide += 2.5;
-              coordinateArray = boundingBox(location.lat, location.lng, searchHalfSide);
+              coordinateArray = boundingBox(
+                location.lat,
+                location.lng,
+                searchHalfSide
+              );
               coordinateString = coordinateArray.join(',');
               APIOutputs = await apiLogic(coordinateString);
             }

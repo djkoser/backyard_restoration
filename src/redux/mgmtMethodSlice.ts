@@ -11,7 +11,7 @@ const initialState: ManagementMethodState = {
 export const getMethods = () => {
   const methods: Promise<ManagementMethod[]> = axios
     .get('/api/wdctrl')
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch(() => initialState.userMethods);
 
   const action = {
@@ -24,7 +24,7 @@ export const getMethods = () => {
 export const toggleMethod = (methodID: string) => {
   const methods: Promise<ManagementMethod[]> = axios
     .put(`/api/wdctrl/${methodID}`)
-    .then(res => res.data)
+    .then((res) => res.data)
     .catch(() => initialState.userMethods);
 
   const action = {
@@ -34,18 +34,28 @@ export const toggleMethod = (methodID: string) => {
   return action;
 };
 
-
-
 const managementMethodSlice = createSlice({
   name: 'managementMethods',
   initialState,
   reducers: {
-    GET_METHODS: (state, action: PayloadAction<Promise<ManagementMethod[]>>) => {
-      console.log('Is payload a promise? -> ', action.payload instanceof Promise);
+    GET_METHODS: (
+      state,
+      action: PayloadAction<Promise<ManagementMethod[]>>
+    ) => {
+      console.log(
+        'Is payload a promise? -> ',
+        action.payload instanceof Promise
+      );
       return state;
     },
-    TOGGLE_METHOD: (state, action: PayloadAction<Promise<ManagementMethod[]>>) => {
-      console.log('Is payload a promise? -> ', action.payload instanceof Promise);
+    TOGGLE_METHOD: (
+      state,
+      action: PayloadAction<Promise<ManagementMethod[]>>
+    ) => {
+      console.log(
+        'Is payload a promise? -> ',
+        action.payload instanceof Promise
+      );
       return state;
     },
     RESET_STORE: () => {
@@ -57,7 +67,10 @@ const managementMethodSlice = createSlice({
       state.failed = false;
       state.loading = true;
     },
-    GET_METHODS_FULFILLED: (state, action: PayloadAction<ManagementMethod[]>) => {
+    GET_METHODS_FULFILLED: (
+      state,
+      action: PayloadAction<ManagementMethod[]>
+    ) => {
       state.failed = false;
       state.loading = false;
       state.userMethods = action.payload;
@@ -70,7 +83,10 @@ const managementMethodSlice = createSlice({
       state.failed = false;
       state.loading = true;
     },
-    TOGGLE_METHOD_FULFILLED: (state, action: PayloadAction<ManagementMethod[]>) => {
+    TOGGLE_METHOD_FULFILLED: (
+      state,
+      action: PayloadAction<ManagementMethod[]>
+    ) => {
       state.failed = false;
       state.loading = false;
       state.userMethods = action.payload;
@@ -82,4 +98,4 @@ const managementMethodSlice = createSlice({
   }
 });
 
-export default managementMethodSlice; 
+export default managementMethodSlice;

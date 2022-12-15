@@ -10,14 +10,22 @@ module.exports = {
     if (req.body.email === '') {
       res.sendStatus(400);
     } else {
-      const rtvdCreds = await db.user.getUserCredentials(req.body.email.toLowerCase().replace(/\s/g, ''));
+      const rtvdCreds = await db.user.getUserCredentials(
+        req.body.email.toLowerCase().replace(/\s/g, '')
+      );
       if (rtvdCreds.length > 0) {
         let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
         const token = crypto.randomBytes(16).toString('hex');
         db.updateUser.pwdReset(rtvdCreds[0].user_id, token, expDate);
         console.log(rtvdCreds);
         // Will send the appropriate response directly from this function
-        await sendEmail(rtvdCreds[0].email, token, GMAIL_ADDRESS, GMAIL_PASSWORD, res);
+        await sendEmail(
+          rtvdCreds[0].email,
+          token,
+          GMAIL_ADDRESS,
+          GMAIL_PASSWORD,
+          res
+        );
       } else {
         res.sendStatus(400);
       }
@@ -26,7 +34,9 @@ module.exports = {
   processReset: async (req, res) => {
     const db = req.app.get('db');
     if (req.params.token) {
-      const userCreds = await db.updateUser.getCredsByResetToken(req.params.token);
+      const userCreds = await db.updateUser.getCredsByResetToken(
+        req.params.token
+      );
       if (userCreds.length > 0) {
         if (userCreds[0].reset_password_expiration.getTime() >= Date.now()) {
           const { newPassword } = req.body;

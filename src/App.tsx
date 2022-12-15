@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Stripe from './components/Stripe';
@@ -14,48 +13,61 @@ import StripeThankYou from './components/StripeThankYou';
 import WeedPage from './components/WeedPage';
 import WeedSearch from './components/WeedSearch';
 
-const router = createBrowserRouter([{
-  path: '/',
-  element: <Login/>
-}, {
-  path: 'requestReset',
-  element: <RequestPasswordReset/>
-}, {
-  path: 'resetPassword/:token',
-  element: <ResetPassword/>
-}, {
-  path: 'dash',
-  element: <Dashboard/>
-}, {
-  path: 'account',
-  element: <MyAccount/>
-}, {
-  path: 'register',
-  element: <Register/>
-}, {
-  path: 'weed/:id',
-  element: <WeedPage/>
-}, {
-  path: 'search/:vegType',
-  element: <WeedSearch/>
-}, {
-  path: 'donation',
-  element: <Stripe/>
-}, {
-  path: 'donation/success',
-  element: <StripeThankYou/>
-}, {
-  path: 'manualEntry',
-  element: <NOAAHangupPage/>
-}, {
-  path: 'nativesSelector',
-  element: <NativeSelector/>
-  }]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />
+  },
+  {
+    path: 'requestReset',
+    element: <RequestPasswordReset />
+  },
+  {
+    path: 'resetPassword/:token',
+    element: <ResetPassword />
+  },
+  {
+    path: 'dash',
+    element: <Dashboard />
+  },
+  {
+    path: 'account',
+    element: <MyAccount />
+  },
+  {
+    path: 'register',
+    element: <Register />
+  },
+  {
+    path: 'weed/:id',
+    element: <WeedPage />
+  },
+  {
+    path: 'search/:vegType',
+    element: <WeedSearch />
+  },
+  {
+    path: 'donation',
+    element: <Stripe />
+  },
+  {
+    path: 'donation/success',
+    element: <StripeThankYou />
+  },
+  {
+    path: 'manualEntry',
+    element: <NOAAHangupPage />
+  },
+  {
+    path: 'nativesSelector',
+    element: <NativeSelector />
+  }
+]);
 
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={ router} />
+      <RouterProvider router={router} />
     </div>
   );
 }
