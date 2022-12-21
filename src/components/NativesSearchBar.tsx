@@ -9,15 +9,31 @@ import {
 } from '../API';
 import { listNativePlantsC } from '../graphql/customQueries';
 import { NativeSearchBarProps } from '../types';
+import { getLocalStateHelper } from '../utilities';
 
 //Props from app.js -myPlantsList addToMyPlants
 export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
-  const [botanicalCommonNameInput, setBotanicalCommonNameInput] = useState('');
-  const [sunInput, setSunInput] = useState('');
-  const [bloomTimeInput, setBloomTimeInput] = useState('');
-  const [minHeightInput, setMinHeightInput] = useState('');
-  const [maxHeightInput, setMaxHeightInput] = useState('');
-  const [moistureInput, setMoistureInput] = useState('');
+  const initialState = {
+    botanicalCommonNameInput: '',
+    sunInput: '',
+    bloomTimeInput: '',
+    minHeightInput: '',
+    maxHeightInput: '',
+    moistureInput: ''
+  };
+
+  const [localState, setLocalState] = useState(initialState);
+
+  const {
+    botanicalCommonNameInput,
+    sunInput,
+    bloomTimeInput,
+    minHeightInput,
+    maxHeightInput,
+    moistureInput
+  } = localState;
+  const localStateHelper =
+    getLocalStateHelper<typeof localState>(setLocalState);
 
   const { setSearchResults, setLoadingParent } = props;
 
@@ -26,12 +42,7 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
   }, []);
 
   const clearSearch = () => {
-    setBotanicalCommonNameInput('');
-    setSunInput('');
-    setBloomTimeInput('');
-    setMinHeightInput('');
-    setMaxHeightInput('');
-    setMoistureInput('');
+    localStateHelper(initialState);
     void searchPlants();
   };
 
@@ -116,7 +127,7 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
             id="botNameInput"
             type="text"
             onChange={(e) => {
-              setBotanicalCommonNameInput(e.target.value);
+              localStateHelper({ botanicalCommonNameInput: e.target.value });
             }}
             value={botanicalCommonNameInput}
             placeholder={'Botanical/Common Name'}
@@ -128,9 +139,7 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
           </label>
           <select
             id="sunDropdown"
-            onChange={(e) => {
-              setSunInput(e.target.value);
-            }}
+            onChange={(e) => localStateHelper({ sunInput: e.target.value })}
             value={sunInput}
           >
             <option value={''}></option>
@@ -150,7 +159,9 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
           </label>
           <select
             id="blmTmDropdown"
-            onChange={(e) => setBloomTimeInput(e.target.value)}
+            onChange={(e) =>
+              localStateHelper({ bloomTimeInput: e.target.value })
+            }
             value={bloomTimeInput}
           >
             <option value={''}></option>
@@ -167,9 +178,9 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
           <input
             id="minHt"
             type="text"
-            onChange={(e) => {
-              setMinHeightInput(e.target.value);
-            }}
+            onChange={(e) =>
+              localStateHelper({ minHeightInput: e.target.value })
+            }
             value={minHeightInput}
             placeholder={'Min'}
           ></input>
@@ -181,9 +192,9 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
           <input
             id="maxHt"
             type="text"
-            onChange={(e) => {
-              setMaxHeightInput(e.target.value);
-            }}
+            onChange={(e) =>
+              localStateHelper({ maxHeightInput: e.target.value })
+            }
             value={maxHeightInput}
             placeholder={'Max'}
           ></input>
@@ -194,9 +205,9 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
           </label>
           <select
             id="moistLvl"
-            onChange={(e) => {
-              setMoistureInput(e.target.value);
-            }}
+            onChange={(e) =>
+              localStateHelper({ moistureInput: e.target.value })
+            }
             value={moistureInput}
           >
             <option value={''}></option>

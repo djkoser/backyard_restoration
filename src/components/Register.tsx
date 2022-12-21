@@ -3,24 +3,30 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { WeatherLoader } from './';
-import { passwordChecker } from '../utilities';
+import { getLocalStateHelper, passwordChecker } from '../utilities';
 
 // props from Login email, password
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [localState, setLocalState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    loading: false
+  });
+  const { firstName, lastName, email, password, loading } = localState;
+
+  const localStateHelper =
+    getLocalStateHelper<typeof localState>(setLocalState);
 
   const createNewUser = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       if (passwordChecker.test(password)) {
-        setLoading(true);
+        localStateHelper({ loading: true });
         await Auth.signUp({
           username: email,
           password,
@@ -37,13 +43,13 @@ export const Register: React.FC = () => {
           5000
         );
       } else {
-        setLoading(false);
+        localStateHelper({ loading: false });
         toast.warning(
           'The password you created does not meet our requirements: minimum of 8 characters, at least one uppercase and lowercase letter, one number and one special character: @,$,!,%,*,? or &. Please create a new password and try again.'
         );
       }
     } catch (err) {
-      setLoading(false);
+      localStateHelper({ loading: false });
       toast.error(
         'There was an error while attempting to create your use account and validate your email address, if you already have an account with us, please log in using your email and password, or reset your password using the "Forgot Password" link..'
       );
@@ -74,17 +80,13 @@ export const Register: React.FC = () => {
               placeholder="First Name"
               type="text"
               value={firstName}
-              onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
+              onChange={(e) => localStateHelper({ firstName: e.target.value })}
             ></input>
             <input
               placeholder="Last Name"
               type="text"
               value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value);
-              }}
+              onChange={(e) => localStateHelper({ lastName: e.target.value })}
             ></input>
           </section>
           <section className="registerSections">
@@ -93,9 +95,7 @@ export const Register: React.FC = () => {
               placeholder="Email"
               type="text"
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) => localStateHelper({ email: e.target.value })}
             ></input>
           </section>
           <section className="registerSections">
@@ -113,9 +113,7 @@ export const Register: React.FC = () => {
               placeholder="Password"
               type="password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => localStateHelper({ password: e.target.value })}
             ></input>
           </section>
           <button>Confirm Email</button>

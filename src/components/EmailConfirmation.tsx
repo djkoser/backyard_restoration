@@ -7,7 +7,7 @@ import {
   UpdateUserCMutationVariables
 } from '../API';
 import { createUserC, updateUserC } from '../graphql/customMutations';
-import { getGrowingParams } from '../utilities';
+import { getGrowingParams, getLocalStateHelper } from '../utilities';
 import { WeatherLoader } from './';
 
 export const EmailConfirmation: React.FC = () => {
@@ -15,12 +15,19 @@ export const EmailConfirmation: React.FC = () => {
   const location = useLocation();
   const { email, password, firstName, lastName } = location.state;
 
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipcode, setZipcode] = useState('');
-  const [confirmationCode, setConfirmationCode] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [localState, setState] = useState({
+    street: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    confirmationCode: '',
+    loading: false
+  });
+
+  const { street, city, state, zipcode, confirmationCode, loading } =
+    localState;
+
+  const localStateHelper = getLocalStateHelper<typeof localState>(setState);
 
   const handleManualEntry = () => {
     toast.warning(
@@ -37,7 +44,7 @@ export const EmailConfirmation: React.FC = () => {
       await Auth.confirmSignUp(email, confirmationCode);
       await Auth.signIn(email, password);
       location.state.password = '';
-      setLoading(true);
+      localStateHelper({ loading: true });
       const paramsToAdd: CreateUserCMutationVariables = {
         input: {
           email,
@@ -78,7 +85,7 @@ export const EmailConfirmation: React.FC = () => {
             handleManualEntry();
           }
         } else {
-          setLoading(false);
+          localStateHelper({ loading: false });
           toast.error('Please enter a 5 digit zipcode, thank you');
         }
       } else {
@@ -88,7 +95,7 @@ export const EmailConfirmation: React.FC = () => {
       const errParsed =
         err instanceof Error ? err : new Error(JSON.stringify(err));
       console.log(errParsed.message);
-      setLoading(false);
+      localStateHelper({ loading: false });
       toast.error(
         'User registration failed, please check your confirmation code and try again, or email us at BackyardRestorationNet@gmail.com'
       );
@@ -165,7 +172,7 @@ export const EmailConfirmation: React.FC = () => {
               type="text"
               value={confirmationCode}
               onChange={(e) => {
-                setConfirmationCode(e.target.value);
+                localStateHelper({ confirmationCode: e.target.value });
               }}
             ></input>
           </section>
@@ -176,7 +183,7 @@ export const EmailConfirmation: React.FC = () => {
               type="text"
               value={street}
               onChange={(e) => {
-                setStreet(e.target.value);
+                localStateHelper({ street: e.target.value });
               }}
             ></input>
             <input
@@ -184,7 +191,7 @@ export const EmailConfirmation: React.FC = () => {
               type="text"
               value={city}
               onChange={(e) => {
-                setCity(e.target.value);
+                localStateHelper({ city: e.target.value });
               }}
             ></input>
             <input
@@ -192,7 +199,7 @@ export const EmailConfirmation: React.FC = () => {
               type="text"
               value={state}
               onChange={(e) => {
-                setState(e.target.value);
+                localStateHelper({ state: e.target.value });
               }}
             ></input>
             <input
@@ -200,7 +207,7 @@ export const EmailConfirmation: React.FC = () => {
               type="text"
               value={zipcode}
               onChange={(e) => {
-                setZipcode(e.target.value);
+                localStateHelper({ zipcode: e.target.value });
               }}
             ></input>
           </section>

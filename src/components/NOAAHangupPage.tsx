@@ -4,23 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AppStore } from '../redux/store';
 import { deleteUser, updateUser } from '../redux/userSlice';
-import { daysBetween, isValidDate } from '../utilities';
+import { FailedLoading, ReduxConverter } from '../types';
+import { daysBetween, getLocalStateHelper, isValidDate } from '../utilities';
 
 export const NOAAHangupPage: React.FC = () => {
   const navigate = useNavigate();
-  const [firstGdd45, setFirstGDD35] = useState('MM-DD');
-  const [lastGdd45, setLastGDD35] = useState('MM-DD');
-  const [hardinessZone, setHardinessZone] = useState('');
-  const [canceling, setCanceling] = useState(false);
+
+  const [localState, setLocalState] = useState({
+    firstGdd45: 'MM-DD',
+    lastGdd45: 'MM-DD',
+    hardinessZone: '',
+    canceling: false
+  });
+  const { firstGdd45, lastGdd45, hardinessZone, canceling } = localState;
+  const localStateHelper =
+    getLocalStateHelper<typeof localState>(setLocalState);
   const dispatch = useDispatch();
 
-  const reduxFailed = useSelector<AppStore, boolean>(
-    (state) => state.userInfo.failed
-  );
-
-  const reduxLoading = useSelector<AppStore, boolean>(
-    (state) => state.userInfo.loading
-  );
+  const { failedRedux, loadingRedux } = useSelector<
+    AppStore,
+    ReduxConverter<FailedLoading>
+  >((state) => {
+    const { failed, loading } = state.userInfo;
+    return { loadingRedux: failed, failedRedux: loading };
+  });
 
   const addGrowingInfoHandler = () => {
     const startEndFormatChecker = /^[0-1][0-9]-[0-3][0-9]$/;
@@ -51,7 +58,7 @@ export const NOAAHangupPage: React.FC = () => {
   };
 
   const cancelRegistration = () => {
-    setCanceling(true);
+    localStateHelper({ canceling: true });
     toast.success(
       'Canceling your registration and deleting any acquired user information...'
     );
@@ -61,11 +68,12 @@ export const NOAAHangupPage: React.FC = () => {
 
   const previouslyLoading = useRef(false);
   useEffect(() => {
-    if (previouslyLoading.current && reduxFailed) {
+    const { current } = previouslyLoading;
+    if (current && failedRedux) {
       toast.error(
         'An error occurred while attempting to add your growing information to your account. Please email us at BackyardRestorationNet@gmail.com and we will fix your account manually.'
       );
-    } else if (previouslyLoading.current && !reduxFailed && !canceling) {
+    } else if (current && !failedRedux && !canceling) {
       toast.success(
         'Just a few seconds while we add this information to your profile and navigate to your new dashboard...'
       );
@@ -73,8 +81,8 @@ export const NOAAHangupPage: React.FC = () => {
         navigate('/dash');
       }, 3000);
     }
-    previouslyLoading.current = reduxLoading;
-  }, [reduxFailed, reduxLoading]);
+    previouslyLoading.current = loadingRedux;
+  }, [failedRedux, loadingRedux]);
 
   return (
     <main id="NOAAHangupBody">
@@ -94,20 +102,16 @@ export const NOAAHangupPage: React.FC = () => {
             Note: these are not traditional growing season start and end dates.
           </h4>
           <input
-            onFocus={() => setFirstGDD35('')}
+            onFocus={() => localStateHelper({ firstGdd45: '' })}
             type="text"
             value={firstGdd45}
-            onChange={(e) => {
-              setFirstGDD35(e.target.value);
-            }}
+            onChange={(e) => localStateHelper({ firstGdd45: e.target.value })}
           />
           <input
-            onFocus={() => setLastGDD35('')}
+            onFocus={() => localStateHelper({ lastGdd45: '' })}
             type="text"
             value={lastGdd45}
-            onChange={(e) => {
-              setLastGDD35(e.target.value);
-            }}
+            onChange={(e) => localStateHelper({ lastGdd45: e.target.value })}
           />
           <h2 className="accountPageText">
             {' '}
@@ -126,9 +130,9 @@ export const NOAAHangupPage: React.FC = () => {
           </h4>
           <select
             value={hardinessZone}
-            onChange={(e) => {
-              setHardinessZone(e.target.value);
-            }}
+            onChange={(e) =>
+              localStateHelper({ hardinessZone: e.target.value })
+            }
             className="zoneSelector"
           >
             <option value="1a">Zone 1a: -60F - -55F </option>

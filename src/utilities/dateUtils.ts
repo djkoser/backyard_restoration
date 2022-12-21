@@ -16,16 +16,20 @@ export function isValidDate(year: string, month: string, day: string) {
   return false;
 }
 
-export function daysBetween(dateString1: string, dateString2: string) {
-  const [month, day] = dateString1.split('-');
-  const [month2, day2] = dateString2.split('-');
-  const monthNumber = Number.parseInt(month);
-  const dayNumber = Number.parseInt(day);
-  const monthNumber2 = Number.parseInt(month2);
-  const dayNumber2 = Number.parseInt(day2);
-  const monthZeroIndexed = monthNumber - 1;
-  const monthZeroIndexed2 = monthNumber2 - 1;
-  const date1 = new Date(2020, monthZeroIndexed, dayNumber);
-  const date2 = new Date(2020, monthZeroIndexed2, dayNumber2);
-  return (date2.getTime() - date1.getTime()) / 1000 / 60 / 60 / 24;
+/**Calculates days between two strings in MM-DD format*
+ * @param firstDate earlier of the two dates in MM-DD format
+ * @param lastDate later of the two dates in MM-DD format
+ */
+export function daysBetween(firstDate: string, lastDate: string) {
+  const [month, day] = firstDate.split('-');
+  const [month2, day2] = lastDate.split('-');
+  const firstMonthNumber = Number.parseInt(month);
+  const firstDayNumber = Number.parseInt(day);
+  const lastMonthNumber = Number.parseInt(month2);
+  const lastDayNumber = Number.parseInt(day2);
+  const firstMonthZeroIndexed = firstMonthNumber - 1;
+  const lastMonthZeroIndexed = lastMonthNumber - 1;
+  const firstDateObj = new Date(2020, firstMonthZeroIndexed, firstDayNumber);
+  const lastDateObj = new Date(2020, lastMonthZeroIndexed, lastDayNumber);
+  return (lastDateObj.getTime() - firstDateObj.getTime()) / 1000 / 60 / 60 / 24;
 }

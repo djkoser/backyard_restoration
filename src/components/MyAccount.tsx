@@ -6,7 +6,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import { UpdateUserInput } from '../API';
 import { AppDispatch, AppStore } from '../redux/store';
 import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
-import { getGrowingParams, passwordChecker } from '../utilities';
+import { ReduxConverter, UserState } from '../types';
+import {
+  daysBetween,
+  getGrowingParams,
+  getLocalStateHelper,
+  passwordChecker
+} from '../utilities';
 import { Footer, Nav, WeatherLoader } from './';
 
 enum ChangeCases {
@@ -22,100 +28,108 @@ export const MyAccount: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const emailRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.email
-  );
+  const {
+    emailRedux,
+    firstNameRedux,
+    lastNameRedux,
+    streetRedux,
+    cityRedux,
+    stateRedux,
+    zipcodeRedux,
+    firstGdd45Redux,
+    lastGdd45Redux,
+    hardinessZoneRedux,
+    failedRedux,
+    loadingRedux
+  } = useSelector<
+    AppStore,
+    Omit<ReduxConverter<UserState>, 'growingSeasonLengthRedux'>
+  >((reduxState) => {
+    const {
+      email,
+      firstName,
+      lastName,
+      street,
+      city,
+      state,
+      zipcode,
+      firstGdd45,
+      lastGdd45,
+      hardinessZone,
+      failed,
+      loading
+    } = reduxState.userInfo;
+    return {
+      emailRedux: email || '',
+      firstNameRedux: firstName || '',
+      lastNameRedux: lastName || '',
+      streetRedux: street || '',
+      cityRedux: city || '',
+      stateRedux: state || '',
+      zipcodeRedux: zipcode || '',
+      firstGdd45Redux: firstGdd45 || '',
+      lastGdd45Redux: lastGdd45 || '',
+      hardinessZoneRedux: hardinessZone || '',
+      failedRedux: failed,
+      loadingRedux: loading
+    };
+  });
 
-  const firstNameRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.firstName || ''
-  );
+  const [localState, setLocalState] = useState({
+    lastChanged: ChangeCases.none,
+    firstName: firstNameRedux || '',
+    lastName: lastNameRedux || '',
+    currentPassword: 'This is a fake password',
+    newPassword: 'This is a fake password',
+    street: streetRedux || '',
+    city: cityRedux || '',
+    state: stateRedux || '',
+    zipcode: zipcodeRedux || '',
+    firstGdd45: firstGdd45Redux || '',
+    lastGdd45: lastGdd45Redux || '',
+    hardinessZone: hardinessZoneRedux || '',
+    editToggleName: true,
+    editTogglePassword: true,
+    editToggleAddress: true,
+    editToggleGrwParams: true,
+    loadingGrowingParams: false
+  });
 
-  const lastNameRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.lastName || ''
-  );
+  const {
+    lastChanged,
+    firstName,
+    lastName,
+    currentPassword,
+    newPassword,
+    street,
+    city,
+    state,
+    zipcode,
+    firstGdd45,
+    lastGdd45,
+    hardinessZone,
+    editToggleName,
+    editTogglePassword,
+    editToggleAddress,
+    editToggleGrwParams,
+    loadingGrowingParams
+  } = localState;
 
-  const streetRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.street || ''
-  );
-
-  const cityRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.city || ''
-  );
-
-  const stateRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.state || ''
-  );
-
-  const zipcodeRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.zipcode || ''
-  );
-
-  const firstGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.userInfo.firstGdd45
-  );
-
-  const lastGDD35Redux = useSelector<AppStore, string>(
-    (state) => state.userInfo.lastGdd45
-  );
-
-  const hardinessZoneRedux = useSelector<AppStore, string>(
-    (state) => state.userInfo.hardinessZone
-  );
-
-  const failedRedux = useSelector<AppStore, boolean>(
-    (state) => state.userInfo.failed
-  );
-
-  const loadingRedux = useSelector<AppStore, boolean>(
-    (state) => state.userInfo.loading
-  );
-
-  const [lastChanged, setLastChanged] = useState<ChangeCases>(ChangeCases.none);
-
-  const [firstName, setFirstName] = useState(firstNameRedux || '');
-
-  const [lastName, setLastName] = useState(lastNameRedux || '');
-
-  const [currentPassword, setCurrentPassword] = useState(
-    'This is a fake password'
-  );
-
-  const [newPassword, setNewPassword] = useState('This is a fake password');
-
-  const [street, setStreet] = useState(streetRedux || '');
-
-  const [city, setCity] = useState(cityRedux || '');
-
-  const [state, setState] = useState(stateRedux || '');
-
-  const [zipcode, setZipcode] = useState(zipcodeRedux || '');
-
-  const [firstGdd45, setFirstGDD35] = useState(firstGDD35Redux || '');
-
-  const [lastGdd45, setLastGDD35] = useState(lastGDD35Redux || '');
-
-  const [hardinessZone, setHardinessZone] = useState(hardinessZoneRedux || '');
-
-  const [editToggleName, setEditToggleName] = useState(true);
-
-  const [editTogglePassword, setEditTogglePassword] = useState(true);
-
-  const [editToggleAddress, setEditToggleAddress] = useState(true);
-
-  const [editToggleGrwParams, setEditToggleGrwParams] = useState(true);
-
-  const [loadingGrowingParams, setLoadingGrowingParams] = useState(false);
+  const localStateHelper =
+    getLocalStateHelper<typeof localState>(setLocalState);
 
   const refresh = () => {
-    setFirstName(firstNameRedux || '');
-    setLastName(lastNameRedux || '');
-    setStreet(streetRedux || '');
-    setCity(cityRedux || '');
-    setState(stateRedux || '');
-    setZipcode(zipcodeRedux || '');
-    setFirstGDD35(firstGDD35Redux || '');
-    setLastGDD35(lastGDD35Redux || '');
-    setHardinessZone(hardinessZoneRedux || '');
+    localStateHelper({
+      firstName: firstNameRedux || '',
+      lastName: lastNameRedux || '',
+      street: streetRedux || '',
+      city: cityRedux || '',
+      state: stateRedux || '',
+      zipcode: zipcodeRedux || '',
+      firstGdd45: firstGdd45Redux || '',
+      lastGdd45: lastGdd45Redux || '',
+      hardinessZone: hardinessZoneRedux || ''
+    });
   };
 
   const onError = () => {
@@ -127,8 +141,8 @@ export const MyAccount: React.FC = () => {
       cityRedux &&
       stateRedux &&
       zipcodeRedux &&
-      firstGDD35Redux &&
-      lastGDD35Redux &&
+      firstGdd45Redux &&
+      lastGdd45Redux &&
       hardinessZoneRedux
     ) {
       switch (lastChanged) {
@@ -166,8 +180,8 @@ export const MyAccount: React.FC = () => {
     cityRedux,
     stateRedux,
     zipcodeRedux,
-    firstGDD35Redux,
-    lastGDD35Redux,
+    firstGdd45Redux,
+    lastGdd45Redux,
     hardinessZoneRedux
   ]);
 
@@ -196,23 +210,25 @@ export const MyAccount: React.FC = () => {
     switch (type) {
       case ChangeCases.name:
         if (editToggleName) {
-          setEditToggleName(false);
+          localStateHelper({ editToggleName: false });
         } else {
-          setLastChanged(ChangeCases.name);
-          setEditToggleName(true);
+          localStateHelper({
+            lastChanged: ChangeCases.name,
+            editToggleName: true
+          });
           dispatch(updateUser({ firstName, lastName }));
-          setCurrentPassword('This is a fake password');
-          setNewPassword('This is a fake password');
         }
         return;
       case ChangeCases.password:
         if (editTogglePassword) {
-          setEditTogglePassword(false);
-          setCurrentPassword('');
-          setNewPassword('');
+          localStateHelper({
+            editTogglePassword: false,
+            currentPassword: 'This is a fake password',
+            newPassword: 'This is a fake password'
+          });
         } else {
           if (passwordChecker.test(newPassword)) {
-            setEditTogglePassword(true);
+            localStateHelper({ editTogglePassword: true });
             Auth.currentAuthenticatedUser({ bypassCache: true })
               .then((user) =>
                 Auth.changePassword(user, currentPassword, newPassword).then(
@@ -233,10 +249,13 @@ export const MyAccount: React.FC = () => {
         return;
       case ChangeCases.address:
         if (editToggleAddress) {
-          setEditToggleAddress(false);
+          localStateHelper({ editToggleAddress: false });
         } else {
-          setLastChanged(ChangeCases.address);
-          setEditToggleAddress(true);
+          localStateHelper({
+            lastChanged: ChangeCases.address,
+            editToggleAddress: true
+          });
+
           const paramsToUpdate: Omit<UpdateUserInput, 'email'> = {};
           if (street) paramsToUpdate.street = street;
           if (city) paramsToUpdate.city = city;
@@ -247,15 +266,17 @@ export const MyAccount: React.FC = () => {
             const digitChecker = zipcode.match(/\d\d\d\d\d/g);
             if (digitChecker) {
               try {
-                setLoadingGrowingParams(true);
+                localStateHelper({ loadingGrowingParams: true });
                 const {
                   hardinessZone,
                   firstGdd45,
                   lastGdd45,
                   growingSeasonLength
                 } = await getGrowingParams(zipcode, street, city, state);
-                setLoadingGrowingParams(false);
-                setLastChanged(ChangeCases.growingParams);
+                localStateHelper({
+                  loadingGrowingParams: false,
+                  lastChanged: ChangeCases.growingParams
+                });
                 dispatch(
                   updateUser({
                     hardinessZone,
@@ -265,7 +286,7 @@ export const MyAccount: React.FC = () => {
                   })
                 );
               } catch (err) {
-                setLoadingGrowingParams(false);
+                localStateHelper({ loadingGrowingParams: false });
                 toast.warn(
                   'We were unable to compute growing parameters for your new address, please update them within the appropriate "My Account" section. Thank you'
                 );
@@ -278,11 +299,21 @@ export const MyAccount: React.FC = () => {
         return;
       case ChangeCases.growingParams:
         if (editToggleGrwParams) {
-          setEditToggleGrwParams(false);
+          localStateHelper({ editToggleGrwParams: false });
         } else {
-          setLastChanged(ChangeCases.growingParams);
-          setEditToggleGrwParams(true);
-          dispatch(updateUser({ firstGdd45, lastGdd45, hardinessZone }));
+          localStateHelper({
+            lastChanged: ChangeCases.growingParams,
+            editToggleGrwParams: true
+          });
+          const growingSeasonLength = daysBetween(firstGdd45, lastGdd45);
+          dispatch(
+            updateUser({
+              firstGdd45,
+              lastGdd45,
+              hardinessZone,
+              growingSeasonLength
+            })
+          );
         }
         return;
       default:
@@ -317,7 +348,9 @@ export const MyAccount: React.FC = () => {
                 type="text"
                 value={firstGdd45}
                 onChange={(e) => {
-                  setFirstGDD35(e.target.value);
+                  localStateHelper({
+                    firstGdd45: e.target.value
+                  });
                 }}
               />
               <input
@@ -326,7 +359,7 @@ export const MyAccount: React.FC = () => {
                 type="text"
                 value={lastGdd45}
                 onChange={(e) => {
-                  setLastGDD35(e.target.value);
+                  localStateHelper({ lastGdd45: e.target.value });
                 }}
               />
               <h3 className="accountPageText"> USDA Hardiness Zone.</h3>
@@ -345,7 +378,7 @@ export const MyAccount: React.FC = () => {
                 disabled={editToggleGrwParams}
                 value={hardinessZone}
                 onChange={(e) => {
-                  setHardinessZone(e.target.value);
+                  localStateHelper({ hardinessZone: e.target.value });
                 }}
               >
                 <option value="1a">Zone 1a: -60F - -55F </option>
@@ -389,7 +422,7 @@ export const MyAccount: React.FC = () => {
                 type="text"
                 value={firstName}
                 onChange={(e) => {
-                  setFirstName(e.target.value);
+                  localStateHelper({ firstName: e.target.value });
                 }}
               />
               <input
@@ -398,7 +431,7 @@ export const MyAccount: React.FC = () => {
                 type="text"
                 value={lastName}
                 onChange={(e) => {
-                  setLastName(e.target.value);
+                  localStateHelper({ lastName: e.target.value });
                 }}
               />
             </fieldset>
@@ -414,7 +447,7 @@ export const MyAccount: React.FC = () => {
                 value={street}
                 placeholder="Street"
                 onChange={(e) => {
-                  setStreet(e.target.value);
+                  localStateHelper({ street: e.target.value });
                 }}
               />
               <input
@@ -424,7 +457,7 @@ export const MyAccount: React.FC = () => {
                 value={city}
                 placeholder="City"
                 onChange={(e) => {
-                  setCity(e.target.value);
+                  localStateHelper({ city: e.target.value });
                 }}
               />
               <input
@@ -434,7 +467,7 @@ export const MyAccount: React.FC = () => {
                 value={state}
                 placeholder="State"
                 onChange={(e) => {
-                  setState(e.target.value);
+                  localStateHelper({ state: e.target.value });
                 }}
               />
               <input
@@ -444,7 +477,7 @@ export const MyAccount: React.FC = () => {
                 value={zipcode}
                 placeholder="Zipcode"
                 onChange={(e) => {
-                  setZipcode(e.target.value);
+                  localStateHelper({ zipcode: e.target.value });
                 }}
               />
             </fieldset>
@@ -470,7 +503,7 @@ export const MyAccount: React.FC = () => {
                 type="password"
                 value={currentPassword}
                 onChange={(e) => {
-                  setCurrentPassword(e.target.value);
+                  localStateHelper({ currentPassword: e.target.value });
                 }}
               />
               <h3 className="accountPageText">New Password</h3>
@@ -480,7 +513,7 @@ export const MyAccount: React.FC = () => {
                 type="password"
                 value={newPassword}
                 onChange={(e) => {
-                  setNewPassword(e.target.value);
+                  localStateHelper({ newPassword: e.target.value });
                 }}
               />
             </fieldset>
@@ -491,7 +524,7 @@ export const MyAccount: React.FC = () => {
               <h3 className="accountPageText">Delete My Account</h3>
               <button
                 onClick={() => {
-                  setLastChanged(ChangeCases.deleteUser);
+                  localStateHelper({ lastChanged: ChangeCases.deleteUser });
                   dispatch(deleteUser());
                 }}
               >

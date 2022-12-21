@@ -6,19 +6,19 @@ import {
   addUserManagementMethod,
   deleteUserManagementMethod
 } from '../redux/userMethodSlice';
-import { SwitchMakerProps, UserManagementMethodStateVersion } from '../types';
+import { SwitchMakerProps, UserMethodState } from '../types';
 
 export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
   const dispatch = useDispatch();
   // Determine if weed method is in user method list and check inputs accordingly
 
-  const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
-    (state) => state.userMethod.userMethods
-  );
-
-  const loading = useSelector<AppStore, boolean>(
-    (state) => state.userMethod.loading
-  );
+  const { userMethods, loading } = useSelector<
+    AppStore,
+    Pick<UserMethodState, 'userMethods' | 'loading'>
+  >((state) => {
+    const { userMethods, loading } = state.userMethod;
+    return { userMethods, loading };
+  });
 
   const { weedMethod } = props;
 

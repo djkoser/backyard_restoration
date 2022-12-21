@@ -12,27 +12,47 @@ import { getWeedC } from '../graphql/customQueries';
 import { AppStore } from '../redux/store';
 import { getUserMethods } from '../redux/userMethodSlice';
 import { UserManagementMethodStateVersion } from '../types';
+import { getLocalStateHelper } from '../utilities';
 import { Footer, MethodSwitch, Nav, WeatherLoader } from './';
 
 export const WeedPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [src, setSrc] = useState('');
-  const [commonName, setCommonName] = useState('');
-  const [botanicalName, setBotanicalName] = useState('');
-  const [annualPerennialBiennial, setAnnualPerennialBiennial] = useState('');
-  const [vegType, setVegType] = useState('');
-  const [description, setDescription] = useState('');
-  const [mgmtOptions, setMgmtOptions] = useState<
-    Omit<ManagementMethod, '__typename' | 'weed' | 'createdAt' | 'updatedAt'>[]
-  >([]);
-  const [switches, setSwitches] = useState([<></>]);
+
+  const [localState, setLocalState] = useState({
+    src: '',
+    commonName: '',
+    botanicalName: '',
+    annualPerennialBiennial: '',
+    vegType: '',
+    description: '',
+    mgmtOptions: [] as Omit<
+      ManagementMethod,
+      '__typename' | 'weed' | 'createdAt' | 'updatedAt'
+    >[],
+    switches: [<></>],
+    loading: true
+  });
+
+  const {
+    src,
+    commonName,
+    botanicalName,
+    annualPerennialBiennial,
+    vegType,
+    description,
+    mgmtOptions,
+    loading,
+    switches
+  } = localState;
+
+  const localStateHelper =
+    getLocalStateHelper<typeof localState>(setLocalState);
 
   const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
     (state) => state.userMethod.userMethods
   );
   // Creates local state to avoid lagging and render errors caused by adding/removing methods on switch toggle
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserMethods());
@@ -44,11 +64,11 @@ export const WeedPage: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    setSwitches(
-      mgmtOptions.map((el) => (
+    localStateHelper({
+      switches: mgmtOptions.map((el) => (
         <MethodSwitch key={`methodSwitch${el.methodId}`} weedMethod={el} />
       ))
-    );
+    });
   }, [mgmtOptions, userMethods]);
 
   const getWeedDetails = async () => {
@@ -66,25 +86,26 @@ export const WeedPage: React.FC = () => {
         description,
         managementMethods
       } = result.data?.getWeed || {};
-      setSrc(src || '');
-      setCommonName(commonName || '');
-      setBotanicalName(botanicalName || '');
-      setAnnualPerennialBiennial(annualPerennialBiennial || '');
-      setVegType(vegetationType || '');
-      setDescription(description || '');
-      setLoading(false);
-      setMgmtOptions(
-        managementMethods?.items.reduce((methodsParsed, method) => {
-          if (method) {
-            const { __typename, ...omitTypename } = method;
-            methodsParsed.push(omitTypename);
-          }
-          return methodsParsed;
-        }, [] as Omit<ManagementMethod, '__typename' | 'weed' | 'createdAt' | 'updatedAt'>[]) ||
+      localStateHelper({
+        src: src || '',
+        commonName: commonName || '',
+        botanicalName: botanicalName || '',
+        annualPerennialBiennial: annualPerennialBiennial || '',
+        vegType: vegetationType || '',
+        description: description || '',
+        loading: false,
+        mgmtOptions:
+          managementMethods?.items.reduce((methodsParsed, method) => {
+            if (method) {
+              const { __typename, ...omitTypename } = method;
+              methodsParsed.push(omitTypename);
+            }
+            return methodsParsed;
+          }, [] as Omit<ManagementMethod, '__typename' | 'weed' | 'createdAt' | 'updatedAt'>[]) ||
           []
-      );
+      });
     } catch {
-      setLoading(false);
+      localStateHelper({ loading: false });
       navigate('/');
     }
   };

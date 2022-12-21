@@ -5,14 +5,18 @@ import { AddedNativesProps, UserNativeStateVersion } from '../types';
 import { NativeAdded } from './';
 
 export const AddedNatives: React.FC<AddedNativesProps> = (props) => {
-  const [eSpring, setESpring] = useState<JSX.Element[]>([]);
-  const [lSpring, setLSpring] = useState<JSX.Element[]>([]);
-  const [summer, setSummer] = useState<JSX.Element[]>([]);
-  const [fall, setFall] = useState<JSX.Element[]>([]);
+  const [addedNatives, setAddedNatives] = useState<{
+    eSpring: JSX.Element[];
+    lSpring: JSX.Element[];
+    summer: JSX.Element[];
+    fall: JSX.Element[];
+  }>({ eSpring: [], lSpring: [], summer: [], fall: [] });
 
   const userNatives = useSelector<AppStore, UserNativeStateVersion[]>(
     (state) => state.userNativePlant.nativePlants
   );
+
+  const { eSpring, lSpring, summer, fall } = addedNatives;
 
   useEffect(() => {
     if (typeof userNatives === 'object') {
@@ -92,10 +96,12 @@ export const AddedNatives: React.FC<AddedNativesProps> = (props) => {
         />
       ));
 
-      setESpring(lSpringTempElements);
-      setLSpring(eSpringTempElements);
-      setSummer(summerTempElements);
-      setFall(fallTempElements);
+      setAddedNatives({
+        eSpring: eSpringTempElements,
+        lSpring: lSpringTempElements,
+        summer: summerTempElements,
+        fall: fallTempElements
+      });
     }
   }, [userNatives]);
 

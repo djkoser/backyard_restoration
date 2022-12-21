@@ -8,22 +8,29 @@ import {
 } from '../API';
 import { weedByVegetationTypeC } from '../graphql/customQueries';
 import { Weed } from '../types';
+import { getLocalStateHelper } from '../utilities';
 import { Footer, Nav, Thumbnail, WeatherLoader } from './';
 
 // props vegType
 export const WeedSearch: React.FC = () => {
   const navigate = useNavigate();
   const { vegType } = useParams<{ vegType: string }>();
-  const [searchText, setSearchText] = useState('');
-  const [weedList, setWeedList] = useState<Weed[]>([]);
-  const [apbInput, setAPBInput] = useState<string>('');
 
-  const [loading, setLoading] = useState(true);
+  const [localState, setLocalState] = useState({
+    searchText: '',
+    weedList: [] as Weed[],
+    apbInput: '',
+    loading: true
+  });
+  const { searchText, weedList, apbInput, loading } = localState;
+
+  const localStateHelper =
+    getLocalStateHelper<typeof localState>(setLocalState);
 
   const getWeedsByType = async (e?: React.FormEvent<HTMLButtonElement>) => {
     if (e) e.preventDefault();
     try {
-      setLoading(true);
+      localStateHelper({ loading: true });
       const getWeedsByTypeInput: WeedByVegetationTypeCQueryVariables = {
         vegetationType: vegType || ''
       };
@@ -42,8 +49,10 @@ export const WeedSearch: React.FC = () => {
           },
           [] as Weed[]
         ) || [];
-      setWeedList(weedsParsed);
-      setLoading(false);
+      localStateHelper({
+        weedList: weedsParsed,
+        loading: false
+      });
     } catch {
       navigate('/');
     }
@@ -53,7 +62,7 @@ export const WeedSearch: React.FC = () => {
   ) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      localStateHelper({ loading: true });
       if (searchText || apbInput) {
         const getWeedsByKeywordInputs: WeedByVegetationTypeCQueryVariables = {
           vegetationType: vegType || '',
@@ -75,26 +84,26 @@ export const WeedSearch: React.FC = () => {
         const botanicalNameResults = (await API.graphql(
           graphqlOperation(weedByVegetationTypeC, getWeedsByKeywordInputs)
         )) as GraphQLResult<WeedByVegetationTypeCQuery>;
-        setWeedList(
-          botanicalNameResults.data?.weedByVegetationType?.items.reduce(
-            (weedsParsed, weed) => {
-              if (weed) {
-                const { __typename, ...omitTypename } = weed;
-                if (omitTypename) weedsParsed.push(omitTypename);
-              }
-              return weedsParsed;
-            },
-            [] as Weed[]
-          ) || []
-        );
-        setLoading(false);
-        setSearchText('');
-        setLoading(false);
+        localStateHelper({
+          weedList:
+            botanicalNameResults.data?.weedByVegetationType?.items.reduce(
+              (weedsParsed, weed) => {
+                if (weed) {
+                  const { __typename, ...omitTypename } = weed;
+                  if (omitTypename) weedsParsed.push(omitTypename);
+                }
+                return weedsParsed;
+              },
+              [] as Weed[]
+            ) || [],
+          loading: false,
+          searchText: ''
+        });
       } else {
         await getWeedsByType();
       }
     } catch (err) {
-      setLoading(false);
+      localStateHelper({ loading: false });
       navigate('/');
     }
   };
@@ -115,16 +124,14 @@ export const WeedSearch: React.FC = () => {
             type="text"
             placeholder="Weed Name"
             value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => localStateHelper({ searchText: e.target.value })}
           ></input>
           <label id="apbLabel" htmlFor="apbDropdown">
             Annual/Perennial/Biennial:
           </label>
           <select
             id="apbDropdown"
-            onChange={(e) => {
-              setAPBInput(e.target.value);
-            }}
+            onChange={(e) => localStateHelper({ apbInput: e.target.value })}
             value={apbInput}
           >
             <option value=""></option>

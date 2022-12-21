@@ -67,7 +67,10 @@ export const Stripe: React.FC = () => {
   };
 
   return loading ? (
-    <WeatherLoader noText={true} />
+    <>
+      <WeatherLoader noText={true} />
+      <ToastContainer />
+    </>
   ) : (
     <>
       <Nav invertColors={false} />
