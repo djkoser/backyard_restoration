@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppStore } from '../redux/store';
 import { getUserMethods } from '../redux/userMethodSlice';
 import { getUserInfo } from '../redux/userSlice';
-import {
-  UserMethodState,
-  UserState
-} from '../types';
+import { UserMethodState, UserState } from '../types';
 import { DashboardDropdowns, Footer, Nav, Timeline } from './';
 
 // props from store hZone, gSeasonLength firstGDD45
