@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { AppStore, useAppDispatch } from '../redux/store';
+import { AppDispatch, AppStore } from '../redux/store';
 import { deleteUser, updateUser } from '../redux/userSlice';
 import { FailedLoading, ReduxConverter } from '../types';
 import { daysBetween, getLocalStateHelper, isValidDate } from '../utilities';
@@ -19,7 +19,7 @@ export const NOAAHangupPage: React.FC = () => {
   const { firstGdd45, lastGdd45, hardinessZone, canceling } = localState;
   const localStateHelper =
     getLocalStateHelper<typeof localState>(setLocalState);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { failedRedux, loadingRedux } = useSelector<
     AppStore,
@@ -46,7 +46,7 @@ export const NOAAHangupPage: React.FC = () => {
       );
     } else {
       const growingSeasonLength = daysBetween(firstGdd45, lastGdd45);
-      dispatch(
+      void dispatch(
         updateUser({
           firstGdd45,
           lastGdd45,
@@ -62,7 +62,7 @@ export const NOAAHangupPage: React.FC = () => {
     toast.success(
       'Canceling your registration and deleting any acquired user information...'
     );
-    dispatch(deleteUser());
+    void dispatch(deleteUser());
     setTimeout(() => navigate('/'), 5000);
   };
 

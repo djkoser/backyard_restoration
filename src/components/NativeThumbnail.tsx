@@ -1,12 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { AppStore, useAppDispatch } from '../redux/store';
+import { AppDispatch, AppStore } from '../redux/store';
 import { addUserNative } from '../redux/userNativePlantsSlice';
 import type { NativeThumbnailProps, UserNativeStateVersion } from '../types';
 
 export const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     nativeId,
     commonName,
@@ -32,7 +32,7 @@ export const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
             ) ||
             userNatives.length === 0
           ) {
-            dispatch(addUserNative(nativeId));
+            void dispatch(addUserNative(nativeId));
           } else {
             toast.warning(
               'This plant has already been added to your list, please select another'

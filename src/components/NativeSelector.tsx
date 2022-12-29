@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { useAppDispatch } from '../redux/store';
+import { AppDispatch } from '../redux/store';
 import { getUserNatives } from '../redux/userNativePlantsSlice';
 import { UserNativeStateVersion } from '../types';
 import {
@@ -12,7 +13,7 @@ import {
 } from './';
 
 export const NativeSelector: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [searchResults, setSearchResults] = useState<UserNativeStateVersion[]>(
     []
   );
@@ -21,7 +22,7 @@ export const NativeSelector: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserNatives());
+    void dispatch(getUserNatives());
   }, []);
 
   useEffect(() => {

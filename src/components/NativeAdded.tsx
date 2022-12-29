@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../redux/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
 import {
   deleteUserNative,
   updateUserNative
@@ -7,7 +8,7 @@ import {
 import { NativeAddedProps } from '../types';
 
 export const NativeAdded: React.FC<NativeAddedProps> = (props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     id,
     botanicalName,
@@ -24,7 +25,7 @@ export const NativeAdded: React.FC<NativeAddedProps> = (props) => {
 
   useEffect(() => {
     if (!editing && projectNotes !== projectNotesInput) {
-      dispatch(updateUserNative({ id, projectNotes: projectNotesInput }));
+      void dispatch(updateUserNative({ id, projectNotes: projectNotesInput }));
     }
   }, [editing]);
 
@@ -33,7 +34,7 @@ export const NativeAdded: React.FC<NativeAddedProps> = (props) => {
       <div>
         <img
           className="nativeAddedPic"
-          onClick={() => dispatch(deleteUserNative(id))}
+          onClick={() => void dispatch(deleteUserNative(id))}
           alt={`Added plant ${botanicalName}, commonly known as ${commonName}.`}
           src={src}
           width="50px"

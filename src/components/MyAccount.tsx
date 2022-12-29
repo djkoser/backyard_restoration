@@ -1,10 +1,10 @@
 import { Auth } from 'aws-amplify';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { UpdateUserInput } from '../API';
-import { AppStore, useAppDispatch } from '../redux/store';
+import { AppDispatch, AppStore } from '../redux/store';
 import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
 import { ReduxConverter, UserState } from '../types';
 import {
@@ -26,7 +26,7 @@ enum ChangeCases {
 
 export const MyAccount: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     emailRedux,
@@ -167,7 +167,7 @@ export const MyAccount: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    void dispatch(getUserInfo());
   }, []);
 
   useEffect(() => {
@@ -216,7 +216,7 @@ export const MyAccount: React.FC = () => {
             lastChanged: ChangeCases.name,
             editToggleName: true
           });
-          dispatch(updateUser({ firstName, lastName }));
+          void dispatch(updateUser({ firstName, lastName }));
         }
         return;
       case ChangeCases.password:
@@ -261,7 +261,7 @@ export const MyAccount: React.FC = () => {
           if (city) paramsToUpdate.city = city;
           if (state) paramsToUpdate.state = state;
           if (zipcode) paramsToUpdate.zipcode = zipcode;
-          dispatch(updateUser(paramsToUpdate));
+          void dispatch(updateUser(paramsToUpdate));
           if (zipcode && street && city && state) {
             const digitChecker = zipcode.match(/\d\d\d\d\d/g);
             if (digitChecker) {
@@ -277,7 +277,7 @@ export const MyAccount: React.FC = () => {
                   loadingGrowingParams: false,
                   lastChanged: ChangeCases.growingParams
                 });
-                dispatch(
+                void dispatch(
                   updateUser({
                     hardinessZone,
                     firstGdd45,
@@ -306,7 +306,7 @@ export const MyAccount: React.FC = () => {
             editToggleGrwParams: true
           });
           const growingSeasonLength = daysBetween(firstGdd45, lastGdd45);
-          dispatch(
+          void dispatch(
             updateUser({
               firstGdd45,
               lastGdd45,
@@ -525,7 +525,7 @@ export const MyAccount: React.FC = () => {
               <button
                 onClick={() => {
                   localStateHelper({ lastChanged: ChangeCases.deleteUser });
-                  dispatch(deleteUser());
+                  void dispatch(deleteUser());
                 }}
               >
                 Delete Account

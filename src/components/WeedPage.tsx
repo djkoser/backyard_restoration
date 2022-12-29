@@ -1,7 +1,7 @@
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   GetWeedCQuery,
@@ -9,7 +9,7 @@ import {
   ManagementMethod
 } from '../API';
 import { getWeedC } from '../graphql/customQueries';
-import { AppStore, useAppDispatch } from '../redux/store';
+import { AppDispatch, AppStore } from '../redux/store';
 import { getUserMethods } from '../redux/userMethodSlice';
 import { UserManagementMethodStateVersion } from '../types';
 import { getLocalStateHelper } from '../utilities';
@@ -53,9 +53,9 @@ export const WeedPage: React.FC = () => {
     (state) => state.userMethod.userMethods
   );
   // Creates local state to avoid lagging and render errors caused by adding/removing methods on switch toggle
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(getUserMethods());
+    void dispatch(getUserMethods());
   }, []);
   useEffect(() => {
     if (id) {

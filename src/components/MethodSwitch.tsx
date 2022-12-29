@@ -1,7 +1,7 @@
 import * as CSS from 'csstype';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { AppStore, useAppDispatch } from '../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppStore } from '../redux/store';
 import {
   addUserManagementMethod,
   deleteUserManagementMethod
@@ -9,7 +9,7 @@ import {
 import { SwitchMakerProps, UserMethodState } from '../types';
 
 export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   // Determine if weed method is in user method list and check inputs accordingly
 
   const { userMethods, loading } = useSelector<
@@ -62,9 +62,9 @@ export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
               onChange={() => {
                 if (!loading) {
                   if (id) {
-                    dispatch(deleteUserManagementMethod(id));
+                    void dispatch(deleteUserManagementMethod(id));
                   } else {
-                    dispatch(addUserManagementMethod(weedMethod.methodId));
+                    void dispatch(addUserManagementMethod(weedMethod.methodId));
                   }
                 }
               }}
