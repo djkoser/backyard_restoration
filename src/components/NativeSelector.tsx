@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import { useAppDispatch } from '../redux/store';
 import { getUserNatives } from '../redux/userNativePlantsSlice';
 import { UserNativeStateVersion } from '../types';
 import {
@@ -12,7 +12,7 @@ import {
 } from './';
 
 export const NativeSelector: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [searchResults, setSearchResults] = useState<UserNativeStateVersion[]>(
     []
   );

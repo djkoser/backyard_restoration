@@ -1,7 +1,7 @@
 import * as CSS from 'csstype';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppStore } from '../redux/store';
+import { useSelector } from 'react-redux';
+import { AppStore, useAppDispatch } from '../redux/store';
 import {
   addUserManagementMethod,
   deleteUserManagementMethod
@@ -9,7 +9,7 @@ import {
 import { SwitchMakerProps, UserMethodState } from '../types';
 
 export const MethodSwitch: React.FC<SwitchMakerProps> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   // Determine if weed method is in user method list and check inputs accordingly
 
   const { userMethods, loading } = useSelector<

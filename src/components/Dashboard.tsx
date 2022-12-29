@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppStore } from '../redux/store';
+import { useSelector } from 'react-redux';
+import { AppStore, useAppDispatch } from '../redux/store';
 import { getUserMethods } from '../redux/userMethodSlice';
 import { getUserInfo } from '../redux/userSlice';
 import { UserMethodState, UserState } from '../types';
@@ -37,7 +37,7 @@ export const Dashboard: React.FC = () => {
 
   const chartMargin = { top: 10, right: 10, bottom: 10, left: 10 };
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserInfo());
     dispatch(getUserMethods());

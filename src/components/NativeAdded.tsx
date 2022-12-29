@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
 import {
   deleteUserNative,
   updateUserNative
@@ -7,7 +7,7 @@ import {
 import { NativeAddedProps } from '../types';
 
 export const NativeAdded: React.FC<NativeAddedProps> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     id,
     botanicalName,

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import promiseMiddleware from 'redux-promise-middleware';
-import userSlice from './userSlice';
+import { useDispatch } from 'react-redux';
 import userMethodSlice from './userMethodSlice';
 import userNativePlantSlice from './userNativePlantsSlice';
+import userSlice from './userSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,10 +10,10 @@ const store = configureStore({
     userNativePlant: userNativePlantSlice.reducer,
     userMethod: userMethodSlice.reducer
   },
-  middleware: [promiseMiddleware] as const,
   devTools: true
 });
 
 export type AppStore = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export default store;

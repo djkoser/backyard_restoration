@@ -1,5 +1,10 @@
 import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  CaseReducer,
+  createSlice,
+  PayloadAction,
+  createAsyncThunk
+} from '@reduxjs/toolkit';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   CreateUserManagementMethodCMutation,
@@ -19,7 +24,11 @@ import {
 } from '../graphql/customMutations';
 import { getUserManagementMethods } from '../graphql/customQueries';
 import { UserMethodPayload, UserMethodState } from '../types/state';
-import { isFulfilled, isPending, isRejected } from '../utilities';
+import {
+  isFulfilledMatcher,
+  isPendingMatcher,
+  isRejectedMatcher
+} from '../utilities';
 
 const initialUserMethodsPayload: UserMethodPayload = {
   userMethods: []
@@ -51,290 +60,230 @@ const fulfill: CaseReducer<
   return { ...action.payload, ...{ loading: false, failed: false } };
 };
 
-export const addUserManagementMethod = (
-  userManagementMethodManagementMethodMethodId: string
-) => {
-  return userMethodSlice.actions.ADD_USER_METHOD(
-    new Promise((resolve, reject) =>
-      Auth.currentAuthenticatedUser({
-        bypassCache: true
-      })
-        .then(async ({ attributes }) => {
-          const createUserManagementMethodInput: CreateUserManagementMethodCMutationVariables =
-            {
-              input: {
-                projectNotes: '',
-                userManagementMethodsEmail: attributes.email,
-                userManagementMethodManagementMethodMethodId
-              }
-            };
-          const graphQlResult = await (API.graphql(
-            graphqlOperation(
-              createUserManagementMethodC,
-              createUserManagementMethodInput
-            )
-          ) as Promise<GraphQLResult<CreateUserManagementMethodCMutation>>);
-          if (
-            graphQlResult.data?.createUserManagementMethod?.user
-              ?.managementMethods?.items?.map
-          ) {
-            const userMethods =
-              graphQlResult.data.createUserManagementMethod.user.managementMethods.items.map(
-                (userManagementMethod) => {
-                  const { projectNotes, id } = userManagementMethod || {};
-                  if (
-                    userManagementMethod?.managementMethod &&
-                    typeof projectNotes === 'string' &&
-                    id
-                  ) {
-                    const { __typename, weed, ...noTypeName } =
-                      userManagementMethod.managementMethod;
-                    return {
-                      id,
-                      projectNotes,
-                      commonName: weed.commonName,
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'addUserManagementMethod: Unexpected result from API'
-                    );
-                  }
-                }
-              );
-            resolve({ userMethods });
-          } else {
-            throw new Error(
-              'addUserManagementMethod: Unexpected result from API'
-            );
-          }
-        })
-        .catch((err) => reject(err))
-    )
-  );
-};
-export const updateUserMethod = (
-  newUserMethodProperties: UpdateUserManagementMethodInput
-) => {
-  return userMethodSlice.actions.UPDATE_USER_METHOD(
-    new Promise((resolve, reject) => {
-      const updateUserManagementMethodInput: UpdateUserManagementMethodCMutationVariables =
-        {
-          input: newUserMethodProperties
-        };
-      return (
-        API.graphql(
-          graphqlOperation(
-            updateUserManagementMethodC,
-            updateUserManagementMethodInput
-          )
-        ) as Promise<GraphQLResult<UpdateUserManagementMethodCMutation>>
+const name = 'userMethodSlice';
+
+export const addUserManagementMethod = createAsyncThunk(
+  `${name}/addUserManagementMethod`,
+  async (userManagementMethodManagementMethodMethodId: string) => {
+    const { attributes } = await Auth.currentAuthenticatedUser({
+      bypassCache: true
+    });
+
+    const createUserManagementMethodInput: CreateUserManagementMethodCMutationVariables =
+      {
+        input: {
+          projectNotes: '',
+          userManagementMethodsEmail: attributes.email,
+          userManagementMethodManagementMethodMethodId
+        }
+      };
+
+    const graphQlResult = await (API.graphql(
+      graphqlOperation(
+        createUserManagementMethodC,
+        createUserManagementMethodInput
       )
-        .then((graphQlResult) => {
-          if (
-            graphQlResult.data?.updateUserManagementMethod?.user
-              ?.managementMethods?.items?.map
-          ) {
-            const userMethods =
-              graphQlResult.data.updateUserManagementMethod.user.managementMethods.items.map(
-                (userManagementMethod) => {
-                  const { id, projectNotes } = userManagementMethod || {};
-                  if (
-                    userManagementMethod?.managementMethod &&
-                    id &&
-                    typeof projectNotes === 'string'
-                  ) {
-                    const { __typename, weed, ...noTypeName } =
-                      userManagementMethod.managementMethod;
-                    return {
-                      id,
-                      commonName: weed.commonName,
-                      projectNotes,
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'updateUserMethod: Unexpected result from API'
-                    );
-                  }
-                }
-              );
+    ) as Promise<GraphQLResult<CreateUserManagementMethodCMutation>>);
 
-            resolve({ userMethods });
-          } else {
-            reject(new Error('updateUserMethod: Unexpected result from API'));
+    if (
+      graphQlResult.data?.createUserManagementMethod?.user?.managementMethods
+        ?.items?.map
+    ) {
+      const userMethods =
+        graphQlResult.data.createUserManagementMethod.user.managementMethods.items.map(
+          (userManagementMethod) => {
+            const { projectNotes, id } = userManagementMethod || {};
+            if (
+              userManagementMethod?.managementMethod &&
+              typeof projectNotes === 'string' &&
+              id
+            ) {
+              const { __typename, weed, ...noTypeName } =
+                userManagementMethod.managementMethod;
+              return {
+                id,
+                projectNotes,
+                commonName: weed.commonName,
+                ...noTypeName
+              };
+            } else {
+              throw new Error(
+                'addUserManagementMethod: Unexpected result from API'
+              );
+            }
           }
-        })
-        .catch((err) => reject(err));
-    })
-  );
-};
-export const deleteUserManagementMethod = (userMethodId: string) => {
-  return userMethodSlice.actions.REMOVE_USER_METHOD(
-    new Promise((resolve, reject) => {
-      const deleteUserManagementMethodInput: DeleteUserManagementMethodCMutationVariables =
-        {
-          input: { id: userMethodId }
-        };
-      return (
-        API.graphql(
-          graphqlOperation(
-            deleteUserManagementMethodC,
-            deleteUserManagementMethodInput
-          )
-        ) as Promise<GraphQLResult<DeleteUserManagementMethodCMutation>>
+        );
+      return { userMethods };
+    } else {
+      throw new Error('addUserManagementMethod: Unexpected result from API');
+    }
+  }
+);
+
+export const updateUserMethod = createAsyncThunk(
+  `${name}/updateUserMethod`,
+  async (newUserMethodProperties: UpdateUserManagementMethodInput) => {
+    const updateUserManagementMethodInput: UpdateUserManagementMethodCMutationVariables =
+      {
+        input: newUserMethodProperties
+      };
+
+    const graphQLResult = (await API.graphql(
+      graphqlOperation(
+        updateUserManagementMethodC,
+        updateUserManagementMethodInput
       )
-        .then((graphQlResult) => {
-          if (
-            graphQlResult.data?.deleteUserManagementMethod?.user
-              ?.managementMethods?.items?.map
-          ) {
-            const userMethods =
-              graphQlResult.data.deleteUserManagementMethod.user.managementMethods.items.map(
-                (userManagementMethod) => {
-                  const { id, projectNotes } = userManagementMethod || {};
+    )) as Awaited<Promise<GraphQLResult<UpdateUserManagementMethodCMutation>>>;
 
-                  if (
-                    userManagementMethod?.managementMethod &&
-                    id &&
-                    typeof projectNotes === 'string'
-                  ) {
-                    const { __typename, weed, ...noTypeName } =
-                      userManagementMethod.managementMethod;
-                    return {
-                      id,
-                      commonName: weed.commonName,
-                      projectNotes: userManagementMethod?.projectNotes || '',
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'deleteUserManagementMethod: Unexpected result from API'
-                    );
-                  }
-                }
-              );
+    if (
+      graphQLResult.data?.updateUserManagementMethod?.user?.managementMethods
+        ?.items?.map
+    ) {
+      const userMethods =
+        graphQLResult.data.updateUserManagementMethod.user.managementMethods.items.map(
+          (userManagementMethod) => {
+            const { id, projectNotes } = userManagementMethod || {};
+            if (
+              userManagementMethod?.managementMethod &&
+              id &&
+              typeof projectNotes === 'string'
+            ) {
+              const { __typename, weed, ...noTypeName } =
+                userManagementMethod.managementMethod;
+              return {
+                id,
+                commonName: weed.commonName,
+                projectNotes,
+                ...noTypeName
+              };
+            } else {
+              throw new Error('updateUserMethod: Unexpected result from API');
+            }
+          }
+        );
 
-            resolve({ userMethods });
-          } else {
-            reject(
-              new Error(
+      return { userMethods };
+    } else {
+      throw new Error('updateUserMethod: Unexpected result from API');
+    }
+  }
+);
+
+export const deleteUserManagementMethod = createAsyncThunk(
+  `${name}/deleteUserManagementMethod`,
+  async (userMethodId: string) => {
+    const deleteUserManagementMethodInput: DeleteUserManagementMethodCMutationVariables =
+      {
+        input: { id: userMethodId }
+      };
+    const graphQLResult = (await API.graphql(
+      graphqlOperation(
+        deleteUserManagementMethodC,
+        deleteUserManagementMethodInput
+      )
+    )) as Awaited<Promise<GraphQLResult<DeleteUserManagementMethodCMutation>>>;
+
+    if (
+      graphQLResult.data?.deleteUserManagementMethod?.user?.managementMethods
+        ?.items?.map
+    ) {
+      const userMethods =
+        graphQLResult.data.deleteUserManagementMethod.user.managementMethods.items.map(
+          (userManagementMethod) => {
+            const { id, projectNotes } = userManagementMethod || {};
+
+            if (
+              userManagementMethod?.managementMethod &&
+              id &&
+              typeof projectNotes === 'string'
+            ) {
+              const { __typename, weed, ...noTypeName } =
+                userManagementMethod.managementMethod;
+              return {
+                id,
+                commonName: weed.commonName,
+                projectNotes: userManagementMethod?.projectNotes || '',
+                ...noTypeName
+              };
+            } else {
+              throw new Error(
                 'deleteUserManagementMethod: Unexpected result from API'
-              )
-            );
-          }
-        })
-        .catch((err) => reject(err));
-    })
-  );
-};
-export const getUserMethods = () => {
-  return userMethodSlice.actions.GET_USER_METHODS(
-    new Promise((resolve, reject) =>
-      Auth.currentAuthenticatedUser({
-        bypassCache: true
-      })
-        .then(async ({ attributes }) => {
-          const getUserManagementMethodsInput: GetUserManagementMethodsQueryVariables =
-            {
-              email: attributes.email
-            };
-          const graphQlResult = await (API.graphql(
-            graphqlOperation(
-              getUserManagementMethods,
-              getUserManagementMethodsInput
-            )
-          ) as Promise<GraphQLResult<GetUserManagementMethodsQuery>>);
-          if (graphQlResult.data?.getUser?.managementMethods?.items?.map) {
-            const userMethods =
-              graphQlResult.data.getUser.managementMethods.items.map(
-                (userManagementMethod) => {
-                  const { id, projectNotes } = userManagementMethod || {};
-
-                  if (
-                    userManagementMethod?.managementMethod &&
-                    id &&
-                    typeof projectNotes === 'string'
-                  ) {
-                    const { __typename, weed, ...noTypeName } =
-                      userManagementMethod.managementMethod;
-                    return {
-                      id,
-                      commonName: weed.commonName,
-                      projectNotes: userManagementMethod?.projectNotes || '',
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'getUserMethods: Unexpected result from API'
-                    );
-                  }
-                }
               );
-
-            resolve({ userMethods });
-          } else {
-            reject(new Error('getUserMethods: Unexpected result from API'));
+            }
           }
-        })
-        .catch((err) => reject(err))
-    )
-  );
-};
+        );
+
+      return { userMethods };
+    } else {
+      throw new Error('deleteUserManagementMethod: Unexpected result from API');
+    }
+  }
+);
+
+export const getUserMethods = createAsyncThunk(
+  `${name}/getUserMethods`,
+  async () => {
+    const { attributes } = await Auth.currentAuthenticatedUser({
+      bypassCache: true
+    });
+    const getUserManagementMethodsInput: GetUserManagementMethodsQueryVariables =
+      {
+        email: attributes.email
+      };
+    const graphQlResult = (await API.graphql(
+      graphqlOperation(getUserManagementMethods, getUserManagementMethodsInput)
+    )) as Awaited<Promise<GraphQLResult<GetUserManagementMethodsQuery>>>;
+
+    if (graphQlResult.data?.getUser?.managementMethods?.items?.map) {
+      const userMethods =
+        graphQlResult.data.getUser.managementMethods.items.map(
+          (userManagementMethod) => {
+            const { id, projectNotes } = userManagementMethod || {};
+
+            if (
+              userManagementMethod?.managementMethod &&
+              id &&
+              typeof projectNotes === 'string'
+            ) {
+              const { __typename, weed, ...noTypeName } =
+                userManagementMethod.managementMethod;
+              return {
+                id,
+                commonName: weed.commonName,
+                projectNotes: userManagementMethod?.projectNotes || '',
+                ...noTypeName
+              };
+            } else {
+              throw new Error('getUserMethods: Unexpected result from API');
+            }
+          }
+        );
+
+      return { userMethods };
+    } else {
+      throw new Error('getUserMethods: Unexpected result from API');
+    }
+  }
+);
 
 const userMethodSlice = createSlice({
-  name: 'userMethodSlice',
+  name,
   initialState,
-  reducers: {
-    ADD_USER_METHOD: (
-      state,
-      action: PayloadAction<Promise<UserMethodPayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    },
-    UPDATE_USER_METHOD: (
-      state,
-      action: PayloadAction<Promise<UserMethodPayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    },
-    REMOVE_USER_METHOD: (
-      state,
-      action: PayloadAction<Promise<UserMethodPayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    },
-    GET_USER_METHODS: (
-      state,
-      action: PayloadAction<Promise<UserMethodPayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher((action) => isPending(action, userMethodSlice.name), pending)
       .addMatcher(
-        (action) => isFulfilled(action, userMethodSlice.name),
+        (action) => isPendingMatcher(action, userMethodSlice.name),
+        pending
+      )
+      .addMatcher(
+        (action) => isFulfilledMatcher(action, userMethodSlice.name),
         fulfill
       )
-      .addMatcher((action) => isRejected(action, userMethodSlice.name), reject);
+      .addMatcher(
+        (action) => isRejectedMatcher(action, userMethodSlice.name),
+        reject
+      );
   }
 });
 

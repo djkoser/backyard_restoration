@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { AppStore } from '../redux/store';
+import { AppStore, useAppDispatch } from '../redux/store';
 import { deleteUser, updateUser } from '../redux/userSlice';
 import { FailedLoading, ReduxConverter } from '../types';
 import { daysBetween, getLocalStateHelper, isValidDate } from '../utilities';
@@ -19,7 +19,7 @@ export const NOAAHangupPage: React.FC = () => {
   const { firstGdd45, lastGdd45, hardinessZone, canceling } = localState;
   const localStateHelper =
     getLocalStateHelper<typeof localState>(setLocalState);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { failedRedux, loadingRedux } = useSelector<
     AppStore,

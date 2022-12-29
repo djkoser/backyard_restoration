@@ -1,5 +1,10 @@
 import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  CaseReducer,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction
+} from '@reduxjs/toolkit';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import {
   CreateUserNativePlantCMutation,
@@ -19,7 +24,11 @@ import {
 } from '../graphql/customMutations';
 import { getUserNativePlants } from '../graphql/customQueries';
 import { UserNativePayload, UserNativeState } from '../types/state';
-import { isFulfilled, isPending, isRejected } from '../utilities';
+import {
+  isFulfilledMatcher,
+  isPendingMatcher,
+  isRejectedMatcher
+} from '../utilities';
 
 const initialUserNativesPayload: UserNativePayload = {
   nativePlants: []
@@ -51,268 +60,196 @@ const fulfill: CaseReducer<
   return { ...action.payload, ...{ loading: false, failed: false } };
 };
 
-export const addUserNative = (userNativePlantNativePlantNativeId: string) => {
-  return userNativePlantSlice.actions.ADD_USER_NATIVE(
-    new Promise((resolve, reject) =>
-      Auth.currentAuthenticatedUser()
-        .then(async ({ attributes }) => {
-          const createUserNativePlantInput: CreateUserNativePlantCMutationVariables =
-            {
-              input: {
-                projectNotes: '',
-                userNativePlantsEmail: attributes.email,
-                userNativePlantNativePlantNativeId
-              }
+const name = 'userNativePlantSlice';
+
+export const addUserNative = createAsyncThunk(
+  `${name}/addUserNative`,
+  async (userNativePlantNativePlantNativeId: string) => {
+    const { attributes } = await Auth.currentAuthenticatedUser();
+    const createUserNativePlantInput: CreateUserNativePlantCMutationVariables =
+      {
+        input: {
+          projectNotes: '',
+          userNativePlantsEmail: attributes.email,
+          userNativePlantNativePlantNativeId
+        }
+      };
+    const graphQlResult = (await API.graphql(
+      graphqlOperation(createUserNativePlantC, createUserNativePlantInput)
+    )) as Awaited<Promise<GraphQLResult<CreateUserNativePlantCMutation>>>;
+
+    if (
+      graphQlResult.data?.createUserNativePlant?.user?.nativePlants?.items?.map
+    ) {
+      const nativePlants =
+        graphQlResult.data.createUserNativePlant.user.nativePlants.items.map(
+          (nativePlant) => {
+            const { projectNotes, id } = nativePlant || {};
+            if (
+              nativePlant?.nativePlant &&
+              typeof projectNotes === 'string' &&
+              id
+            ) {
+              const { __typename, ...noTypeName } = nativePlant.nativePlant;
+              return {
+                id,
+                projectNotes,
+                ...noTypeName
+              };
+            } else {
+              throw new Error('addUserNative: Unexpected result from API');
+            }
+          }
+        );
+
+      return { nativePlants };
+    } else {
+      throw new Error('addUserNative: Unexpected result from API');
+    }
+  }
+);
+
+export const updateUserNative = createAsyncThunk(
+  `${name}/updateUserNative`,
+  async (newUserNativeProperties: UpdateUserNativePlantInput) => {
+    const updateUserNativePlantInput: UpdateUserNativePlantCMutationVariables =
+      {
+        input: newUserNativeProperties
+      };
+    const graphQLResult = (await API.graphql(
+      graphqlOperation(updateUserNativePlantC, updateUserNativePlantInput)
+    )) as Awaited<Promise<GraphQLResult<UpdateUserNativePlantCMutation>>>;
+
+    if (
+      graphQLResult.data?.updateUserNativePlant?.user?.nativePlants?.items?.map
+    ) {
+      const nativePlants =
+        graphQLResult.data.updateUserNativePlant.user.nativePlants.items.map(
+          (nativePlant) => {
+            const { id, projectNotes } = nativePlant || {};
+            if (
+              nativePlant?.nativePlant &&
+              id &&
+              typeof projectNotes === 'string'
+            ) {
+              const { __typename, ...noTypeName } = nativePlant.nativePlant;
+              return {
+                id,
+                projectNotes,
+                ...noTypeName
+              };
+            } else {
+              throw new Error('updateUserNative: Unexpected result from API');
+            }
+          }
+        );
+      return { nativePlants };
+    } else {
+      throw new Error('updateUserNative: Unexpected result from API');
+    }
+  }
+);
+
+export const deleteUserNative = createAsyncThunk(
+  `${name}/deleteUserNative`,
+  async (userNativeId: string) => {
+    const deleteUserNativePlantInput: DeleteUserNativePlantCMutationVariables =
+      {
+        input: { id: userNativeId }
+      };
+    const graphQLResult = (await API.graphql(
+      graphqlOperation(deleteUserNativePlantC, deleteUserNativePlantInput)
+    )) as Awaited<Promise<GraphQLResult<DeleteUserNativePlantCMutation>>>;
+
+    if (
+      graphQLResult.data?.deleteUserNativePlant?.user?.nativePlants?.items?.map
+    ) {
+      const nativePlants =
+        graphQLResult.data.deleteUserNativePlant.user.nativePlants.items.map(
+          (nativePlant) => {
+            const { id, projectNotes } = nativePlant || {};
+
+            if (
+              nativePlant?.nativePlant &&
+              id &&
+              typeof projectNotes === 'string'
+            ) {
+              const { __typename, ...noTypeName } = nativePlant.nativePlant;
+              return {
+                id,
+                projectNotes: nativePlant?.projectNotes || '',
+                ...noTypeName
+              };
+            } else {
+              throw new Error('deleteUserNative: Unexpected result from API');
+            }
+          }
+        );
+
+      return { nativePlants };
+    } else {
+      throw new Error('deleteUserNative: Unexpected result from API');
+    }
+  }
+);
+
+export const getUserNatives = createAsyncThunk(
+  `${name}/getUserNatives`,
+  async () => {
+    const { attributes } = await Auth.currentAuthenticatedUser({
+      bypassCache: true
+    });
+    const getUserNativePlantsInput: GetUserNativePlantsQueryVariables = {
+      email: attributes.email
+    };
+    const graphQlResult = await (API.graphql(
+      graphqlOperation(getUserNativePlants, getUserNativePlantsInput)
+    ) as Promise<GraphQLResult<GetUserNativePlantsQuery>>);
+    if (graphQlResult.data?.getUser?.nativePlants?.items?.map) {
+      const nativePlants = graphQlResult.data.getUser.nativePlants.items.map(
+        (nativePlant) => {
+          const { id, projectNotes } = nativePlant || {};
+
+          if (
+            nativePlant?.nativePlant &&
+            id &&
+            typeof projectNotes === 'string'
+          ) {
+            const { __typename, ...noTypeName } = nativePlant.nativePlant;
+            return {
+              id,
+              projectNotes: nativePlant?.projectNotes || '',
+              ...noTypeName
             };
-          const graphQlResult = await (API.graphql(
-            graphqlOperation(createUserNativePlantC, createUserNativePlantInput)
-          ) as Promise<GraphQLResult<CreateUserNativePlantCMutation>>);
-          if (
-            graphQlResult.data?.createUserNativePlant?.user?.nativePlants?.items
-              ?.map
-          ) {
-            const nativePlants =
-              graphQlResult.data.createUserNativePlant.user.nativePlants.items.map(
-                (nativePlant) => {
-                  const { projectNotes, id } = nativePlant || {};
-                  if (
-                    nativePlant?.nativePlant &&
-                    typeof projectNotes === 'string' &&
-                    id
-                  ) {
-                    const { __typename, ...noTypeName } =
-                      nativePlant.nativePlant;
-                    return {
-                      id,
-                      projectNotes,
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'addUserNative: Unexpected result from API'
-                    );
-                  }
-                }
-              );
-
-            resolve({ nativePlants });
           } else {
-            throw new Error('addUserNative: Unexpected result from API');
+            throw new Error('getUserNatives: Unexpected result from API');
           }
-        })
-        .catch((err) => reject(err))
-    )
-  );
-};
+        }
+      );
 
-export const updateUserNative = (
-  newUserNativeProperties: UpdateUserNativePlantInput
-) => {
-  return userNativePlantSlice.actions.UPDATE_PROJECT_NOTES(
-    new Promise((resolve, reject) => {
-      const updateUserNativePlantInput: UpdateUserNativePlantCMutationVariables =
-        {
-          input: newUserNativeProperties
-        };
-      return (
-        API.graphql(
-          graphqlOperation(updateUserNativePlantC, updateUserNativePlantInput)
-        ) as Promise<GraphQLResult<UpdateUserNativePlantCMutation>>
-      )
-        .then((graphQlResult) => {
-          if (
-            graphQlResult.data?.updateUserNativePlant?.user?.nativePlants?.items
-              ?.map
-          ) {
-            const nativePlants =
-              graphQlResult.data.updateUserNativePlant.user.nativePlants.items.map(
-                (nativePlant) => {
-                  const { id, projectNotes } = nativePlant || {};
-                  if (
-                    nativePlant?.nativePlant &&
-                    id &&
-                    typeof projectNotes === 'string'
-                  ) {
-                    const { __typename, ...noTypeName } =
-                      nativePlant.nativePlant;
-                    return {
-                      id,
-                      projectNotes,
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'updateUserNative: Unexpected result from API'
-                    );
-                  }
-                }
-              );
-            resolve({ nativePlants });
-          } else {
-            reject(new Error('updateUserNative: Unexpected result from API'));
-          }
-        })
-        .catch((err) => reject(err));
-    })
-  );
-};
-export const deleteUserNative = (userNativeId: string) => {
-  return userNativePlantSlice.actions.REMOVE_USER_NATIVE(
-    new Promise((resolve, reject) => {
-      const deleteUserNativePlantInput: DeleteUserNativePlantCMutationVariables =
-        {
-          input: { id: userNativeId }
-        };
-      return (
-        API.graphql(
-          graphqlOperation(deleteUserNativePlantC, deleteUserNativePlantInput)
-        ) as Promise<GraphQLResult<DeleteUserNativePlantCMutation>>
-      )
-        .then((graphQlResult) => {
-          if (
-            graphQlResult.data?.deleteUserNativePlant?.user?.nativePlants?.items
-              ?.map
-          ) {
-            const nativePlants =
-              graphQlResult.data.deleteUserNativePlant.user.nativePlants.items.map(
-                (nativePlant) => {
-                  const { id, projectNotes } = nativePlant || {};
-
-                  if (
-                    nativePlant?.nativePlant &&
-                    id &&
-                    typeof projectNotes === 'string'
-                  ) {
-                    const { __typename, ...noTypeName } =
-                      nativePlant.nativePlant;
-                    return {
-                      id,
-                      projectNotes: nativePlant?.projectNotes || '',
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'deleteUserNative: Unexpected result from API'
-                    );
-                  }
-                }
-              );
-
-            resolve({ nativePlants });
-          } else {
-            reject(new Error('deleteUserNative: Unexpected result from API'));
-          }
-        })
-        .catch((err) => reject(err));
-    })
-  );
-};
-export const getUserNatives = () => {
-  return userNativePlantSlice.actions.GET_USER_NATIVES(
-    new Promise((resolve, reject) =>
-      Auth.currentAuthenticatedUser({
-        bypassCache: true
-      })
-        .then(async ({ attributes }) => {
-          const getUserNativePlantsInput: GetUserNativePlantsQueryVariables = {
-            email: attributes.email
-          };
-          const graphQlResult = await (API.graphql(
-            graphqlOperation(getUserNativePlants, getUserNativePlantsInput)
-          ) as Promise<GraphQLResult<GetUserNativePlantsQuery>>);
-          if (graphQlResult.data?.getUser?.nativePlants?.items?.map) {
-            const nativePlants =
-              graphQlResult.data.getUser.nativePlants.items.map(
-                (nativePlant) => {
-                  const { id, projectNotes } = nativePlant || {};
-
-                  if (
-                    nativePlant?.nativePlant &&
-                    id &&
-                    typeof projectNotes === 'string'
-                  ) {
-                    const { __typename, ...noTypeName } =
-                      nativePlant.nativePlant;
-                    return {
-                      id,
-                      projectNotes: nativePlant?.projectNotes || '',
-                      ...noTypeName
-                    };
-                  } else {
-                    throw new Error(
-                      'getUserNatives: Unexpected result from API'
-                    );
-                  }
-                }
-              );
-
-            resolve({ nativePlants });
-          } else {
-            reject(new Error('getUserNatives: Unexpected result from API'));
-          }
-        })
-        .catch((err) => reject(err))
-    )
-  );
-};
+      return { nativePlants };
+    } else {
+      throw new Error('getUserNatives: Unexpected result from API');
+    }
+  }
+);
 
 const userNativePlantSlice = createSlice({
-  name: 'userNativePlantSlice',
+  name,
   initialState,
-  reducers: {
-    ADD_USER_NATIVE: (
-      state,
-      action: PayloadAction<Promise<UserNativePayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    },
-    UPDATE_PROJECT_NOTES: (
-      state,
-      action: PayloadAction<Promise<UserNativePayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    },
-    REMOVE_USER_NATIVE: (
-      state,
-      action: PayloadAction<Promise<UserNativePayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    },
-    GET_USER_NATIVES: (
-      state,
-      action: PayloadAction<Promise<UserNativePayload>>
-    ) => {
-      console.log(
-        'Is payload a promise? -> ',
-        action.payload instanceof Promise
-      );
-      return state;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        (action) => isPending(action, userNativePlantSlice.name),
+        (action) => isPendingMatcher(action, userNativePlantSlice.name),
         pending
       )
       .addMatcher(
-        (action) => isFulfilled(action, userNativePlantSlice.name),
+        (action) => isFulfilledMatcher(action, userNativePlantSlice.name),
         fulfill
       )
       .addMatcher(
-        (action) => isRejected(action, userNativePlantSlice.name),
+        (action) => isRejectedMatcher(action, userNativePlantSlice.name),
         reject
       );
   }

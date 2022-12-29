@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { AppStore } from '../redux/store';
+import { AppStore, useAppDispatch } from '../redux/store';
 import { addUserNative } from '../redux/userNativePlantsSlice';
 import type { NativeThumbnailProps, UserNativeStateVersion } from '../types';
 
 export const NativeThumbnail: React.FC<NativeThumbnailProps> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     nativeId,
     commonName,

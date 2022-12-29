@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/store';
 import { NavProps } from '../types';
 
 export const Nav: React.FC<NavProps> = (props) => {
@@ -9,7 +9,7 @@ export const Nav: React.FC<NavProps> = (props) => {
   const { invertColors } = props;
   const [mobileOpenClose, setMobileOpenClose] = useState(false);
   const [weedOpenClose, setWeedOpenClose] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const logout = () => {
     Auth.signOut()
       .then(() => {

@@ -1,10 +1,10 @@
 import { Auth } from 'aws-amplify';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { UpdateUserInput } from '../API';
-import { AppDispatch, AppStore } from '../redux/store';
+import { AppStore, useAppDispatch } from '../redux/store';
 import { deleteUser, getUserInfo, updateUser } from '../redux/userSlice';
 import { ReduxConverter, UserState } from '../types';
 import {
@@ -26,7 +26,7 @@ enum ChangeCases {
 
 export const MyAccount: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const {
     emailRedux,

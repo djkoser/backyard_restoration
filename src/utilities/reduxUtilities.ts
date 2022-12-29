@@ -1,13 +1,22 @@
 import { AnyAction } from 'redux';
 
-export const isPending = (action: AnyAction, sliceName: string) => {
-  return action.type.includes('_PENDING') && action.type.includes(sliceName);
+export const isPendingMatcher = (
+  action: AnyAction,
+  sliceName: string
+): boolean => {
+  return action.type.includes('/pending') && action.type.includes(sliceName);
 };
 
-export const isRejected = (action: AnyAction, sliceName: string) => {
-  return action.type.includes('_REJECTED') && action.type.includes(sliceName);
+export const isRejectedMatcher = (
+  action: AnyAction,
+  sliceName: string
+): boolean => {
+  return action.type.includes('/rejected') && action.type.includes(sliceName);
 };
 
-export const isFulfilled = (action: AnyAction, sliceName: string) => {
-  return action.type.includes('_FULFILLED') && action.type.includes(sliceName);
+export const isFulfilledMatcher = (
+  action: AnyAction,
+  sliceName: string
+): boolean => {
+  return action.type.includes('/fulfilled') && action.type.includes(sliceName);
 };
