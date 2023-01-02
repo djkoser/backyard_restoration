@@ -68,11 +68,11 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
         });
       if (maxHeightInput)
         and!.push({
-          height: { le: maxHeightInput }
+          height: { le: Number(maxHeightInput) }
         });
       if (minHeightInput) {
         and!.push({
-          height: { ge: minHeightInput }
+          height: { ge: Number(minHeightInput) }
         });
       }
       if (bloomTimeInput) and!.push({ bloomTime: { eq: bloomTimeInput } });

@@ -3,7 +3,10 @@
   font-weight: bolder;
   margin-top: 30px;
 }
-
+#dashboardMain {
+  min-height: calc(100vh - 2 * $hFHeight);
+  @extend %columnFlex;
+}
 #dashboardDecoration {
   @extend %columnFlex;
   @extend %lightBlueBox;

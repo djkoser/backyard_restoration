@@ -69,7 +69,7 @@ type NativePlant
   commonName: String!
   moisture: String!
   sun: String!
-  height: String!
+  height: Int!
   bloomTime: String!
   src: String!
 }

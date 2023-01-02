@@ -54,12 +54,13 @@ export const EmailConfirmation: React.FC = () => {
           hardinessZone: ''
         }
       };
-      if (firstName) paramsToAdd.input.firstName = firstName;
-      if (lastName) paramsToAdd.input.lastName = lastName;
-      if (street) paramsToAdd.input.street = street;
-      if (city) paramsToAdd.input.city = city;
-      if (state) paramsToAdd.input.state = state;
-      if (zipcode) paramsToAdd.input.zipcode = zipcode;
+      const { input } = paramsToAdd;
+      if (firstName) input.firstName = firstName;
+      if (lastName) input.lastName = lastName;
+      if (street) input.street = street;
+      if (city) input.city = city;
+      if (state) input.state = state;
+      if (zipcode) input.zipcode = zipcode;
       await API.graphql(graphqlOperation(createUserC, paramsToAdd));
 
       if (zipcode && street && city && state) {
@@ -147,99 +148,103 @@ export const EmailConfirmation: React.FC = () => {
     }
   };
 
-  return loading ? (
+  return (
     <>
       <ToastContainer />
-      <WeatherLoader noText={false} />
-    </>
-  ) : (
-    <>
-      <ToastContainer />
-      <section
-        id="registerBody"
-        style={loading ? { visibility: 'hidden' } : { visibility: 'visible' }}
-      >
-        <form id="registerForm">
-          <section className="registerSections">
-            <h3 className="registerSectionText">Confirmation Code</h3>
-            <br />
-            <h4 style={{ color: 'black' }}>
-              Please enter the confirmation we sent you here
-            </h4>
-            <br />
-            <input
-              placeholder="Confirmation Code"
-              type="text"
-              value={confirmationCode}
-              onChange={(e) => {
-                localStateHelper({ confirmationCode: e.target.value });
-              }}
-            ></input>
-          </section>
-          <section className="registerSections">
-            <h3 className="registerSectionText">Address</h3>
-            <input
-              placeholder="Street"
-              type="text"
-              value={street}
-              onChange={(e) => {
-                localStateHelper({ street: e.target.value });
-              }}
-            ></input>
-            <input
-              placeholder="City"
-              type="text"
-              value={city}
-              onChange={(e) => {
-                localStateHelper({ city: e.target.value });
-              }}
-            ></input>
-            <input
-              placeholder="State"
-              type="text"
-              value={state}
-              onChange={(e) => {
-                localStateHelper({ state: e.target.value });
-              }}
-            ></input>
-            <input
-              placeholder="Zipcode"
-              type="text"
-              value={zipcode}
-              onChange={(e) => {
-                localStateHelper({ zipcode: e.target.value });
-              }}
-            ></input>
-          </section>
-          <button
-            onClick={(e) => {
-              void confirmUser(e);
-            }}
-          >
-            Complete Registration
-          </button>
-          <button
-            onClick={(e) => {
-              void cancelRegistration(e);
-            }}
-          >
-            Cancel Registration
-          </button>
-        </form>
-        <article className="registerWelcomeText">
-          <h1>Welcome to Our Community!</h1>
-          <h4>
-            Your address will be used to calculate growing parameters for your
-            local area using historical weather data.
-          </h4>
-          <h4>
-            BackyardRestoration.net was built with modern security protocols,
-            but if you have any privacy concerns with providing your address,
-            please leave this information blank and you will be prompted to
-            manually enter your: season start-date, season end-date and
-            hardiness zone on the next page.
-          </h4>
-        </article>
+      <section id="registerBody">
+        <WeatherLoader
+          loadingOverride={loading}
+          text={`Calculating growing parameters for your location based upon 10 years of
+        local weather data, courtesy of the National Oceanic and Atmospheric
+        Administration (NOAA). This could take several minutes depending on
+        server traffic.`}
+          invertColors={true}
+        />
+        {loading ? null : (
+          <>
+            <form id="registerForm">
+              <section className="registerSections">
+                <h3 className="registerSectionText">Confirmation Code</h3>
+                <br />
+                <h4 style={{ color: 'black' }}>
+                  Please enter the confirmation we sent you here
+                </h4>
+                <br />
+                <input
+                  placeholder="Confirmation Code"
+                  type="text"
+                  value={confirmationCode}
+                  onChange={(e) => {
+                    localStateHelper({ confirmationCode: e.target.value });
+                  }}
+                ></input>
+              </section>
+              <section className="registerSections">
+                <h3 className="registerSectionText">Address</h3>
+                <input
+                  placeholder="Street"
+                  type="text"
+                  value={street}
+                  onChange={(e) => {
+                    localStateHelper({ street: e.target.value });
+                  }}
+                ></input>
+                <input
+                  placeholder="City"
+                  type="text"
+                  value={city}
+                  onChange={(e) => {
+                    localStateHelper({ city: e.target.value });
+                  }}
+                ></input>
+                <input
+                  placeholder="State"
+                  type="text"
+                  value={state}
+                  onChange={(e) => {
+                    localStateHelper({ state: e.target.value });
+                  }}
+                ></input>
+                <input
+                  placeholder="Zipcode"
+                  type="text"
+                  value={zipcode}
+                  onChange={(e) => {
+                    localStateHelper({ zipcode: e.target.value });
+                  }}
+                ></input>
+              </section>
+              <button
+                onClick={(e) => {
+                  void confirmUser(e);
+                }}
+              >
+                Complete Registration
+              </button>
+              <button
+                onClick={(e) => {
+                  void cancelRegistration(e);
+                }}
+              >
+                Cancel Registration
+              </button>
+            </form>
+            <article className="registerWelcomeText">
+              <h1>Welcome to Our Community!</h1>
+              <h4>
+                Your address will be used to calculate growing parameters for
+                your local area using historical weather data.
+              </h4>
+              <h4>
+                BackyardRestoration.net was built with modern security
+                protocols, but if you have any privacy concerns with providing
+                your address, please leave this information blank and you will
+                be prompted to manually enter your: season start-date, season
+                end-date and hardiness zone on the next page.
+              </h4>
+            </article>
+          </>
+        )}
       </section>
       <Link id="backToLoginLink" to={'/'}>
         Back to Login

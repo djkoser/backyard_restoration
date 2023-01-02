@@ -115,10 +115,15 @@ export const WeedSearch: React.FC = () => {
     <Thumbnail key={el.weedId} weedInfo={el} />
   ));
 
-  const output = (
+  return (
     <>
       <Nav invertColors={true} />
       <main id="weedSearchBody">
+        <WeatherLoader
+          loadingOverride={loading}
+          invertColors={true}
+          text={''}
+        />
         <form id="weedSearchForm">
           <input
             type="text"
@@ -150,14 +155,5 @@ export const WeedSearch: React.FC = () => {
       </main>
       <Footer />
     </>
-  );
-
-  return loading ? (
-    <>
-      <WeatherLoader noText={true} />
-      <h3>Loading, Please Wait</h3>
-    </>
-  ) : (
-    output
   );
 };

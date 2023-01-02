@@ -49,12 +49,11 @@ export interface ThumbnailProps {
 export interface TimelineProps {
   width: number;
   height: number;
-  firstGdd45: string;
-  lastGdd45: string;
   margin: { left: number; right: number; top: number; bottom: number };
-  userMethods: UserManagementMethodStateVersion[];
 }
 
 export interface WeatherLoaderProps {
-  noText: boolean;
+  text?: string;
+  loadingOverride?: boolean;
+  invertColors?: boolean;
 }

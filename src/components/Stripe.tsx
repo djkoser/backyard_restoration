@@ -66,15 +66,11 @@ export const Stripe: React.FC = () => {
     }
   };
 
-  return loading ? (
-    <>
-      <WeatherLoader noText={true} />
-      <ToastContainer />
-    </>
-  ) : (
+  return (
     <>
       <Nav invertColors={false} />
       <ToastContainer />
+      <WeatherLoader loadingOverride={loading} />
       <div id="donationBox">
         <h2>Thank you for your donation!</h2>
         <h4>

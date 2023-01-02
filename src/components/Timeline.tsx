@@ -2,11 +2,41 @@
 
 import * as d3 from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
-import { TimelineProps, UserManagementMethodStateVersion } from '../types';
+import { useSelector } from 'react-redux';
+import { AppStore } from '../redux/store';
+import {
+  TimelineProps,
+  UserManagementMethodStateVersion,
+  UserMethodState,
+  UserState
+} from '../types';
 
 // From store userMethods[], gSeasonLength, firstGDD35
 
-export const Timeline: React.FC<TimelineProps> = (props) => {
+export const Timeline: React.FC<TimelineProps> = ({
+  width,
+  height,
+  margin
+}) => {
+  const { firstGdd45, lastGdd45, userMethods } = useSelector<
+    AppStore,
+    Pick<
+      UserState,
+      'hardinessZone' | 'growingSeasonLength' | 'firstGdd45' | 'lastGdd45'
+    > &
+      Pick<UserMethodState, 'userMethods'>
+  >((state) => {
+    const { hardinessZone, growingSeasonLength, firstGdd45, lastGdd45 } =
+      state.userInfo;
+
+    return {
+      hardinessZone,
+      growingSeasonLength,
+      firstGdd45,
+      lastGdd45,
+      userMethods: state.userMethod.userMethods
+    };
+  });
   // Calculates a year as January 1st through December 31st, this will the be axis display range
   const currentDate = new Date();
   const yrEndDate = new Date(currentDate.getFullYear(), 11, 31);
@@ -29,9 +59,6 @@ export const Timeline: React.FC<TimelineProps> = (props) => {
     'november',
     'december'
   ] as const;
-
-  // Create chart view box width and height variables
-  const { width, height, firstGdd45, lastGdd45, margin, userMethods } = props;
 
   const colorGenerator = () => {
     const output = [];

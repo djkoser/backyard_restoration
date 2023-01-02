@@ -4,7 +4,7 @@
     "botanicalName": "Achillea millefolium",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "21",
+    "height": 21,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/common-yarrow_0619_083615a-t.jpg",
     "nativeId": 1
@@ -14,7 +14,7 @@
     "botanicalName": "Acorus americanus",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/green/acorus-americanus-sweet-flag_0627_160830a-t.jpg",
     "nativeId": 2
@@ -24,7 +24,7 @@
     "botanicalName": "Actaea rubra",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/red-baneberry-100_4337a-t.jpg",
     "nativeId": 3
@@ -34,7 +34,7 @@
     "botanicalName": "Adiantum pedatum",
     "moisture": "Mesic",
     "sun": "Full Shade",
-    "height": "12",
+    "height": 12,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/adiantum-pedatum-4a-t.jpg",
     "nativeId": 4
@@ -44,7 +44,7 @@
     "botanicalName": "Agastache foeniculum",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/blue-giant-hyssop_0703_170347a-t.jpg",
     "nativeId": 5
@@ -54,7 +54,7 @@
     "botanicalName": "Ageratina altissima",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/white-snakeroot-100_1943a-t.jpg",
     "nativeId": 6
@@ -64,7 +64,7 @@
     "botanicalName": "Alisma subcordatum",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.agrecol.com/thumbnail.asp?file=assets/images/store%20images/alisub%206001.jpg&maxx=300&maxy=0",
     "nativeId": 7
@@ -74,7 +74,7 @@
     "botanicalName": "Alisma triviale",
     "moisture": "Wet",
     "sun": "Full",
-    "height": "23",
+    "height": 23,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/northern-water-plantain_0726_151720a-t.jpg",
     "nativeId": 8
@@ -84,7 +84,7 @@
     "botanicalName": "Allium canadense",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/allium-canadense-13a-t.jpg",
     "nativeId": 9
@@ -94,7 +94,7 @@
     "botanicalName": "Allium stellatum",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/prairie-onion_0727_090929a-t.jpg",
     "nativeId": 10
@@ -104,7 +104,7 @@
     "botanicalName": "Allium tricoccum",
     "moisture": "Mesic, Wet",
     "sun": "Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/green/wild-leek_0628_102850a-t.jpg",
     "nativeId": 11
@@ -114,7 +114,7 @@
     "botanicalName": "Anaphalis margaritacea",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/pearly-everlasting_0731_111848a-t.jpg",
     "nativeId": 12
@@ -124,7 +124,7 @@
     "botanicalName": "Andropogon gerardii",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "72",
+    "height": 72,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/andropogon-gerardii-big-bluestem_0727_104452a-t.jpg",
     "nativeId": 13
@@ -134,7 +134,7 @@
     "botanicalName": "Anemone canadensis",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/canada-anemone-100_7010a-t.jpg",
     "nativeId": 14
@@ -144,7 +144,7 @@
     "botanicalName": "Anemone cylindrica",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/thimbleweed_0704_102728a-t.jpg",
     "nativeId": 15
@@ -154,7 +154,7 @@
     "botanicalName": "Anemone patens",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/pulsatilla-nuttalliana-9275-10a-t.jpg",
     "nativeId": 16
@@ -164,7 +164,7 @@
     "botanicalName": "Anemone quinquefolia",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/wood-anemone-100_3961a-t.jpg",
     "nativeId": 17
@@ -174,7 +174,7 @@
     "botanicalName": "Anemone virginiana",
     "moisture": "Dry",
     "sun": "Full, Partial, Full Shade",
-    "height": "26",
+    "height": 26,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/tall-thimbleweed_0718_141935a-t.jpg",
     "nativeId": 18
@@ -184,7 +184,7 @@
     "botanicalName": "Antennaria neglecta",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "3",
+    "height": 3,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/field-pussytoes_0524_124308a-t.jpg",
     "nativeId": 19
@@ -194,7 +194,7 @@
     "botanicalName": "Anthoxanthum hirtum",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/anthoxanthum-hirtum-15-3a-t.jpg",
     "nativeId": 20
@@ -204,7 +204,7 @@
     "botanicalName": "Apocynum androsaemifolium",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/spreading-dogbane_0704_092141a-t.jpg",
     "nativeId": 21
@@ -214,7 +214,7 @@
     "botanicalName": "Aquilegia canadensis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial, Full Shade",
-    "height": "12",
+    "height": 12,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/red/red-columbine-100_5791a-t.jpg",
     "nativeId": 22
@@ -224,7 +224,7 @@
     "botanicalName": "Aralia nudicaulis",
     "moisture": "Any",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/wild-sarsaparilla-100_5924a-t.jpg",
     "nativeId": 23
@@ -234,7 +234,7 @@
     "botanicalName": "Aralia racemosa",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/aralia-racemosa-4a-t.jpg",
     "nativeId": 24
@@ -244,7 +244,7 @@
     "botanicalName": "Arisaema triphyllum",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/green/jack-in-the-pulpit-100_5034a-t.jpg",
     "nativeId": 25
@@ -254,7 +254,7 @@
     "botanicalName": "Artemisia ludoviciana",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/green/white-sage_0822_084813a-t.jpg",
     "nativeId": 26
@@ -264,7 +264,7 @@
     "botanicalName": "Asarum canadense",
     "moisture": "Mesic, Wet",
     "sun": "Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/other/wild-ginger_0504_125543a-t.jpg",
     "nativeId": 27
@@ -274,7 +274,7 @@
     "botanicalName": "Asclepias incarnata",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/swamp-milkweed-000_0151a-t.jpg",
     "nativeId": 28
@@ -284,7 +284,7 @@
     "botanicalName": "Asclepias syriaca",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/common-milkweed_0627_160427a-t.jpg",
     "nativeId": 29
@@ -294,7 +294,7 @@
     "botanicalName": "Asclepias tuberosa",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/orange/butterfly-weed-100_0763a-t.jpg",
     "nativeId": 30
@@ -304,7 +304,7 @@
     "botanicalName": "Asclepias verticillata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/whorled-milkweed_0719_125048a-t.jpg",
     "nativeId": 31
@@ -314,7 +314,7 @@
     "botanicalName": "Astragalus canadensis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/canada-milkvetch_0729_113413a-t.jpg",
     "nativeId": 32
@@ -324,7 +324,7 @@
     "botanicalName": "Athyrium filix-femina",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/ferns/lady-fern_0429_131021a-t.jpg",
     "nativeId": 33
@@ -334,7 +334,7 @@
     "botanicalName": "Baptisia alba",
     "moisture": "Mesic",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/baptisia-lactea-a-t.jpg",
     "nativeId": 34
@@ -344,7 +344,7 @@
     "botanicalName": "Beckmannia syzigachne",
     "moisture": "Wet",
     "sun": "Full",
-    "height": "22",
+    "height": 22,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/beckmannia-syzigachne-15c-1a-t.jpg",
     "nativeId": 35
@@ -354,7 +354,7 @@
     "botanicalName": "Bidens cernua",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "21",
+    "height": 21,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/nodding-bur-marigold-0914_113202a-t.jpg",
     "nativeId": 36
@@ -364,7 +364,7 @@
     "botanicalName": "Bidens frondosa",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/orange/devils-beggarticks_0903_153702a-t.jpg",
     "nativeId": 37
@@ -374,7 +374,7 @@
     "botanicalName": "Bolboschoenus fluviatilis",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "60",
+    "height": 60,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/bolboschoenus-fluviatilis-071516-8a-t.jpg",
     "nativeId": 38
@@ -384,7 +384,7 @@
     "botanicalName": "Bouteloua curtipendula",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/bouteloua-curtipendula-side-oats-grama_0809_184657-t.jpg",
     "nativeId": 39
@@ -394,7 +394,7 @@
     "botanicalName": "Bouteloua gracilis",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/bouteloua-gracilis-1a-t.jpg",
     "nativeId": 40
@@ -404,7 +404,7 @@
     "botanicalName": "Bouteloua hirsuta",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "12",
+    "height": 12,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/bouteloua-hirsuta-hairy-grama_0724_112209a-t.jpg",
     "nativeId": 41
@@ -414,7 +414,7 @@
     "botanicalName": "Bromus ciliatus",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/bromus-ciliatus-78793-4a-t.jpg",
     "nativeId": 42
@@ -424,7 +424,7 @@
     "botanicalName": "Bromus kalmii",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/bromus-kalmii-kalms-brome_0801_130627a-t.jpg",
     "nativeId": 43
@@ -434,7 +434,7 @@
     "botanicalName": "Calamagrostis canadensis",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "60",
+    "height": 60,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/calamagrostis-canadensis-80413-7a-t.jpg",
     "nativeId": 44
@@ -444,7 +444,7 @@
     "botanicalName": "Caltha palustris",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/marsh-marigold-100_4138a-t.jpg",
     "nativeId": 45
@@ -454,7 +454,7 @@
     "botanicalName": "Calylophus serrulatus",
     "moisture": "Dry",
     "sun": "Full",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/yellow-sundrops_0711_130040a-t.jpg",
     "nativeId": 46
@@ -464,7 +464,7 @@
     "botanicalName": "Campanula rotundifolia",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/harebell_0629_095742a-t.jpg",
     "nativeId": 47
@@ -474,7 +474,7 @@
     "botanicalName": "Carex bebbii",
     "moisture": "Wet",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.agrecol.com/thumbnail.asp?file=assets/images/store%20images/carbeb%206001.jpg&maxx=300&maxy=0",
     "nativeId": 48
@@ -484,7 +484,7 @@
     "botanicalName": "Carex brevior",
     "moisture": "Any",
     "sun": "Full, Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-brevior_0710_173314a-t.jpg",
     "nativeId": 49
@@ -494,7 +494,7 @@
     "botanicalName": "Carex comosa",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-comosa-8377-5a-t.jpg",
     "nativeId": 50
@@ -504,7 +504,7 @@
     "botanicalName": "Carex crinita",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-crinita-2175-3a-t.jpg",
     "nativeId": 51
@@ -514,7 +514,7 @@
     "botanicalName": "Carex deweyana",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-deweyana-6911-4a-t.jpg",
     "nativeId": 52
@@ -524,7 +524,7 @@
     "botanicalName": "Carex gracillima",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-gracillima-2149-14a-t.jpg",
     "nativeId": 53
@@ -534,7 +534,7 @@
     "botanicalName": "Carex grisea",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "12",
+    "height": 12,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-grisea-246a-t.jpg",
     "nativeId": 54
@@ -544,7 +544,7 @@
     "botanicalName": "Carex hystericina",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "25",
+    "height": 25,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-hystericina-0303-2a-t.jpg",
     "nativeId": 55
@@ -554,7 +554,7 @@
     "botanicalName": "Carex lacustris",
     "moisture": "Wet, Emergent",
     "sun": "Partial, Full Shade",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-lacustris-061516-3a-t.jpg",
     "nativeId": 56
@@ -564,7 +564,7 @@
     "botanicalName": "Carex lupulina",
     "moisture": "Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-lupulina-8120074-2a-t.jpg",
     "nativeId": 57
@@ -574,7 +574,7 @@
     "botanicalName": "Carex pensylvanica",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial, Full Shade",
-    "height": "7",
+    "height": 7,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-pensylvanica-pennsylvania-sedge_0516_132311a-t.jpg",
     "nativeId": 58
@@ -584,7 +584,7 @@
     "botanicalName": "Carex radiata",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-radiata_0612_085753a-t.jpg",
     "nativeId": 59
@@ -594,7 +594,7 @@
     "botanicalName": "Carex retrorsa",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-retrorsa-7210090-5a-t.jpg",
     "nativeId": 60
@@ -604,7 +604,7 @@
     "botanicalName": "Carex rosea",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-rosea-052717-1a-t.jpg",
     "nativeId": 61
@@ -614,7 +614,7 @@
     "botanicalName": "Carex scoparia",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-scoparia_0627_093014a-t.jpg",
     "nativeId": 62
@@ -624,7 +624,7 @@
     "botanicalName": "Carex sprengelii",
     "moisture": "Any",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-sprengelii-sprengels-sedge_0515_110628a-t.jpg",
     "nativeId": 63
@@ -634,7 +634,7 @@
     "botanicalName": "Carex stipata",
     "moisture": "Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-stipata_0701_171820a-t.jpg",
     "nativeId": 64
@@ -644,7 +644,7 @@
     "botanicalName": "Carex stricta",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/carex-stricta-6250481-3a-t.jpg",
     "nativeId": 65
@@ -654,7 +654,7 @@
     "botanicalName": "Carex utriculata",
     "moisture": "Mesic, Wet",
     "sun": "Full",
-    "height": "25",
+    "height": 25,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-utriculata_0718_175747a-t.jpg",
     "nativeId": 66
@@ -664,7 +664,7 @@
     "botanicalName": "Carex vulpinoidea",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/carex-vulpinoidea_0627_182625a-t.jpg",
     "nativeId": 67
@@ -674,7 +674,7 @@
     "botanicalName": "Chamaecrista fasciculata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "21",
+    "height": 21,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/chamaecrista-fasciculata-002a-t.jpg",
     "nativeId": 68
@@ -684,7 +684,7 @@
     "botanicalName": "Chelone glabra",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "0",
+    "height": 0,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/white-turtlehead_0905_143459a-t.jpg",
     "nativeId": 69
@@ -694,7 +694,7 @@
     "botanicalName": "Claytonia virginica",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/spring-beauty_0504_110554a-t.jpg",
     "nativeId": 70
@@ -704,7 +704,7 @@
     "botanicalName": "Clintonia borealis",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/bluebead_0608_105635a-t.jpg",
     "nativeId": 71
@@ -714,7 +714,7 @@
     "botanicalName": "Coreopsis palmata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/prairie-coreopsis-100_0939a-t.jpg",
     "nativeId": 72
@@ -724,7 +724,7 @@
     "botanicalName": "Cornus canadensis",
     "moisture": "Any",
     "sun": "Partial, Full Shade",
-    "height": "8",
+    "height": 8,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/cornus-canadensis-31a-t.jpg",
     "nativeId": 73
@@ -734,7 +734,7 @@
     "botanicalName": "Dalea candida",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/dalea-candida-white-prairie-clover_0711_165305a-t.jpg",
     "nativeId": 74
@@ -744,7 +744,7 @@
     "botanicalName": "Dalea purpurea",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/dalea-purpurea-11a-t.jpg",
     "nativeId": 75
@@ -754,7 +754,7 @@
     "botanicalName": "Dalea villosa",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/dalea-villosa-silky-prairie-clover_0727_103757a-t.jpg",
     "nativeId": 76
@@ -764,7 +764,7 @@
     "botanicalName": "Danthonia spicata",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/danthonia-spicata-073016-1a-t.jpg",
     "nativeId": 77
@@ -774,7 +774,7 @@
     "botanicalName": "Delphinium virescens",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.hortmag.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY4OTExNDI5MzM2Mzc3MDQw/image-placeholder-title.jpg",
     "nativeId": 78
@@ -784,7 +784,7 @@
     "botanicalName": "Deschampsia cespitosa",
     "moisture": "Mesic",
     "sun": "Full",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/deschampsia-cespitosa-71214-2a-t.jpg",
     "nativeId": 79
@@ -794,7 +794,7 @@
     "botanicalName": "Desmodium canadense",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/showy-tick-trefoil_0719_123737a-t.jpg",
     "nativeId": 80
@@ -804,7 +804,7 @@
     "botanicalName": "Doellingeria umbellata",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "60",
+    "height": 60,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/doellingeria-umbellata-3a-t.jpg",
     "nativeId": 81
@@ -814,7 +814,7 @@
     "botanicalName": "Drymocallis arguta",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/tall-cinquefoil_0711_172910a-t.jpg",
     "nativeId": 82
@@ -824,7 +824,7 @@
     "botanicalName": "Echinacea angustifolia",
     "moisture": "Dry",
     "sun": "Full",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/echinacea-angustifolium-5a-t.jpg",
     "nativeId": 83
@@ -834,7 +834,7 @@
     "botanicalName": "Eleocharis obtusa",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/eleocharis-obtusa-2a-t.jpg",
     "nativeId": 84
@@ -844,7 +844,7 @@
     "botanicalName": "Elymus canadensis",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/elymus-canadensis-canada-wild-rye_0904_175946a-t.jpg",
     "nativeId": 85
@@ -854,7 +854,7 @@
     "botanicalName": "Elymus hystrix",
     "moisture": "Any",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/elymus-hystrix-bottlebrush-grass_0719_100543a-t.jpg",
     "nativeId": 86
@@ -864,7 +864,7 @@
     "botanicalName": "Elymus trachycaulus",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/elymus-trachycaulus-1414-11a-t.jpg",
     "nativeId": 87
@@ -874,7 +874,7 @@
     "botanicalName": "Elymus villosus",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "28",
+    "height": 28,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/elymus-villosus-071317-2a-t.jpg",
     "nativeId": 88
@@ -884,7 +884,7 @@
     "botanicalName": "Elymus virginicus",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/elymus-virginicus-072717-5a-t.jpg",
     "nativeId": 89
@@ -894,7 +894,7 @@
     "botanicalName": "Enemion biternatum",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "7",
+    "height": 7,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/false-rue-anemone_0504_104012a-t.jpg",
     "nativeId": 90
@@ -904,7 +904,7 @@
     "botanicalName": "Epilobium angustifolium",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/epilobium-angustifolium-9758-2a-t.jpg",
     "nativeId": 91
@@ -914,7 +914,7 @@
     "botanicalName": "Eragrostis spectabilis",
     "moisture": "Dry, Mesic",
     "sun": "Full",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/eragrostis-spectabilis-08095a-t.jpg",
     "nativeId": 92
@@ -924,7 +924,7 @@
     "botanicalName": "Eryngium yuccifolium",
     "moisture": "Any",
     "sun": "Full",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/rattlesnake-master_0718_152622a-t.jpg",
     "nativeId": 93
@@ -934,7 +934,7 @@
     "botanicalName": "Eupatorium perfoliatum",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/eupatorium-perfoliatum-common-boneset_0824_164409a-t.jpg",
     "nativeId": 94
@@ -944,7 +944,7 @@
     "botanicalName": "Euphorbia corollata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/euphorbia-corollata-12-7a-t.jpg",
     "nativeId": 95
@@ -954,7 +954,7 @@
     "botanicalName": "Eurybia macrophylla",
     "moisture": "Any",
     "sun": "Full, Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/eurybia-macrophylla-large-leaf-aster_0923_145813a-t.jpg",
     "nativeId": 96
@@ -964,7 +964,7 @@
     "botanicalName": "Euthamia graminifolia",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/euthamia-graminifolia-3a-t.jpg",
     "nativeId": 97
@@ -974,7 +974,7 @@
     "botanicalName": "Eutrochium maculatum",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "31",
+    "height": 31,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/joe-pye-weed-100_2460a-t.jpg",
     "nativeId": 98
@@ -984,7 +984,7 @@
     "botanicalName": "Fragaria virginiana",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "3",
+    "height": 3,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/fragaria-virginiana-12a-t.jpg",
     "nativeId": 99
@@ -994,7 +994,7 @@
     "botanicalName": "Gaillardia aristata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "21",
+    "height": 21,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/gaillardia-aristata_702987-8a-t.jpg",
     "nativeId": 100
@@ -1004,7 +1004,7 @@
     "botanicalName": "Galium boreale",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/northern-bedstraw-100_8682a-t.jpg",
     "nativeId": 101
@@ -1014,7 +1014,7 @@
     "botanicalName": "Gentiana andrewsii",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/bottle-gentian-100_3786a-t.jpg",
     "nativeId": 102
@@ -1024,7 +1024,7 @@
     "botanicalName": "Gentiana flavida",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/gentiana-flavida-6-4a-t.jpg",
     "nativeId": 103
@@ -1034,7 +1034,7 @@
     "botanicalName": "Geranium maculatum",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial, Full Shade",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/geranium-maculatum-7029598-2-t.jpg",
     "nativeId": 104
@@ -1044,7 +1044,7 @@
     "botanicalName": "Geum aleppicum",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/yellow-avens_0627_180035a-t.jpg",
     "nativeId": 105
@@ -1054,7 +1054,7 @@
     "botanicalName": "Geum rivale",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/geum-rivale-83498-1a-t.jpg",
     "nativeId": 106
@@ -1064,7 +1064,7 @@
     "botanicalName": "Geum triflorum",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "7",
+    "height": 7,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/red/prairie-smoke-100_4690a-t.jpg",
     "nativeId": 107
@@ -1074,7 +1074,7 @@
     "botanicalName": "Glyceria canadensis",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/glyceria-canadensis_0813_134506a-t.jpg",
     "nativeId": 108
@@ -1084,7 +1084,7 @@
     "botanicalName": "Glyceria grandis",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "60",
+    "height": 60,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/glyceria-grandis-14-9a-t.jpg",
     "nativeId": 109
@@ -1094,7 +1094,7 @@
     "botanicalName": "Glyceria striata",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/glyceria-striata_0721_104719a-t.jpg",
     "nativeId": 110
@@ -1104,7 +1104,7 @@
     "botanicalName": "Helenium autumnale",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/sneezeweed-100_3111a-t.jpg",
     "nativeId": 111
@@ -1114,7 +1114,7 @@
     "botanicalName": "Helianthus giganteus",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "78",
+    "height": 78,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/giant-sunflower-0803_111031a-t.jpg",
     "nativeId": 112
@@ -1124,7 +1124,7 @@
     "botanicalName": "Helianthus grosseserratus",
     "moisture": "Mesic",
     "sun": "Full, Partial",
-    "height": "72",
+    "height": 72,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/sawtooth-sunflower_0827_114308a-t.jpg",
     "nativeId": 113
@@ -1134,7 +1134,7 @@
     "botanicalName": "Helianthus hirsutus",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial, Full Shade",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.dropseednursery.com/wp-content/uploads/2015/07/helianthus-hirsutus-1000x1000.jpg",
     "nativeId": 114
@@ -1144,7 +1144,7 @@
     "botanicalName": "Helianthus maximiliani",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/maximilians-sunflower_0919_160603a-t.jpg",
     "nativeId": 115
@@ -1154,7 +1154,7 @@
     "botanicalName": "Helianthus pauciflorus",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/stiff-sunflower_0822_084204a-t.jpg",
     "nativeId": 116
@@ -1164,7 +1164,7 @@
     "botanicalName": "Heliopsis helianthoides",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/smooth-oxeye-0623_110557a-t.jpg",
     "nativeId": 117
@@ -1174,7 +1174,7 @@
     "botanicalName": "Heterotheca villosa",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/heterotheca-villosa-98098a-t.jpg",
     "nativeId": 118
@@ -1184,7 +1184,7 @@
     "botanicalName": "Heuchera richardsonii",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/green/prairie-alumroot_0608_122628a-t.jpg",
     "nativeId": 119
@@ -1194,7 +1194,7 @@
     "botanicalName": "Houstonia longifolia",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/long-leaved-bluets_0614_130220a-t.jpg",
     "nativeId": 120
@@ -1204,7 +1204,7 @@
     "botanicalName": "Hydrophyllum virginianum",
     "moisture": "Any",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/virginia-waterleaf_0606_154839a-t.jpg",
     "nativeId": 121
@@ -1214,7 +1214,7 @@
     "botanicalName": "Hypericum pyramidatum",
     "moisture": "Mesic, Wet",
     "sun": "Full",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/great-st-johnswort_0719_114601a-t.jpg",
     "nativeId": 122
@@ -1224,7 +1224,7 @@
     "botanicalName": "Iris versicolor",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/iris-versicolor-6a-t.jpg",
     "nativeId": 123
@@ -1234,7 +1234,7 @@
     "botanicalName": "Juncus dudleyi",
     "moisture": "Mesic, Wet",
     "sun": "Full",
-    "height": "16",
+    "height": 16,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/juncus-dudleyi_0710_175351a-t.jpg",
     "nativeId": 124
@@ -1244,7 +1244,7 @@
     "botanicalName": "Juncus effusus",
     "moisture": "Mesic, Wet",
     "sun": "Full",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/juncus-effusus_0813_114107a-t.jpg",
     "nativeId": 125
@@ -1254,7 +1254,7 @@
     "botanicalName": "Juncus greenei",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/juncus-greenei-32_0713_132642a-t.jpg",
     "nativeId": 126
@@ -1264,7 +1264,7 @@
     "botanicalName": "Juncus tenuis",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/juncus-tenuis_0724_115631a-t.jpg",
     "nativeId": 127
@@ -1274,7 +1274,7 @@
     "botanicalName": "Koeleria macrantha",
     "moisture": "Dry",
     "sun": "Full",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/koeleria-macrantha-42987-2a-t.jpg",
     "nativeId": 128
@@ -1284,7 +1284,7 @@
     "botanicalName": "Krigia biflora",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/krigia-biflora-10-18a-t.jpg",
     "nativeId": 129
@@ -1294,7 +1294,7 @@
     "botanicalName": "Leersia oryzoides",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/leersia-oryzoides-15-23a-t.jpg",
     "nativeId": 130
@@ -1304,7 +1304,7 @@
     "botanicalName": "Lespedeza capitata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/lespedeza-capitata-round-headed-bush-clover-100_2683a-t.jpg",
     "nativeId": 131
@@ -1314,7 +1314,7 @@
     "botanicalName": "Liatris aspera",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/rough-blazing-star-0728_085410a-t.jpg",
     "nativeId": 132
@@ -1324,7 +1324,7 @@
     "botanicalName": "Liatris cylindracea",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/liatris-cylindracea-12-7a-t.jpg",
     "nativeId": 133
@@ -1334,7 +1334,7 @@
     "botanicalName": "Liatris ligulistylis",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/liatris-ligulistylis-22a-t.jpg",
     "nativeId": 134
@@ -1344,7 +1344,7 @@
     "botanicalName": "Liatris punctata",
     "moisture": "Dry",
     "sun": "Full",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/dotted-blazing-star_0811_074849a-t.jpg",
     "nativeId": 135
@@ -1354,7 +1354,7 @@
     "botanicalName": "Liatris pycnostachya",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/prairie-blazing-star_0727_123233a-t.jpg",
     "nativeId": 136
@@ -1364,7 +1364,7 @@
     "botanicalName": "Lilium michiganense",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/orange/michigan-lily_0724_154824a-t.jpg",
     "nativeId": 137
@@ -1374,7 +1374,7 @@
     "botanicalName": "Lithospermum caroliniense",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/orange/hairy-puccoon_0529_153342a-t.jpg",
     "nativeId": 138
@@ -1384,7 +1384,7 @@
     "botanicalName": "Lobelia cardinalis",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/red/cardinal-flower_0819_105940a-t.jpg",
     "nativeId": 139
@@ -1394,7 +1394,7 @@
     "botanicalName": "Lobelia kalmii",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "10",
+    "height": 10,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/lobelia-kalmii-18a-t.jpg",
     "nativeId": 140
@@ -1404,7 +1404,7 @@
     "botanicalName": "Lobelia siphilitica",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/blue-lobelia_0830_153317a-t.jpg",
     "nativeId": 141
@@ -1414,7 +1414,7 @@
     "botanicalName": "Lobelia spicata",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/palespike-lobelia_0703_160117a-t.jpg",
     "nativeId": 142
@@ -1424,7 +1424,7 @@
     "botanicalName": "Lupinus perennis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/wild-lupine-100_5659a-t.jpg",
     "nativeId": 143
@@ -1434,7 +1434,7 @@
     "botanicalName": "Luzula acuminata",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/luzula-acuminata-643287-4a-t.jpg",
     "nativeId": 144
@@ -1444,7 +1444,7 @@
     "botanicalName": "Luzula multiflora",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/luzula-multiflora-6100396-5a-t.jpg",
     "nativeId": 145
@@ -1454,7 +1454,7 @@
     "botanicalName": "Lysimachia borealis",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/starflower_0530_162405a-t.jpg",
     "nativeId": 146
@@ -1464,7 +1464,7 @@
     "botanicalName": "Lysimachia ciliata",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/fringed-loosestrife_0712_130754a-t.jpg",
     "nativeId": 147
@@ -1474,7 +1474,7 @@
     "botanicalName": "Maianthemum canadense",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/canada-mayflower_0608_112458a-t.jpg",
     "nativeId": 148
@@ -1484,7 +1484,7 @@
     "botanicalName": "Maianthemum racemosum",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/false-solomons-seal-100_5953a-t.jpg",
     "nativeId": 149
@@ -1494,7 +1494,7 @@
     "botanicalName": "Maianthemum stellatum",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/starry-solomons-plume-100_5988a-t.jpg",
     "nativeId": 150
@@ -1504,7 +1504,7 @@
     "botanicalName": "Matteuccia struthiopteris",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/matteuccia-struthiopteris-7242a-t.jpg",
     "nativeId": 151
@@ -1514,7 +1514,7 @@
     "botanicalName": "Mertensia paniculata",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/mertensia-paniculata-98479-5a-t.jpg",
     "nativeId": 152
@@ -1524,7 +1524,7 @@
     "botanicalName": "Mimulus ringens",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/allegheny-monkey-flower-100_0825a-t.jpg",
     "nativeId": 153
@@ -1534,7 +1534,7 @@
     "botanicalName": "Mitella diphylla",
     "moisture": "Mesic, Wet",
     "sun": "Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/two-leaf-miterwort_0601_131716a-t.jpg",
     "nativeId": 154
@@ -1544,7 +1544,7 @@
     "botanicalName": "Monarda fistulosa",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/wild-bergamot_0713_161459a-t.jpg",
     "nativeId": 155
@@ -1554,7 +1554,7 @@
     "botanicalName": "Monarda punctata",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/monarda-punctata-002a-t.jpg",
     "nativeId": 156
@@ -1564,7 +1564,7 @@
     "botanicalName": "Oenothera biennis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/common-evening-primrose-100_1629a-t.jpg",
     "nativeId": 157
@@ -1574,7 +1574,7 @@
     "botanicalName": "Onoclea sensibilis",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/ferns/sensitive-fern-100_4172a-t.jpg",
     "nativeId": 158
@@ -1584,7 +1584,7 @@
     "botanicalName": "Oryzopsis asperifolia",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/oryzopsis-asperifolia-687-12a-t.jpg",
     "nativeId": 159
@@ -1594,7 +1594,7 @@
     "botanicalName": "Osmorhiza claytonii",
     "moisture": "Dry, Mesic",
     "sun": "Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/sweet-cicely_0601_160018a-t.jpg",
     "nativeId": 160
@@ -1604,7 +1604,7 @@
     "botanicalName": "Osmunda claytoniana",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/osmunda-claytoniana-7117a-t.jpg",
     "nativeId": 161
@@ -1614,7 +1614,7 @@
     "botanicalName": "Packera aurea",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/packera-aurea-19a-t.jpg",
     "nativeId": 162
@@ -1624,7 +1624,7 @@
     "botanicalName": "Packera paupercula",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/balsam-ragwort_0614_132545a-t.jpg",
     "nativeId": 163
@@ -1634,7 +1634,7 @@
     "botanicalName": "Panicum virgatum",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/panicum-virgatum-switch-grass_0806_122957a-t.jpg",
     "nativeId": 164
@@ -1644,7 +1644,7 @@
     "botanicalName": "Penstemon gracilis",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/slender-beardtongue_0619_171645a-t.jpg",
     "nativeId": 165
@@ -1654,7 +1654,7 @@
     "botanicalName": "Penstemon grandiflorus",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/large-beardtongue-100_6067a-t.jpg",
     "nativeId": 166
@@ -1664,7 +1664,7 @@
     "botanicalName": "Phlox divaricata",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/wild-blue-phlox-100_4918a-t.jpg",
     "nativeId": 167
@@ -1674,7 +1674,7 @@
     "botanicalName": "Phlox pilosa",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/prairie-phlox_0613_121451a-t.jpg",
     "nativeId": 168
@@ -1684,7 +1684,7 @@
     "botanicalName": "Physostegia virginiana",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/obedient-plant-100_4263a-t.jpg",
     "nativeId": 169
@@ -1694,7 +1694,7 @@
     "botanicalName": "Poa palustris",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://newfs.s3.amazonaws.com/taxon-images-239x239/Poaceae/poa-palustris-in-gmittelhauser-a.jpg",
     "nativeId": 170
@@ -1704,7 +1704,7 @@
     "botanicalName": "Polemonium reptans",
     "moisture": "Mesic",
     "sun": "Partial",
-    "height": "11",
+    "height": 11,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/spreading-jacobs-ladder_0519_134739a-t.jpg",
     "nativeId": 171
@@ -1714,7 +1714,7 @@
     "botanicalName": "Polygonatum biflorum",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/green/smooth-solomons-seal-100_7571a-t.jpg",
     "nativeId": 172
@@ -1724,7 +1724,7 @@
     "botanicalName": "Prenanthes alba",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/white-rattlesnake-root_0916_175831a-t.jpg",
     "nativeId": 173
@@ -1734,7 +1734,7 @@
     "botanicalName": "Pycnanthemum virginianum",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/virginia-mountain-mint-0721_082052a-t.jpg",
     "nativeId": 174
@@ -1744,7 +1744,7 @@
     "botanicalName": "Ranunculus fascicularis",
     "moisture": "Dry",
     "sun": "Full",
-    "height": "4",
+    "height": 4,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/early-buttercup_0411_163145a-t.jpg",
     "nativeId": 175
@@ -1754,7 +1754,7 @@
     "botanicalName": "Ranunculus hispidus",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/hispid-buttercup_0523_113752a-t.jpg",
     "nativeId": 176
@@ -1764,7 +1764,7 @@
     "botanicalName": "Ratibida columnifera",
     "moisture": "Dry, Mesic",
     "sun": "Full",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/prairie-coneflower_0706_124053a-t.jpg",
     "nativeId": 177
@@ -1774,7 +1774,7 @@
     "botanicalName": "Ratibida pinnata",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/ratibida-pinnata-gray-headed-coneflower_0727_094405a-t.jpg",
     "nativeId": 178
@@ -1784,7 +1784,7 @@
     "botanicalName": "Rudbeckia hirta",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/rudbeckia-hirta-14a-t.jpg",
     "nativeId": 179
@@ -1794,7 +1794,7 @@
     "botanicalName": "Rudbeckia laciniata",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "66",
+    "height": 66,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/rudbeckia-laciniata-cutleaf-coneflower_0822_124143a-t.jpg",
     "nativeId": 180
@@ -1804,7 +1804,7 @@
     "botanicalName": "Sagittaria latifolia",
     "moisture": "Emergent",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/broadleaf-arrowhead_0823_155500a-t.jpg",
     "nativeId": 181
@@ -1814,7 +1814,7 @@
     "botanicalName": "Schizachne purpurascens",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/schizachne-purpurascens-14-4a-t.jpg",
     "nativeId": 182
@@ -1824,7 +1824,7 @@
     "botanicalName": "Schizachyrium scoparium",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/schizachyrium-scoparium-9214a-t.jpg",
     "nativeId": 183
@@ -1834,7 +1834,7 @@
     "botanicalName": "Schoenoplectus tabernaemontani",
     "moisture": "Emergent",
     "sun": "Full",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/schoenoplectus-tabernaemontani-072817-9a-t.jpg",
     "nativeId": 184
@@ -1844,7 +1844,7 @@
     "botanicalName": "Scirpus atrovirens",
     "moisture": "Wet, Emergent",
     "sun": "Full, Partial",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/scirpus-atrovirens_0726_132709a-t.jpg",
     "nativeId": 185
@@ -1854,7 +1854,7 @@
     "botanicalName": "Scirpus cyperinus",
     "moisture": "Wet, Emergent",
     "sun": "Full",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/scirpus-cyperinus-7798-4a-t.jpg",
     "nativeId": 186
@@ -1864,7 +1864,7 @@
     "botanicalName": "Silphium laciniatum",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "66",
+    "height": 66,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/silphium-laciniatum-compass-plant_0718_155454a-t.jpg",
     "nativeId": 187
@@ -1874,7 +1874,7 @@
     "botanicalName": "Silphium perfoliatum",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/silphium-perfoliatum-cup-plant_0727_171815a-t.jpg",
     "nativeId": 188
@@ -1884,7 +1884,7 @@
     "botanicalName": "Sisyrinchium montanum",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "8",
+    "height": 8,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/sisyrinchium-montanum-6a-t.jpg",
     "nativeId": 189
@@ -1894,7 +1894,7 @@
     "botanicalName": "Solidago flexicaulis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial, Full Shade",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/solidago-flexicaulis-zig-zag-goldenrod_0916_182644a-t.jpg",
     "nativeId": 190
@@ -1904,7 +1904,7 @@
     "botanicalName": "Solidago hispida",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/hairy-goldenrod_0816_125025a-t.jpg",
     "nativeId": 191
@@ -1914,7 +1914,7 @@
     "botanicalName": "Solidago juncea",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/solidago-juncea-84-1a-t.jpg",
     "nativeId": 192
@@ -1924,7 +1924,7 @@
     "botanicalName": "Solidago nemoralis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/solidago-nemoralis-gray-goldenrod_0826_122838a-t.jpg",
     "nativeId": 193
@@ -1934,7 +1934,7 @@
     "botanicalName": "Solidago ptarmicoides",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/upland-white-goldenrod_0818_164227a-t.jpg",
     "nativeId": 194
@@ -1944,7 +1944,7 @@
     "botanicalName": "Solidago rigida",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/stiff-goldenrod_0904_135752a-t.jpg",
     "nativeId": 195
@@ -1954,7 +1954,7 @@
     "botanicalName": "Solidago speciosa",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/solidago-speciosa-showy-goldenrod-100_3025a-t.jpg",
     "nativeId": 196
@@ -1964,7 +1964,7 @@
     "botanicalName": "Solidago uliginosa",
     "moisture": "Wet, Emergent",
     "sun": "Full",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/solidago-ulignosa-18a-t.jpg",
     "nativeId": 197
@@ -1974,7 +1974,7 @@
     "botanicalName": "Sorghastrum nutans",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "60",
+    "height": 60,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/sorghastrum-nutans_5837_1a-t.jpg",
     "nativeId": 198
@@ -1984,7 +1984,7 @@
     "botanicalName": "Sparganium eurycarpum",
     "moisture": "Wet, Emergent",
     "sun": "Full",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/sparganium-eurycarpum-070417-24a-t.jpg",
     "nativeId": 199
@@ -1994,7 +1994,7 @@
     "botanicalName": "Spartina pectinata",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "60",
+    "height": 60,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/spartina-pectinata-prairie-cord-grass_0801_130125a-t.jpg",
     "nativeId": 200
@@ -2004,7 +2004,7 @@
     "botanicalName": "Spiraea tomentosa",
     "moisture": "Wet",
     "sun": "Full",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/steeplebush_0811_164842a-t.jpg",
     "nativeId": 201
@@ -2014,7 +2014,7 @@
     "botanicalName": "Sporobolus cryptandrus",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/grass/sporobolus-cryptandrus_0901_152048a-t.jpg",
     "nativeId": 202
@@ -2024,7 +2024,7 @@
     "botanicalName": "Sporobolus heterolepis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd3/sporobolus-heterolepis-scan-4a-t.jpg",
     "nativeId": 203
@@ -2034,7 +2034,7 @@
     "botanicalName": "Streptopus roseus",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pink/streptopus-lanceolatus-rose-twisted-stalk_0513_101848a-t.jpg",
     "nativeId": 204
@@ -2044,7 +2044,7 @@
     "botanicalName": "Symphyotrichum ciliolatum",
     "moisture": "Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/lindleys-aster_0906_095832a-t.jpg",
     "nativeId": 205
@@ -2054,7 +2054,7 @@
     "botanicalName": "Symphyotrichum ericoides",
     "moisture": "Dry, Mesic",
     "sun": "Full",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/heath-aster_0919_154605a-t.jpg",
     "nativeId": 206
@@ -2064,7 +2064,7 @@
     "botanicalName": "Symphyotrichum laeve",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/symphyotrichum-laeve-78162-28a-t.jpg",
     "nativeId": 207
@@ -2074,7 +2074,7 @@
     "botanicalName": "Symphyotrichum lanceolatum",
     "moisture": "Mesic, Wet",
     "sun": "Full",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/symphyotrichum-lanceolatum-panicled-aster_0912_141501a-t.jpg",
     "nativeId": 208
@@ -2084,7 +2084,7 @@
     "botanicalName": "Symphyotrichum lateriflorum",
     "moisture": "Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/symphyotrichum-lateriflorum-calico-aster_0822_185200a-t.jpg",
     "nativeId": 209
@@ -2094,7 +2094,7 @@
     "botanicalName": "Symphyotrichum novae-angilae",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Fall",
     "src": "https://cdn.shopify.com/s/files/1/0739/9053/products/Aster-New-England_1024x1024.jpg?v=1478537393",
     "nativeId": 210
@@ -2104,7 +2104,7 @@
     "botanicalName": "Symphyotrichum oblongifolium",
     "moisture": "Dry",
     "sun": "Full, Partial",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/aromatic-aster_0919_153728a-t.jpg",
     "nativeId": 211
@@ -2114,7 +2114,7 @@
     "botanicalName": "Symphyotrichum oolentangiense",
     "moisture": "Any",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/azure-aster-100_4993a-t.jpg",
     "nativeId": 212
@@ -2124,7 +2124,7 @@
     "botanicalName": "Symphyotrichum puniceum",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "48",
+    "height": 48,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/purple-stem-aster_0823_155616a-t.jpg",
     "nativeId": 213
@@ -2134,7 +2134,7 @@
     "botanicalName": "Symphyotrichum sericeum",
     "moisture": "Dry",
     "sun": "Full",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/silky-aster_0921_105151a-t.jpg",
     "nativeId": 214
@@ -2144,7 +2144,7 @@
     "botanicalName": "Symphyotrichum urophyllum",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "30",
+    "height": 30,
     "bloomTime": "Fall",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/symphyotrichum-urophyllum-arrow-leaved-aster_0831_101003a-t.jpg",
     "nativeId": 215
@@ -2154,7 +2154,7 @@
     "botanicalName": "Thalictrum dasycarpum",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "54",
+    "height": 54,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/tall-meadow-rue-100_9336a-t.jpg",
     "nativeId": 216
@@ -2164,7 +2164,7 @@
     "botanicalName": "Thalictrum dioicum",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/other/early-meadow-rue_0601_100943a-t.jpg",
     "nativeId": 217
@@ -2174,7 +2174,7 @@
     "botanicalName": "Tradescantia occidentalis",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "15",
+    "height": 15,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/prairie-spiderwort_0626_114356a-t.jpg",
     "nativeId": 218
@@ -2184,7 +2184,7 @@
     "botanicalName": "Uvularia grandiflora",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "18",
+    "height": 18,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/largeflower-bellwort-100_4806a-t.jpg",
     "nativeId": 219
@@ -2194,7 +2194,7 @@
     "botanicalName": "Uvularia sessilifolia",
     "moisture": "Dry, Mesic",
     "sun": "Partial, Full Shade",
-    "height": "6",
+    "height": 6,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/sessile-leaved%20bellwort_0509_113350a-t.jpg",
     "nativeId": 220
@@ -2204,7 +2204,7 @@
     "botanicalName": "Verbena hastata",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/blue/blue-vervain-100_1777a-t.jpg",
     "nativeId": 221
@@ -2214,7 +2214,7 @@
     "botanicalName": "Verbena stricta",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "36",
+    "height": 36,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/hoary-vervain-100_0832a-t.jpg",
     "nativeId": 222
@@ -2224,7 +2224,7 @@
     "botanicalName": "Vernonia fasciculata",
     "moisture": "Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Summer",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/vernonia-fasciculata-9358039-2a-t.jpg",
     "nativeId": 223
@@ -2234,7 +2234,7 @@
     "botanicalName": "Veronicastrum virginicum",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "42",
+    "height": 42,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/veronicastrum-virginicum-09-2a-t.jpg",
     "nativeId": 224
@@ -2244,7 +2244,7 @@
     "botanicalName": "Viola blanda",
     "moisture": "Mesic, Wet",
     "sun": "Partial, Full Shade",
-    "height": "4",
+    "height": 4,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white2/viola-blanda_0518_153411a-t.jpg",
     "nativeId": 225
@@ -2254,7 +2254,7 @@
     "botanicalName": "Viola canadensis",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "12",
+    "height": 12,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/white/canadian-white-violet_0425_100836a-t.jpg",
     "nativeId": 226
@@ -2264,7 +2264,7 @@
     "botanicalName": "Viola cucullata",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "8",
+    "height": 8,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/viola-cucullata-8884-3a-t.jpg",
     "nativeId": 227
@@ -2274,7 +2274,7 @@
     "botanicalName": "Viola pedatifida",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/purple/prairie-violet_0517_153826a-t.jpg",
     "nativeId": 228
@@ -2284,7 +2284,7 @@
     "botanicalName": "Viola pubescens",
     "moisture": "Mesic",
     "sun": "Partial, Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/downy-yellow-violet_0521_155424a-t.jpg",
     "nativeId": 229
@@ -2294,7 +2294,7 @@
     "botanicalName": "Viola sagittata",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "4",
+    "height": 4,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/viola-sagittata-9847-3a-t.jpg",
     "nativeId": 230
@@ -2304,7 +2304,7 @@
     "botanicalName": "Viola sororia",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial, Full Shade",
-    "height": "5",
+    "height": 5,
     "bloomTime": "Early Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd2/viola-sororia-05-9a-t.jpg",
     "nativeId": 231
@@ -2314,7 +2314,7 @@
     "botanicalName": "Zizia aptera",
     "moisture": "Dry, Mesic",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/pd/zizia-aptera-9875-1a-t.jpg",
     "nativeId": 232
@@ -2324,7 +2324,7 @@
     "botanicalName": "Zizia aurea",
     "moisture": "Mesic, Wet",
     "sun": "Full, Partial",
-    "height": "24",
+    "height": 24,
     "bloomTime": "Late Spring",
     "src": "https://www.minnesotawildflowers.info/udata/r9ndp23q/yellow/golden-alexanders-100_5630a-t.jpg",
     "nativeId": 233

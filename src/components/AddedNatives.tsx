@@ -1,109 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../redux/store';
-import { AddedNativesProps, UserNativeStateVersion } from '../types';
+import { AddedNativesProps } from '../types';
 import { NativeAdded } from './';
 
 export const AddedNatives: React.FC<AddedNativesProps> = (props) => {
-  const [addedNatives, setAddedNatives] = useState<{
-    eSpring: JSX.Element[];
-    lSpring: JSX.Element[];
-    summer: JSX.Element[];
-    fall: JSX.Element[];
-  }>({ eSpring: [], lSpring: [], summer: [], fall: [] });
-
-  const userNatives = useSelector<AppStore, UserNativeStateVersion[]>(
-    (state) => state.userNativePlant.nativePlants
-  );
-
-  const { eSpring, lSpring, summer, fall } = addedNatives;
-
-  useEffect(() => {
-    if (typeof userNatives === 'object') {
-      const eSpringTempData: UserNativeStateVersion[] = [];
-      const lSpringTempData: UserNativeStateVersion[] = [];
-      const summerTempData: UserNativeStateVersion[] = [];
-      const fallTempData: UserNativeStateVersion[] = [];
-
-      userNatives.forEach((el) => {
+  const { eSpring, lSpring, summer, fall } = useSelector<
+    AppStore,
+    {
+      eSpring: JSX.Element[];
+      lSpring: JSX.Element[];
+      summer: JSX.Element[];
+      fall: JSX.Element[];
+    }
+  >((state) => {
+    return state.userNativePlant.nativePlants.reduce(
+      (jsxElement, el) => {
+        const { eSpring, lSpring, summer, fall } = jsxElement;
+        const elementParsed: JSX.Element = (
+          <NativeAdded
+            key={el.id}
+            id={el.id}
+            botanicalName={el.botanicalName}
+            commonName={el.commonName}
+            moisture={el.moisture}
+            sun={el.sun}
+            height={el.height}
+            src={el.src}
+            projectNotes={el.projectNotes}
+          />
+        );
         switch (el.bloomTime) {
           case 'Late Spring':
-            return lSpringTempData.push(el);
+            lSpring.push(elementParsed);
+            break;
           case 'Summer':
-            return summerTempData.push(el);
+            summer.push(elementParsed);
+            break;
           case 'Early Spring':
-            return eSpringTempData.push(el);
+            eSpring.push(elementParsed);
+            break;
           case 'Fall':
-            return fallTempData.push(el);
+            fall.push(elementParsed);
+            break;
           default:
             break;
         }
-      });
-
-      const lSpringTempElements = eSpringTempData.map((el) => (
-        <NativeAdded
-          key={el.id}
-          id={el.id}
-          botanicalName={el.botanicalName}
-          commonName={el.commonName}
-          moisture={el.moisture}
-          sun={el.sun}
-          height={el.height}
-          src={el.src}
-          projectNotes={el.projectNotes}
-        />
-      ));
-
-      const eSpringTempElements = lSpringTempData.map((el) => (
-        <NativeAdded
-          key={el.id}
-          id={el.id}
-          botanicalName={el.botanicalName}
-          commonName={el.commonName}
-          moisture={el.moisture}
-          sun={el.sun}
-          height={el.height}
-          src={el.src}
-          projectNotes={el.projectNotes}
-        />
-      ));
-
-      const summerTempElements = summerTempData.map((el) => (
-        <NativeAdded
-          key={el.id}
-          id={el.id}
-          botanicalName={el.botanicalName}
-          commonName={el.commonName}
-          moisture={el.moisture}
-          sun={el.sun}
-          height={el.height}
-          src={el.src}
-          projectNotes={el.projectNotes}
-        />
-      ));
-
-      const fallTempElements = fallTempData.map((el) => (
-        <NativeAdded
-          key={el.id}
-          id={el.id}
-          botanicalName={el.botanicalName}
-          commonName={el.commonName}
-          moisture={el.moisture}
-          sun={el.sun}
-          height={el.height}
-          src={el.src}
-          projectNotes={el.projectNotes}
-        />
-      ));
-
-      setAddedNatives({
-        eSpring: eSpringTempElements,
-        lSpring: lSpringTempElements,
-        summer: summerTempElements,
-        fall: fallTempElements
-      });
-    }
-  }, [userNatives]);
+        return { eSpring, lSpring, summer, fall };
+      },
+      {
+        eSpring: [] as JSX.Element[],
+        lSpring: [] as JSX.Element[],
+        summer: [] as JSX.Element[],
+        fall: [] as JSX.Element[]
+      }
+    );
+  });
 
   return (
     <aside

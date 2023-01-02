@@ -1,21 +1,35 @@
 /* eslint-disable react/no-unknown-property */
 
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { AppStore } from '../redux/store';
 import { WeatherLoaderProps } from '../types';
 //  Weather-Themed Loading SVG Adapted from Tim Holman's Work as Listed on Codepen - I thought this particularly lengthy loading screen deserved a solid weather-themed loading graphic. Much time spent reconfiguring CSS to be more adapted to mobile view (retained relative positions of SVGs) by turning animation into a series of nested SVGs. Also added animateTransform element for rotation to account for coordinate system difference in SVG as opposed to CSS keyframes
 export const WeatherLoader: React.FC<WeatherLoaderProps> = (props) => {
-  const { noText } = props;
+  const { text, loadingOverride, invertColors } = props;
+  const { userLoading, methodLoading, nativePlantLoading } = useSelector<
+    AppStore,
+    {
+      userLoading: boolean;
+      methodLoading: boolean;
+      nativePlantLoading: boolean;
+    }
+  >((state) => {
+    const { userInfo, userMethod, userNativePlant } = state;
+    return {
+      userLoading: userInfo.loading,
+      methodLoading: userMethod.loading,
+      nativePlantLoading: userNativePlant.loading
+    };
+  });
 
-  return (
-    <div id="loaderBox">
-      <div
-        className="loaderText"
-        style={noText ? { display: 'none' } : undefined}
-      >
-        Calculating growing parameters for your location based upon 10 years of
-        local weather data, courtesy of the National Oceanic and Atmospheric
-        Administration (NOAA). This could take several minutes depending on
-        server traffic.
+  return userLoading ||
+    methodLoading ||
+    nativePlantLoading ||
+    (typeof loadingOverride === 'boolean' && loadingOverride) ? (
+    <div className={invertColors ? 'invert' : ''} id="loaderBox">
+      <div className={`loaderText ${invertColors ? 'invert' : ''}`}>
+        {typeof text === 'string' ? text : 'Loading, Please Wait...'}
       </div>
       <svg
         className="svgContainer"
@@ -26,6 +40,7 @@ export const WeatherLoader: React.FC<WeatherLoaderProps> = (props) => {
           x="340"
           y="80"
           id="sun"
+          className={invertColors ? 'invert' : undefined}
           width="275"
           viewBox="0 0 10 10"
           preserveAspectRatio="xMinYMin meet"
@@ -100,6 +115,7 @@ export const WeatherLoader: React.FC<WeatherLoaderProps> = (props) => {
           x="40"
           height="600"
           id="cloud"
+          className={invertColors ? 'invert' : undefined}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 10 10"
           preserveAspectRatio="xMinYMin meet"
@@ -111,18 +127,50 @@ export const WeatherLoader: React.FC<WeatherLoaderProps> = (props) => {
         </svg>
 
         <svg x="100" y="140" width="500" viewBox="0 0 200 1" className="rain">
-          <rect x="0" className="drop"></rect>
-          <rect x="20" className="drop"></rect>
-          <rect x="40" className="drop"></rect>
-          <rect x="60" className="drop"></rect>
-          <rect x="80" className="drop"></rect>
-          <rect x="100" className="drop"></rect>
-          <rect x="120" className="drop"></rect>
-          <rect x="140" className="drop"></rect>
-          <rect x="160" className="drop"></rect>
-          <rect x="180" className="drop"></rect>
+          <rect
+            x="0"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="20"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="40"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="60"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="80"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="100"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="120"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="140"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="160"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
+          <rect
+            x="180"
+            className={`drop ${invertColors ? 'invert' : undefined}`}
+          ></rect>
         </svg>
       </svg>
     </div>
+  ) : (
+    <></>
   );
 };

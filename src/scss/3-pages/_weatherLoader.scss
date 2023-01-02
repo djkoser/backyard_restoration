@@ -1,8 +1,8 @@
 /* Loading Screen Graphic */
 #loaderBox {
-  background-color: $greenBlue;
   max-width: 700px;
   @extend %columnFlex;
+  padding: 10%;
 }
 
 .svgContainer {
@@ -118,4 +118,17 @@
   #loaderBox {
     width: 70%;
   }
+}
+
+.loaderText.invert {
+  color: $greenBlue;
+}
+
+#cloud.invert path,
+#sun.invert path {
+  stroke: $greenBlue;
+  fill: $greenYellow;
+}
+.drop.invert {
+  fill: $greenBlue;
 }

@@ -1,7 +1,7 @@
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   GetWeedCQuery,
@@ -9,9 +9,8 @@ import {
   ManagementMethod
 } from '../API';
 import { getWeedC } from '../graphql/customQueries';
-import { AppDispatch, AppStore } from '../redux/store';
+import { AppDispatch } from '../redux/store';
 import { getUserMethods } from '../redux/userMethodSlice';
-import { UserManagementMethodStateVersion } from '../types';
 import { getLocalStateHelper } from '../utilities';
 import { Footer, MethodSwitch, Nav, WeatherLoader } from './';
 
@@ -26,11 +25,7 @@ export const WeedPage: React.FC = () => {
     annualPerennialBiennial: '',
     vegType: '',
     description: '',
-    mgmtOptions: [] as Omit<
-      ManagementMethod,
-      '__typename' | 'weed' | 'createdAt' | 'updatedAt'
-    >[],
-    switches: [<></>],
+    switches: [] as JSX.Element[],
     loading: true
   });
 
@@ -41,17 +36,13 @@ export const WeedPage: React.FC = () => {
     annualPerennialBiennial,
     vegType,
     description,
-    mgmtOptions,
-    loading,
-    switches
+    switches,
+    loading
   } = localState;
 
   const localStateHelper =
     getLocalStateHelper<typeof localState>(setLocalState);
 
-  const userMethods = useSelector<AppStore, UserManagementMethodStateVersion[]>(
-    (state) => state.userMethod.userMethods
-  );
   // Creates local state to avoid lagging and render errors caused by adding/removing methods on switch toggle
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -62,14 +53,6 @@ export const WeedPage: React.FC = () => {
       void getWeedDetails();
     }
   }, [id]);
-
-  useEffect(() => {
-    localStateHelper({
-      switches: mgmtOptions.map((el) => (
-        <MethodSwitch key={`methodSwitch${el.methodId}`} weedMethod={el} />
-      ))
-    });
-  }, [mgmtOptions, userMethods]);
 
   const getWeedDetails = async () => {
     try {
@@ -94,7 +77,7 @@ export const WeedPage: React.FC = () => {
         vegType: vegetationType || '',
         description: description || '',
         loading: false,
-        mgmtOptions:
+        switches: (
           managementMethods?.items.reduce((methodsParsed, method) => {
             if (method) {
               const { __typename, ...omitTypename } = method;
@@ -103,6 +86,9 @@ export const WeedPage: React.FC = () => {
             return methodsParsed;
           }, [] as Omit<ManagementMethod, '__typename' | 'weed' | 'createdAt' | 'updatedAt'>[]) ||
           []
+        ).map((el) => (
+          <MethodSwitch key={`methodSwitch${el.methodId}`} weedMethod={el} />
+        ))
       });
     } catch {
       localStateHelper({ loading: false });
@@ -147,12 +133,10 @@ export const WeedPage: React.FC = () => {
     </>
   );
 
-  return loading ? (
+  return (
     <>
-      <WeatherLoader noText={true} />
-      <h3>Loading, Please Wait</h3>
+      <WeatherLoader loadingOverride={loading} />
+      {output}
     </>
-  ) : (
-    output
   );
 };

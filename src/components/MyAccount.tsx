@@ -16,7 +16,7 @@ import {
 import { Footer, Nav, WeatherLoader } from './';
 
 enum ChangeCases {
-  growingParams = 'growingParams',
+  growingParams = 'growing parameters',
   deleteUser = 'deleteUser',
   name = 'name',
   password = 'password',
@@ -118,20 +118,6 @@ export const MyAccount: React.FC = () => {
   const localStateHelper =
     getLocalStateHelper<typeof localState>(setLocalState);
 
-  const refresh = () => {
-    localStateHelper({
-      firstName: firstNameRedux || '',
-      lastName: lastNameRedux || '',
-      street: streetRedux || '',
-      city: cityRedux || '',
-      state: stateRedux || '',
-      zipcode: zipcodeRedux || '',
-      firstGdd45: firstGdd45Redux || '',
-      lastGdd45: lastGdd45Redux || '',
-      hardinessZone: hardinessZoneRedux || ''
-    });
-  };
-
   const onError = () => {
     if (
       emailRedux &&
@@ -169,6 +155,20 @@ export const MyAccount: React.FC = () => {
   useEffect(() => {
     void dispatch(getUserInfo());
   }, []);
+
+  const refresh = () => {
+    localStateHelper({
+      firstName: firstNameRedux || '',
+      lastName: lastNameRedux || '',
+      street: streetRedux || '',
+      city: cityRedux || '',
+      state: stateRedux || '',
+      zipcode: zipcodeRedux || '',
+      firstGdd45: firstGdd45Redux || '',
+      lastGdd45: lastGdd45Redux || '',
+      hardinessZone: hardinessZoneRedux || ''
+    });
+  };
 
   useEffect(() => {
     refresh();
@@ -321,17 +321,24 @@ export const MyAccount: React.FC = () => {
     }
   };
 
-  return loadingRedux || loadingGrowingParams ? (
+  return (
     <>
-      <WeatherLoader noText={loadingGrowingParams ? false : true} />
-      <ToastContainer />
-    </>
-  ) : (
-    <>
+      <Nav invertColors={true} />
       <ToastContainer />
       <div id="myAccountBkgd">
-        <Nav invertColors={true} />
         <h1 id="myAccountHeader">My Account</h1>
+        <WeatherLoader
+          loadingOverride={loadingGrowingParams}
+          text={
+            loadingGrowingParams
+              ? `Calculating growing parameters for your location based upon 10 years of
+          local weather data, courtesy of the National Oceanic and Atmospheric
+          Administration (NOAA). This could take several minutes depending on
+          server traffic.`
+              : undefined
+          }
+          invertColors={true}
+        />
         <main
           className="myAccountForm"
           style={
