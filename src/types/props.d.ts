@@ -1,4 +1,5 @@
 import type { ManagementMethodStateVersion, UserNativeStateVersion } from './';
+import type { PropsWithChildren } from 'react';
 
 export interface AddedNativesProps {
   searchAdded: boolean;
@@ -52,7 +53,7 @@ export interface TimelineProps {
   margin: { left: number; right: number; top: number; bottom: number };
 }
 
-export interface WeatherLoaderProps {
+export interface WeatherLoaderProps extends PropsWithChildren {
   text?: string;
   loadingOverride?: boolean;
   invertColors?: boolean;

@@ -338,211 +338,209 @@ export const MyAccount: React.FC = () => {
               : undefined
           }
           invertColors={true}
-        />
-        <main
-          className="myAccountForm"
-          style={
-            !loadingRedux ? { display: 'inline-flex' } : { display: 'none' }
-          }
         >
-          <div id="startHardiness">
-            <fieldset className=" editBoxes">
-              <h3 className="accountPageText">Season Start and End Dates</h3>
-              <h4 className="accountPageText">(MM-DD)</h4>
-              <input
-                className="myAccountInput"
-                disabled={editToggleGrwParams}
-                type="text"
-                value={firstGdd45}
-                onChange={(e) => {
-                  localStateHelper({
-                    firstGdd45: e.target.value
-                  });
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleGrwParams}
-                type="text"
-                value={lastGdd45}
-                onChange={(e) => {
-                  localStateHelper({ lastGdd45: e.target.value });
-                }}
-              />
-              <h3 className="accountPageText"> USDA Hardiness Zone.</h3>
-              <br />
-              <h4>
-                <a
-                  href="https://planthardiness.ars.usda.gov/"
-                  target="_blank"
-                  rel="noreferrer noopener"
+          <main className="myAccountForm">
+            <div id="startHardiness">
+              <fieldset className=" editBoxes">
+                <h3 className="accountPageText">Season Start and End Dates</h3>
+                <h4 className="accountPageText">(MM-DD)</h4>
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleGrwParams}
+                  type="text"
+                  value={firstGdd45}
+                  onChange={(e) => {
+                    localStateHelper({
+                      firstGdd45: e.target.value
+                    });
+                  }}
+                />
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleGrwParams}
+                  type="text"
+                  value={lastGdd45}
+                  onChange={(e) => {
+                    localStateHelper({ lastGdd45: e.target.value });
+                  }}
+                />
+                <h3 className="accountPageText"> USDA Hardiness Zone.</h3>
+                <br />
+                <h4>
+                  <a
+                    href="https://planthardiness.ars.usda.gov/"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Need Help? Click Here
+                  </a>
+                </h4>
+                <select
+                  className="myAccountInput"
+                  disabled={editToggleGrwParams}
+                  value={hardinessZone}
+                  onChange={(e) => {
+                    localStateHelper({ hardinessZone: e.target.value });
+                  }}
                 >
-                  Need Help? Click Here
-                </a>
-              </h4>
-              <select
-                className="myAccountInput"
-                disabled={editToggleGrwParams}
-                value={hardinessZone}
-                onChange={(e) => {
-                  localStateHelper({ hardinessZone: e.target.value });
-                }}
-              >
-                <option value="1a">Zone 1a: -60F - -55F </option>
-                <option value="1b">Zone 1b: -55F - -50F </option>
-                <option value="2a">Zone 2a: -50F - -45F </option>
-                <option value="2b">Zone 2b: -45F - -40F </option>
-                <option value="3a">Zone 3a: -40F - -35F </option>
-                <option value="3b">Zone 3b: -35F - -30F </option>
-                <option value="4a">Zone 4a: -30F - -25F </option>
-                <option value="4b">Zone 4b: -25F - -20F </option>
-                <option value="5a">Zone 5a: -20F - -15F </option>
-                <option value="5b">Zone 5b: -15F - -10F </option>
-                <option value="6a">Zone 6a: -10F - -5F </option>
-                <option value="6b">Zone 6b: -5F - 0F </option>
-                <option value="7a">Zone 7a: 0F - 5F </option>
-                <option value="7b">Zone 7b: 5F - 10F </option>
-                <option value="8a">Zone 8a: 10F - 15F </option>
-                <option value="8b">Zone 8b: 15F - 20F </option>
-                <option value="9a">Zone 9a: 20F - 25F </option>
-                <option value="9b">Zone 9b: 25F - 30F </option>
-                <option value="10a">Zone 10a: 30F - 35F </option>
-                <option value="10b">Zone 10b: 35F - 40F </option>
-                <option value="11a">Zone 11a: 40F - 45F </option>
-                <option value="11b">Zone 11b: 45F - 50F </option>
-                <option value="12a">Zone 12a: 50F - 55F </option>
-                <option value="12b">Zone 12b: 55F - 60F </option>
-                <option value="13a">Zone 13a: 60F - 65F </option>
-                <option value="13b">Zone 13b: 65F - 70F </option>
-              </select>
-            </fieldset>
-            <button onClick={() => toggleEdit('growingParams')}>
-              {editToggleGrwParams ? 'Edit' : 'Submit'}
-            </button>
-          </div>
-          <div id="nameAddress">
-            <fieldset className=" editBoxes">
-              <h3 className="accountPageText">Name</h3>
-              <input
-                className="myAccountInput"
-                disabled={editToggleName}
-                type="text"
-                value={firstName}
-                onChange={(e) => {
-                  localStateHelper({ firstName: e.target.value });
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleName}
-                type="text"
-                value={lastName}
-                onChange={(e) => {
-                  localStateHelper({ lastName: e.target.value });
-                }}
-              />
-            </fieldset>
-            <button onClick={() => toggleEdit('name')}>
-              {editToggleName ? 'Edit' : 'Submit'}
-            </button>
-            <fieldset className="editBoxes">
-              <h3 className="accountPageText">Address</h3>
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={street}
-                placeholder="Street"
-                onChange={(e) => {
-                  localStateHelper({ street: e.target.value });
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={city}
-                placeholder="City"
-                onChange={(e) => {
-                  localStateHelper({ city: e.target.value });
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={state}
-                placeholder="State"
-                onChange={(e) => {
-                  localStateHelper({ state: e.target.value });
-                }}
-              />
-              <input
-                className="myAccountInput"
-                disabled={editToggleAddress}
-                type="text"
-                value={zipcode}
-                placeholder="Zipcode"
-                onChange={(e) => {
-                  localStateHelper({ zipcode: e.target.value });
-                }}
-              />
-            </fieldset>
-            <button onClick={() => toggleEdit('address')}>
-              {editToggleAddress ? 'Edit' : 'Submit'}
-            </button>
-          </div>
-          <div id="emailPassword">
-            <fieldset className="editBoxes">
-              <h3 className="accountPageText">Email</h3>
-              <br />
-              <h3 style={{ fontWeight: 'bold' }} className="myAccountInput">
-                {emailRedux}
-              </h3>
-            </fieldset>
-            <br />
-            <br />
-            <fieldset className="editBoxes">
-              <h3 className="accountPageText">Current Password</h3>
-              <input
-                className="myAccountInput"
-                disabled={editTogglePassword}
-                type="password"
-                value={currentPassword}
-                onChange={(e) => {
-                  localStateHelper({ currentPassword: e.target.value });
-                }}
-              />
-              <h3 className="accountPageText">New Password</h3>
-              <input
-                className="myAccountInput"
-                disabled={editTogglePassword}
-                type="password"
-                value={newPassword}
-                onChange={(e) => {
-                  localStateHelper({ newPassword: e.target.value });
-                }}
-              />
-            </fieldset>
-            <button onClick={() => toggleEdit('password')}>
-              {editTogglePassword ? 'Edit' : 'Submit'}
-            </button>
-            <fieldset className="editBoxes">
-              <h3 className="accountPageText">Delete My Account</h3>
-              <button
-                onClick={() => {
-                  localStateHelper({ lastChanged: ChangeCases.deleteUser });
-                  void dispatch(deleteUser());
-                }}
-              >
-                Delete Account
+                  <option value="1a">Zone 1a: -60F - -55F </option>
+                  <option value="1b">Zone 1b: -55F - -50F </option>
+                  <option value="2a">Zone 2a: -50F - -45F </option>
+                  <option value="2b">Zone 2b: -45F - -40F </option>
+                  <option value="3a">Zone 3a: -40F - -35F </option>
+                  <option value="3b">Zone 3b: -35F - -30F </option>
+                  <option value="4a">Zone 4a: -30F - -25F </option>
+                  <option value="4b">Zone 4b: -25F - -20F </option>
+                  <option value="5a">Zone 5a: -20F - -15F </option>
+                  <option value="5b">Zone 5b: -15F - -10F </option>
+                  <option value="6a">Zone 6a: -10F - -5F </option>
+                  <option value="6b">Zone 6b: -5F - 0F </option>
+                  <option value="7a">Zone 7a: 0F - 5F </option>
+                  <option value="7b">Zone 7b: 5F - 10F </option>
+                  <option value="8a">Zone 8a: 10F - 15F </option>
+                  <option value="8b">Zone 8b: 15F - 20F </option>
+                  <option value="9a">Zone 9a: 20F - 25F </option>
+                  <option value="9b">Zone 9b: 25F - 30F </option>
+                  <option value="10a">Zone 10a: 30F - 35F </option>
+                  <option value="10b">Zone 10b: 35F - 40F </option>
+                  <option value="11a">Zone 11a: 40F - 45F </option>
+                  <option value="11b">Zone 11b: 45F - 50F </option>
+                  <option value="12a">Zone 12a: 50F - 55F </option>
+                  <option value="12b">Zone 12b: 55F - 60F </option>
+                  <option value="13a">Zone 13a: 60F - 65F </option>
+                  <option value="13b">Zone 13b: 65F - 70F </option>
+                </select>
+              </fieldset>
+              <button onClick={() => toggleEdit('growingParams')}>
+                {editToggleGrwParams ? 'Edit' : 'Submit'}
               </button>
-            </fieldset>
+            </div>
+            <div id="nameAddress">
+              <fieldset className=" editBoxes">
+                <h3 className="accountPageText">Name</h3>
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleName}
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => {
+                    localStateHelper({ firstName: e.target.value });
+                  }}
+                />
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleName}
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => {
+                    localStateHelper({ lastName: e.target.value });
+                  }}
+                />
+              </fieldset>
+              <button onClick={() => toggleEdit('name')}>
+                {editToggleName ? 'Edit' : 'Submit'}
+              </button>
+              <fieldset className="editBoxes">
+                <h3 className="accountPageText">Address</h3>
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleAddress}
+                  type="text"
+                  value={street}
+                  placeholder="Street"
+                  onChange={(e) => {
+                    localStateHelper({ street: e.target.value });
+                  }}
+                />
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleAddress}
+                  type="text"
+                  value={city}
+                  placeholder="City"
+                  onChange={(e) => {
+                    localStateHelper({ city: e.target.value });
+                  }}
+                />
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleAddress}
+                  type="text"
+                  value={state}
+                  placeholder="State"
+                  onChange={(e) => {
+                    localStateHelper({ state: e.target.value });
+                  }}
+                />
+                <input
+                  className="myAccountInput"
+                  disabled={editToggleAddress}
+                  type="text"
+                  value={zipcode}
+                  placeholder="Zipcode"
+                  onChange={(e) => {
+                    localStateHelper({ zipcode: e.target.value });
+                  }}
+                />
+              </fieldset>
+              <button onClick={() => toggleEdit('address')}>
+                {editToggleAddress ? 'Edit' : 'Submit'}
+              </button>
+            </div>
+            <div id="emailPassword">
+              <fieldset className="editBoxes">
+                <h3 className="accountPageText">Email</h3>
+                <br />
+                <input
+                  value={emailRedux}
+                  disabled={true}
+                  className="myAccountInput"
+                ></input>
+              </fieldset>
+              <br />
+              <br />
+              <fieldset className="editBoxes">
+                <h3 className="accountPageText">Current Password</h3>
+                <input
+                  className="myAccountInput"
+                  disabled={editTogglePassword}
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => {
+                    localStateHelper({ currentPassword: e.target.value });
+                  }}
+                />
+                <h3 className="accountPageText">New Password</h3>
+                <input
+                  className="myAccountInput"
+                  disabled={editTogglePassword}
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => {
+                    localStateHelper({ newPassword: e.target.value });
+                  }}
+                />
+              </fieldset>
+              <button onClick={() => toggleEdit('password')}>
+                {editTogglePassword ? 'Edit' : 'Submit'}
+              </button>
+              <fieldset className="editBoxes">
+                <h3 className="accountPageText">Delete My Account</h3>
+                <button
+                  onClick={() => {
+                    localStateHelper({ lastChanged: ChangeCases.deleteUser });
+                    void dispatch(deleteUser());
+                  }}
+                >
+                  Delete Account
+                </button>
+              </fieldset>
+              <br />
+              <br />
+            </div>
             <br />
-            <br />
-          </div>
-          <br />
-        </main>
+          </main>
+        </WeatherLoader>
       </div>
       <Footer />
     </>

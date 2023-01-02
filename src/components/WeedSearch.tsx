@@ -119,11 +119,6 @@ export const WeedSearch: React.FC = () => {
     <>
       <Nav invertColors={true} />
       <main id="weedSearchBody">
-        <WeatherLoader
-          loadingOverride={loading}
-          invertColors={true}
-          text={''}
-        />
         <form id="weedSearchForm">
           <input
             type="text"
@@ -151,7 +146,15 @@ export const WeedSearch: React.FC = () => {
             Species
           </button>
         </form>
-        <div id="searchResultsBox">{searchResults}</div>
+        <div id="searchResultsBox">
+          <WeatherLoader
+            loadingOverride={loading}
+            invertColors={true}
+            text={''}
+          >
+            {searchResults}
+          </WeatherLoader>
+        </div>
       </main>
       <Footer />
     </>

@@ -135,8 +135,7 @@ export const WeedPage: React.FC = () => {
 
   return (
     <>
-      <WeatherLoader loadingOverride={loading} />
-      {output}
+      <WeatherLoader loadingOverride={loading}>{output}</WeatherLoader>
     </>
   );
 };

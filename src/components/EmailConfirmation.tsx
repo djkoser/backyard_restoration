@@ -159,8 +159,7 @@ export const EmailConfirmation: React.FC = () => {
         Administration (NOAA). This could take several minutes depending on
         server traffic.`}
           invertColors={true}
-        />
-        {loading ? null : (
+        >
           <>
             <form id="registerForm">
               <section className="registerSections">
@@ -244,7 +243,7 @@ export const EmailConfirmation: React.FC = () => {
               </h4>
             </article>
           </>
-        )}
+        </WeatherLoader>
       </section>
       <Link id="backToLoginLink" to={'/'}>
         Back to Login

@@ -165,7 +165,7 @@
     position: static;
   }
   .searchClosed {
-    display: none;
+    visibility: hidden;
   }
   .searchOpen {
     display: inline-flex;

@@ -60,77 +60,70 @@ export const Register: React.FC = () => {
     <>
       <ToastContainer />
       <section id="registerBody">
-        <WeatherLoader invertColors={true} loadingOverride={loading} />
-        {loading ? null : (
-          <>
-            <form
-              id="registerForm"
-              onSubmit={(e) => {
-                void createNewUser(e);
-              }}
-            >
-              <section className="registerSections">
-                <h3 className="registerSectionText">Name</h3>
-                <input
-                  placeholder="First Name"
-                  type="text"
-                  value={firstName}
-                  onChange={(e) =>
-                    localStateHelper({ firstName: e.target.value })
-                  }
-                ></input>
-                <input
-                  placeholder="Last Name"
-                  type="text"
-                  value={lastName}
-                  onChange={(e) =>
-                    localStateHelper({ lastName: e.target.value })
-                  }
-                ></input>
-              </section>
-              <section className="registerSections">
-                <h3 className="registerSectionText">Email</h3>
-                <input
-                  placeholder="Email"
-                  type="text"
-                  value={email}
-                  onChange={(e) => localStateHelper({ email: e.target.value })}
-                ></input>
-              </section>
-              <section className="registerSections">
-                <h3 className="registerSectionText">Password</h3>
+        <WeatherLoader invertColors={true} loadingOverride={loading}>
+          <form
+            id="registerForm"
+            onSubmit={(e) => {
+              void createNewUser(e);
+            }}
+          >
+            <section className="registerSections">
+              <h3 className="registerSectionText">Name</h3>
+              <input
+                placeholder="First Name"
+                type="text"
+                value={firstName}
+                onChange={(e) =>
+                  localStateHelper({ firstName: e.target.value })
+                }
+              ></input>
+              <input
+                placeholder="Last Name"
+                type="text"
+                value={lastName}
+                onChange={(e) => localStateHelper({ lastName: e.target.value })}
+              ></input>
+            </section>
+            <section className="registerSections">
+              <h3 className="registerSectionText">Email</h3>
+              <input
+                placeholder="Email"
+                type="text"
+                value={email}
+                onChange={(e) => localStateHelper({ email: e.target.value })}
+              ></input>
+            </section>
+            <section className="registerSections">
+              <h3 className="registerSectionText">Password</h3>
+              <br />
+              <h4 style={{ color: 'black' }}>
+                Your password must be a minimum of 8 characters and contain at
+                least one: uppercase letter, lowercase letter, number and
+                special character
                 <br />
-                <h4 style={{ color: 'black' }}>
-                  Your password must be a minimum of 8 characters and contain at
-                  least one: uppercase letter, lowercase letter, number and
-                  special character
-                  <br />
-                  (@ $ ! % * ? &)
-                </h4>
-                <br />
-                <input
-                  placeholder="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) =>
-                    localStateHelper({ password: e.target.value })
-                  }
-                ></input>
-              </section>
-              <button>Confirm Email</button>
-            </form>
-            <article className="registerWelcomeText">
-              <h1>Welcome to Our Community!</h1>
-              <h4>
-                {' '}
-                Registering for an account with BackyardRestoration.net will
-                provide you with access to a series of free tools designed to
-                help you plan and complete your own backyard ecological
-                restoration projects.{' '}
+                (@ $ ! % * ? &)
               </h4>
-            </article>
-          </>
-        )}
+              <br />
+              <input
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => localStateHelper({ password: e.target.value })}
+              ></input>
+            </section>
+            <button>Confirm Email</button>
+          </form>
+          <article className="registerWelcomeText">
+            <h1>Welcome to Our Community!</h1>
+            <h4>
+              {' '}
+              Registering for an account with BackyardRestoration.net will
+              provide you with access to a series of free tools designed to help
+              you plan and complete your own backyard ecological restoration
+              projects.{' '}
+            </h4>
+          </article>
+        </WeatherLoader>
       </section>
       <Link id="backToLoginLink" to={'/'}>
         Back to Login

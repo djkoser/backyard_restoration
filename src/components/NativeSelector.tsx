@@ -60,8 +60,9 @@ export const NativeSelector: React.FC = () => {
         className={searchAdded ? 'searchOpen ' : 'searchClosed'}
         id="nativeSearchResults"
       >
-        <WeatherLoader loadingOverride={loading} />
-        {loading ? null : searchResultsJSX}
+        <WeatherLoader loadingOverride={loading}>
+          {searchResultsJSX}
+        </WeatherLoader>
       </main>
     </>
   );
