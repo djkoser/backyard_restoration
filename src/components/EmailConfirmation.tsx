@@ -92,10 +92,7 @@ export const EmailConfirmation: React.FC = () => {
       } else {
         handleManualEntry();
       }
-    } catch (err) {
-      const errParsed =
-        err instanceof Error ? err : new Error(JSON.stringify(err));
-      console.log(errParsed.message);
+    } catch {
       localStateHelper({ loading: false });
       toast.error(
         'User registration failed, please check your confirmation code and try again, or email us at BackyardRestorationNet@gmail.com'

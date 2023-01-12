@@ -58,12 +58,6 @@ export class GrowingCalculations {
   }
   /** An initializer that makes all necessary API calls and calculates all requisite growing parameters pertaining to the user's location*/
   async calculateGrowingParams() {
-    console.log(
-      typeof this.GOOGLE_API_KEY === 'string',
-      typeof this.NOAA_TOKEN === 'string',
-      typeof this.NOAA_TOKEN_BACKUP === 'string'
-    );
-
     // Get TMIN and TMAX data from the weather station closest to the user's location
     let { TMIN, TMAX } = await this.retrieveAPIData();
     // writeFileSync(join(__dirname, 'TMIN.json'), JSON.stringify(TMIN));

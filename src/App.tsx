@@ -20,9 +20,6 @@ import {
   WeedSearch
 } from './components';
 
-console.log(typeof Symbol_observable);
-console.log(typeof React);
-
 Amplify.configure(awsconfig);
 
 const router = createBrowserRouter([

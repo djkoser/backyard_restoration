@@ -90,9 +90,7 @@ var GrowingCalculations = /** @class */ (function () {
             var _a, TMIN, TMAX, TMINAvg, seasonStarts, seasonEnds, dateParser, firstGdd45, lastGdd45;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
-                        console.log(typeof this.GOOGLE_API_KEY === 'string', typeof this.NOAA_TOKEN === 'string', typeof this.NOAA_TOKEN_BACKUP === 'string');
-                        return [4 /*yield*/, this.retrieveAPIData()];
+                    case 0: return [4 /*yield*/, this.retrieveAPIData()];
                     case 1:
                         _a = _b.sent(), TMIN = _a.TMIN, TMAX = _a.TMAX;
                         // writeFileSync(join(__dirname, 'TMIN.json'), JSON.stringify(TMIN));
