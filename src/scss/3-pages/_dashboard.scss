@@ -6,6 +6,7 @@
 #dashboardMain {
   min-height: calc(100vh - 2 * $hFHeight);
   @extend %columnFlex;
+  padding-bottom: 40px;
 }
 #dashboardDecoration {
   @extend %columnFlex;
@@ -130,7 +131,7 @@ select {
 
 /* From MDN, The adjacent sibling combinator (+) separates two selectors and matches the second element only if it immediately follows the first element, and both are children of the same parent. 
   
-  If the checkbox within the switch class is checked, and a label element exists that immediately follows this checkd box and immediately precedes the switchSpan in the after pseudo state, apply the styling */
+  If the checkbox within the switch class is checked, and a label element exists that immediately follows this checkbox and immediately precedes the switchSpan in the after pseudo state, apply the styling */
 .switch [type='checkbox']:checked + label .switchSpan::after {
   height: 31px;
   width: 60px;
