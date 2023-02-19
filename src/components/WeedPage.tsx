@@ -129,6 +129,8 @@ export const WeedPage: React.FC = () => {
         <br />
         <div>{switches}</div>
       </fieldset>
+      <br />
+      <br />
       <Footer />
     </>
   );
