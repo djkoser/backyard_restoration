@@ -206,7 +206,7 @@ export const MyAccount: React.FC = () => {
     loadingPreviously.current = loadingRedux;
   }, [failedRedux, lastChanged, loadingRedux]);
 
-  const toggleEdit = async (type: string) => {
+  const toggleEdit = async (type: ChangeCases) => {
     switch (type) {
       case ChangeCases.name:
         if (editToggleName) {
@@ -411,7 +411,7 @@ export const MyAccount: React.FC = () => {
                   <option value="13b">Zone 13b: 65F - 70F </option>
                 </select>
               </fieldset>
-              <button onClick={() => toggleEdit('growingParams')}>
+              <button onClick={() => toggleEdit(ChangeCases.growingParams)}>
                 {editToggleGrwParams ? 'Edit' : 'Submit'}
               </button>
             </div>
@@ -437,7 +437,7 @@ export const MyAccount: React.FC = () => {
                   }}
                 />
               </fieldset>
-              <button onClick={() => toggleEdit('name')}>
+              <button onClick={() => toggleEdit(ChangeCases.name)}>
                 {editToggleName ? 'Edit' : 'Submit'}
               </button>
               <fieldset className="editBoxes">
@@ -483,7 +483,7 @@ export const MyAccount: React.FC = () => {
                   }}
                 />
               </fieldset>
-              <button onClick={() => toggleEdit('address')}>
+              <button onClick={() => toggleEdit(ChangeCases.address)}>
                 {editToggleAddress ? 'Edit' : 'Submit'}
               </button>
             </div>
@@ -521,7 +521,7 @@ export const MyAccount: React.FC = () => {
                   }}
                 />
               </fieldset>
-              <button onClick={() => toggleEdit('password')}>
+              <button onClick={() => toggleEdit(ChangeCases.password)}>
                 {editTogglePassword ? 'Edit' : 'Submit'}
               </button>
               <fieldset className="editBoxes">

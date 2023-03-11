@@ -54,6 +54,9 @@ export const NOAAHangupPage: React.FC = () => {
           growingSeasonLength
         })
       );
+
+      toast.success('Success! Welcome to Backyard Restoration Net!');
+      setTimeout(() => navigate('/'), 3000);
     }
   };
 

@@ -17,7 +17,7 @@ export class GrowingCalculations {
   // The number of km to increase the bounding box by with each expanding area search for weather towers with data
   private boundingBoxGrowFactor = 5;
   // Total number of years of temperature data to work with
-  private numberOfYearsToRetrieve = 15;
+  private numberOfYearsToRetrieve = 20;
   // The side of the bonding box (in km) surrounding the user's location in which to search for weather stations
   private boundingBoxSide = 10;
   // The number of days to look before and after a date to determine if the date represents a season start or end
@@ -67,10 +67,9 @@ export class GrowingCalculations {
     // Clean the data
     TMAX = this.selectHighestDuplicates(TMAX);
     TMIN = this.selectLowestDuplicates(TMIN);
-    this.sortTMINTMAX(TMIN, TMAX);
     // Create an observation_date -> {TMIN, TMAX, GDD } map using filtered for season starts and ends calculation
     this.mapTMINTMAX(TMIN, TMAX);
-    const TMINAvg = this.getLowestTemperature(TMIN);
+    const TMINAvg = this.getLowestTemperatureAvg(TMIN);
 
     const seasonStarts = this.removeOutliersFromDates(
       this.gdd45SpringTransitions()
@@ -94,9 +93,11 @@ export class GrowingCalculations {
     };
   }
 
+  /** Remove date outliers */
   private removeOutliersFromDates(dates: Date[]) {
-    const values = dates.map((dateString) => new Date(dateString).getTime());
-    values.sort((a, b) => a - b);
+    const values = dates
+      .map((dateString) => new Date(dateString).getTime())
+      .sort((a, b) => this.sortAsc(a, b));
     /* Then find a generous IQR. This is generous because if (values.length / 4)
      * is not an int, then really you should average the two elements on either
      * side to find q1.
@@ -114,6 +115,25 @@ export class GrowingCalculations {
       })
       .map((number) => new Date(number));
   }
+
+  /** Remove HIGH outliers from TMIN temperatures */
+  private keepLowerQuartile(temperatures: number[]) {
+    // remove outliers from TMIN and TMAX temperatures
+    /* Then find a generous IQR. This is generous because if (values.length / 4)
+     * is not an int, then really you should average the two elements on either
+     * side to find q1.
+     */
+    // Likewise for q3.
+    temperatures.sort((a: number, b: number) => this.sortAsc(a, b));
+    const q1 = temperatures[Math.ceil(temperatures.length * (1 / 4))];
+    // Then find min and max values
+    const maxValue = q1;
+    // Then filter anything beyond or beneath these values.
+    const out = temperatures.filter((x) => x < maxValue);
+    return out;
+  }
+
+  /** Get spring transition dates */
   private gdd45SpringTransitions(): Date[] {
     const gdd45SpringTransitionDates: Date[] = [];
     if (this.tminMaxMap)
@@ -160,11 +180,12 @@ export class GrowingCalculations {
   }
 
   /** Determines the average lowest annual temperature */
-  private getLowestTemperature(TMIN: Observation[]): number {
-    return TMIN.reduce(
-      (lowestTemp, tminObs: Observation) =>
-        tminObs.temperature < lowestTemp ? tminObs.temperature : lowestTemp,
-      9999
+  private getLowestTemperatureAvg(TMIN: Observation[]): number {
+    const minTemps = this.getAnnualLowestTemps(TMIN);
+    const minTempsFiltered = this.keepLowerQuartile(minTemps);
+    return (
+      minTempsFiltered.reduce((sum, observedTemp) => sum + observedTemp, 0) /
+      minTempsFiltered.length
     );
   }
 
@@ -254,20 +275,6 @@ export class GrowingCalculations {
             leadGDDs.length
           : undefined;
       });
-  }
-
-  /** Sorts TMIN and TMAX data ascending by date */
-  private sortTMINTMAX(TMIN: Observation[], TMAX: Observation[]) {
-    TMAX.sort(
-      (tempObjectA, tempObjectB) =>
-        new Date(tempObjectA.observation_date).getTime() -
-        new Date(tempObjectB.observation_date).getTime()
-    );
-    TMIN.sort(
-      (tempObjectA, tempObjectB) =>
-        new Date(tempObjectA.observation_date).getTime() -
-        new Date(tempObjectB.observation_date).getTime()
-    );
   }
   /** Utility function to calculate GDD45
    * @param tmax - maximum temperature for that day
@@ -434,9 +441,7 @@ export class GrowingCalculations {
    * Filter out the lower TMAX values (if multiple present on same day) out of the data if present
    * @param TMAX TMAX data returned from the API calls
    */
-  private selectHighestDuplicates(
-    TMAX: { observation_date: string; temperature: number }[]
-  ): Observation[] {
+  private selectHighestDuplicates(TMAX: Observation[]): Observation[] {
     const observationDateMap: { [obsDate: string]: number } = {};
     TMAX.forEach((obsTmax) => {
       const { observation_date, temperature } = obsTmax;
@@ -460,21 +465,19 @@ export class GrowingCalculations {
   /**
    * Filter out the the higher TMIN values (if multiple present on same day) out of the data if present
    * @param TMIN TMIN data returned from the API calls
-
    */
-  private selectLowestDuplicates(
-    TMIN: { observation_date: string; temperature: number }[]
-  ) {
+  private selectLowestDuplicates(TMIN: Observation[]) {
     const observationDateMap: { [obsDate: string]: number } = {};
     TMIN.forEach((obsTmin) => {
       const { observation_date, temperature } = obsTmin;
+      const temperatureParsed = Number(temperature);
       if (observationDateMap[observation_date] !== undefined) {
         const existing = observationDateMap[observation_date];
-        if (temperature < existing) {
-          observationDateMap[observation_date] = temperature;
+        if (temperatureParsed < existing) {
+          observationDateMap[observation_date] = temperatureParsed;
         }
       } else {
-        observationDateMap[observation_date] = temperature;
+        observationDateMap[observation_date] = temperatureParsed;
       }
     });
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -485,6 +488,30 @@ export class GrowingCalculations {
     );
   }
 
+  /** Get the 3 lowest temperatures for each year */
+  private getAnnualLowestTemps(TMIN: Observation[]): number[] {
+    const annualLowestTemps: { [year: string]: number[] } = {};
+    TMIN.sort((a: Observation, b: Observation) =>
+      this.sortAsc(a.temperature, b.temperature)
+    );
+    TMIN.forEach((obsTmin) => {
+      const { observation_date, temperature } = obsTmin;
+      const [year] = observation_date.split('-');
+      if (annualLowestTemps[year] !== undefined) {
+        if (annualLowestTemps[year].length < 3) {
+          annualLowestTemps[year].push(temperature);
+        }
+      } else {
+        annualLowestTemps[year] = [temperature];
+      }
+    });
+
+    return Object.values(annualLowestTemps).reduce(
+      (temperatures, temperaturesForYear) => {
+        return temperatures.concat(temperaturesForYear);
+      }
+    );
+  }
   /** Get the user's location coordinates via Google maps */
   private async convertAddressToCoordinate(): Promise<{
     results: [{ geometry: { location: { lat: number; lng: number } } }];
@@ -672,5 +699,18 @@ export class GrowingCalculations {
       60 /
       24
     );
+  }
+
+  /** Sort ascending */
+  private sortAsc(a: number, b: number) {
+    const aParsed = Number(a);
+    const bParsed = Number(b);
+    if (aParsed < bParsed) {
+      return -1;
+    }
+    if (aParsed > bParsed) {
+      return 1;
+    }
+    return 0;
   }
 }
