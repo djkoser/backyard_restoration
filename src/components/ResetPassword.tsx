@@ -11,6 +11,8 @@ export const ResetPassword: React.FC = () => {
   const [failureMessage, setFailureMessage] = useState<CSS.Properties>({
     visibility: 'hidden'
   });
+  const [failureMessageContents, setFailureMessageContents] =
+    useState<string>('');
   const [password, setPassword] = useState('');
   const [resetCode, setResetCode] = useState('');
   const { state } = useLocation();
@@ -27,13 +29,21 @@ export const ResetPassword: React.FC = () => {
           navigate('/dash');
         });
       })
-      .catch(() => {
-        setPassword('');
-        toast.error(
-          'Your password reset request has expired. Please try again using the "Forgot Password" link on the login page.'
-        );
+      .catch(({ __type, message }: { __type: string; message: string }) => {
+        let failureMessageContents;
+
+        switch (__type) {
+          case 'InvalidPasswordException':
+            failureMessageContents = message;
+            break;
+          default:
+            failureMessageContents =
+              'An unknown error occurred. Please try again.';
+            break;
+        }
+
+        setFailureMessageContents(failureMessageContents);
         setFailureMessage({ visibility: 'visible' });
-        navigate('/');
       });
   };
 
@@ -73,10 +83,7 @@ export const ResetPassword: React.FC = () => {
         <button>Change Password</button>
       </form>
       <article style={failureMessage}>
-        <h4>
-          'Your password reset request has expired. Please try again using the
-          "Forgot Password" link on our login page.'
-        </h4>
+        <h4>{failureMessageContents}</h4>
       </article>
       <Link to={'/'}>Back to Login</Link>
     </main>
