@@ -56,16 +56,7 @@
       ],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "apiKeyConfig": {
-                "apiKeyExpirationDate": "2023-06-12T07:44:04.822Z",
-                "apiKeyExpirationDays": 7,
-                "description": "BackyardRestorationGraphQLSeedKey"
-              },
-              "authenticationType": "API_KEY"
-            }
-          ],
+          "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
