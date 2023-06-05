@@ -29,13 +29,16 @@ export const ResetPassword: React.FC = () => {
           navigate('/dash');
         });
       })
-      .catch(({ __type, message }: { __type: string; message: string }) => {
+      .catch(({ name, message}: Error) => {
         let failureMessageContents;
-
-        switch (__type) {
+        console.log(name, message);
+        switch (name) {
           case 'InvalidPasswordException':
             failureMessageContents = message;
             break;
+          case 'LimitExceededException ':
+            failureMessageContents = message;
+            break; 
           default:
             failureMessageContents =
               'An unknown error occurred. Please try again.';
@@ -83,7 +86,7 @@ export const ResetPassword: React.FC = () => {
         <button>Change Password</button>
       </form>
       <article style={failureMessage}>
-        <h4>{failureMessageContents}</h4>
+        <strong><h4>{failureMessageContents}</h4></strong>
       </article>
       <Link to={'/'}>Back to Login</Link>
     </main>
